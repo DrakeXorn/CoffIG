@@ -1,0 +1,91 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e9592e27-a7d2-4cb4-bc3a-342f35bddb77\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <ignored path=\"$PROJECT_DIR$/out/\" />\r\n    <option name=\"EXCLUDED_CONVERTED_TO_IGNORED\" value=\"true\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"DefaultGradleProjectSettings\">\r\n    <option name=\"testRunner\" value=\"GRADLE\" />\r\n    <option name=\"delegatedBuild\" value=\"true\" />\r\n  </component>\r\n  <component name=\"FileEditorManager\">\r\n    <leaf SIDE_TABS_SIZE_LIMIT_KEY=\"300\">\r\n      <file pinned=\"false\" current-in-tab=\"true\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/Principal.java\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"50\">\r\n              <caret line=\"2\" column=\"15\" selection-start-line=\"2\" selection-start-column=\"15\" selection-end-line=\"2\" selection-end-column=\"15\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n    </leaf>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"IdeDocumentHistory\">\r\n    <option name=\"CHANGED_PATHS\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/src/Principal.java\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectFrameBounds\" extendedState=\"6\">\r\n    <option name=\"x\" value=\"-10\" />\r\n    <option name=\"width\" value=\"1240\" />\r\n    <option name=\"height\" value=\"1040\" />\r\n  </component>\r\n  <component name=\"ProjectView\">\r\n    <navigator proportions=\"\" version=\"1\">\r\n      <foldersAlwaysOnTop value=\"true\" />\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"Scope\" />\r\n      <pane id=\"ProjectPane\">\r\n        <subPane>\r\n          <expand>\r\n            <path>\r\n              <item name=\"projet_java_Coff-IG\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"projet-b2\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"projet_java_Coff-IG\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"projet-b2\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n          </expand>\r\n          <select />\r\n        </subPane>\r\n      </pane>\r\n      <pane id=\"PackagesPane\" />\r\n    </panes>\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"nodejs_interpreter_path.stuck_in_default_project\" value=\"undefined stuck path\" />\r\n    <property name=\"nodejs_npm_path_reset_for_default_project\" value=\"true\" />\r\n  </component>\r\n  <component name=\"RunDashboard\">\r\n    <option name=\"ruleStates\">\r\n      <list>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"ConfigurationTypeDashboardGroupingRule\" />\r\n        </RuleState>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"StatusDashboardGroupingRule\" />\r\n        </RuleState>\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e9592e27-a7d2-4cb4-bc3a-342f35bddb77\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1584106920266</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1584106920266</updated>\r\n      <workItem from=\"1584106923997\" duration=\"45000\" />\r\n      <workItem from=\"1584107051275\" duration=\"64000\" />\r\n      <workItem from=\"1584107132569\" duration=\"418000\" />\r\n      <workItem from=\"1584107570447\" duration=\"2000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Création classe principale\">\r\n      <created>1584107162951</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1584107162951</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TimeTrackingManager\">\r\n    <option name=\"totallyTimeSpent\" value=\"529000\" />\r\n  </component>\r\n  <component name=\"ToolWindowManager\">\r\n    <frame x=\"-7\" y=\"-7\" width=\"1550\" height=\"838\" extended-state=\"6\" />\r\n    <editor active=\"true\" />\r\n    <layout>\r\n      <window_info active=\"true\" content_ui=\"combo\" id=\"Project\" order=\"0\" visible=\"true\" weight=\"0.25973153\" />\r\n      <window_info id=\"Structure\" order=\"1\" side_tool=\"true\" weight=\"0.25\" />\r\n      <window_info id=\"Image Layers\" order=\"2\" />\r\n      <window_info id=\"Designer\" order=\"3\" />\r\n      <window_info id=\"UI Designer\" order=\"4\" />\r\n      <window_info id=\"Capture Tool\" order=\"5\" />\r\n      <window_info id=\"Favorites\" order=\"6\" side_tool=\"true\" />\r\n      <window_info anchor=\"bottom\" id=\"Message\" order=\"0\" />\r\n      <window_info anchor=\"bottom\" id=\"Find\" order=\"1\" />\r\n      <window_info anchor=\"bottom\" id=\"Run\" order=\"2\" />\r\n      <window_info anchor=\"bottom\" id=\"Debug\" order=\"3\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"Cvs\" order=\"4\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Inspection\" order=\"5\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"TODO\" order=\"6\" />\r\n      <window_info anchor=\"bottom\" id=\"Docker\" order=\"7\" show_stripe_button=\"false\" />\r\n      <window_info anchor=\"bottom\" id=\"Version Control\" order=\"8\" />\r\n      <window_info anchor=\"bottom\" id=\"Database Changes\" order=\"9\" />\r\n      <window_info anchor=\"bottom\" id=\"Terminal\" order=\"10\" />\r\n      <window_info anchor=\"bottom\" id=\"Event Log\" order=\"11\" side_tool=\"true\" />\r\n      <window_info anchor=\"right\" id=\"Commander\" internal_type=\"SLIDING\" order=\"0\" type=\"SLIDING\" weight=\"0.4\" />\r\n      <window_info anchor=\"right\" id=\"Ant Build\" order=\"1\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" content_ui=\"combo\" id=\"Hierarchy\" order=\"2\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" id=\"Palette\" order=\"3\" />\r\n      <window_info anchor=\"right\" id=\"Theme Preview\" order=\"4\" />\r\n      <window_info anchor=\"right\" id=\"Maven\" order=\"5\" />\r\n      <window_info anchor=\"right\" id=\"Capture Analysis\" order=\"6\" />\r\n      <window_info anchor=\"right\" id=\"Palette&#9;\" order=\"7\" />\r\n      <window_info anchor=\"right\" id=\"Database\" order=\"8\" />\r\n    </layout>\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"1\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Création classe principale\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Création classe principale\" />\r\n  </component>\r\n  <component name=\"editorHistoryManager\">\r\n    <entry file=\"file://$PROJECT_DIR$/src/Principal.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"50\">\r\n          <caret line=\"2\" column=\"15\" selection-start-line=\"2\" selection-start-column=\"15\" selection-end-line=\"2\" selection-end-column=\"15\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision ec399d4a8c25a4385cc948d07df05c66ed9edeb7)
++++ .idea/workspace.xml	(date 1584107836168)
+@@ -20,8 +20,8 @@
+       <file pinned="false" current-in-tab="true">
+         <entry file="file://$PROJECT_DIR$/src/Principal.java">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="50">
+-              <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
++            <state relative-caret-position="100">
++              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+             </state>
+           </provider>
+         </entry>
+@@ -36,6 +36,7 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="UPDATE_TYPE" value="MERGE" />
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="IdeDocumentHistory">
+@@ -56,6 +57,7 @@
+     </navigator>
+     <panes>
+       <pane id="Scope" />
++      <pane id="PackagesPane" />
+       <pane id="ProjectPane">
+         <subPane>
+           <expand>
+@@ -72,7 +74,6 @@
+           <select />
+         </subPane>
+       </pane>
+-      <pane id="PackagesPane" />
+     </panes>
+   </component>
+   <component name="PropertiesComponent">
+@@ -108,6 +109,7 @@
+       <workItem from="1584107051275" duration="64000" />
+       <workItem from="1584107132569" duration="418000" />
+       <workItem from="1584107570447" duration="2000" />
++      <workItem from="1584107594045" duration="240000" />
+     </task>
+     <task id="LOCAL-00001" summary="Création classe principale">
+       <created>1584107162951</created>
+@@ -116,17 +118,23 @@
+       <option name="project" value="LOCAL" />
+       <updated>1584107162951</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="Création classe principale">
++      <created>1584107662071</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1584107662071</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="529000" />
++    <option name="totallyTimeSpent" value="769000" />
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+-    <editor active="true" />
+     <layout>
+-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25973153" />
++      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26308724" />
+       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+       <window_info id="Image Layers" order="2" />
+       <window_info id="Designer" order="3" />
+@@ -166,8 +174,8 @@
+   <component name="editorHistoryManager">
+     <entry file="file://$PROJECT_DIR$/src/Principal.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="50">
+-          <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
++        <state relative-caret-position="100">
++          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+         </state>
+       </provider>
+     </entry>
