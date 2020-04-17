@@ -1,12 +1,12 @@
 package model.exceptions;
 
 public class QuantityException extends Exception {
-    private Integer quantityErrone;
+    private Integer wrongQuantity;
 
-    public QuantityException(Integer quantityErrone) {
-        this.quantityErrone = quantityErrone;
+    public QuantityException(Integer wrongQuantity) {
+        this.wrongQuantity = wrongQuantity;
     }
     public String getMessage() {
-        return	"The value (" + quantityErrone + ") proposed for quantity is invalid !";
+        return	"The value (" + wrongQuantity + ") proposed for quantity is invalid !";
     }
 }

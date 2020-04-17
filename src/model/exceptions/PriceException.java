@@ -1,13 +1,13 @@
 package model.exceptions;
 
 public class PriceException extends Exception{
-    private Double priceErrone;
+    private Double wrongPrice;
 
-    public PriceException(Double priceErrone) {
-        this.priceErrone = priceErrone;
+    public PriceException(Double wrongPrice) {
+        this.wrongPrice = wrongPrice;
     }
 
-    public String getMessage(){
-        return "La valeur " + priceErrone + " proposée pour le prix est invalide !";
+    public String getMessage() {
+        return "La valeur " + wrongPrice + " proposée pour le prix est invalide !";
     }
 }

@@ -2,67 +2,52 @@ package model;
 
 import model.exceptions.SatisfactionDegreeException;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Customer extends User {
-    private Boolean wantAdvertising;
+    private Boolean wantsAdvertising;
     private Integer satisfactionDegree;
     private LoyaltyCard loyaltyCard;
+    private ArrayList<Order> orders;
 
-    // Constructors
-    public Customer(Integer userID, String password, String lastName, String firstName, String secondName,
+    public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender,
-                    Locality locality, Boolean wantAdvertising, Integer satisfactionDegree, LoyaltyCard loyaltyCard)
-            throws SatisfactionDegreeException {
-        super(userID, password, lastName, firstName, secondName, maidenName,
-                birthDate, streetName, email, phone, gender, locality);
+                    Locality locality, Boolean wantsAdvertising) {
+        super(password, lastName, firstName, secondName, maidenName,
+                birthDate, streetName, locality, email, phone, gender);
 
-        this.wantAdvertising = wantAdvertising;
-        setSatisfactionDegree(satisfactionDegree);
-        this.loyaltyCard = loyaltyCard;
+        this.wantsAdvertising = wantsAdvertising;
+        orders = new ArrayList<>();
     }
 
-    public Customer(Integer userID, String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender,
-                    Locality locality, Integer satisfactionDegree, LoyaltyCard loyaltyCard)
-            throws SatisfactionDegreeException {
-        this(userID, password, lastName, firstName, secondName, maidenName,
-                birthDate, streetName, email, phone, gender, locality,
-                Boolean.FALSE, satisfactionDegree, loyaltyCard);
+    public Customer(String password, String lastName, String firstName, String secondName,
+                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone,
+                    Character gender, Locality locality) {
+        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, email, phone, gender,
+                locality, Boolean.FALSE);
     }
-
-    public Customer(Integer userID, String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender,
-                    Locality locality, LoyaltyCard loyaltyCard)
-            throws SatisfactionDegreeException {
-        this(userID, password, lastName, firstName, secondName, maidenName,
-                birthDate, streetName, email, phone, gender, locality,
-                Boolean.FALSE, null, loyaltyCard);
-    }
-
-    public Customer(Integer userID, String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender, Locality locality)
-            throws SatisfactionDegreeException {
-        this(userID, password, lastName, firstName, secondName, maidenName,
-                birthDate, streetName, email, phone, gender, locality,
-                false, null, null);
-    }
-
-    // Getters / Setters
-    public Boolean getWantAdvertising() { return wantAdvertising; }
-    public Integer getSatisfactionDegree() { return satisfactionDegree; }
-    public LoyaltyCard getLoyaltyCard() { return loyaltyCard; }
 
     public void setSatisfactionDegree(Integer satisfactionDegree)
             throws SatisfactionDegreeException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new SatisfactionDegreeException(satisfactionDegree);
-        else this.satisfactionDegree = satisfactionDegree;
+        this.satisfactionDegree = satisfactionDegree;
     }
 
-    // Methods
+    public void addLoyaltyCard(LoyaltyCard card) {
+        loyaltyCard = card;
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
+    public void addOrders(ArrayList<Order> newOrders) {
+        orders.addAll(newOrders);
+    }
+
     public String toString() {
-        return super.toString() + ", " + wantAdvertising + ", " + satisfactionDegree;
+        return super.toString() + ", " + wantsAdvertising + ", " + satisfactionDegree;
     }
 }

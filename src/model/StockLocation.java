@@ -5,6 +5,7 @@ import model.exceptions.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class StockLocation {
     private Integer alley;
@@ -12,13 +13,10 @@ public class StockLocation {
     private Integer number;
     private Double buyingPrice;
     private Integer quantity;
-    private Date expirationDate;
+    private GregorianCalendar expirationDate;
 
-
-    // Constructor
-    public StockLocation(Integer alley, Integer shelf, Integer number, Double buyingPrice, Integer quantity, Date expirationDate)
-            throws AlleyException, ShelfException, NumberException, BuyingPriceException, QuantityException
-    {
+    public StockLocation(Integer alley, Integer shelf, Integer number, Double buyingPrice, Integer quantity, GregorianCalendar expirationDate)
+            throws AlleyException, ShelfException, NumberException, PriceException, QuantityException {
         setAlley(alley);
         setShelf(shelf);
         setNumber(number);
@@ -27,40 +25,39 @@ public class StockLocation {
         this.expirationDate = expirationDate;
     }
 
-
-    // Getters / Setters
-    public Integer getAlley() { return alley; }
-    public Integer getShelf() { return shelf; }
-    public Integer getNumber() { return number; }
-    public Double getBuyingPrice() { return buyingPrice; }
-    public Integer getQuantity() { return quantity; }
-    public Date getExpirationDate() { return expirationDate;}
-
     public void setAlley(Integer alley) throws AlleyException {
-        if (alley < 1) throw new AlleyException(alley);
-        else this.alley = alley;
+        if (alley < 1)
+            throw new AlleyException(alley);
+        this.alley = alley;
     }
+
     public void setShelf(Integer shelf) throws ShelfException {
-        if (shelf < 1) throw new ShelfException(shelf);
-        else this.shelf = shelf;
+        if (shelf < 1)
+            throw new ShelfException(shelf);
+        this.shelf = shelf;
     }
+
     public void setNumber(Integer number) throws NumberException {
-        if (number < 1) throw new NumberException(number);
-        else this.number = number;
+        if (number < 1)
+            throw new NumberException(number);
+        this.number = number;
     }
-    public void setBuyingPrice(Double buyingPrice) throws BuyingPriceException {
-        if (buyingPrice < 0) throw new BuyingPriceException(buyingPrice);
-        else this.buyingPrice = buyingPrice;
+
+    public void setBuyingPrice(Double buyingPrice) throws PriceException {
+        if (buyingPrice < 0)
+            throw new PriceException(buyingPrice);
+        this.buyingPrice = buyingPrice;
     }
+
     public void setQuantity(Integer quantity) throws QuantityException {
-        if (quantity < 0) throw new QuantityException(quantity);
-        else this.quantity = quantity;
+        if (quantity < 0)
+            throw new QuantityException(quantity);
+        this.quantity = quantity;
     }
 
-
-    // Methods
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); // Pas sur de +º+á
+        // TODO : à modifier
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return alley + ", " + shelf + ", " + number + ", " + buyingPrice + ", " + quantity + ", " + dateFormat.format(expirationDate);
     }
 }

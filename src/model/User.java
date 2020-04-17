@@ -5,7 +5,8 @@ import model.exceptions.GenderException;
 import java.util.GregorianCalendar;
 
 public class User {
-    private Integer userID;
+    private static int nbrRegistered = 0;
+    private String userID;
     private String password;
     private String lastName, firstName, secondName, maidenName;
     private GregorianCalendar birthDate;
@@ -15,10 +16,12 @@ public class User {
     private Character gender;
     private Locality locality;
 
-    public User(Integer userID, String password, String lastName, String firstName, String secondName,
-                String maidenName, GregorianCalendar birthDate, String streetName, String email,
-                String phone, Character gender, Locality locality) {
-        this.userID = userID;
+    public User(String password, String lastName, String firstName, String secondName,
+                String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
+                String phone, Character gender) {
+        userID = lastName.substring(0, 3) + firstName.substring(0, 1) + phone.substring(phone.length() - 2)
+                + nbrRegistered;
+        nbrRegistered++;
         this.password = password;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -33,10 +36,9 @@ public class User {
     }
 
     public void setGender(Character gender) throws GenderException{
-        if(Character.toUpperCase(gender) == 'M' || Character.toUpperCase(gender) == 'F')
-            this.gender = gender;
-        else
+        if(Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F')
             throw new GenderException(gender);
+        this.gender = gender;
     }
 
     public String getPhone() {

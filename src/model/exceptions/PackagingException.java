@@ -1,13 +1,13 @@
 package model.exceptions;
 
 public class PackagingException extends Exception {
-    private Double packagingErrone;
+    private Double wrongPackaging;
 
-    public PackagingException(Double packagingErrone) {
-        this.packagingErrone = packagingErrone;
+    public PackagingException(Double wrongPackaging) {
+        this.wrongPackaging = wrongPackaging;
     }
 
     public String getMessage(){
-        return "La valeur " + packagingErrone + " proposée pour le packaging est invalide !";
+        return "La valeur " + wrongPackaging + " proposée pour le packaging est invalide !";
     }
 }

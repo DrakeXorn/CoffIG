@@ -1,12 +1,12 @@
 package model.exceptions;
 
 public class ShelfException extends Exception {
-    private Integer shelfErrone;
+    private Integer wrongShelf;
 
-    public ShelfException(Integer shelfErrone) {
-        this.shelfErrone = shelfErrone;
+    public ShelfException(Integer wrongShelf) {
+        this.wrongShelf = wrongShelf;
     }
     public String getMessage() {
-        return	"The value ("+shelfErrone+") proposed for shelf is invalid !";
+        return	"The value ("+ wrongShelf +") proposed for shelf is invalid !";
     }
 }

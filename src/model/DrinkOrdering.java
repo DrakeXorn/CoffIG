@@ -1,33 +1,25 @@
 package model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class DrinkOrdering {
-    private Date date;
-    private Boolean isToTakeAway;
-
+    private Drink drink;
     private Order order;
+    private Integer nbrPieces;
+    private Double sellingPrice;
 
-
-    // Constructor
-    public DrinkOrdering(Date date, Boolean isToTakeAway, Order order) {
-        this.date = date;
-        this.isToTakeAway = isToTakeAway;
+    public DrinkOrdering(Drink drink, Order order, Integer nbrPieces, Double sellingPrice) {
+        this.drink = drink;
         this.order = order;
+        order.addDrinkOrdering(this);
+        this.nbrPieces = nbrPieces;
+        this.sellingPrice = sellingPrice;
     }
 
-
-    // Getters / Setters
-    public Order getOrder() { return order;}
-    public Date getDate() { return date; }
-    public Boolean getToTakeAway() { return isToTakeAway; }
-
-
-    // Methode
+    @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); // Pas sur de +º+á
-        return dateFormat.format(date) + ", " + isToTakeAway;
+        StringBuilder res = new StringBuilder(drink.toString());
+
+        res.append("\t").append(nbrPieces).append("\t").append(sellingPrice);
+
+        return res.toString();
     }
 }

@@ -1,13 +1,13 @@
 package model.exceptions;
 
 public class IntensityException extends Exception {
-    private Integer intensityErrone;
+    private Integer wrongIntensity;
 
-    public IntensityException(Integer intensityErrone) {
-        this.intensityErrone = intensityErrone;
+    public IntensityException(Integer wrongIntensity) {
+        this.wrongIntensity = wrongIntensity;
     }
 
     public String getMessage(){
-        return "La valeur " + intensityErrone + " proposée pour l'intensité est invalide !";
+        return "La valeur " + wrongIntensity + " proposée pour l'intensité est invalide !";
     }
 }

@@ -7,5 +7,6 @@ public class Supplement {
     public Supplement(Topping topping, Drink drink) {
         this.topping = topping;
         this.drink = drink;
+        drink.addSupplement(this);
     }
 }

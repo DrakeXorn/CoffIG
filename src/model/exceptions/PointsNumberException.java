@@ -1,12 +1,12 @@
 package model.exceptions;
 
 public class PointsNumberException extends Exception {
-    private Integer pointsNumberErrone;
+    private Integer wrongPointsNumber;
 
-    public PointsNumberException(Integer pointsNumberErrone) {
-        this.pointsNumberErrone = pointsNumberErrone;
+    public PointsNumberException(Integer wrongPointsNumber) {
+        this.wrongPointsNumber = wrongPointsNumber;
     }
     public String getMessage() {
-        return	"The value ("+pointsNumberErrone+") proposed for points Number is invalid !";
+        return	"The value ("+ wrongPointsNumber +") proposed for points Number is invalid !";
     }
 }

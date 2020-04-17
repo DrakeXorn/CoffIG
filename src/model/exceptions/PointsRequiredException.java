@@ -1,13 +1,13 @@
 package model.exceptions;
 
 public class PointsRequiredException extends Exception{
-    private Integer pointsErrone;
+    private Integer worongPoints;
 
-    public PointsRequiredException(Integer pointsErrone) {
-        this.pointsErrone = pointsErrone;
+    public PointsRequiredException(Integer worongPoints) {
+        this.worongPoints = worongPoints;
     }
 
     public String getMessage(){
-        return "La valeur " + pointsErrone + " proposée pour le nombre de point requis est invalide ! ";
+        return "La valeur " + worongPoints + " proposée pour le nombre de point requis est invalide ! ";
     }
 }

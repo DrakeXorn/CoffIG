@@ -1,12 +1,12 @@
 package model.exceptions;
 
 public class SatisfactionDegreeException extends Exception {
-    private Integer satisfactionDegreeErrone;
+    private Integer wrongSatisfactionDegree;
 
-    public SatisfactionDegreeException(Integer satisfactionDegreeErrone) {
-        this.satisfactionDegreeErrone = satisfactionDegreeErrone;
+    public SatisfactionDegreeException(Integer wrongSatisfactionDegree) {
+        this.wrongSatisfactionDegree = wrongSatisfactionDegree;
     }
     public String getMessage() {
-        return	"The value ("+satisfactionDegreeErrone+") proposed for satisfaction level is invalid !";
+        return	"The value ("+ wrongSatisfactionDegree +") proposed for satisfaction level is invalid !";
     }
 }

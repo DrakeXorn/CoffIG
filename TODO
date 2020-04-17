@@ -1,0 +1,8 @@
+TODO :
+	Phone devient String et pas int
+	UserID varchar et pas int
+	Changer en StringBuilder dans les classes exception
+	Ajouter des toString
+	Mettre locality prêt de streetName dans le constructeur
+	drinkOrdering adapter le schéma
+	À l'initialisation de l'application, setter le nombre maximal de toutes les tables aux classes (via static setter)

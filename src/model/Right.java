@@ -12,8 +12,4 @@ public class Right {
     public Advantage getAdvantage() {
         return advantage;
     }
-
-    public LoyaltyCard getCard() {
-        return card;
-    }
 }

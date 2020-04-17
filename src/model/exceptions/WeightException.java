@@ -1,13 +1,13 @@
 package model.exceptions;
 
 public class WeightException extends Exception {
-    private Double weightErrone;
+    private Double wrongWeight;
 
-    public WeightException(Double weightErrone) {
-        this.weightErrone = weightErrone;
+    public WeightException(Double wrongWeight) {
+        this.wrongWeight = wrongWeight;
     }
 
     public String getMessage(){
-        return "La valeur " + weightErrone + " proposée pour le poids est invalide !";
+        return "La valeur " + wrongWeight + " proposée pour le poids est invalide !";
     }
 }

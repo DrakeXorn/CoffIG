@@ -1,12 +1,12 @@
 package model.exceptions;
 
 public class AlleyException extends Exception {
-    private Integer alleyErrone;
+    private Integer wrongAlley;
 
-    public AlleyException(Integer alleyErrone) {
-        this.alleyErrone = alleyErrone;
+    public AlleyException(Integer wrongAlley) {
+        this.wrongAlley = wrongAlley;
     }
     public String getMessage() {
-        return	"The value ("+alleyErrone+") proposed for alley is invalid !";
+        return	"The value ("+ wrongAlley +") proposed for alley is invalid !";
     }
 }

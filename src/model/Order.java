@@ -1,25 +1,23 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Order {
-    private static int orderNumber;
+    private static int nbrOrders = 1;
+    private Integer orderNumber;
     private GregorianCalendar date;
     private Boolean isToTakeAway;
     private Customer beneficiary;
     private Employee orderPicker;
 
-    private FoodOrdering [] foodOrderings;
-    private int nbFoodOrderings;
-    private final static int NB_FOOD_ORDDERINGS = 20;
-
-    private DrinkOrdering [] drinkOrderings;
-    private int nbDrinkOrderings;
-    private final static int NB_DRINK_ORDDERINGS = 20;
+    private ArrayList<FoodOrdering> foodOrderings;
+    private ArrayList<DrinkOrdering> drinkOrderings;
 
     public Order(GregorianCalendar date, Boolean isToTakeAway,
                  Customer beneficiary, Employee orderPicker) {
-        orderNumber++;
+        orderNumber = nbrOrders;
+        nbrOrders++;
         this.date = date;
         this.isToTakeAway = isToTakeAway;
 
@@ -28,26 +26,20 @@ public class Order {
             beneficiary.addOrder(this);
 
         this.orderPicker = orderPicker;
-        if(orderPicker != null)
-            orderPicker.addOrder(this);
 
-        foodOrderings = new FoodOrdering[NB_FOOD_ORDDERINGS];
-        drinkOrderings = new DrinkOrdering[NB_DRINK_ORDDERINGS];
+        foodOrderings = new ArrayList<>();
+        drinkOrderings = new ArrayList<>();
     }
 
-    // à appeler dans le constructeur de FoodOrdering sur Order
-    public void addFoodOrdering(FoodOrdering foodOrdering){
-        if(nbFoodOrderings < NB_FOOD_ORDDERINGS){
-            foodOrderings[nbFoodOrderings] = foodOrdering;
-            nbFoodOrderings++;
-        }
+    public void addFoodOrdering(FoodOrdering foodOrdering) {
+        foodOrderings.add(foodOrdering);
     }
 
-    // à appeler dans le constructeur de DrinkOrdering sur Order
-    public void addDrinkOrdering(DrinkOrdering drinkOrdering){
-        if(nbDrinkOrderings < NB_DRINK_ORDDERINGS){
-            drinkOrderings[nbDrinkOrderings] = drinkOrdering;
-            nbDrinkOrderings++;
-        }
+    public void removeFoodOrdering(FoodOrdering foodOrdering) {
+        foodOrderings.remove(foodOrdering);
+    }
+
+    public void addDrinkOrdering(DrinkOrdering drinkOrdering) {
+        drinkOrderings.add(drinkOrdering);
     }
 }
