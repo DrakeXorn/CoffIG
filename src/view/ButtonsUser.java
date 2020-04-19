@@ -5,19 +5,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ButtonsUserPanel extends JPanel {
+public class ButtonsUser extends JPanel {
     private JButton validation, reset;
     private MainWindow parent;
-    private User user;
     private Customer customer;
-    private AddUserForm userForm;
-    private AddCustomerForm customerForm;
-    //private AddEmployeeForm employeeForm;
+    private CustomerForm customerForm;
+    //private EmployeeForm employeeForm;
 
-    public ButtonsUserPanel(MainWindow mainWindow, AddUserForm userForm,
-                            AddCustomerForm customerForm/*, AddEmployeeForm employeeForm*/){
+    public ButtonsUser(MainWindow mainWindow, CustomerForm customerForm/*, EmployeeForm employeeForm*/){
         this.parent = mainWindow;
-        this.userForm = userForm;
         this.customerForm = customerForm;
         //this. employeeForm = employeeForm;
         this.setLayout(new FlowLayout());
@@ -36,25 +32,24 @@ public class ButtonsUserPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent even) {
             if (even.getSource() == validation){
-                user = userForm.createUser();
                 if (customerForm != null)
-                    customer = customerForm.createCustomer(user);
+                    customer = customerForm.createCustomer();
                 //else if (employeeForm != null)
-                    //employeeForm = employeeForm.createCustomer(user);
+                    //employeeForm = employeeForm.createEmployee();
             }
             else if( even.getSource() == reset){
                 parent.getWindowContainer().removeAll();
-                AddUserForm user = new AddUserForm();
+                UserForm user = new UserForm();
                 parent.getWindowContainer().add(user, BorderLayout.NORTH);
                 if (customerForm != null){
-                    AddCustomerForm customer = new AddCustomerForm();
+                    CustomerForm customer = new CustomerForm(user);
                     parent.getWindowContainer().add(customer, BorderLayout.CENTER);
-                    parent.getWindowContainer().add(new ButtonsUserPanel(parent, user, customer/*, null*/), BorderLayout.SOUTH);
+                    parent.getWindowContainer().add(new ButtonsUser(parent, customer/*, null*/), BorderLayout.SOUTH);
                 }
                 //else if (employeeForm != null) {
-                //    AddEmployeeForm employee = new AddEmployeeForm();
+                //    EmployeeForm employee = new EmployeeForm(user);
                 //    parent.getWindowContainer().add(employee, BorderLayout.CENTER);
-                 //   parent.getWindowContainer().add(new ButtonsUserPanel(parent, user, null, employee), BorderLayout.SOUTH);
+                 //   parent.getWindowContainer().add(new ButtonsUserPanel(parent, null, employee), BorderLayout.SOUTH);
                 //}
                 parent.getWindowContainer().repaint();
                 parent.setVisible(true);

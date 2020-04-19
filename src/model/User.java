@@ -46,46 +46,6 @@ public class User {
         return userID;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public String getMaidenName() {
-        return maidenName;
-    }
-
-    public GregorianCalendar getBirthDate() {
-        return birthDate;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Character getGender() {
-        return gender;
-    }
-
-    public Locality getLocality() {
-        return locality;
-    }
-
     public String getPhone() {
         return phone;
     }

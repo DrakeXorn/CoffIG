@@ -40,12 +40,11 @@ public class MainWindow extends JFrame {
     private class AddCustomerListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
-            AddUserForm user = new AddUserForm();
-            AddCustomerForm customer = new AddCustomerForm();
+            UserForm user = new UserForm();
+            CustomerForm customer = new CustomerForm(user);
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(customer, BorderLayout.CENTER);
-            windowContainer.add(new ButtonsUserPanel(MainWindow.this, user, customer), BorderLayout.SOUTH);
-
+            windowContainer.add(new ButtonsUser(MainWindow.this, customer), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }

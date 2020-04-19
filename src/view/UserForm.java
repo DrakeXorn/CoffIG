@@ -8,14 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.GregorianCalendar;
 
-public class AddUserForm extends JPanel {
+public class UserForm extends JPanel {
     private JLabel birthdateLabel, streetNameLabel, emailLabel, phoneLabel, localityPostalCodeLabel, localityCityLabel;
     private JDatePicker birthdate;
     private JTextField streetName, email, phone, localityPostalCode, localityCity;
     private JRadioButton male, female;
     private ButtonGroup buttonGroup;
 
-    public AddUserForm(){
+    public UserForm(){
         this.setLayout(new GridLayout(9, 2, 5, 5));
 
         birthdateLabel = new JLabel("Date de naissance :");
@@ -70,20 +70,28 @@ public class AddUserForm extends JPanel {
         this.add(localityCity);
     }
 
-    public User createUser(){
-        User user = null;
-        try{
-             user = new User("mot de passe", "nom", "prénom","second nom",
-                     "nom de jeune fille", (GregorianCalendar) birthdate.getModel().getValue(),
-                     streetName.getText(), new Locality(Integer.parseInt(localityPostalCode.getText()), localityCity.getText()),
-                     email.getText(), phone.getText(), (female.isSelected() ? 'F' : 'M'));
-        }
-        catch (GenderException exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
-        }
-        return user;
+    public GregorianCalendar getBirthdate() {
+        return (GregorianCalendar)birthdate.getModel().getValue();
     }
 
+    public String getStreetName() {
+        return streetName.getText();
+    }
+
+    public String getEmail() {
+        return email.getText();
+    }
+
+    public String getPhone() {
+        return phone.getText();
+    }
+
+    public Locality getLocality (){
+        return new Locality(Integer.parseInt(localityPostalCode.getText()), localityCity.getText());
+    }
+
+    public Character getGender() {
+        return male.isSelected() ? 'M' : 'F';
+    }
 
 }
