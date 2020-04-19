@@ -1,0 +1,3 @@
+INSERT INTO `coff-ig`.food (food_id, label, price, stock_location_alley, stock_location_shelf, stock_location_number) VALUES (4, 'Banana bread', 4.3, 1, 2, 1);
+INSERT INTO `coff-ig`.food (food_id, label, price, stock_location_alley, stock_location_shelf, stock_location_number) VALUES (5, 'Carrot cake', 4.3, 1, 2, 2);
+INSERT INTO `coff-ig`.food (food_id, label, price, stock_location_alley, stock_location_shelf, stock_location_number) VALUES (6, 'Bagel tomate mozzarella', 5.5, 1, 2, 3);

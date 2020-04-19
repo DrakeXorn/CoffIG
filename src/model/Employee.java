@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.DateException;
 import model.exceptions.DiscountException;
+import model.exceptions.GenderException;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws DiscountException {
+            throws DiscountException, GenderException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
@@ -38,7 +39,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws DiscountException {
+            throws DiscountException, GenderException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
@@ -57,7 +58,7 @@ public class Employee extends User {
     public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
-                    Boolean isEmployeeOfMonth, Double discount, Employee manager) throws DiscountException {
+                    Boolean isEmployeeOfMonth, Double discount, Employee manager) throws DiscountException, GenderException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }

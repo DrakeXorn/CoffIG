@@ -1,0 +1,2 @@
+INSERT INTO `coff-ig`.topping (topping_id, label, price, stock_location_alley, stock_location_shelf, stock_location_number) VALUES (5, 'lait', 0.3, 2, 2, 4);
+INSERT INTO `coff-ig`.topping (topping_id, label, price, stock_location_alley, stock_location_shelf, stock_location_number) VALUES (5, 'sucre', 0.3, 2, 2, 5);

@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.GenderException;
 import model.exceptions.SatisfactionDegreeException;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Customer extends User {
 
     public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender,
-                    Locality locality, Boolean wantsAdvertising) {
+                    Locality locality, Boolean wantsAdvertising) throws GenderException {
         super(password, lastName, firstName, secondName, maidenName,
                 birthDate, streetName, locality, email, phone, gender);
 
@@ -23,12 +24,12 @@ public class Customer extends User {
 
     public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone,
-                    Character gender, Locality locality) {
+                    Character gender, Locality locality) throws GenderException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, email, phone, gender,
                 locality, Boolean.FALSE);
     }
 
-    public void setSatisfactionDegree(Integer satisfactionDegree)
+    public void setSatisfactionDegree(int satisfactionDegree)
             throws SatisfactionDegreeException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new SatisfactionDegreeException(satisfactionDegree);
@@ -48,6 +49,8 @@ public class Customer extends User {
     }
 
     public String toString() {
-        return super.toString() + ", " + wantsAdvertising + ", " + satisfactionDegree;
+        return super.toString() + ", " +
+                (wantsAdvertising ? " souhaite" : " ne souhaite pas") +
+                " recevoir la newsletter et a un degré de satisfaction de  " + satisfactionDegree;
     }
 }

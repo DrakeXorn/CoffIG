@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.GenderException;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class User {
@@ -18,7 +19,7 @@ public class User {
 
     public User(String password, String lastName, String firstName, String secondName,
                 String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
-                String phone, Character gender) {
+                String phone, Character gender) throws GenderException {
         userID = lastName.substring(0, 3) + firstName.substring(0, 1) + phone.substring(phone.length() - 2)
                 + nbrRegistered;
         nbrRegistered++;
@@ -31,7 +32,7 @@ public class User {
         this.streetName = streetName;
         this.email = email;
         this.phone = phone;
-        this.gender = gender;
+        setGender(gender);
         this.locality = locality;
     }
 
@@ -41,7 +42,59 @@ public class User {
         this.gender = gender;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getMaidenName() {
+        return maidenName;
+    }
+
+    public GregorianCalendar getBirthDate() {
+        return birthDate;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public Locality getLocality() {
+        return locality;
+    }
+
     public String getPhone() {
         return phone;
+    }
+
+    public String toString (){
+        return firstName + " " + lastName + " (" + userID + ")" +
+                (gender == 'F' ? " née le " : "né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
+                + "/" + birthDate.get(Calendar.MONTH + 1) + "/" + birthDate.get(Calendar.YEAR) +
+                " et habitant " + streetName + " " + locality + " a l'email " + email +
+                " et le numéro " + phone;
     }
 }

@@ -1,0 +1,3 @@
+INSERT INTO `coff-ig`.loyalty_card (loyalty_card_id, registration_date, points_number) VALUES (7, str_to_date('2019-09-02', '%y-%c-%e'), 12000);
+INSERT INTO `coff-ig`.loyalty_card (loyalty_card_id, registration_date, points_number) VALUES (8, str_to_date('2019-12-19', '%y-%c-%e'), 200);
+INSERT INTO `coff-ig`.loyalty_card (loyalty_card_id, registration_date, points_number) VALUES (9, str_to_date('2020-02-20', '%y-%c-%e'), 1500);

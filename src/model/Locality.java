@@ -8,4 +8,8 @@ public class Locality {
         this.postalCode = postalCode;
         this.city = city;
     }
+
+    public String toString(){
+        return postalCode + " " + city;
+    }
 }
