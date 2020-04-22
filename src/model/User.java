@@ -15,6 +15,7 @@ public class User {
     private String phone;
     private Character gender;
     private Locality locality;
+    private byte[] passwordHash;
 
     public User(String password, String lastName, String firstName, String secondName,
                 String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,

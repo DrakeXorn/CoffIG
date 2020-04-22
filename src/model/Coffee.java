@@ -44,6 +44,50 @@ public class Coffee {
         features = new ArrayList<>();
     }
 
+    public Integer getCoffeeID() {
+        return coffeeID;
+    }
+
+    public Integer getIntensity() {
+        return intensity;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public String getRecommendedConsumingMoment() {
+        return recommendedConsumingMoment;
+    }
+
+    public Double getWeightNeededForPreparation() {
+        return weightNeededForPreparation;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Double getPackaging() {
+        return packaging;
+    }
+
+    public GregorianCalendar getDiscoveryDate() {
+        return discoveryDate;
+    }
+
+    public Boolean getInGrains() {
+        return isInGrains;
+    }
+
+    public Boolean getEnvironmentFriendly() {
+        return isEnvironmentFriendly;
+    }
+
     public void setIntensity(Integer intensity) throws IntensityException {
         if (intensity <= 0 || intensity >= 6)
             throw new IntensityException(intensity);
