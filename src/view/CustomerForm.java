@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class CustomerForm extends JPanel {
-
-    private JLabel satisfactionDegree;
     private JCheckBox wantsAdvertising, wantsSatisfactionDegree;
+    private JLabel satisfactionDegreeLabel;
     private JRadioButton un, deux, trois, quatre, cinq;
+    private Integer satisfactionDegree;
     private ButtonGroup buttonGroup;
     private UserForm userInfos;
 
@@ -26,8 +26,8 @@ public class CustomerForm extends JPanel {
         SatisfactionDegreeListener satisfactionDegreeListener = new SatisfactionDegreeListener();
         wantsSatisfactionDegree.addItemListener(satisfactionDegreeListener);
 
-        satisfactionDegree = new JLabel("Degré de satisfaction (entre 1 et 5) :");
-        this.add(satisfactionDegree);
+        satisfactionDegreeLabel = new JLabel("Degré de satisfaction (entre 1 et 5) :");
+        this.add(satisfactionDegreeLabel);
 
         un = new JRadioButton("1", false);
         this.add(un);
@@ -45,6 +45,13 @@ public class CustomerForm extends JPanel {
         trois.setEnabled(false);
         quatre.setEnabled(false);
         cinq.setEnabled(false);
+
+        DegreeListener degreeListener = new DegreeListener();
+        un.addItemListener(degreeListener);
+        deux.addItemListener(degreeListener);
+        trois.addItemListener(degreeListener);
+        quatre.addItemListener(degreeListener);
+        cinq.addItemListener(degreeListener);
 
         buttonGroup = new ButtonGroup();
         buttonGroup.add(un);
@@ -70,7 +77,25 @@ public class CustomerForm extends JPanel {
                 trois.setEnabled(false);
                 quatre.setEnabled(false);
                 cinq.setEnabled(false);
+                satisfactionDegree = null;
             }
+        }
+    }
+
+
+    private class DegreeListener implements ItemListener{
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getSource() == un && event.getStateChange() == ItemEvent.SELECTED)
+                satisfactionDegree = 1;
+            else if (event.getSource() == deux && event.getStateChange() == ItemEvent.SELECTED)
+                satisfactionDegree = 2;
+            else if (event.getSource() == trois && event.getStateChange() == ItemEvent.SELECTED)
+                satisfactionDegree = 3;
+            else if (event.getSource() == quatre && event.getStateChange() == ItemEvent.SELECTED)
+                satisfactionDegree = 4;
+            else if (event.getSource() == cinq && event.getStateChange() == ItemEvent.SELECTED)
+                satisfactionDegree = 5;
         }
     }
 
@@ -81,8 +106,7 @@ public class CustomerForm extends JPanel {
                     "second name", "maiden name", userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getEmail(), userInfos.getPhone(), userInfos.getGender(),
                     userInfos.getLocality(), wantsAdvertising.isSelected());
-
-            customer.setSatisfactionDegree(3);
+            customer.setSatisfactionDegree(satisfactionDegree);
             JOptionPane.showMessageDialog(null, customer + "\nVotre identifiant est " + customer.getUserID(),
                     "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
         } catch (GenderException exception) {
