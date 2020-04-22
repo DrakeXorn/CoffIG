@@ -29,7 +29,7 @@ public class Customer extends User {
                 locality, Boolean.FALSE);
     }
 
-    public void setSatisfactionDegree(int satisfactionDegree)
+    public void setSatisfactionDegree(Integer satisfactionDegree)
             throws SatisfactionDegreeException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new SatisfactionDegreeException(satisfactionDegree);
