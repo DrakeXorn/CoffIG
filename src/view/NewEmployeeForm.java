@@ -57,7 +57,7 @@ public class NewEmployeeForm extends JPanel {
         discountLabel = new JLabel("Remise* :");
         discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(discountLabel);
-        discount = new JSpinner(new SpinnerNumberModel(0, 0, 100, 10.));
+        discount = new JSpinner(new SpinnerNumberModel(0, 0, 100., 10.));
         this.add(discount);
 
         isEmployeeOfMonth = new JCheckBox("Je suis employé du mois");
