@@ -8,4 +8,14 @@ public class Locality {
         this.postalCode = postalCode;
         this.city = city;
     }
+
+    public void setPostalCode(Integer postalCode) {
+        if(postalCode < 1000 || postalCode > 9999)
+            // throw exception
+        this.postalCode = postalCode;
+    }
+
+    public String toString(){
+        return postalCode + " " + city;
+    }
 }

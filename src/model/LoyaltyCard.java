@@ -4,6 +4,7 @@ import model.exceptions.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
@@ -43,7 +44,10 @@ public class LoyaltyCard {
 
     public String toString() {
         // TODO: à modifier
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); // Pas sur de +º+á
-        return loyaltyCardID + ", " + dateFormat.format(registrationDate) + ", " + pointsNumber;
+        return "Carte de fidélité numéro : " + loyaltyCardID + " créée le "
+                + registrationDate.get(Calendar.DAY_OF_MONTH)
+                + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
+                "/" + registrationDate.get(Calendar.YEAR) +
+                " avec " + pointsNumber + " points de fidélité";
     }
 }

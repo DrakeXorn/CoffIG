@@ -1,6 +1,6 @@
 package model;
 
-import model.exceptions.SatisfactionDegreeException;
+import model.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -12,8 +12,9 @@ public class Customer extends User {
     private ArrayList<Order> orders;
 
     public Customer(String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone, Character gender,
-                    Locality locality, Boolean wantsAdvertising) {
+                    String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
+                    String email, String phone, Character gender, Boolean wantsAdvertising)
+            throws StreetException, EmailException, PasswordException, GenderException, PhoneException, NameException, FirstNameException, DateException {
         super(password, lastName, firstName, secondName, maidenName,
                 birthDate, streetName, locality, email, phone, gender);
 
@@ -22,14 +23,13 @@ public class Customer extends User {
     }
 
     public Customer(String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, String email, String phone,
-                    Character gender, Locality locality) {
-        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, email, phone, gender,
-                locality, Boolean.FALSE);
+                    String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
+                    String email, String phone, Character gender)
+            throws EmailException, PasswordException, GenderException, NameException, PhoneException, StreetException, FirstNameException, DateException {
+        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender, Boolean.FALSE);
     }
 
-    public void setSatisfactionDegree(Integer satisfactionDegree)
-            throws SatisfactionDegreeException {
+    public void setSatisfactionDegree(Integer satisfactionDegree) throws SatisfactionDegreeException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new SatisfactionDegreeException(satisfactionDegree);
         this.satisfactionDegree = satisfactionDegree;
@@ -48,6 +48,9 @@ public class Customer extends User {
     }
 
     public String toString() {
-        return super.toString() + ", " + wantsAdvertising + ", " + satisfactionDegree;
+        return super.toString() + ", " +
+                (wantsAdvertising ? " souhaite" : " ne souhaite pas") +
+                " recevoir la newsletter" +
+                (satisfactionDegree != null ? " et a un degré de satisfaction de  " + satisfactionDegree : "");
     }
 }
