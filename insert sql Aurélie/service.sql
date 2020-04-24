@@ -1,1 +1,0 @@
-INSERT INTO `coff-ig`.service (service_id, star_time, end_time) VALUES (1, '6h', '10h30');

@@ -1,1 +1,0 @@
-INSERT INTO `coff-ig`.employee (employee_id, hire_date, end_contract_date, is_employee_of_the_month, discount, parking_space_number, manager_id) VALUES ('5', str_to_date('2016-05-14', '%y-%c-%e'), null, false, 20, null, '12');

@@ -40,7 +40,7 @@ public class Advantage {
 
     public void setEndDate(GregorianCalendar endDate) throws DateException {
         if (endDate.before(startDate))
-            throw new DateException(endDate);
+            throw new DateException(endDate, startDate);
         this.endDate = endDate;
     }
 }

@@ -1,2 +1,0 @@
-INSERT INTO `coff-ig`.drink (coffee_id, label, size, is_cold) VALUES (1, 'Espresso', 'small', false);
-INSERT INTO `coff-ig`.drink (coffee_id, label, size, is_cold) VALUES (2, 'Americano', 'medium', false);

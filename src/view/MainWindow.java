@@ -7,12 +7,12 @@ import java.awt.event.*;
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu coffIG;
-    private JMenuItem customer;
+    private JMenuItem addCustomer, addEmployee;
 
     private Container windowContainer;
     public MainWindow(){
         super("Menu");
-        this.setBounds(100, 50, 800, 500);
+        this.setBounds(100, 50, 800, 600);
         this.addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) { System.exit(0); } } );
 
@@ -25,10 +25,13 @@ public class MainWindow extends JFrame {
         coffIG = new JMenu("Ajout");
         menuBar.add(coffIG);
 
-        customer = new JMenuItem("Ajout d'un client");
-        coffIG.add(customer);
-        AddCustomerListener addCustomerListener = new AddCustomerListener();
-        customer.addActionListener(addCustomerListener);
+        addCustomer = new JMenuItem("Ajout d'un client");
+        coffIG.add(addCustomer);
+        addCustomer.addActionListener(new AddCustomerListener());
+
+        addEmployee = new JMenuItem("Ajout d'un employé");
+        coffIG.add(addEmployee);
+        addEmployee.addActionListener(new AddEmployeeListener());
 
         setVisible(true);
     }
@@ -40,11 +43,24 @@ public class MainWindow extends JFrame {
     private class AddCustomerListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
-            UserForm user = new UserForm();
-            CustomerForm customer = new CustomerForm(user);
+            NewUserForm user = new NewUserForm();
+            NewCustomerForm customerForm = new NewCustomerForm(user);
             windowContainer.add(user, BorderLayout.NORTH);
-            windowContainer.add(customer, BorderLayout.CENTER);
-            windowContainer.add(new ButtonsUser(MainWindow.this, customer), BorderLayout.SOUTH);
+            windowContainer.add(customerForm, BorderLayout.CENTER);
+            windowContainer.add(new ButtonsUser(MainWindow.this, customerForm), BorderLayout.SOUTH);
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+        }
+    }
+
+    private class AddEmployeeListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            windowContainer.removeAll();
+            NewUserForm user = new NewUserForm();
+            NewEmployeeForm employeeForm = new NewEmployeeForm(user);
+            windowContainer.add(user, BorderLayout.NORTH);
+            windowContainer.add(employeeForm, BorderLayout.CENTER);
+            windowContainer.add(new ButtonsUser(MainWindow.this, employeeForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
