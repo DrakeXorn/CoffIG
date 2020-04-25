@@ -34,7 +34,7 @@ public class Advantage {
 
     public void setPointsRequired(Integer pointsRequired) throws IntegerInputException {
         if (pointsRequired < 0)
-            throw new IntegerInputException(pointsRequired, "les points requi", "Les points requi doivent être positif !");
+            throw new IntegerInputException(pointsRequired, "les points requis", "Les points requis doivent être positif !");
         this.pointsRequired = pointsRequired;
     }
 
