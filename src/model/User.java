@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class User {
-    private final static int YEAR_OLD_MIN = 16;
+    private final static int AGE_MIN = 16;
     private static int nbrRegistered = 0;
     private String userID;
     private String password;
@@ -20,7 +20,7 @@ public class User {
 
     public User(String password, String lastName, String firstName, String secondName,
                 String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
-                String phone, Character gender) throws PasswordException, NameException, FirstNameException, StreetException, EmailException, PhoneException, GenderException, DateException {
+                String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
 
         setPassword(password);
         setLastName(lastName);
@@ -42,17 +42,17 @@ public class User {
         nbrRegistered++;
     }
 
-    public void setPassword(String password) throws PasswordException {
+    public void setPassword(String password) throws StringInputException {
         if(password.isEmpty())
-            throw new PasswordException(password);
+            throw new StringInputException(password, null, "Le mot de passe est un champ obligatoire !");
         this.password = password;
     }
 
-    public void setLastName(String lastName) throws NameException {
+    public void setLastName(String lastName) throws StringInputException {
         if(lastName.isEmpty())
-            throw new NameException(lastName);
+            throw new StringInputException(lastName, null, "Le nom est un champ obligatoire !");
         if(!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
-            throw new NameException(lastName);
+            throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
 
         int size = lastName.length();
         if(size < 4){
@@ -62,11 +62,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setFirstName(String firstName) throws FirstNameException {
+    public void setFirstName(String firstName) throws StringInputException {
         if(firstName.isEmpty())
-            throw new FirstNameException(firstName);
+            throw new StringInputException(firstName, null, "Le prénom est un champ obligatoire !");
         if(!firstName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
-           throw new FirstNameException(lastName);
+           throw new StringInputException(firstName, null, "Le prénom se compose uniquement de lettres !");
 
         int size = firstName.length();
         if(size < 2){
@@ -80,39 +80,40 @@ public class User {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
         if(birthDate.after(today))
             throw new DateException(birthDate, today);
-        if(birthDate.get(Calendar.YEAR) + YEAR_OLD_MIN > today.get(Calendar.YEAR))
-            throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - YEAR_OLD_MIN,
+        if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneID()), LocalDate.now()).getYears() < AGE_MIN)
+            throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - AGE_MIN,
                     today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
         this.birthDate = birthDate;
     }
 
-    public void setStreetName(String streetName) throws StreetException {
+    public void setStreetName(String streetName) throws StringInputException {
         if(streetName.isEmpty())
-            throw new StreetException(streetName);
+            throw new StringInputException(streetName, null, "L'adresse est un champ obligatoire !\nFormat : nom de rue, numéro de maison\n" +
+                    "La valeur encodée '" + streetName + "' est incorrecte !");
         this.streetName = streetName;
     }
 
-    public void setEmail(String email) throws EmailException {
+    public void setEmail(String email) throws StringInputException {
         if(email.isEmpty())
-            throw new EmailException(email);
+            throw new StringInputException(email, null, "L'email est un champ obligatoire !");
         if(!email.matches("^[a-zA-ZÀ-ÿ0-9]+.?-?[a-zA-ZÀ-ÿ0-9]+@[a-zA-ZÀ-ÿ]+.[a-zA-ZÀ-ÿ]+$"))
-            throw new EmailException(email);
+            throw new StringInputException(email, null, "L'email a comme format xxxxxxx@xxxxxx.xxx !");
         this.email = email;
     }
 
-    public void setPhone(String phone) throws PhoneException {
+    public void setPhone(String phone) throws StringInputException {
         if(phone.isEmpty())
-            throw new PhoneException(phone);
+            throw new StringInputException(phone , null, "Le numéro de téléphone est obligatoire !");
         if(phone.length() != 10)
-            throw new PhoneException(phone);
+            throw new StringInputException(phone, null, "Le numéro de téléphone doit comprendre exactement 10 chiffres !");
         if(!phone.matches("^\\d*$"))
-            throw new PhoneException(phone);
+            throw new StringInputException(phone, null, "Le numéro de téléphone ne peut pas contenir de '/' et de '.' !");
         this.phone = phone;
     }
 
-    public void setGender(Character gender) throws GenderException{
+    public void setGender(Character gender) throws CharacterInputException {
         if(Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F')
-            throw new GenderException(gender);
+            throw new CharacterInputException(gender, "Le genre", "Le genre doit être M ou F !");
         this.gender = gender;
     }
 
@@ -120,7 +121,7 @@ public class User {
         return phone;
     }
 
-    public String toString (){
+    public String toString () {
         return firstName + " " + lastName + " (" + userID + ")" +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +

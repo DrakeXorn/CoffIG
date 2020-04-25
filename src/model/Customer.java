@@ -14,7 +14,7 @@ public class Customer extends User {
     public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
                     String email, String phone, Character gender, Boolean wantsAdvertising)
-            throws StreetException, EmailException, PasswordException, GenderException, PhoneException, NameException, FirstNameException, DateException {
+            throws DateException, StringInputException, CharacterInputException {
         super(password, lastName, firstName, secondName, maidenName,
                 birthDate, streetName, locality, email, phone, gender);
 
@@ -25,13 +25,13 @@ public class Customer extends User {
     public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
                     String email, String phone, Character gender)
-            throws EmailException, PasswordException, GenderException, NameException, PhoneException, StreetException, FirstNameException, DateException {
+            throws DateException, StringInputException, CharacterInputException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender, Boolean.FALSE);
     }
 
-    public void setSatisfactionDegree(Integer satisfactionDegree) throws SatisfactionDegreeException {
+    public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
-            throw new SatisfactionDegreeException(satisfactionDegree);
+            throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
         this.satisfactionDegree = satisfactionDegree;
     }
 

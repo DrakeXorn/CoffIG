@@ -18,8 +18,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws StreetException, EmailException, PasswordException, GenderException, PhoneException, NameException,
-            DiscountException, DateException, FirstNameException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr, gender);
         this.hireDate = hireDate;
         setEndContractDate(endContractDate);
@@ -37,8 +36,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws StreetException, EmailException, PasswordException, GenderException, PhoneException, NameException,
-            DiscountException, DateException, FirstNameException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
@@ -58,16 +56,14 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager)
-            throws EmailException, DiscountException, PasswordException, GenderException, NameException, PhoneException,
-            StreetException, DateException, FirstNameException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
-
-    public void setDiscount(Double discount) throws DiscountException {
+    public void setDiscount(Double discount) throws DoubleInputException {
         if(discount < 0 || discount > 100)
-            throw new DiscountException(discount);
+            throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
         this.discount = discount;
     }
 

@@ -15,7 +15,7 @@ public class LoyaltyCard {
     private Customer customer;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
-            throws PointsNumberException {
+            throws IntegerInputException {
         this.loyaltyCardID = customer.getPhone();
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
@@ -25,12 +25,12 @@ public class LoyaltyCard {
     }
 
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
-            throws PointsNumberException {
+            throws IntegerInputException {
         this(registrationDate, 100, customer);
     }
 
-    public void setPointsNumber(Integer pointsNumber) throws PointsNumberException {
-        if (pointsNumber < 0) throw new PointsNumberException(pointsNumber);
+    public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
+        if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de points doit être positif");
         else this.pointsNumber = pointsNumber;
     }
 
