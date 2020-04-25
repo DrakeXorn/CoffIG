@@ -26,20 +26,20 @@ public class StockLocation {
     }
 
     public void setAlley(Integer alley) throws IntegerInputException {
-        if (alley < 1)
-            throw new IntegerInputException(alley, "l'allée", "L'allée doit être différente de 0 !");
+        if (alley < 1 || alley > 6)
+            throw new IntegerInputException(alley, "l'allée", "L'allée doit être comprise entre 1 et 6 !");
         this.alley = alley;
     }
 
     public void setShelf(Integer shelf) throws IntegerInputException {
-        if (shelf < 1)
-            throw new IntegerInputException(shelf, "l'étagère", "L'étagère doit être différente de 0 !");
+        if (shelf < 1 || shelf > 6)
+            throw new IntegerInputException(shelf, "l'étagère", "L'étagère doit être comprise entre 1 et 6 !");
         this.shelf = shelf;
     }
 
     public void setNumber(Integer number) throws IntegerInputException {
-        if (number < 1)
-            throw new IntegerInputException(number, "le nombre");
+        if (number < 1 || number > 6)
+            throw new IntegerInputException(number, "le nombre", "Le numéro doit être compris entre 1 et 6 !");
         this.number = number;
     }
 
@@ -51,7 +51,7 @@ public class StockLocation {
 
     public void setQuantity(Integer quantity) throws IntegerInputException {
         if (quantity < 0)
-            throw new IntegerInputException(quantity, "la quantitée", "La quantitée doit être positive !");
+            throw new IntegerInputException(quantity, "la quantité", "La quantité doit être positive !");
         this.quantity = quantity;
     }
 
