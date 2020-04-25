@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class User {
-    private final static int YEAR_OLD_MIN = 16;
+    private final static int AGE_MIN = 16;
     private static int nbrRegistered = 0;
     private String userID;
     private String password;
@@ -80,8 +80,8 @@ public class User {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
         if(birthDate.after(today))
             throw new DateException(birthDate, today);
-        if(birthDate.get(Calendar.YEAR) + YEAR_OLD_MIN > today.get(Calendar.YEAR))
-            throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - YEAR_OLD_MIN,
+        if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneID()), LocalDate.now()).getYears() < AGE_MIN)
+            throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - AGE_MIN,
                     today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
         this.birthDate = birthDate;
     }
@@ -121,7 +121,7 @@ public class User {
         return phone;
     }
 
-    public String toString (){
+    public String toString () {
         return firstName + " " + lastName + " (" + userID + ")" +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +

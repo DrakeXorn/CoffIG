@@ -61,7 +61,6 @@ public class Employee extends User {
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
-
     public void setDiscount(Double discount) throws DoubleInputException {
         if(discount < 0 || discount > 100)
             throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
