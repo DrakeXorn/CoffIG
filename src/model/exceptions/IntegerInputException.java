@@ -16,6 +16,6 @@ public class IntegerInputException extends Exception {
     }
 
     public String getMessage() {
-        return	"La valeur ("+ wrongValue +") proposée pour "+ nameValue +" est invalide !\n" + precision;
+        return "La valeur (" + wrongValue + ") proposée pour " + nameValue + " est invalide !\n" + precision;
     }
 }
