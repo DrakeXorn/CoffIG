@@ -46,7 +46,7 @@ public class Coffee {
 
     public void setIntensity(Integer intensity) throws IntegerInputException {
         if (intensity <= 0 || intensity >= 6)
-            throw new IntegerInputException(intensity, "l'intensité", "L'intensité doit être comprise entre 0 et 6 !");
+            throw new IntegerInputException(intensity, "l'intensité", "L'intensité doit être comprise entre 1 et 5 !");
         this.intensity = intensity;
     }
 
@@ -72,7 +72,7 @@ public class Coffee {
         features.add(feature);
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder description = new StringBuilder();
 
         description.append("Laissez-vous tenter par le café ").append(label);
