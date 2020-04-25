@@ -16,6 +16,6 @@ public class StringInputException extends Exception {
     }
 
     public String getMessage() {
-        return	nameValue != null ? "La valeur ("+ wrongValue +") proposée pour "+ nameValue +" est invalide !\n" + precision : precision;
+        return nameValue != null ? "La valeur ("+ wrongValue +") proposée pour "+ nameValue +" est invalide !\n" + precision : precision;
     }
 }
