@@ -107,7 +107,7 @@ public class User {
         if(phone.length() != 10)
             throw new StringInputException(phone, null, "Le numéro de téléphone doit comprendre exactement 10 chiffres !");
         if(!phone.matches("^\\d*$"))
-            throw new StringInputException(phone, null, "Le numéro de téléphone ne peut pas contenir de </> et de <.> !");
+            throw new StringInputException(phone, null, "Le numéro de téléphone ne peut pas contenir de '/' et de '.' !");
         this.phone = phone;
     }
 
