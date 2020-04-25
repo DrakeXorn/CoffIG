@@ -16,7 +16,7 @@ public class Advantage {
 
     public Advantage(String label, Double discount,
                      GregorianCalendar startDate, GregorianCalendar endDate, Integer pointsRequired)
-                    throws DiscountException, PointsRequiredException, DateException {
+                    throws IntegerInputException, DoubleInputException, DateException {
         nbrAdvantages++;
         this.advantageID = nbrAdvantages;
         this.label = label;
@@ -26,21 +26,21 @@ public class Advantage {
         setPointsRequired(pointsRequired);
     }
 
-    public void setDiscount(Double discount) throws DiscountException {
+    public void setDiscount(Double discount) throws DoubleInputException {
         if (discount <= 0 || discount > 100)
-            throw new DiscountException(discount);
+            throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
         this.discount = discount;
     }
 
-    public void setPointsRequired(Integer pointsRequired) throws PointsRequiredException {
+    public void setPointsRequired(Integer pointsRequired) throws IntegerInputException {
         if (pointsRequired < 0)
-            throw new PointsRequiredException(pointsRequired);
+            throw new IntegerInputException(pointsRequired, "les points requi", "Les points requi doivent être positif !");
         this.pointsRequired = pointsRequired;
     }
 
     public void setEndDate(GregorianCalendar endDate) throws DateException {
         if (endDate.before(startDate))
-            throw new DateException(endDate);
+            throw new DateException(endDate, startDate);
         this.endDate = endDate;
     }
 }

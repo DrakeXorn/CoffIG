@@ -16,7 +16,7 @@ public class StockLocation {
     private GregorianCalendar expirationDate;
 
     public StockLocation(Integer alley, Integer shelf, Integer number, Double buyingPrice, Integer quantity, GregorianCalendar expirationDate)
-            throws AlleyException, ShelfException, NumberException, PriceException, QuantityException {
+            throws IntegerInputException, DoubleInputException {
         setAlley(alley);
         setShelf(shelf);
         setNumber(number);
@@ -25,33 +25,33 @@ public class StockLocation {
         this.expirationDate = expirationDate;
     }
 
-    public void setAlley(Integer alley) throws AlleyException {
+    public void setAlley(Integer alley) throws IntegerInputException {
         if (alley < 1)
-            throw new AlleyException(alley);
+            throw new IntegerInputException(alley, "l'allée", "L'allée doit être différente de 0 !");
         this.alley = alley;
     }
 
-    public void setShelf(Integer shelf) throws ShelfException {
+    public void setShelf(Integer shelf) throws IntegerInputException {
         if (shelf < 1)
-            throw new ShelfException(shelf);
+            throw new IntegerInputException(shelf, "l'étagère", "L'étagère doit être différente de 0 !");
         this.shelf = shelf;
     }
 
-    public void setNumber(Integer number) throws NumberException {
+    public void setNumber(Integer number) throws IntegerInputException {
         if (number < 1)
-            throw new NumberException(number);
+            throw new IntegerInputException(number, "le nombre");
         this.number = number;
     }
 
-    public void setBuyingPrice(Double buyingPrice) throws PriceException {
+    public void setBuyingPrice(Double buyingPrice) throws DoubleInputException {
         if (buyingPrice < 0)
-            throw new PriceException(buyingPrice);
+            throw new DoubleInputException(buyingPrice, "le prix d'achat", "Le prix d'achat doit être positif !");
         this.buyingPrice = buyingPrice;
     }
 
-    public void setQuantity(Integer quantity) throws QuantityException {
+    public void setQuantity(Integer quantity) throws IntegerInputException {
         if (quantity < 0)
-            throw new QuantityException(quantity);
+            throw new IntegerInputException(quantity, "la quantitée", "La quantitée doit être positive !");
         this.quantity = quantity;
     }
 

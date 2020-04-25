@@ -26,7 +26,7 @@ public class Coffee {
                   Double weightNeededForPreparation, GregorianCalendar discoveryDate, Boolean isInGrains,
                   Boolean isEnvironmentFriendly, Double price, Double packaging,
                   String recommendedConsumingMoment, StockLocation stockLocation)
-            throws IntensityException, WeightException, PriceException, PackagingException {
+            throws IntegerInputException, DoubleInputException {
         coffeeID = nbrCoffees;
         nbrCoffees++;
         this.label = label;
@@ -44,27 +44,27 @@ public class Coffee {
         features = new ArrayList<>();
     }
 
-    public void setIntensity(Integer intensity) throws IntensityException {
+    public void setIntensity(Integer intensity) throws IntegerInputException {
         if (intensity <= 0 || intensity >= 6)
-            throw new IntensityException(intensity);
+            throw new IntegerInputException(intensity, "l'intensité", "L'intensité doit être comprise entre 0 et 6 !");
         this.intensity = intensity;
     }
 
-    public void setWeightNeededForPreparation(Double weightNeededForPreparation) throws WeightException {
+    public void setWeightNeededForPreparation(Double weightNeededForPreparation) throws DoubleInputException {
         if (weightNeededForPreparation <= 0)
-            throw new WeightException(weightNeededForPreparation);
+            throw new DoubleInputException(weightNeededForPreparation, "le poids nécessaire pour la préparation");
         this.weightNeededForPreparation = weightNeededForPreparation;
     }
 
-    public void setPrice(Double price) throws PriceException {
+    public void setPrice(Double price) throws DoubleInputException {
         if (price <= 0)
-            throw new PriceException(price);
+            throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");
         this.price = price;
     }
 
-    public void setPackaging(Double packaging) throws PackagingException {
+    public void setPackaging(Double packaging) throws DoubleInputException {
         if (packaging <= 0)
-            throw new PackagingException(packaging);
+            throw new DoubleInputException(packaging, "le packaging", "Le packaging doit être positif et différent de 0 !");
         this.packaging = packaging;
     }
 

@@ -1,6 +1,6 @@
 package model;
 
-import model.exceptions.SizeException;
+import model.exceptions.StringInputException;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class Drink {
     private Boolean isCold;
     private ArrayList<Supplement> supplements;
 
-    public Drink(String label, Coffee coffee, String size, Boolean isCold) throws SizeException {
+    public Drink(String label, Coffee coffee, String size, Boolean isCold) throws StringInputException {
         this.label = label;
         this.coffee = coffee;
         setSize(size);
@@ -19,9 +19,9 @@ public class Drink {
         supplements = new ArrayList<>();
     }
 
-    public void setSize(String size) throws SizeException {
+    public void setSize(String size) throws StringInputException {
         if (!size.toLowerCase().equals("small") && !size.toLowerCase().equals("medium") && !size.toLowerCase().equals("large"))
-            throw new SizeException(size);
+            throw new StringInputException(size, "la taille", "La taille doit être small, medium ou large !");
         this.size = size;
     }
 
