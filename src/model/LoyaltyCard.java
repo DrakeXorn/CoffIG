@@ -30,7 +30,7 @@ public class LoyaltyCard {
     }
 
     public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
-        if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de point doit être positif");
+        if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de points doit être positif");
         else this.pointsNumber = pointsNumber;
     }
 
