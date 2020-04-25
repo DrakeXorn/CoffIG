@@ -31,7 +31,7 @@ public class Customer extends User {
 
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
-            throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compri entre 0 et 5 !");
+            throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
         this.satisfactionDegree = satisfactionDegree;
     }
 
