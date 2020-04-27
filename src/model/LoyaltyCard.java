@@ -11,17 +11,18 @@ public class LoyaltyCard {
     private String loyaltyCardID;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
-    private ArrayList<Right> rights;
+    private ArrayList<Advantage> advantages;
     private Customer customer;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
             throws IntegerInputException {
-        this.loyaltyCardID = customer.getPhone();
+        this.customer = customer;
+        if(customer != null)
+            this.loyaltyCardID = customer.getPhone();
+
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
-        this.customer = customer;
-        customer.addLoyaltyCard(this);
-        rights = new ArrayList<>();
+        advantages = new ArrayList<>();
     }
 
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
@@ -29,17 +30,29 @@ public class LoyaltyCard {
         this(registrationDate, 100, customer);
     }
 
+    public String getLoyaltyCardID() {
+        return loyaltyCardID;
+    }
+
+    public GregorianCalendar getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public Integer getPointsNumber() {
+        return pointsNumber;
+    }
+
     public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
         if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de points doit être positif");
         else this.pointsNumber = pointsNumber;
     }
 
-    public void addAdvantages(ArrayList<Right> newRights) {
-        rights.addAll(newRights);
+    public void addAdvantages(ArrayList<Advantage> newRights) {
+        advantages.addAll(newRights);
     }
 
-    public void removeAdvantages(ArrayList<Right> rightsToDelete) {
-        rights.removeAll(rightsToDelete);
+    public void removeAdvantages(ArrayList<Advantage> rightsToDelete) {
+        advantages.removeAll(rightsToDelete);
     }
 
     public String toString() {

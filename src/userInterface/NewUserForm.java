@@ -16,7 +16,7 @@ public class NewUserForm extends JPanel {
             streetName, numberStreet, email, phone;
     private JRadioButton male, female;
     private ButtonGroup buttonGroup;
-    private JComboBox localitiesBox;
+    private JComboBox<String> localitiesBox;
     private static String [] localitiesCity = {"5000 Namur", "5020 Malonne", "5100 Naninne", "5100 Wépion", "5100 Jambes", "5300 Vezin"};
 
     public NewUserForm(){
@@ -25,31 +25,31 @@ public class NewUserForm extends JPanel {
         passwordLable = new JLabel("Mot de passe* :");
         passwordLable.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(passwordLable);
-        password = new JPasswordField();
+        password = new JPasswordField("pomme456");
         this.add(password);
 
         lastNameLabel = new JLabel("Nom de famille* :");
         lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(lastNameLabel);
-        lastName = new JTextField();
+        lastName = new JTextField("Bodart");
         this.add(lastName);
 
         firstNameLebel = new JLabel("Prénom* :");
         firstNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(firstNameLebel);
-        firstName = new JTextField();
+        firstName = new JTextField("Nicolas");
         this.add(firstName);
 
         secondNameLebel = new JLabel("Second prénom :");
         secondNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(secondNameLebel);
-        secondName = new JTextField("");
+        secondName = new JTextField("Pascal");
         this.add(secondName);
 
         maidenNameLebel = new JLabel("Nom de jeune fille :");
         maidenNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(maidenNameLebel);
-        maidenName = new JTextField("");
+        maidenName = new JTextField();
         this.add(maidenName);
 
         male = new JRadioButton("Homme", true);
@@ -68,42 +68,42 @@ public class NewUserForm extends JPanel {
         this.add(birthdateLabel);
         birthdate = new JDatePicker();
         birthdate.setShowYearButtons(true);
-        birthdate.getModel().setYear(2020);
-        birthdate.getModel().setMonth(0);
-        birthdate.getModel().setDay(1);
+        birthdate.getModel().setYear(2003);
+        birthdate.getModel().setMonth(1);
+        birthdate.getModel().setDay(6);
         birthdate.getModel().setSelected(true);
         this.add(birthdate);
 
         streetNameLabel = new JLabel("Adresse* :");
         streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(streetNameLabel);
-        streetName = new JTextField();
+        streetName = new JTextField("rue des bolettes ");
         this.add(streetName);
 
         numberStreetLabel = new JLabel("Numéro* :");
         numberStreetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberStreetLabel);
-        numberStreet = new JTextField();
+        numberStreet = new JTextField("3");
         this.add(numberStreet);
 
         localityLabel = new JLabel("Localité* :");
         localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(localityLabel);
 
-        localitiesBox = new JComboBox(localitiesCity);
+        localitiesBox = new JComboBox<>(localitiesCity);
         localitiesBox.setMaximumRowCount(3);
         this.add(localitiesBox);
 
         emailLabel = new JLabel("Email* :");
         emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(emailLabel);
-        email = new JTextField();
+        email = new JTextField("bodart.nicolas@gmail.com");
         this.add(email);
 
         phoneLabel = new JLabel("Numéro de GSM* :");
         phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(phoneLabel);
-        phone = new JTextField();
+        phone = new JTextField("0456897546");
         this.add(phone);
     }
 
@@ -131,9 +131,9 @@ public class NewUserForm extends JPanel {
         return (GregorianCalendar)birthdate.getModel().getValue();
     }
 
-    public String getStreetName() throws StreetException {
+    public String getStreetName() throws StringInputException {
         if(!numberStreet.getText().matches("^\\d*$"))
-            throw new StreetException(numberStreet.getText());
+            throw new StringInputException(numberStreet.getText(), null);
         return streetName.getText() + ", " + numberStreet.getText();
     }
 

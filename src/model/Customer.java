@@ -22,17 +22,22 @@ public class Customer extends User {
         orders = new ArrayList<>();
     }
 
-    public Customer(String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
-                    String email, String phone, Character gender)
-            throws DateException, StringInputException, CharacterInputException {
-        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender, Boolean.FALSE);
-    }
-
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
         this.satisfactionDegree = satisfactionDegree;
+    }
+
+    public Boolean getWantsAdvertising() {
+        return wantsAdvertising;
+    }
+
+    public Integer getSatisfactionDegree() {
+        return satisfactionDegree;
+    }
+
+    public LoyaltyCard getLoyaltyCard() {
+        return loyaltyCard;
     }
 
     public void addLoyaltyCard(LoyaltyCard card) {

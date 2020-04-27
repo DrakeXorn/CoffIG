@@ -65,11 +65,10 @@ public class NewCustomerForm extends JPanel {
                 customer.setSatisfactionDegree((Integer)degree.getValue());
 
             if(wantsLoyaltyCard.isSelected())
-                customer.addLoyaltyCard(new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), 100, customer));
+                customer.addLoyaltyCard(new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), customer));
 
-            JOptionPane.showMessageDialog(null, customer,
+            JOptionPane.showMessageDialog(null, customer + "\n" + customer.getLoyaltyCard().toString() + " " + customer.getMaidenName(),
                     "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
-
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.INFORMATION_MESSAGE);

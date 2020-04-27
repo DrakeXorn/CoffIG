@@ -2,6 +2,8 @@ package model;
 
 import model.exceptions.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -36,8 +38,12 @@ public class User {
         setUserID();
     }
 
+    public User(String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
+                String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
+        this(password, lastName, firstName, null,null,birthDate, streetName, locality, email, phone, gender);
+    }
     public void setUserID() {
-        this.userID = this.lastName.substring(0, 4) + this.firstName.substring(0, 2)
+        this.userID = this.lastName.toLowerCase().substring(0, 4) + this.firstName.toLowerCase().substring(0, 2)
                 + this.phone.substring(phone.length() - 2) + nbrRegistered;
         nbrRegistered++;
     }
@@ -80,7 +86,7 @@ public class User {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
         if(birthDate.after(today))
             throw new DateException(birthDate, today);
-        if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneID()), LocalDate.now()).getYears() < AGE_MIN)
+        if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneId()), LocalDate.now()).getYears() < AGE_MIN)
             throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - AGE_MIN,
                     today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
         this.birthDate = birthDate;
@@ -117,8 +123,52 @@ public class User {
         this.gender = gender;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getMaidenName() {
+        return maidenName;
+    }
+
+    public GregorianCalendar getBirthDate() {
+        return birthDate;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getPhone() {
         return phone;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public Locality getLocality() {
+        return locality;
     }
 
     public String toString () {
