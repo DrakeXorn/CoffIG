@@ -1,21 +1,21 @@
 package model;
 
 import model.exceptions.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
-    private String loyaltyCardID;
+    private String loyaltyCardId;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
     private ArrayList<Right> rights;
     private Customer customer;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
-            throws PointsNumberException {
-        this.loyaltyCardID = customer.getPhone();
+            throws IntegerInputException {
+        this.loyaltyCardId = customer.getPhone();
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
         this.customer = customer;
@@ -24,12 +24,19 @@ public class LoyaltyCard {
     }
 
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
-            throws PointsNumberException {
+            throws IntegerInputException {
         this(registrationDate, 100, customer);
     }
 
-    public void setPointsNumber(Integer pointsNumber) throws PointsNumberException {
-        if (pointsNumber < 0) throw new PointsNumberException(pointsNumber);
+    public LoyaltyCard(String loyaltyCardId, GregorianCalendar registrationDateJava, Integer pointsNumber, Customer customer) throws IntegerInputException {
+        this.loyaltyCardId = loyaltyCardId;
+        registrationDate = registrationDateJava;
+        setPointsNumber(pointsNumber);
+        this.customer = customer;
+    }
+
+    public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
+        if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de points doit être positif");
         else this.pointsNumber = pointsNumber;
     }
 
@@ -43,7 +50,10 @@ public class LoyaltyCard {
 
     public String toString() {
         // TODO: à modifier
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); // Pas sur de +º+á
-        return loyaltyCardID + ", " + dateFormat.format(registrationDate) + ", " + pointsNumber;
+        return "Carte de fidélité numéro : " + loyaltyCardId + " créée le "
+                + registrationDate.get(Calendar.DAY_OF_MONTH)
+                + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
+                "/" + registrationDate.get(Calendar.YEAR) +
+                " avec " + pointsNumber + " points de fidélité";
     }
 }

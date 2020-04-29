@@ -1,9 +1,12 @@
 package userInterface.panels;
 
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import controller.CoffeeController;
+import model.Coffee;
+import model.StockLocation;
+import model.exceptions.*;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.UtilDateModel;
+import userInterface.frames.NewCoffeeFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,144 +14,190 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
+import utils.InputCheck;
+
 public class NewCoffeeForm extends JPanel {
+    private NewCoffeeFrame parent;
     private JLabel coffeeIDLabel, coffeeNameLabel, countryLabel, intensityLabel, weightLabel, dateLabel, priceLabel,
-            packagingLabel, momentLabel, alleyLabel, shelfLabel, numberLabel;
+            packagingLabel, momentLabel, alleyLabel, shelfLabel, numberLabel, quantityLabel, expirationDateLabel;
     private JTextField coffeeID, label, weightNeeded, price, packaging, recommendedMoment;
     private JSpinner alley, shelf, number;
-    private JComboBox<String> countries;
-    private JSpinner intensity;
-    private JDatePickerImpl discoveryDatePicker;
+    private static JComboBox<String> countries;
+    private JSpinner intensity, quantityBought;
+    private JDatePicker discoveryDatePicker, expirationDatePicker;
     private JCheckBox isInGrains, isEnvironmentFriendly;
     private JButton resetButton, confirmButton;
+    private CoffeeController controller;
 
-    public NewCoffeeForm() {
-        setLayout(new GridLayout(14, 2));
-        UtilDateModel model = new UtilDateModel();
-        Properties properties = new Properties();
-        JDatePanelImpl datePanel;
-        SpinnerModel alleyConstraints = new SpinnerNumberModel(1, 1, 6, 1);
-        SpinnerModel shelfConstraints = new SpinnerNumberModel(1, 1, 6, 1);
-        SpinnerModel numberConstraints = new SpinnerNumberModel(1, 1, 6, 1);
+    public NewCoffeeForm(NewCoffeeFrame parent) {
+        try {
+            this.parent = parent;
+            setLayout(new GridLayout(16, 2));
+            controller = new CoffeeController();
+            UtilDateModel model = new UtilDateModel();
+            SpinnerModel alleyConstraints = new SpinnerNumberModel(0, 0, 6, 1);
+            SpinnerModel shelfConstraints = new SpinnerNumberModel(0, 0, 6, 1);
+            SpinnerModel numberConstraints = new SpinnerNumberModel(0, 0, 6, 1);
 
-        properties.put("text.today", "aujourd'hui");
-        properties.put("text.month", "mois");
-        properties.put("text.year", "année");
+            coffeeIDLabel = new JLabel("Numéro du café : ");
+            coffeeNameLabel = new JLabel("Nom du café* : ");
+            countryLabel = new JLabel("Pays d'origine* : ");
+            intensityLabel = new JLabel("Intensité du café* : ");
+            weightLabel = new JLabel("Poids requis pour la préparation (g)* : ");
+            dateLabel = new JLabel("Année de découverte : ");
+            expirationDateLabel = new JLabel("Date d'expiration* : ");
+            priceLabel = new JLabel("Prix* : ");
+            packagingLabel = new JLabel("Poids initial du paquet (kg)* : ");
+            momentLabel = new JLabel("Moment de la journée préféré : ");
+            alleyLabel = new JLabel("Numéro de l'allée* : ");
+            shelfLabel = new JLabel("Numéro de l'étagère* : ");
+            numberLabel = new JLabel("Numéro d'emplacement* : ");
+            quantityLabel = new JLabel("Nombre de paquets achetés* : ");
 
-        datePanel = new JDatePanelImpl(model, properties);
-        coffeeIDLabel = new JLabel("Numéro du café : ");
-        coffeeNameLabel = new JLabel("Nom du café : ");
-        countryLabel = new JLabel("Pays d'origine : ");
-        intensityLabel = new JLabel("Intensité du café : ");
-        weightLabel = new JLabel("Poids requis pour la préparation : ");
-        dateLabel = new JLabel("Date de découverte : "); // TODO Année de découverte, plutôt ? Pas facile de trouver les dates précises. => Si le cas, peut-être changer le type de la date de découverte de la BD en int.
-        priceLabel = new JLabel("Prix : ");
-        packagingLabel = new JLabel("Quantité initiale du paquet : ");
-        momentLabel = new JLabel("Moment de la journée préféré : ");
-        alleyLabel = new JLabel("Numéro de l'allée : ");
-        shelfLabel = new JLabel("Numéro de l'étagère : ");
-        numberLabel = new JLabel("Numéro d'emplacement : ");
+            coffeeID = new JTextField();
+            label = new JTextField();
+            weightNeeded = new JTextField();
+            price = new JTextField();
+            packaging = new JTextField();
+            recommendedMoment = new JTextField();
+            alley = new JSpinner(alleyConstraints);
+            shelf = new JSpinner(shelfConstraints);
+            number = new JSpinner(numberConstraints);
+            countries = new JComboBox<>();
+            intensity = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
+            discoveryDatePicker = new JDatePicker(new UtilDateModel(), "yyyy");
+            expirationDatePicker = new JDatePicker();
+            isInGrains = new JCheckBox("Est en grains");
+            isEnvironmentFriendly = new JCheckBox("Cultivé écologiquement");
+            resetButton = new JButton("Tout vider");
+            confirmButton = new JButton("Ajouter le café");
+            quantityBought = new JSpinner(new SpinnerNumberModel(0, 0, 20, 1));
 
-        coffeeID = new JTextField();
-        label = new JTextField();
-        weightNeeded = new JTextField();
-        price = new JTextField();
-        packaging = new JTextField();
-        recommendedMoment = new JTextField();
-        alley = new JSpinner(alleyConstraints);
-        shelf = new JSpinner(shelfConstraints);
-        number = new JSpinner(numberConstraints);
-        countries = new JComboBox<>();
-        intensity = new JSpinner(new SpinnerNumberModel(3, 1, 5, 1));
-        discoveryDatePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-        isInGrains = new JCheckBox("Est en grains");
-        isEnvironmentFriendly = new JCheckBox("Cultivé écologiquement");
-        resetButton = new JButton("Tout vider");
-        confirmButton = new JButton("Ajouter le café");
+            coffeeID.setEnabled(false);
+            coffeeID.setText(String.valueOf(controller.getNbrCoffees()));
+            // TODO Donnez votre avis, je ne sais pas vraiment comment j'aurais pu faire autrement
 
-        coffeeID.setEnabled(false);
-        // TODO récupérer automatiquement le numéro du café via une requête SQL
+            setCountries();
+            discoveryDatePicker.setTextEditable(true);
+            expirationDatePicker.setTextEditable(true);
 
-        ArrayList<String> countriesList = new ArrayList<>();
-        for (String country : Locale.getISOCountries()) {
-            Locale locale = new Locale("fr", country);
-            countriesList.add(locale.getDisplayCountry());
+            coffeeIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            coffeeNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            countryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            intensityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            quantityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            weightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            expirationDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            priceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            packagingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            momentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            alleyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            shelfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            isInGrains.setHorizontalAlignment(SwingConstants.CENTER);
+            isEnvironmentFriendly.setHorizontalAlignment(SwingConstants.CENTER);
+
+            resetButton.addActionListener(new ResetListener());
+            confirmButton.addActionListener(new ConfirmListener());
+
+            add(coffeeIDLabel);
+            add(coffeeID);
+            add(coffeeNameLabel);
+            add(label);
+            add(countryLabel);
+            add(countries);
+            add(intensityLabel);
+            add(intensity);
+            add(dateLabel);
+            add(discoveryDatePicker);
+            add(quantityLabel);
+            add(quantityBought);
+            add(expirationDateLabel);
+            add(expirationDatePicker);
+            add(weightLabel);
+            add(weightNeeded);
+            add(priceLabel);
+            add(price);
+            add(packagingLabel);
+            add(packaging);
+            add(momentLabel);
+            add(recommendedMoment);
+            add(alleyLabel);
+            add(alley);
+            add(shelfLabel);
+            add(shelf);
+            add(numberLabel);
+            add(number);
+            add(isInGrains);
+            add(isEnvironmentFriendly);
+            add(resetButton);
+            add(confirmButton);
+
+            this.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur lors de la création de l'identifiant du café", JOptionPane.ERROR_MESSAGE);
         }
-        Collections.sort(countriesList);
-        for (String country : countriesList)
-            countries.addItem(country);
+    }
 
-        coffeeIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        coffeeNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        countryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        intensityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        weightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        priceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        packagingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        momentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        alleyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        shelfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        resetButton.addActionListener(new ResetListener());
-        confirmButton.addActionListener(new ConfirmListener());
-
-        add(coffeeIDLabel);
-        add(coffeeID);
-        add(coffeeNameLabel);
-        add(label);
-        add(countryLabel);
-        add(countries);
-        add(intensityLabel);
-        add(intensity);
-        add(weightLabel);
-        add(weightNeeded);
-        add(priceLabel);
-        add(price);
-        add(packagingLabel);
-        add(packaging);
-        add(dateLabel);
-        add(discoveryDatePicker);
-        add(momentLabel);
-        add(recommendedMoment);
-        add(alleyLabel);
-        add(alley);
-        add(shelfLabel);
-        add(shelf);
-        add(numberLabel);
-        add(number);
-        add(isInGrains);
-        add(isEnvironmentFriendly);
-        add(resetButton);
-        add(confirmButton);
-
-        this.setVisible(true);
+    public void setCountries() {
+        if (countries == null) {
+            ArrayList<String> countriesList = new ArrayList<>();
+            countriesList.add("");
+            for (String country : Locale.getISOCountries()) {
+                Locale locale = new Locale("fr", country);
+                countriesList.add(locale.getDisplayCountry());
+            }
+            Collections.sort(countriesList);
+            for (String country : countriesList)
+                countries.addItem(country);
+        }
     }
 
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            label.setText("");
-            weightNeeded.setText("");
-            price.setText("");
-            packaging.setText("");
-            recommendedMoment.setText("");
-            alley.setValue(1);
-            shelf.setValue(1);
-            number.setValue(1);
-            countries.setSelectedIndex(0);
-            intensity.setValue(3);
-            discoveryDatePicker.getJFormattedTextField().setText("");
-            isInGrains.setSelected(false);
-            isEnvironmentFriendly.setSelected(false);
+            parent.resetForm();
         }
     }
 
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (InputCheck.areInputsFilled(label, weightNeeded, price, packaging, alley, shelf, number, countries,
+                    intensity, expirationDatePicker, quantityBought)) {
+                try {
+                    Coffee coffee = new Coffee(label.getText(),
+                            Objects.requireNonNull(countries.getSelectedItem()).toString(),
+                            (Integer) intensity.getValue(),
+                            Double.parseDouble(weightNeeded.getText()),
+                            (discoveryDatePicker.getFormattedTextField().getText().isEmpty() ? null : discoveryDatePicker.getModel().getYear()),
+                            isInGrains.isSelected(),
+                            isEnvironmentFriendly.isSelected(),
+                            Double.parseDouble(price.getText()),
+                            Double.parseDouble(packaging.getText()),
+                            recommendedMoment.getText().toLowerCase(),
+                            new StockLocation(Integer.parseInt(alley.getValue().toString()),
+                                    Integer.parseInt(shelf.getValue().toString()),
+                                    Integer.parseInt(number.getValue().toString()),
+                                    Double.parseDouble(price.getText()),
+                                    Integer.parseInt(quantityBought.getValue().toString()),
+                                    new GregorianCalendar(expirationDatePicker.getModel().getYear(),
+                                            expirationDatePicker.getModel().getMonth(),
+                                            expirationDatePicker.getModel().getDay())));
 
+                    if (JOptionPane.showConfirmDialog(NewCoffeeForm.this, coffee, "Confirmer l'ajout ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+                        controller.addCoffee(coffee);
+                } catch (IntegerInputException | DoubleInputException exception) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (ConnectionException connectionException) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, connectionException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
+                } catch (AddCoffeeException addCoffeeException) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, addCoffeeException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(NewCoffeeForm.this, "Vous devez remplir tous les champs obligatoires !", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

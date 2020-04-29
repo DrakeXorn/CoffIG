@@ -1,6 +1,6 @@
 package model;
 
-import model.exceptions.PriceException;
+import model.exceptions.DoubleInputException;
 
 public class Topping {
     private static int nbrToppings = 1;
@@ -9,7 +9,7 @@ public class Topping {
     private Double price;
     private StockLocation stock;
 
-    public Topping(String label, Double price, StockLocation stock) throws PriceException {
+    public Topping(String label, Double price, StockLocation stock) throws DoubleInputException {
         toppingID = nbrToppings;
         nbrToppings++;
         this.label = label;
@@ -17,7 +17,7 @@ public class Topping {
         this.stock = stock;
     }
 
-    public Topping(Integer toppingID, String label, Double price, StockLocation stock) throws PriceException {
+    public Topping(Integer toppingID, String label, Double price, StockLocation stock) throws DoubleInputException {
         this.toppingID = toppingID;
         if (toppingID > nbrToppings)
             nbrToppings = toppingID + 1;
@@ -26,9 +26,9 @@ public class Topping {
         this.stock = stock;
     }
 
-    public void setPrice(Double price) throws PriceException {
+    public void setPrice(Double price) throws DoubleInputException {
         if (price < 0)
-            throw new PriceException(price);
+            throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");
         this.price = price;
     }
 

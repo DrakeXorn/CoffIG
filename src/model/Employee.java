@@ -1,7 +1,6 @@
 package model;
 
-import model.exceptions.DateException;
-import model.exceptions.DiscountException;
+import model.exceptions.*;
 
 import java.util.*;
 
@@ -19,11 +18,10 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws DiscountException {
-        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
-                gender);
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr, gender);
         this.hireDate = hireDate;
-        this.endContractDate = endContractDate;
+        setEndContractDate(endContractDate);
         this.isEmployeeOfMonth = isEmployeeOfMonth;
         setDiscount(discount);
         this.manager = manager;
@@ -38,11 +36,11 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws DiscountException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
-        this.endContractDate = endContractDate;
+        setEndContractDate(endContractDate);
         this.isEmployeeOfMonth = isEmployeeOfMonth;
         setDiscount(discount);
         this.manager = manager;
@@ -57,22 +55,24 @@ public class Employee extends User {
     public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
-                    Boolean isEmployeeOfMonth, Double discount, Employee manager) throws DiscountException {
+                    Boolean isEmployeeOfMonth, Double discount, Employee manager)
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
-    public void setDiscount(Double discount) throws DiscountException {
-        if(discount > 0 && discount <= 100)
-            this.discount = discount;
-        else
-            throw new DiscountException(discount);
+    public void setDiscount(Double discount) throws DoubleInputException {
+        if(discount < 0 || discount > 100)
+            throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
+        this.discount = discount;
     }
 
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
-        if(endContractDate.before(hireDate))
-            throw new DateException(endContractDate);
-        this.endContractDate = endContractDate;
+        if(endContractDate != null){
+            if(endContractDate.before(hireDate))
+                throw new DateException(endContractDate, hireDate);
+            this.endContractDate = endContractDate;
+        }
     }
 
     public void addAssignments(ArrayList<Assignment> newAssignments) {
@@ -88,11 +88,10 @@ public class Employee extends User {
         StringBuilder res = new StringBuilder(super.toString());
 
         res.append("(embauché le ");
-        res.append(hireDate.getDisplayName(GregorianCalendar.DAY_OF_MONTH, GregorianCalendar.LONG, Locale.FRANCE));
+        res.append(hireDate.get(Calendar.DAY_OF_MONTH));
         res.append(" ").append(hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE));
-        res.append(" ").append(hireDate.getDisplayName(GregorianCalendar.YEAR, GregorianCalendar.LONG, Locale.FRANCE));
+        res.append(" ").append(hireDate.get(Calendar.YEAR));
         res.append(")");
-
         return res.toString();
     }
 }
