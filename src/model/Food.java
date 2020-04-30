@@ -21,7 +21,7 @@ public class Food {
     public Food(Integer foodID, String label, Double price, StockLocation stockLocation) throws DoubleInputException {
         this.foodID = foodID;
         if (foodID > nbrFoods)
-            nbrFoods = foodID;
+            nbrFoods = foodID + 1;
         this.label = label;
         setPrice(price);
         this.stockLocation = stockLocation;

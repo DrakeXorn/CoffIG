@@ -1,7 +1,6 @@
 package userInterface;
 
 import model.*;
-import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
@@ -16,9 +15,9 @@ public class NewEmployeeForm extends JPanel {
     private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContrat;
     private JSpinner discount;
 
-    private NewUserForm userInfos;
+    private UserForm userInfos;
 
-    public NewEmployeeForm(NewUserForm userInfos) {
+    public NewEmployeeForm(UserForm userInfos) {
         this.setLayout(new GridLayout(5, 2, 5, 5));
         this.userInfos = userInfos;
 
@@ -84,7 +83,7 @@ public class NewEmployeeForm extends JPanel {
     public Employee createEmployee() {
         Employee employee = null;
         try {
-            employee = new Employee(userInfos.getPasseword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
+            employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
                     userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
                     (wantsEndContrat.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),

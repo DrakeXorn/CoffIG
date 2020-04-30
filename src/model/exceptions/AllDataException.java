@@ -13,7 +13,7 @@ public class AllDataException extends Exception {
     public String getMessage() {
         StringBuilder res = new StringBuilder("Erreur lors de ");
 
-        res.append(attemptDescription).append(" des cafés de la base de données :\n");
+        res.append(attemptDescription).append(" dans la base de données :\n");
         res.append(exceptionMessage);
 
         return res.toString();

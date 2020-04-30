@@ -1,5 +1,6 @@
 package userInterface;
 
+import controller.CustomerController;
 import model.*;
 import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
@@ -7,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-public class NewUserForm extends JPanel {
+public class UserForm extends JPanel {
     private JLabel  passwordLable, lastNameLabel, firstNameLebel, secondNameLebel, maidenNameLebel,
             birthdateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
     private JDatePicker birthdate;
@@ -16,46 +17,49 @@ public class NewUserForm extends JPanel {
             streetName, numberStreet, email, phone;
     private JRadioButton male, female;
     private ButtonGroup buttonGroup;
-    private JComboBox<String> localitiesBox;
-    private static String [] localitiesCity = {"5000 Namur", "5020 Malonne", "5100 Naninne", "5100 Wépion", "5100 Jambes", "5300 Vezin"};
+    private JComboBox<Locality> localitiesBox;
+    private static ArrayList<Locality> localities;
 
-    public NewUserForm(){
+    private CustomerController controller;
+
+    public UserForm(Customer customerToModify) {
+        controller = new CustomerController();
         this.setLayout(new GridLayout(12, 2, 5, 5));
 
         passwordLable = new JLabel("Mot de passe* :");
         passwordLable.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(passwordLable);
-        password = new JPasswordField("pomme456");
+        password = new JPasswordField(customerToModify != null ? customerToModify.getPassword() : null);
         this.add(password);
 
         lastNameLabel = new JLabel("Nom de famille* :");
         lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(lastNameLabel);
-        lastName = new JTextField("Bodart");
+        lastName = new JTextField(customerToModify != null ? customerToModify.getLastName() : null);
         this.add(lastName);
 
         firstNameLebel = new JLabel("Prénom* :");
         firstNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(firstNameLebel);
-        firstName = new JTextField("Nicolas");
+        firstName = new JTextField(customerToModify != null ? customerToModify.getFirstName() : null);
         this.add(firstName);
 
         secondNameLebel = new JLabel("Second prénom :");
         secondNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(secondNameLebel);
-        secondName = new JTextField("Pascal");
+        secondName = new JTextField(customerToModify != null ? customerToModify.getSecondName() : null);
         this.add(secondName);
 
         maidenNameLebel = new JLabel("Nom de jeune fille :");
         maidenNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(maidenNameLebel);
-        maidenName = new JTextField();
+        maidenName = new JTextField(customerToModify != null ? customerToModify.getMaidenName() : null);
         this.add(maidenName);
 
-        male = new JRadioButton("Homme", true);
+        male = new JRadioButton("Homme", customerToModify != null ? customerToModify.getGender() == 'M' ? true : false : true);
         male.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(male);
-        female = new JRadioButton("Femme", false);
+        female = new JRadioButton("Femme", customerToModify != null ? customerToModify.getGender() == 'F' ? true : false : false);
         female.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(female);
 
@@ -68,46 +72,63 @@ public class NewUserForm extends JPanel {
         this.add(birthdateLabel);
         birthdate = new JDatePicker();
         birthdate.setShowYearButtons(true);
-        birthdate.getModel().setYear(2003);
-        birthdate.getModel().setMonth(1);
-        birthdate.getModel().setDay(6);
+        if(customerToModify != null) {
+            birthdate.getModel().setYear(customerToModify.getBirthDate().get(Calendar.YEAR));
+            birthdate.getModel().setMonth(customerToModify.getBirthDate().get(Calendar.MONTH));
+            birthdate.getModel().setDay(customerToModify.getBirthDate().get(Calendar.DAY_OF_MONTH));
+        } else {
+            birthdate.getModel().setYear(2020);
+            birthdate.getModel().setMonth(0);
+            birthdate.getModel().setDay(1);
+        }
         birthdate.getModel().setSelected(true);
         this.add(birthdate);
 
         streetNameLabel = new JLabel("Adresse* :");
         streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(streetNameLabel);
-        streetName = new JTextField("rue des bolettes ");
+        streetName = new JTextField(customerToModify != null ? customerToModify.getStreetName().split(", ", 2)[0] : null);
         this.add(streetName);
 
         numberStreetLabel = new JLabel("Numéro* :");
         numberStreetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberStreetLabel);
-        numberStreet = new JTextField("3");
+        numberStreet = new JTextField(customerToModify != null ? customerToModify.getStreetName().split(", ", 2)[1] : null);
         this.add(numberStreet);
 
         localityLabel = new JLabel("Localité* :");
         localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(localityLabel);
 
-        localitiesBox = new JComboBox<>(localitiesCity);
-        localitiesBox.setMaximumRowCount(3);
-        this.add(localitiesBox);
+        try {
+            localities = controller.getAllLocalities();
+            localitiesBox = new JComboBox<Locality>();
+            for (int i = 0; i < localities.size(); i++)
+                localitiesBox.addItem(localities.get(i));
+            localitiesBox.setMaximumRowCount(5);
+            if(customerToModify != null)
+                localitiesBox.setSelectedItem(customerToModify.getLocality()); // ne fonctionne pas
+            this.add(localitiesBox);
+
+        } catch (AllDataException | ConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+        }
 
         emailLabel = new JLabel("Email* :");
         emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(emailLabel);
-        email = new JTextField("bodart.nicolas@gmail.com");
+        email = new JTextField(customerToModify != null ? customerToModify.getEmail() : null);
         this.add(email);
 
         phoneLabel = new JLabel("Numéro de GSM* :");
         phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(phoneLabel);
-        phone = new JTextField("0456897546");
+        phone = new JTextField(customerToModify != null ? customerToModify.getPhone() : null);
         this.add(phone);
     }
 
-    public String getPasseword() {
+    public String getPassword() {
         return new String(password.getPassword());
     }
 
@@ -132,8 +153,8 @@ public class NewUserForm extends JPanel {
     }
 
     public String getStreetName() throws StringInputException {
-        if(!numberStreet.getText().matches("^\\d*$"))
-            throw new StringInputException(numberStreet.getText(), null);
+        if(!numberStreet.getText().matches("^\\d*\\D?$"))
+            throw new StringInputException(numberStreet.getText(), "le numéro de l'adresse", "Le numéro se compose d'un ou de plusieurs chiffres et peut parfois être suivi d'une lettre");
         return streetName.getText() + ", " + numberStreet.getText();
     }
 
@@ -146,8 +167,8 @@ public class NewUserForm extends JPanel {
     }
 
     public Locality getLocality (){
-        String locality = localitiesCity[localitiesBox.getSelectedIndex()];
-        return new Locality(Integer.parseInt(locality.substring(0, 4)), locality.substring(5));
+        Locality locality = localities.get(localitiesBox.getSelectedIndex());
+        return new Locality(locality.getPostalCode(), locality.getCity());
     }
 
     public Character getGender() {

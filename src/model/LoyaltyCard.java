@@ -30,6 +30,16 @@ public class LoyaltyCard {
         this(registrationDate, 100, customer);
     }
 
+    // constructeur pour récupérer AllCustormer dans DBAccess
+    public LoyaltyCard(String loyaltyCardID, GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
+            throws IntegerInputException {
+        this.loyaltyCardID = loyaltyCardID;
+        this.customer = customer;
+        this.registrationDate = registrationDate;
+        setPointsNumber(pointsNumber);
+        advantages = new ArrayList<>();
+    }
+
     public String getLoyaltyCardID() {
         return loyaltyCardID;
     }

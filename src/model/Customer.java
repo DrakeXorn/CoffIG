@@ -22,6 +22,18 @@ public class Customer extends User {
         orders = new ArrayList<>();
     }
 
+    // pour la récupération de la BD
+    public Customer(Integer userID, String password, String lastName, String firstName, GregorianCalendar birthDate,
+                    String streetName, Locality locality, String email, String phone, Character gender,
+                    Boolean wantsAdvertising)
+            throws DateException, StringInputException, CharacterInputException {
+        super(userID, password, lastName, firstName, birthDate, streetName, locality, email, phone, gender);
+        this.wantsAdvertising = wantsAdvertising;
+        orders = new ArrayList<>();
+    }
+
+
+
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");

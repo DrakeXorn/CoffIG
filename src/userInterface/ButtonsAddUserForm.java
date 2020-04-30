@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ButtonsUser extends JPanel {
+public class ButtonsAddUserForm extends JPanel {
     private JLabel requiredFields;
     private JButton validation, reset;
     private MainWindow parent;
@@ -17,8 +17,8 @@ public class ButtonsUser extends JPanel {
     private JPanel form;
     private CustomerController controller;
 
-    public ButtonsUser(MainWindow mainWindow, JPanel form){
-        this.parent = mainWindow;
+    public ButtonsAddUserForm(MainWindow window, JPanel form){
+        this.parent = window;
         this.form = form;
         controller = new CustomerController();
         this.setLayout(new FlowLayout());
@@ -26,10 +26,12 @@ public class ButtonsUser extends JPanel {
         requiredFields = new JLabel("*champs obligatoires");
         this.add(requiredFields);
 
-        validation = new JButton("Validation");
+        validation = new JButton("Insertion");
         this.add(validation);
+
         reset = new JButton("Réinitialisation");
         this.add(reset);
+
 
         validation.addActionListener(new ValidationListener());
         reset.addActionListener(new ResetListener());
@@ -38,40 +40,49 @@ public class ButtonsUser extends JPanel {
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            if(form instanceof NewCustomerForm){
-                user = ((NewCustomerForm)form).createCustomer();
-                try {
+            try {
+                if(form instanceof CustomerForm){
+                    user = ((CustomerForm)form).createCustomer();
                     controller.addCustomer((Customer)user);
-                } catch (AddCustomerException | ConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage(),
-                            "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    user = ((NewEmployeeForm)form).createEmployee();
+                    //controller.addEmployee((Employee)user);
                 }
-            }else
-                user = ((NewEmployeeForm)form).createEmployee();
-            //JOptionPane.showMessageDialog(null, user , "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, user , "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (AddCustomerException | ConnectionException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(),
+                        "Erreur !", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-
 
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             parent.getWindowContainer().removeAll();
-            NewUserForm user = new NewUserForm();
+            UserForm user = new UserForm(null);
             parent.getWindowContainer().add(user, BorderLayout.NORTH);
 
-            if (form instanceof NewCustomerForm){
-                NewCustomerForm customer = new NewCustomerForm(user);
+            if (form instanceof CustomerForm){
+                CustomerForm customer = new CustomerForm(user, null);
                 parent.getWindowContainer().add(customer, BorderLayout.CENTER);
-                parent.getWindowContainer().add(new ButtonsUser(parent, customer), BorderLayout.SOUTH);
+                parent.getWindowContainer().add(new ButtonsAddUserForm(parent, customer), BorderLayout.SOUTH);
             }
             else {
                 NewEmployeeForm employee = new NewEmployeeForm(user);
                 parent.getWindowContainer().add(employee, BorderLayout.CENTER);
-                parent.getWindowContainer().add(new ButtonsUser(parent, employee), BorderLayout.SOUTH);
+                parent.getWindowContainer().add(new ButtonsAddUserForm(parent, employee), BorderLayout.SOUTH);
             }
             parent.getWindowContainer().repaint();
             parent.setVisible(true);
+        }
+    }
+
+    private class GoBackListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            // TO DO
         }
     }
 }

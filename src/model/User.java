@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 public class User {
     private final static int AGE_MIN = 16;
     private static int nbrRegistered = 0;
-    private String userID;
+    private Integer userID;
     private String password;
     private String lastName, firstName, secondName, maidenName;
     private GregorianCalendar birthDate;
@@ -23,29 +23,33 @@ public class User {
     public User(String password, String lastName, String firstName, String secondName,
                 String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
                 String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
-
+        userID = nbrRegistered;
+        nbrRegistered++;
         setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
-        this.secondName = secondName;
-        this.maidenName = maidenName;
+        setSecondName(secondName);
+        setMaidenName(maidenName);
         setBirthDate(birthDate);
         setStreetName(streetName);
         setEmail(email);
         setPhone(phone);
         setGender(gender);
         this.locality = locality;
-        setUserID();
     }
 
-    public User(String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
-                String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
+    // pour la récupération de la BD
+    public User(Integer userID, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName,
+                Locality locality, String email, String phone, Character gender)
+            throws StringInputException, DateException, CharacterInputException {
         this(password, lastName, firstName, null,null,birthDate, streetName, locality, email, phone, gender);
+        setUserID(userID);
     }
-    public void setUserID() {
-        this.userID = this.lastName.toLowerCase().substring(0, 4) + this.firstName.toLowerCase().substring(0, 2)
-                + this.phone.substring(phone.length() - 2) + nbrRegistered;
-        nbrRegistered++;
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+        if (userID > nbrRegistered)
+            nbrRegistered = userID;
     }
 
     public void setPassword(String password) throws StringInputException {
@@ -59,12 +63,6 @@ public class User {
             throw new StringInputException(lastName, null, "Le nom est un champ obligatoire !");
         if(!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
             throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
-
-        int size = lastName.length();
-        if(size < 4){
-            for(int i = 0; i < 4 - size; i++)
-                lastName += "x";
-        }
         this.lastName = lastName;
     }
 
@@ -73,14 +71,27 @@ public class User {
             throw new StringInputException(firstName, null, "Le prénom est un champ obligatoire !");
         if(!firstName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
            throw new StringInputException(firstName, null, "Le prénom se compose uniquement de lettres !");
-
-        int size = firstName.length();
-        if(size < 2){
-            for(int i = 0; i < 2 - size; i++)
-                firstName+= "x";
-        }
         this.firstName = firstName;
     }
+
+    public void setSecondName(String secondName) throws StringInputException {
+        if(secondName == null || secondName.isEmpty())
+            this.secondName = null;
+        else {
+            if(!secondName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+                throw new StringInputException(secondName, null, "Le second prénom se compose uniquement de lettres !");
+            this.secondName = secondName;
+        }
+    }
+
+    public void setMaidenName(String maidenName) throws StringInputException {
+        if(maidenName == null || maidenName.isEmpty())
+            this.maidenName = null;
+        else {
+            if(!maidenName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+                throw new StringInputException(maidenName, null, "Le nom de jeune fille se compose uniquement de lettres !");
+            this.maidenName = maidenName;
+        }    }
 
     public void setBirthDate(GregorianCalendar birthDate) throws DateException {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
@@ -94,8 +105,7 @@ public class User {
 
     public void setStreetName(String streetName) throws StringInputException {
         if(streetName.isEmpty())
-            throw new StringInputException(streetName, null, "L'adresse est un champ obligatoire !\nFormat : nom de rue, numéro de maison\n" +
-                    "La valeur encodée '" + streetName + "' est incorrecte !");
+            throw new StringInputException(streetName, null, "L'adresse est un champ obligatoire !");
         this.streetName = streetName;
     }
 
@@ -109,9 +119,9 @@ public class User {
 
     public void setPhone(String phone) throws StringInputException {
         if(phone.isEmpty())
-            throw new StringInputException(phone , null, "Le numéro de téléphone est obligatoire !");
+            throw new StringInputException(phone , null, "Le numéro de téléphone est un champ obligatoire !");
         if(phone.length() != 10)
-            throw new StringInputException(phone, null, "Le numéro de téléphone doit comprendre exactement 10 chiffres !");
+            throw new StringInputException(phone, null, "Le numéro de téléphone se compose d'exactement 10 chiffres !");
         if(!phone.matches("^\\d*$"))
             throw new StringInputException(phone, null, "Le numéro de téléphone ne peut pas contenir de '/' et de '.' !");
         this.phone = phone;
@@ -119,11 +129,11 @@ public class User {
 
     public void setGender(Character gender) throws CharacterInputException {
         if(Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F')
-            throw new CharacterInputException(gender, "Le genre", "Le genre doit être M ou F !");
+            throw new CharacterInputException(gender, "le genre", "Le genre doit être M ou F !");
         this.gender = gender;
     }
 
-    public String getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
