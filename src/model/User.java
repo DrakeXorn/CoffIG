@@ -49,6 +49,7 @@ public class User {
     }
 
     public void setPassword(String password) throws StringInputException {
+
         if (password.isEmpty())
             throw new StringInputException(password, null, "Le mot de passe est un champ obligatoire !");
         this.password = password;
@@ -61,7 +62,7 @@ public class User {
             throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
 
         int size = lastName.length();
-        if (size < 4){
+        if (size < 4) {
             StringBuilder lastNameBuilder = new StringBuilder(lastName);
             lastNameBuilder.append("x".repeat(4 - size));
             lastName = lastNameBuilder.toString();

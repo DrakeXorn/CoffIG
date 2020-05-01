@@ -48,7 +48,7 @@ public class StockLocation {
     public GregorianCalendar getExpirationDate() {
         return expirationDate;
     }
-
+  
     public void setAlley(Integer alley) throws IntegerInputException {
         if (alley < 1 || alley > 6)
             throw new IntegerInputException(alley, "l'allée", "L'allée doit être comprise entre 1 et 6 !");
