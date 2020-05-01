@@ -42,7 +42,6 @@ public class AllCoffeesFrame extends JFrame {
             listSelect = coffeeTable.getSelectionModel();
             scrollPane = new JScrollPane(coffeeTable);
 
-
             add(scrollPane);
             setVisible(true);
         } catch (AllDataException | ConnectionException exception) {
