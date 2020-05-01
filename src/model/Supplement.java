@@ -9,4 +9,9 @@ public class Supplement {
         this.drink = drink;
         drink.addSupplement(this);
     }
+
+    @Override
+    public String toString() {
+        return topping.toString();
+    }
 }

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.jasypt:jasypt:1.9.3" type="repository">
+    <properties maven-id="org.jasypt:jasypt:1.9.3" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jasypt-1.9.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

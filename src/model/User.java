@@ -2,6 +2,8 @@ package model;
 
 import model.exceptions.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -36,6 +38,10 @@ public class User {
         setUserID();
     }
 
+    public User(String password, String lastName, String firstName, GregorianCalendar birthDateJava, String streetName, Locality locality, String email, String phone, char gender) throws CharacterInputException, DateException, StringInputException {
+        this(password, lastName, firstName, null, null, birthDateJava, streetName, locality, email, phone, gender);
+    }
+
     public void setUserID() {
         this.userID = this.lastName.substring(0, 4) + this.firstName.substring(0, 2)
                 + this.phone.substring(phone.length() - 2) + nbrRegistered;
@@ -43,44 +49,55 @@ public class User {
     }
 
     public void setPassword(String password) throws StringInputException {
-        if(password.isEmpty())
+
+        if (password.isEmpty())
             throw new StringInputException(password, null, "Le mot de passe est un champ obligatoire !");
         this.password = password;
     }
 
     public void setLastName(String lastName) throws StringInputException {
-        if(lastName.isEmpty())
+        if (lastName.isEmpty())
             throw new StringInputException(lastName, null, "Le nom est un champ obligatoire !");
-        if(!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+        if (!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
             throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
 
         int size = lastName.length();
-        if(size < 4){
-            for(int i = 0; i < 4 - size; i++)
-                lastName += "x";
+        if (size < 4) {
+            StringBuilder lastNameBuilder = new StringBuilder(lastName);
+            lastNameBuilder.append("x".repeat(4 - size));
+            lastName = lastNameBuilder.toString();
         }
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws StringInputException {
-        if(firstName.isEmpty())
+        if (firstName.isEmpty())
             throw new StringInputException(firstName, null, "Le prénom est un champ obligatoire !");
-        if(!firstName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
-           throw new StringInputException(firstName, null, "Le prénom se compose uniquement de lettres !");
+        if (!firstName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+            throw new StringInputException(firstName, null, "Le prénom se compose uniquement de lettres !");
 
         int size = firstName.length();
-        if(size < 2){
-            for(int i = 0; i < 2 - size; i++)
-                firstName+= "x";
+        if (size < 2) {
+            StringBuilder firstNameBuilder = new StringBuilder(firstName);
+            firstNameBuilder.append("x".repeat(2 - size));
+            firstName = firstNameBuilder.toString();
         }
         this.firstName = firstName;
     }
 
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public void setMaidenName(String maidenName) {
+        this.maidenName = maidenName;
+    }
+
     public void setBirthDate(GregorianCalendar birthDate) throws DateException {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
-        if(birthDate.after(today))
+        if (birthDate.after(today))
             throw new DateException(birthDate, today);
-        if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneID()), LocalDate.now()).getYears() < AGE_MIN)
+        if (Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneId()), LocalDate.now()).getYears() < AGE_MIN)
             throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - AGE_MIN,
                     today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
         this.birthDate = birthDate;
@@ -94,25 +111,25 @@ public class User {
     }
 
     public void setEmail(String email) throws StringInputException {
-        if(email.isEmpty())
+        if (email.isEmpty())
             throw new StringInputException(email, null, "L'email est un champ obligatoire !");
-        if(!email.matches("^[a-zA-ZÀ-ÿ0-9]+.?-?[a-zA-ZÀ-ÿ0-9]+@[a-zA-ZÀ-ÿ]+.[a-zA-ZÀ-ÿ]+$"))
+        if (!email.matches("^[a-zA-ZÀ-ÿ0-9]+.?-?[a-zA-ZÀ-ÿ0-9]+@[a-zA-ZÀ-ÿ]+.[a-zA-ZÀ-ÿ]+$"))
             throw new StringInputException(email, null, "L'email a comme format xxxxxxx@xxxxxx.xxx !");
         this.email = email;
     }
 
     public void setPhone(String phone) throws StringInputException {
-        if(phone.isEmpty())
+        if (phone.isEmpty())
             throw new StringInputException(phone , null, "Le numéro de téléphone est obligatoire !");
-        if(phone.length() != 10)
+        if (phone.length() != 10)
             throw new StringInputException(phone, null, "Le numéro de téléphone doit comprendre exactement 10 chiffres !");
-        if(!phone.matches("^\\d*$"))
+        if (!phone.matches("^\\d*$"))
             throw new StringInputException(phone, null, "Le numéro de téléphone ne peut pas contenir de '/' et de '.' !");
         this.phone = phone;
     }
 
     public void setGender(Character gender) throws CharacterInputException {
-        if(Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F')
+        if (Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F')
             throw new CharacterInputException(gender, "Le genre", "Le genre doit être M ou F !");
         this.gender = gender;
     }

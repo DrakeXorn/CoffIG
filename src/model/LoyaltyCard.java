@@ -1,14 +1,13 @@
 package model;
 
 import model.exceptions.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
-    private String loyaltyCardID;
+    private String loyaltyCardId;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
     private ArrayList<Right> rights;
@@ -16,7 +15,7 @@ public class LoyaltyCard {
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
             throws IntegerInputException {
-        this.loyaltyCardID = customer.getPhone();
+        this.loyaltyCardId = customer.getPhone();
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
         this.customer = customer;
@@ -27,6 +26,13 @@ public class LoyaltyCard {
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
             throws IntegerInputException {
         this(registrationDate, 100, customer);
+    }
+
+    public LoyaltyCard(String loyaltyCardId, GregorianCalendar registrationDateJava, Integer pointsNumber, Customer customer) throws IntegerInputException {
+        this.loyaltyCardId = loyaltyCardId;
+        registrationDate = registrationDateJava;
+        setPointsNumber(pointsNumber);
+        this.customer = customer;
     }
 
     public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
@@ -44,7 +50,7 @@ public class LoyaltyCard {
 
     public String toString() {
         // TODO: à modifier
-        return "Carte de fidélité numéro : " + loyaltyCardID + " créée le "
+        return "Carte de fidélité numéro : " + loyaltyCardId + " créée le "
                 + registrationDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
                 "/" + registrationDate.get(Calendar.YEAR) +
