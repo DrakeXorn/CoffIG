@@ -129,6 +129,20 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 insertDiscoveryYearStatement.setInt(2, coffee.getCoffeeID());
                 insertDiscoveryYearStatement.executeUpdate();
             }
+
+            String featureInstruction = "insert ignore into feature (label) values (?)";
+            String descriptionInsertInstruction = "insert into description (feature_label, coffee_id) values (?, ?)";
+            PreparedStatement featureStatement = connection.prepareStatement(featureInstruction);
+            PreparedStatement descriptionStatement = connection.prepareStatement(descriptionInsertInstruction);
+
+            descriptionStatement.setInt(2, coffee.getCoffeeID());
+
+            for (String feature : coffee.getFeatures()) {
+                featureStatement.setString(1, feature);
+                featureStatement.executeUpdate();
+                descriptionStatement.setString(1, feature);
+                descriptionStatement.executeUpdate();
+            }
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
