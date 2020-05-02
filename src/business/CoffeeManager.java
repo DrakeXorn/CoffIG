@@ -25,6 +25,6 @@ public class CoffeeManager {
     }
 
     public int getNbrCoffees() throws ConnectionException, AddCoffeeException {
-        return dataAccessor.getNbrCoffees();
+        return dataAccessor.getLastId();
     }
 }

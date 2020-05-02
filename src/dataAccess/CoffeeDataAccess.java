@@ -12,5 +12,5 @@ public interface CoffeeDataAccess {
     boolean addCoffee(Coffee coffee) throws ConnectionException, AddCoffeeException;
     boolean removeCoffee(Coffee coffee) throws ConnectionException, AddCoffeeException;
     boolean updateCoffee(Coffee coffee);
-    int getNbrCoffees() throws ConnectionException, AddCoffeeException;
+    int getLastId() throws ConnectionException, AddCoffeeException;
 }

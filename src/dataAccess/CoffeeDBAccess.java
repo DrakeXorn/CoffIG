@@ -165,17 +165,17 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         return true;
     }
 
-    public int getNbrCoffees() throws ConnectionException, AddCoffeeException {
+    public int getLastId() throws ConnectionException, AddCoffeeException {
         int nbrCoffees;
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select count(*) from coffee";
+            String sqlInstruction = "select max(coffee_id) from coffee";
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             ResultSet result = statement.executeQuery(sqlInstruction);
 
             result.next();
-            nbrCoffees = result.getInt("count(*)");
+            nbrCoffees = result.getInt("max(coffee_id)");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {

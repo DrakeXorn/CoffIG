@@ -131,9 +131,9 @@ public class NewUserForm extends JPanel {
         return (GregorianCalendar)birthdate.getModel().getValue();
     }
 
-    public String getStreetName() throws StreetException {
+    public String getStreetName() throws StringInputException {
         if(!numberStreet.getText().matches("^\\d*$"))
-            throw new StreetException(numberStreet.getText());
+            throw new StringInputException(numberStreet.getText(), "l");
         return streetName.getText() + ", " + numberStreet.getText();
     }
 
