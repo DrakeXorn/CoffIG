@@ -5,19 +5,21 @@ import java.util.GregorianCalendar;
 
 public class DateException extends Exception {
     private GregorianCalendar wrongDate;
-    private GregorianCalendar previousDate;
+    private String precision;
 
-    public DateException(GregorianCalendar wrongDate, GregorianCalendar previousDate) {
+    public DateException(GregorianCalendar wrongDate, String precision) {
         this.wrongDate = wrongDate;
-        this.previousDate = previousDate;
+        this.precision = precision;
     }
 
     public String getMessage(){
-        return "La date " + wrongDate.get(Calendar.DAY_OF_MONTH)
+        String message = "La date " + wrongDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (wrongDate.get(Calendar.MONTH) + 1) + "/"
                 + wrongDate.get(Calendar.YEAR)
-                + " est invalide ! Elle ne doit pas précèder le " + previousDate.get(Calendar.DAY_OF_MONTH)
-                + "/" + (previousDate.get(Calendar.MONTH) + 1) + "/"
-                + previousDate.get(Calendar.YEAR);
+                + " est invalide ! ";
+        if(precision != null){
+            message += precision;
+        }
+        return message;
     }
 }

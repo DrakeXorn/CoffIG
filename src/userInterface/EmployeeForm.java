@@ -1,24 +1,21 @@
 package userInterface;
 
 import model.*;
-import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.GregorianCalendar;
 
-public class NewEmployeeForm extends JPanel {
+public class EmployeeForm extends JPanel {
     private JLabel hireDateLabel, endContractDateLabel, discountLabel;
     private JDatePicker hireDate, endContractDate;
     private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContrat;
     private JSpinner discount;
+    private UserForm userInfos;
 
-    private NewUserForm userInfos;
-
-    public NewEmployeeForm(NewUserForm userInfos) {
+    public EmployeeForm(UserForm userInfos) {
         this.setLayout(new GridLayout(5, 2, 5, 5));
         this.userInfos = userInfos;
 
@@ -32,7 +29,7 @@ public class NewEmployeeForm extends JPanel {
         hireDate.getModel().setMonth(0);
         hireDate.getModel().setDay(1);
         hireDate.getModel().setSelected(true);
-        this.add((JComponent) hireDate);
+        this.add(hireDate);
 
         this.add(new JLabel(""));
 
@@ -52,7 +49,7 @@ public class NewEmployeeForm extends JPanel {
         endContractDate.getModel().setMonth(0);
         endContractDate.getModel().setDay(1);
         endContractDate.getModel().setSelected(false);
-        this.add((JComponent) endContractDate);
+        this.add(endContractDate);
 
         discountLabel = new JLabel("Remise* :");
         discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -84,7 +81,7 @@ public class NewEmployeeForm extends JPanel {
     public Employee createEmployee() {
         Employee employee = null;
         try {
-            employee = new Employee(userInfos.getPasseword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
+            employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
                     userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
                     (wantsEndContrat.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),

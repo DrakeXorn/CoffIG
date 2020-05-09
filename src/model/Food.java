@@ -21,10 +21,22 @@ public class Food {
     public Food(Integer foodID, String label, Double price, StockLocation stockLocation) throws DoubleInputException {
         this.foodID = foodID;
         if (foodID > nbrFoods)
-            nbrFoods = foodID;
+            nbrFoods = foodID + 1;
         this.label = label;
         setPrice(price);
         this.stockLocation = stockLocation;
+    }
+
+    // pour la recherche des anciennes commandes
+    public Food(Integer foodID, String label) {
+        this.foodID = foodID;
+        if (foodID > nbrFoods)
+            nbrFoods = foodID + 1;
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public void setPrice(Double price) throws DoubleInputException {
@@ -34,6 +46,6 @@ public class Food {
     }
 
     public String toString() {
-        return foodID + ", " + label + ", " + price;
+        return label + " (ID : " + foodID;
     }
 }
