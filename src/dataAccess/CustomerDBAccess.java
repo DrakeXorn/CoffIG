@@ -14,7 +14,7 @@ public class CustomerDBAccess implements DataAccess{
     @Override
     public void addCustomer(Customer customer) throws AddCustomerException, ConnectionException {
         try {
-            Connection connection = SingletonConnection.getInstance(); // reçoit l'adresse de la connexion
+            Connection connection = SingletonConnection.getInstance();
 
             String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
@@ -95,8 +95,6 @@ public class CustomerDBAccess implements DataAccess{
             while(datas.next())
                 localities.add(new Locality(datas.getInt("postal_code"), datas.getString("city")));
 
-            //connection.close();
-
         } catch (IOException exception) {
             throw new AllDataException("la récupération des localités", exception.getMessage());
         } catch (SQLException exception) {
@@ -168,9 +166,6 @@ public class CustomerDBAccess implements DataAccess{
         }
         return customers;
     }
-
-
-
 
     public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException {
         try {
@@ -266,7 +261,4 @@ public class CustomerDBAccess implements DataAccess{
             throw new ConnectionException(exception.getMessage());
         }
     }
-
-
-
 }
