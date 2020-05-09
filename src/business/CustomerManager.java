@@ -24,6 +24,7 @@ public class CustomerManager {
     public ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException{
         return dao.getAllCustomers();
     }
+<<<<<<< HEAD
     public int getLastCustomerId() throws AllDataException, ConnectionException {
         return dao.getLastCustomerId();
     }
@@ -35,4 +36,10 @@ public class CustomerManager {
         return dao.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
 
+=======
+
+    public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException{
+        dao.modifyCustomer(customer);
+    }
+>>>>>>> 5dd7335b6321737fe7fdcb23581e5105ed2e6c5e
 }

@@ -11,7 +11,7 @@ public class CustomerDBAccess implements DataAccess{
     @Override
     public void addCustomer(Customer customer) throws AddException, ConnectionException {
         try {
-            Connection connection = SingletonConnection.getInstance(); // reçoit l'adresse de la connexion
+            Connection connection = SingletonConnection.getInstance();
 
             String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
@@ -164,8 +164,12 @@ public class CustomerDBAccess implements DataAccess{
         return customers;
     }
 
+<<<<<<< HEAD
     public int getLastCustomerId() throws AllDataException, ConnectionException {
         int nbrCustomers;
+=======
+    public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException {
+>>>>>>> 5dd7335b6321737fe7fdcb23581e5105ed2e6c5e
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlInstruction = "select max(customer_id) from customer";
@@ -331,6 +335,7 @@ public class CustomerDBAccess implements DataAccess{
             throw new ConnectionException(exception.getMessage());
         }
     }
+<<<<<<< HEAD
 
     public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
             throws AllDataException, ConnectionException, DoubleInputException, StringInputException, IntegerInputException {
@@ -420,4 +425,6 @@ public class CustomerDBAccess implements DataAccess{
         }
         return orders;
     }
+=======
+>>>>>>> 5dd7335b6321737fe7fdcb23581e5105ed2e6c5e
 }
