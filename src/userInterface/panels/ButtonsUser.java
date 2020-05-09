@@ -1,6 +1,8 @@
-package userInterface;
+package userInterface.panels;
 
 import model.*;
+import userInterface.frames.MainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

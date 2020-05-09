@@ -28,7 +28,7 @@ public class Customer extends User {
             throws DateException, StringInputException, CharacterInputException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender, Boolean.FALSE);
     }
-  
+
     public Customer(String password, String lastName, String firstName, GregorianCalendar birthDateJava, String streetName, Locality locality, String email, String phone, char gender, boolean wantsAdvertising) throws StringInputException, DateException, CharacterInputException {
         super(password, lastName, firstName, birthDateJava, streetName, locality, email, phone, gender);
     }
@@ -48,7 +48,7 @@ public class Customer extends User {
     public ArrayList<Order> getOrders() {
         return orders;
     }
-  
+
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree < 0 || satisfactionDegree > 5)
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");

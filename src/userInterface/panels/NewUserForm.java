@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.panels;
 
 import model.*;
 import model.exceptions.*;
@@ -16,7 +16,7 @@ public class NewUserForm extends JPanel {
             streetName, numberStreet, email, phone;
     private JRadioButton male, female;
     private ButtonGroup buttonGroup;
-    private JComboBox localitiesBox;
+    private JComboBox<String> localitiesBox;
     private static String [] localitiesCity = {"5000 Namur", "5020 Malonne", "5100 Naninne", "5100 Wépion", "5100 Jambes", "5300 Vezin"};
 
     public NewUserForm(){
@@ -90,7 +90,7 @@ public class NewUserForm extends JPanel {
         localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(localityLabel);
 
-        localitiesBox = new JComboBox(localitiesCity);
+        localitiesBox = new JComboBox<>(localitiesCity);
         localitiesBox.setMaximumRowCount(3);
         this.add(localitiesBox);
 

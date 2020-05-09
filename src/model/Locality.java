@@ -17,6 +17,14 @@ public class Locality {
         this.postalCode = postalCode;
     }
 
+    public Integer getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     public String toString(){
         return postalCode + " " + city;
     }

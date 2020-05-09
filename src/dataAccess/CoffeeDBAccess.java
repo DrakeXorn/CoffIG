@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class CoffeeDBAccess implements CoffeeDataAccess {
     @Override
-    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException {
+    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException {
         ArrayList<Coffee> allCoffees = new ArrayList<>();
 
         try {
@@ -20,17 +20,12 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
             PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
             ResultSet coffeeData = coffeeStatement.executeQuery();
 
-            Coffee coffee;
-            String originCountry;
-            int discoveryYear;
-            String recommendedConsumingMoment;
-
             while (coffeeData.next()) {
                 GregorianCalendar calendar = new GregorianCalendar();
                 java.sql.Date expirationDate = coffeeData.getDate("expiration_date");
                 calendar.setTime(expirationDate);
 
-                coffee = new Coffee(coffeeData.getInt("coffee_id"),
+                Coffee coffee = new Coffee(coffeeData.getInt("coffee_id"),
                         coffeeData.getString("label"),
                         coffeeData.getInt("intensity"),
                         coffeeData.getDouble("weight_needed_for_preparation"),
@@ -45,15 +40,15 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                                 coffeeData.getInt("quantity"),
                                 calendar));
 
-                originCountry = coffeeData.getString("origin_country");
+                String originCountry = coffeeData.getString("origin_country");
                 if (!coffeeData.wasNull())
                     coffee.setOriginCountry(originCountry);
 
-                discoveryYear = coffeeData.getInt("discovery_year");
+                int discoveryYear = coffeeData.getInt("discovery_year");
                 if (!coffeeData.wasNull())
                     coffee.setDiscoveryYear(discoveryYear);
 
-                recommendedConsumingMoment = coffeeData.getString("recommended_consuming_moment");
+                String recommendedConsumingMoment = coffeeData.getString("recommended_consuming_moment");
                 if (!coffeeData.wasNull())
                     coffee.setRecommendedConsumingMoment(recommendedConsumingMoment);
 
@@ -63,7 +58,6 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 ResultSet featureData = featuresStatement.executeQuery();
                 ArrayList<String> features = new ArrayList<>();
                 while (featureData.next()) {
-                    if (featureData.getInt("coffee_id") == coffeeData.getInt("coffee_id"))
                     features.add(featureData.getString("label"));
                 }
 
@@ -74,15 +68,18 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
             throw new AllDataException(exception.getMessage(), "la récupération");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
-        } catch (IntegerInputException | DoubleInputException e) {
-            e.printStackTrace();
         }
 
         return allCoffees;
     }
 
     @Override
-    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddCoffeeException {
+    public ArrayList<Coffee> getCoffees(GregorianCalendar startDate, GregorianCalendar endDate, String originCountry, boolean areInGrains, boolean areEnvironmentFriendly, double price, double packaging) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String stockSqlInstruction = "insert into stock_location (alley, shelf, number, buying_price, quantity, expiration_date) values (?, ?, ?, ?, ?, ?)";
@@ -146,14 +143,14 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddCoffeeException(exception.getMessage());
+            throw new AddDataException(exception.getMessage(), "café");
         }
 
         return true;
     }
 
     @Override
-    public boolean removeCoffee(Coffee coffee) throws ConnectionException, AddCoffeeException {
+    public boolean removeCoffee(Coffee coffee) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String descriptionSqlInstruction = "delete from description where coffee_id = ?";
@@ -169,17 +166,51 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddCoffeeException(exception.getMessage());
+            throw new AddDataException(exception.getMessage(), "café");
         }
         return true;
     }
 
     @Override
-    public boolean updateCoffee(Coffee coffee) {
+    public boolean updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+        Connection connection;
+        try {
+            connection = SingletonConnection.getInstance();
+            String updateInstruction = "update coffee set label = ?, origin_country = ?, intensity = ?, weight_needed_for_preparation = ?, discovery_year = ?, is_in_grains = ?, is_environment_friendly = ?, price = ?, packaging = ?, recommended_consuming_moment = ? where coffee_id = ?";
+            PreparedStatement updateStatement = connection.prepareStatement(updateInstruction);
+
+            updateStatement.setString(1, coffee.getLabel());
+            updateStatement.setString(2, coffee.getOriginCountry());
+            updateStatement.setInt(3, coffee.getIntensity());
+            updateStatement.setDouble(4, coffee.getWeightNeededForPreparation());
+
+            if (coffee.getDiscoveryYear() != null)
+                updateStatement.setInt(5, coffee.getDiscoveryYear());
+            else
+                updateStatement.setNull(5, Types.DOUBLE);
+
+            updateStatement.setBoolean(6, coffee.isInGrains());
+            updateStatement.setBoolean(7, coffee.isEnvironmentFriendly());
+            updateStatement.setDouble(8, coffee.getPrice());
+            updateStatement.setDouble(9, coffee.getPackaging());
+
+            if (!coffee.getRecommendedConsumingMoment().isEmpty())
+                updateStatement.setString(10, coffee.getRecommendedConsumingMoment());
+            else
+                updateStatement.setNull(10, Types.VARCHAR);
+            updateStatement.setInt(11, coffee.getCoffeeID());
+
+            updateStatement.executeUpdate();
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AddDataException(exception.getMessage(), "café");
+        }
+
         return true;
     }
 
-    public int getLastId() throws ConnectionException, AddCoffeeException {
+    public int getLastId() throws ConnectionException, AddDataException {
         int nbrCoffees;
 
         try {
@@ -193,7 +224,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddCoffeeException(exception.getMessage());
+            throw new AddDataException(exception.getMessage(), "café");
         }
 
         return nbrCoffees;

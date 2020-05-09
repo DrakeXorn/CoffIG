@@ -61,18 +61,64 @@ public class Employee extends User {
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
+    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException {
+        super(employeeId, password, lastName, firstName, birthDate, streetName, locality, email, phone, gender);
+        this.isEmployeeOfMonth = isEmployeeOfMonth;
+        this.discount = discount;
+    }
+
+    public GregorianCalendar getHireDate() {
+        return hireDate;
+    }
+
+    public GregorianCalendar getEndContractDate() {
+        return endContractDate;
+    }
+
+    public Boolean getEmployeeOfMonth() {
+        return isEmployeeOfMonth;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public static int getNbrParkingSpaces() {
+        return nbrParkingSpaces;
+    }
+
+    public Integer getParkingSpaceNumber() {
+        return parkingSpaceNumber;
+    }
+
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
     public void setDiscount(Double discount) throws DoubleInputException {
-        if(discount < 0 || discount > 100)
+        if (discount < 0 || discount > 100)
             throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
         this.discount = discount;
     }
 
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
-        if(endContractDate != null){
-            if(endContractDate.before(hireDate))
+        if (endContractDate != null) {
+            if (endContractDate.before(hireDate))
                 throw new DateException(endContractDate, hireDate);
             this.endContractDate = endContractDate;
         }
+    }
+
+    public void setParkingSpaceNumber(Integer parkingSpaceNumber) {
+        this.parkingSpaceNumber = parkingSpaceNumber;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 
     public void addAssignments(ArrayList<Assignment> newAssignments) {

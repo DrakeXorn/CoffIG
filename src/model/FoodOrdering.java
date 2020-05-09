@@ -14,6 +14,22 @@ public class FoodOrdering {
         this.sellingPrice = sellingPrice;
     }
 
+    public Food getFood() {
+        return food;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Integer getNbrPieces() {
+        return nbrPieces;
+    }
+
+    public Double getSellingPrice() {
+        return sellingPrice;
+    }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder(food.toString());

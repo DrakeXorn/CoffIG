@@ -1,7 +1,7 @@
-package userInterface;
+package userInterface.panels;
 
 import model.*;
-import model.exceptions.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

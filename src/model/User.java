@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 public class User {
     private final static int AGE_MIN = 16;
     private static int nbrRegistered = 0;
-    private String userID;
+    private Integer userId;
     private String password;
     private String lastName, firstName, secondName, maidenName;
     private GregorianCalendar birthDate;
@@ -23,29 +23,81 @@ public class User {
     public User(String password, String lastName, String firstName, String secondName,
                 String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
                 String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
-
+        userId = nbrRegistered;
+        nbrRegistered++;
         setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
-        this.secondName = secondName;
-        this.maidenName = maidenName;
+        setSecondName(secondName);
+        setMaidenName(maidenName);
         setBirthDate(birthDate);
         setStreetName(streetName);
         setEmail(email);
         setPhone(phone);
         setGender(gender);
         this.locality = locality;
-        setUserID();
+    }
+
+    // pour la récupération de la BD
+    public User(Integer userId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName,
+                Locality locality, String email, String phone, Character gender)
+            throws StringInputException, DateException, CharacterInputException {
+        this(password, lastName, firstName, null,null,birthDate, streetName, locality, email, phone, gender);
+        setUserId(userId);
     }
 
     public User(String password, String lastName, String firstName, GregorianCalendar birthDateJava, String streetName, Locality locality, String email, String phone, char gender) throws CharacterInputException, DateException, StringInputException {
         this(password, lastName, firstName, null, null, birthDateJava, streetName, locality, email, phone, gender);
     }
 
-    public void setUserID() {
-        this.userID = this.lastName.substring(0, 4) + this.firstName.substring(0, 2)
-                + this.phone.substring(phone.length() - 2) + nbrRegistered;
-        nbrRegistered++;
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getMaidenName() {
+        return maidenName;
+    }
+
+    public GregorianCalendar getBirthDate() {
+        return birthDate;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public Locality getLocality() {
+        return locality;
+    }
+
+    public String getIdentity() {
+        return firstName + " " + lastName;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+        if (userId > nbrRegistered)
+            nbrRegistered = userId;
     }
 
     public void setPassword(String password) throws StringInputException {
@@ -138,8 +190,12 @@ public class User {
         return phone;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public String toString () {
-        return firstName + " " + lastName + " (" + userID + ")" +
+        return getIdentity() + " (" + userId + ")" +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +
                 " et habitant " + streetName + " " + locality + " a l'email " + email +

@@ -1,4 +1,9 @@
-package userInterface;
+package userInterface.frames;
+
+import userInterface.panels.ButtonsUser;
+import userInterface.panels.NewCustomerForm;
+import userInterface.panels.NewEmployeeForm;
+import userInterface.panels.NewUserForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +12,7 @@ import java.awt.event.*;
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu coffIG;
-    private JMenuItem addCustomer, addEmployee;
+    private JMenuItem addCoffee, addCustomer, addEmployee;
 
     private Container windowContainer;
     public MainWindow(){
@@ -24,6 +29,11 @@ public class MainWindow extends JFrame {
 
         coffIG = new JMenu("Ajout");
         menuBar.add(coffIG);
+
+        addCoffee = new JMenuItem("Ajout d'un café");
+        coffIG.add(addCoffee);
+        addCoffee.addActionListener(new AddCoffeeListener());
+        addCoffee.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
 
         addCustomer = new JMenuItem("Ajout d'un client");
         coffIG.add(addCustomer);
@@ -63,6 +73,13 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsUser(MainWindow.this, employeeForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+        }
+    }
+
+    private class AddCoffeeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            NewCoffeeFrame coffeeFrame = new NewCoffeeFrame();
         }
     }
 }

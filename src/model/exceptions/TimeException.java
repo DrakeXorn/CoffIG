@@ -1,11 +1,12 @@
 package model.exceptions;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class TimeException extends Exception {
-    private Date wrongEndTime;
+    private LocalTime wrongEndTime;
 
-    public TimeException(Date endTime) {
+    public TimeException(LocalTime endTime) {
         wrongEndTime = endTime;
     }
 

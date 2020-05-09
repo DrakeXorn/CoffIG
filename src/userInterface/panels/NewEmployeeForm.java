@@ -1,7 +1,6 @@
-package userInterface;
+package userInterface.panels;
 
 import model.*;
-import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
@@ -32,7 +31,7 @@ public class NewEmployeeForm extends JPanel {
         hireDate.getModel().setMonth(0);
         hireDate.getModel().setDay(1);
         hireDate.getModel().setSelected(true);
-        this.add((JComponent) hireDate);
+        this.add(hireDate);
 
         this.add(new JLabel(""));
 
@@ -52,7 +51,7 @@ public class NewEmployeeForm extends JPanel {
         endContractDate.getModel().setMonth(0);
         endContractDate.getModel().setDay(1);
         endContractDate.getModel().setSelected(false);
-        this.add((JComponent) endContractDate);
+        this.add(endContractDate);
 
         discountLabel = new JLabel("Remise* :");
         discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
