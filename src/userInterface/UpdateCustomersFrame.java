@@ -2,32 +2,31 @@ package userInterface;
 
 import controller.CustomerController;
 import model.Customer;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AllCustomerFrame extends JFrame {
-    private AllCustomersModel model;
+class UpdateCustomersFrame extends JFrame {
+    private UpdateCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
     private ListSelectionModel listSelect;
-    private JButton modify, delete;
+    private JButton modify;
     private CustomerController controller;
     private MainWindow mainWindow;
     private Container container;
 
-    public AllCustomerFrame(MainWindow window, Boolean isOnlyDisplay){
-        super("Affichage de tous les clients");
-        this.setBounds(100, 50, 1500, 600);
+    public UpdateCustomersFrame(MainWindow window){
+        super("Modifier un client");
+        this.setBounds(90, 90, 800, 400);
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
         mainWindow = window;
         controller = new CustomerController();
 
         try {
-            model = new AllCustomersModel(controller.getAllCustomers());
+            model = new UpdateCustomersModel(controller.getAllCustomers());
             customerTable = new JTable(model);
             customerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -37,11 +36,10 @@ public class AllCustomerFrame extends JFrame {
             scrollPane = new JScrollPane((customerTable));
             container.add(scrollPane, BorderLayout.CENTER);
 
-            if(!isOnlyDisplay){
-                modify = new JButton("Modifier un client");
-                container.add(modify, BorderLayout.SOUTH);
-                modify.addActionListener(new ModifyListener());
-            }
+            modify = new JButton("Modifier un client");
+            container.add(modify, BorderLayout.SOUTH);
+            modify.addActionListener(new ModifyListener());
+
             setVisible(true);
 
         } catch (Exception exception) {
@@ -65,10 +63,9 @@ public class AllCustomerFrame extends JFrame {
                 mainWindow.setVisible(true);
                 setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Sélectionnez un client à modifier ou supprimer !",
+                JOptionPane.showMessageDialog(null, "Sélectionnez un client à modifier !",
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }
 }

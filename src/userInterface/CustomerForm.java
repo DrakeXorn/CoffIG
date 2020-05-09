@@ -1,7 +1,7 @@
 package userInterface;
 
+import controller.CustomerController;
 import model.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,10 +13,13 @@ public class CustomerForm extends JPanel {
     private JLabel satisfactionDegreeLabel;
     private JSpinner degree;
     private UserForm userInfos;
+    private CustomerController controller;
+    private Customer customerToUpdate;
 
     public CustomerForm(UserForm userInfos, Customer customerToModify){
         this.setLayout(new GridLayout(4, 1, 5, 5));
         this.userInfos = userInfos;
+        customerToUpdate = customerToModify;
 
         this.add(new JLabel(""));
 
@@ -85,4 +88,28 @@ public class CustomerForm extends JPanel {
         }
         return customer;
     }
+
+    public Customer updateCustomer() {
+        controller = new CustomerController();
+        Customer customer = null;
+        try {
+            customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
+                    userInfos.getGender(), wantsAdvertising.isSelected());
+
+            customer.setSatisfactionDegree(wantsSatisfactionDegree.isSelected() ? (Integer)degree.getValue() : null);
+
+            if(wantsLoyaltyCard.isSelected()) {
+                customer.addLoyaltyCard(customerToUpdate.getLoyaltyCard() != null ? customerToUpdate.getLoyaltyCard() :
+                        new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), customer));
+            }
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
+        }
+        return customer;
+    }
+
+
 }

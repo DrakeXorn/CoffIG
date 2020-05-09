@@ -2,9 +2,7 @@ package userInterface;
 
 import controller.CustomerController;
 import model.*;
-import model.exceptions.AddCustomerException;
-import model.exceptions.ConnectionException;
-
+import model.exceptions.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -45,12 +43,12 @@ public class ButtonsAddUserForm extends JPanel {
                     user = ((CustomerForm)form).createCustomer();
                     controller.addCustomer((Customer)user);
                 } else {
-                    user = ((NewEmployeeForm)form).createEmployee();
+                    user = ((EmployeeForm)form).createEmployee();
                     //controller.addEmployee((Employee)user);
                 }
-                JOptionPane.showMessageDialog(null, user , "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (AddCustomerException | ConnectionException exception) {
+            } catch (AddException | ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
@@ -70,7 +68,7 @@ public class ButtonsAddUserForm extends JPanel {
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, customer), BorderLayout.SOUTH);
             }
             else {
-                NewEmployeeForm employee = new NewEmployeeForm(user);
+                EmployeeForm employee = new EmployeeForm(user);
                 parent.getWindowContainer().add(employee, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, employee), BorderLayout.SOUTH);
             }

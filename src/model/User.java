@@ -1,5 +1,6 @@
 package model;
 
+import controller.CustomerController;
 import model.exceptions.*;
 
 import java.time.LocalDate;
@@ -9,7 +10,6 @@ import java.util.GregorianCalendar;
 
 public class User {
     private final static int AGE_MIN = 16;
-    private static int nbrRegistered = 0;
     private Integer userID;
     private String password;
     private String lastName, firstName, secondName, maidenName;
@@ -19,12 +19,13 @@ public class User {
     private String phone;
     private Character gender;
     private Locality locality;
+    private CustomerController controller;
 
-    public User(String password, String lastName, String firstName, String secondName,
-                String maidenName, GregorianCalendar birthDate, String streetName, Locality locality, String email,
-                String phone, Character gender) throws StringInputException, DateException, CharacterInputException {
-        userID = nbrRegistered;
-        nbrRegistered++;
+    // pour la création avant l'insertion
+    public User(String password, String lastName, String firstName, String secondName, String maidenName,
+                GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
+            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+        setUserID();
         setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
@@ -38,18 +39,19 @@ public class User {
         this.locality = locality;
     }
 
-    // pour la récupération de la BD
-    public User(Integer userID, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName,
-                Locality locality, String email, String phone, Character gender)
-            throws StringInputException, DateException, CharacterInputException {
-        this(password, lastName, firstName, null,null,birthDate, streetName, locality, email, phone, gender);
-        setUserID(userID);
+    // pour la récupération et la modification d'un user
+    public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
+                GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
+            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+        this(password, lastName, firstName, secondName, maidenName,birthDate, streetName, locality, email, phone, gender);
+        this.userID = userID;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-        if (userID > nbrRegistered)
-            nbrRegistered = userID;
+    public void setUserID() throws AllDataException, ConnectionException {
+        if(userID == null) {
+            controller = new CustomerController();
+            this.userID = controller.getLastCustomerId() + 1;
+        }
     }
 
     public void setPassword(String password) throws StringInputException {
@@ -96,10 +98,9 @@ public class User {
     public void setBirthDate(GregorianCalendar birthDate) throws DateException {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
         if(birthDate.after(today))
-            throw new DateException(birthDate, today);
+            throw new DateException(birthDate, "La date de naissance ne doit pas exécer aujourd'hui !");
         if(Period.between(LocalDate.ofInstant(birthDate.toInstant(), birthDate.getTimeZone().toZoneId()), LocalDate.now()).getYears() < AGE_MIN)
-            throw new DateException(birthDate, new GregorianCalendar(today.get(Calendar.YEAR) - AGE_MIN,
-                    today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
+            throw new DateException(birthDate, "L'utilisateur doit avoir minimum 16 ans pour s'inscrire !");
         this.birthDate = birthDate;
     }
 
@@ -181,11 +182,15 @@ public class User {
         return locality;
     }
 
-    public String toString () {
+    public String description () {
         return firstName + " " + lastName + " (" + userID + ")" +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +
                 " et habitant " + streetName + " " + locality + " a l'email " + email +
                 " et le numéro " + phone;
+    }
+
+    public String toString(){
+        return lastName + " " + firstName + " (" + userID + ")";
     }
 }

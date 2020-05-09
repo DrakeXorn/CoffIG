@@ -18,7 +18,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr, gender);
         this.hireDate = hireDate;
         setEndContractDate(endContractDate);
@@ -36,7 +36,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
@@ -56,7 +56,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
@@ -70,7 +70,7 @@ public class Employee extends User {
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
         if(endContractDate != null){
             if(endContractDate.before(hireDate))
-                throw new DateException(endContractDate, hireDate);
+                throw new DateException(endContractDate, "La date de fin de contrat ne doit pas se trouver avant la date de début !");
             this.endContractDate = endContractDate;
         }
     }

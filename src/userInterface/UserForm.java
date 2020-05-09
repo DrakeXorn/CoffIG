@@ -9,11 +9,11 @@ import java.awt.*;
 import java.util.*;
 
 public class UserForm extends JPanel {
-    private JLabel  passwordLable, lastNameLabel, firstNameLebel, secondNameLebel, maidenNameLebel,
+    private JLabel  userIdLabel, passwordLabel, lastNameLabel, firstNameLabel, secondNameLabel, maidenNameLabel,
             birthdateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
     private JDatePicker birthdate;
     private JPasswordField password;
-    private JTextField lastName, firstName, secondName, maidenName,
+    private JTextField userId, lastName, firstName, secondName, maidenName,
             streetName, numberStreet, email, phone;
     private JRadioButton male, female;
     private ButtonGroup buttonGroup;
@@ -24,11 +24,18 @@ public class UserForm extends JPanel {
 
     public UserForm(Customer customerToModify) {
         controller = new CustomerController();
-        this.setLayout(new GridLayout(12, 2, 5, 5));
+        this.setLayout(new GridLayout(13, 2, 5, 5));
 
-        passwordLable = new JLabel("Mot de passe* :");
-        passwordLable.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(passwordLable);
+        userIdLabel = new JLabel("Identifiant : ");
+        userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(userIdLabel);
+        userId = new JTextField(customerToModify != null ? customerToModify.getUserID().toString() : null);
+        userId.setEnabled(false);
+        this.add(userId);
+
+        passwordLabel = new JLabel("Mot de passe* :");
+        passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(passwordLabel);
         password = new JPasswordField(customerToModify != null ? customerToModify.getPassword() : null);
         this.add(password);
 
@@ -38,21 +45,21 @@ public class UserForm extends JPanel {
         lastName = new JTextField(customerToModify != null ? customerToModify.getLastName() : null);
         this.add(lastName);
 
-        firstNameLebel = new JLabel("Prénom* :");
-        firstNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(firstNameLebel);
+        firstNameLabel = new JLabel("Prénom* :");
+        firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(firstNameLabel);
         firstName = new JTextField(customerToModify != null ? customerToModify.getFirstName() : null);
         this.add(firstName);
 
-        secondNameLebel = new JLabel("Second prénom :");
-        secondNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(secondNameLebel);
+        secondNameLabel = new JLabel("Second prénom :");
+        secondNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(secondNameLabel);
         secondName = new JTextField(customerToModify != null ? customerToModify.getSecondName() : null);
         this.add(secondName);
 
-        maidenNameLebel = new JLabel("Nom de jeune fille :");
-        maidenNameLebel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(maidenNameLebel);
+        maidenNameLabel = new JLabel("Nom de jeune fille :");
+        maidenNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(maidenNameLabel);
         maidenName = new JTextField(customerToModify != null ? customerToModify.getMaidenName() : null);
         this.add(maidenName);
 
@@ -102,17 +109,17 @@ public class UserForm extends JPanel {
 
         try {
             localities = controller.getAllLocalities();
-            localitiesBox = new JComboBox<Locality>();
+            localitiesBox = new JComboBox<>();
             for (int i = 0; i < localities.size(); i++)
                 localitiesBox.addItem(localities.get(i));
             localitiesBox.setMaximumRowCount(5);
             if(customerToModify != null)
-                localitiesBox.setSelectedItem(customerToModify.getLocality()); // ne fonctionne pas
+                localitiesBox.setSelectedItem(customerToModify.getLocality());
             this.add(localitiesBox);
 
         } catch (AllDataException | ConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
 
         emailLabel = new JLabel("Email* :");
@@ -126,6 +133,10 @@ public class UserForm extends JPanel {
         this.add(phoneLabel);
         phone = new JTextField(customerToModify != null ? customerToModify.getPhone() : null);
         this.add(phone);
+    }
+
+    public Integer getUserId() {
+        return Integer.parseInt(userId.getText());
     }
 
     public String getPassword() {

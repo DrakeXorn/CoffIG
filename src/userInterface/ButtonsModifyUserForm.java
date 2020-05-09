@@ -1,11 +1,7 @@
 package userInterface;
 
 import controller.CustomerController;
-import model.Customer;
-import model.User;
-import model.exceptions.AddCustomerException;
-import model.exceptions.ConnectionException;
-
+import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,10 +39,11 @@ public class ButtonsModifyUserForm extends JPanel{
         public void actionPerformed(ActionEvent event) {
             try {
                 if(form instanceof CustomerForm){
-                    user = ((CustomerForm)form).createCustomer();
+                    user = ((CustomerForm)form).updateCustomer();
+
                     controller.modifyCustomer((Customer)user);
                 } else {
-                    user = ((NewEmployeeForm)form).createEmployee();
+                    user = ((EmployeeForm)form).createEmployee();
                     //controller.modifyEmployee((Employee)user);
                 }
                 JOptionPane.showMessageDialog(null, user , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
@@ -62,7 +59,7 @@ public class ButtonsModifyUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             parent.getWindowContainer().removeAll();
-            AllCustomerFrame allCustomerPanel = new AllCustomerFrame(parent, false);
+            UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(parent);
         }
     }
 }

@@ -124,7 +124,5 @@ fabric.properties
 hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,intellij,database
-/.idea/
 
-!/src/
-/projet-b2.iml
+**/*.properties

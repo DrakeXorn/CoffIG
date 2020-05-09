@@ -2,14 +2,13 @@ package userInterface;
 
 import model.*;
 import org.jdatepicker.JDatePicker;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.GregorianCalendar;
 
-public class NewEmployeeForm extends JPanel {
+public class EmployeeForm extends JPanel {
     private JLabel hireDateLabel, endContractDateLabel, discountLabel;
     private JDatePicker hireDate, endContractDate;
     private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContrat;
@@ -17,7 +16,7 @@ public class NewEmployeeForm extends JPanel {
 
     private UserForm userInfos;
 
-    public NewEmployeeForm(UserForm userInfos) {
+    public EmployeeForm(UserForm userInfos) {
         this.setLayout(new GridLayout(5, 2, 5, 5));
         this.userInfos = userInfos;
 

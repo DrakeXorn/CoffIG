@@ -27,6 +27,18 @@ public class Food {
         this.stockLocation = stockLocation;
     }
 
+    // pour la recherche des anciennes commandes
+    public Food(Integer foodID, String label) {
+        this.foodID = foodID;
+        if (foodID > nbrFoods)
+            nbrFoods = foodID + 1;
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
     public void setPrice(Double price) throws DoubleInputException {
         if (price < 0)
             throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");
@@ -34,6 +46,6 @@ public class Food {
     }
 
     public String toString() {
-        return foodID + ", " + label + ", " + price;
+        return label + " (ID : " + foodID;
     }
 }

@@ -7,29 +7,40 @@ import java.util.ArrayList;
 public class Drink {
     private String label;
     private Coffee coffee;
-    private String size;
     private Boolean isCold;
-    private ArrayList<Supplement> supplements;
+    private ArrayList<Topping> supplements;
 
-    public Drink(String label, Coffee coffee, String size, Boolean isCold) throws StringInputException {
+    public Drink(String label, Coffee coffee, Boolean isCold) {
         this.label = label;
         this.coffee = coffee;
-        setSize(size);
         this.isCold = isCold;
         supplements = new ArrayList<>();
     }
 
-    public void setSize(String size) throws StringInputException {
-        if (!size.toLowerCase().equals("small") && !size.toLowerCase().equals("medium") && !size.toLowerCase().equals("large"))
-            throw new StringInputException(size, "la taille", "La taille doit être small, medium ou large !");
-        this.size = size;
+    // pour la recherche des anciennes commandes
+    public Drink(String label, Boolean isCold) {
+        this.label = label;
+        this.isCold = isCold;
+        supplements = new ArrayList<>();
     }
 
-    public void addSupplement(Supplement supplement) {
+    public String getLabel() {
+        return label;
+    }
+
+    public Boolean getCold() {
+        return isCold;
+    }
+
+    public void addSupplement(Topping supplement) {
         supplements.add(supplement);
     }
 
-    public void removeSupplement(Supplement supplement) {
+    public void removeSupplement(Topping supplement) {
         supplements.remove(supplement);
+    }
+
+    public String toString(){
+        return label + (isCold ? " froid " : " chaud ");
     }
 }

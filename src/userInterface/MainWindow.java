@@ -6,8 +6,11 @@ import java.awt.event.*;
 
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
-    private JMenu addNew, modify, displayAll, search;
-    private JMenuItem addCustomer, addEmployee, modifyCustomer, allCustomers;
+    private JMenu addNew, upDate, displayAll, search;
+    private JMenuItem addCustomer, addEmployee, addCoffee,
+            updateCustomer, updateEmployee, updateCoffee,
+            allCustomers, allEmployees, allCoffees,
+            searchOrders, searchAdvantages, searchServices;
     private Container windowContainer;
 
     public MainWindow(){
@@ -22,6 +25,7 @@ public class MainWindow extends JFrame {
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 
+
         addNew = new JMenu("Ajouter");
         menuBar.add(addNew);
 
@@ -33,12 +37,23 @@ public class MainWindow extends JFrame {
         addNew.add(addEmployee);
         addEmployee.addActionListener(new AddEmployeeListener());
 
-        modify = new JMenu("Modifier");
-        menuBar.add(modify);
+        addCoffee = new JMenuItem("Ajouter un café");
+        addNew.add(addCoffee);
 
-        modifyCustomer = new JMenuItem("Modifier un client");
-        modify.add(modifyCustomer);
-        modifyCustomer.addActionListener(new ModifyCustomerListener());
+
+        upDate = new JMenu("Modifier");
+        menuBar.add(upDate);
+
+        updateCustomer = new JMenuItem("Modifier un client");
+        upDate.add(updateCustomer);
+        updateCustomer.addActionListener(new ModifyCustomerListener());
+
+        updateEmployee = new JMenuItem("Modifier un employé");
+        upDate.add(updateEmployee);
+
+        updateCoffee = new JMenuItem("Modifier un café");
+        upDate.add(updateCoffee);
+
 
         displayAll = new JMenu("Afficher");
         menuBar.add(displayAll);
@@ -47,8 +62,27 @@ public class MainWindow extends JFrame {
         displayAll.add(allCustomers);
         allCustomers.addActionListener(new AllCustomerListener());
 
+        allEmployees = new JMenuItem("Afficher tous les employés");
+        displayAll.add(allEmployees);
+
+        allCoffees = new JMenuItem("Afficher tous les cafés");
+        displayAll.add(allCoffees);
+
+
+
         search = new JMenu("Rechercher");
         menuBar.add(search);
+
+        searchOrders = new JMenuItem("Rechercher les anciennes commandes d'un client");
+        search.add(searchOrders);
+        searchOrders.addActionListener(new SearchOrdersListener());
+
+        searchAdvantages = new JMenuItem("Rechercher les avantages d'un client");
+        search.add(searchAdvantages);
+
+        searchServices = new JMenuItem("Rechercher les services d'un employé");
+        search.add(searchServices);
+
 
         setVisible(true);
     }
@@ -74,7 +108,7 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
             UserForm user = new UserForm(null);
-            NewEmployeeForm employeeForm = new NewEmployeeForm(user);
+            EmployeeForm employeeForm = new EmployeeForm(user);
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
@@ -85,13 +119,22 @@ public class MainWindow extends JFrame {
 
     private class ModifyCustomerListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            AllCustomerFrame allCustomerPanel = new AllCustomerFrame(MainWindow.this, false);
+            UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(MainWindow.this);
         }
     }
 
     private class AllCustomerListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            AllCustomerFrame allCustomerPanel = new AllCustomerFrame(MainWindow.this, true);
+            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+        }
+    }
+
+    private class SearchOrdersListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            windowContainer.removeAll();
+            windowContainer.add(new SearchOldOrders());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
         }
     }
 }

@@ -25,6 +25,11 @@ public class Locality {
         return city;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Locality && ((Locality)object).toString().equals(toString());
+    }
+
     public String toString(){
         return postalCode + " " + city;
     }

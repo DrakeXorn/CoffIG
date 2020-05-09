@@ -2,10 +2,8 @@ package userInterface;
 
 import model.Customer;
 import model.exceptions.AllDataException;
-
 import javax.swing.table.*;
 import java.util.*;
-
 
 public class AllCustomersModel extends AbstractTableModel {
 
@@ -51,8 +49,8 @@ public class AllCustomersModel extends AbstractTableModel {
             case 0 : return customer.getUserID();
             case 1: return customer.getLastName();
             case 2 : return customer.getFirstName();
-            case 3 : return customer.getSecondName() != null ? customer.getSecondName() : null;
-            case 4 : return customer.getMaidenName() != null ? customer.getMaidenName() : null;
+            case 3 : return customer.getSecondName();
+            case 4 : return customer.getMaidenName();
             case 5 : return customer.getBirthDate().getTime();
             case 6 : return customer.getStreetName();
             case 7 : return customer.getLocality();
@@ -60,7 +58,7 @@ public class AllCustomersModel extends AbstractTableModel {
             case 9 : return customer.getPhone();
             case 10 : return customer.getGender();
             case 11 : return customer.getWantsAdvertising();
-            case 12 : return customer.getSatisfactionDegree() != null ? customer.getSatisfactionDegree() : null;
+            case 12 : return customer.getSatisfactionDegree();
             case 13 : return customer.getLoyaltyCard() != null ? customer.getLoyaltyCard().getLoyaltyCardID() : null;
             default : return null;
         }

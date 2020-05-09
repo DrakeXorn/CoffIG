@@ -1,10 +1,10 @@
 package model.exceptions;
 
-public class AddCustomerException extends Exception {
+public class AddException extends Exception {
     private String objet;
     private String exceptionMessage;
 
-    public AddCustomerException(String objet, String message){
+    public AddException(String objet, String message){
         exceptionMessage = message;
         this.objet = objet;
     }
