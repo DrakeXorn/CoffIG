@@ -26,5 +26,4 @@ public class CustomerController {
     public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException {
         manager.modifyCustomer(customer);
     }
-
 }
