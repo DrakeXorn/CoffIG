@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.StringInputException;
-
 import java.util.ArrayList;
 
 public class Drink {

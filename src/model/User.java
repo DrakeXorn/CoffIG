@@ -55,21 +55,22 @@ public class User {
     }
 
     public void setPassword(String password) throws StringInputException {
-        if(password.isEmpty())
+
+        if (password.isEmpty())
             throw new StringInputException(password, null, "Le mot de passe est un champ obligatoire !");
         this.password = password;
     }
 
     public void setLastName(String lastName) throws StringInputException {
-        if(lastName.isEmpty())
+        if (lastName.isEmpty())
             throw new StringInputException(lastName, null, "Le nom est un champ obligatoire !");
-        if(!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+        if (!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
             throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws StringInputException {
-        if(firstName.isEmpty())
+        if (firstName.isEmpty())
             throw new StringInputException(firstName, null, "Le prénom est un champ obligatoire !");
         if(!firstName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
            throw new StringInputException(firstName, null, "Le prénom se compose uniquement de lettres !");
@@ -111,9 +112,9 @@ public class User {
     }
 
     public void setEmail(String email) throws StringInputException {
-        if(email.isEmpty())
+        if (email.isEmpty())
             throw new StringInputException(email, null, "L'email est un champ obligatoire !");
-        if(!email.matches("^[a-zA-ZÀ-ÿ0-9]+.?-?[a-zA-ZÀ-ÿ0-9]+@[a-zA-ZÀ-ÿ]+.[a-zA-ZÀ-ÿ]+$"))
+        if (!email.matches("^[a-zA-ZÀ-ÿ0-9]+.?-?[a-zA-ZÀ-ÿ0-9]+@[a-zA-ZÀ-ÿ]+.[a-zA-ZÀ-ÿ]+$"))
             throw new StringInputException(email, null, "L'email a comme format xxxxxxx@xxxxxx.xxx !");
         this.email = email;
     }
