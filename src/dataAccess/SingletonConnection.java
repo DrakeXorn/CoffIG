@@ -17,7 +17,7 @@ public class SingletonConnection {
             InputStream stream = SingletonConnection.class.getClassLoader().getResourceAsStream("dbConfig.properties");
 
             if (stream != null) properties.load(stream);
-            else throw new FileNotFoundException("dbConfig.properties");
+            else throw new FileNotFoundException("dbConfig.properties non trouvé. Veuillez le créer.");
 
             username = properties.getProperty("user");
             password = properties.getProperty("password");

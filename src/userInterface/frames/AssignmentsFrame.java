@@ -16,19 +16,18 @@ public class AssignmentsFrame extends JFrame {
     private JButton goBackButton;
 
     public AssignmentsFrame(ArrayList<Assignment> assignments, String employeeIdentity) {
-        super("Services de " + employeeIdentity);
-
         setBounds(50, 200, 700, 300);
         setLayout(new BorderLayout());
         container = getContentPane();
-        updateTable(assignments);
+        updateFrame(assignments, employeeIdentity);
         goBackButton = new JButton("Retour");
         goBackButton.addActionListener(new GoBackListener());
 
         add(goBackButton, BorderLayout.SOUTH);
     }
 
-    public void updateTable(ArrayList<Assignment> assignments) {
+    public void updateFrame(ArrayList<Assignment> assignments, String employeeIdentity) {
+        setTitle("Services de " + employeeIdentity);
         if (scrollPane != null)
             container.remove(scrollPane);
         assignmentsTable = new JTable(new AssignmentsModel(assignments));

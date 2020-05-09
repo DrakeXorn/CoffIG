@@ -1,5 +1,6 @@
 package userInterface.panels;
 
+import controller.CustomerController;
 import model.*;
 
 import javax.swing.*;
@@ -8,36 +9,51 @@ import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class NewCustomerForm extends JPanel {
+public class CustomerForm extends JPanel {
     private JCheckBox wantsAdvertising, wantsSatisfactionDegree, wantsLoyaltyCard;
     private JLabel satisfactionDegreeLabel;
     private JSpinner degree;
-    private NewUserForm userInfos;
+    private UserForm userInfos;
+    private CustomerController controller;
+    private Customer customerToUpdate;
 
-    public NewCustomerForm(NewUserForm userInfos){
+    public CustomerForm(UserForm userInfos, Customer customerToModify){
         this.setLayout(new GridLayout(4, 1, 5, 5));
         this.userInfos = userInfos;
+        customerToUpdate = customerToModify;
 
         this.add(new JLabel(""));
 
         wantsSatisfactionDegree = new JCheckBox("Je souhaite partager mon degré de satisfaction");
         wantsSatisfactionDegree.setHorizontalAlignment(SwingConstants.CENTER);
+        wantsSatisfactionDegree.setSelected(customerToModify != null && customerToModify.getSatisfactionDegree() != null);
         this.add(wantsSatisfactionDegree);
         wantsSatisfactionDegree.addItemListener(new WantsSatisfactionDegreeListener());
 
         satisfactionDegreeLabel = new JLabel("Degré de satisfaction (entre 1 et 5) :");
         satisfactionDegreeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(satisfactionDegreeLabel);
-        degree = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
-        degree.setEnabled(false);
+
+        if(customerToModify != null && customerToModify.getSatisfactionDegree() != null){
+            degree = new JSpinner(new SpinnerNumberModel((int)customerToModify.getSatisfactionDegree(), 1, 5, 1));
+            degree.setEnabled(true);
+        } else {
+            degree = new JSpinner(new SpinnerNumberModel( 1, 1, 5, 1));
+            degree.setEnabled(false);
+        }
+
         this.add(degree);
 
         wantsLoyaltyCard = new JCheckBox("Je souhaite posséder une carte de fidélité");
         wantsLoyaltyCard.setHorizontalAlignment(SwingConstants.CENTER);
+        wantsLoyaltyCard.setSelected(customerToModify != null && customerToModify.getLoyaltyCard() != null);
+
         this.add(wantsLoyaltyCard);
 
         wantsAdvertising = new JCheckBox("Je souhaite recevoir la newsletter");
         wantsAdvertising.setHorizontalAlignment(SwingConstants.CENTER);
+        wantsAdvertising.setSelected(customerToModify != null && customerToModify.getWantsAdvertising());
+
         this.add(wantsAdvertising);
     }
 
@@ -56,7 +72,7 @@ public class NewCustomerForm extends JPanel {
     public Customer createCustomer() {
         Customer customer = null;
         try {
-            customer = new Customer(userInfos.getPasseword(), userInfos.getLastName(), userInfos.getFirstName(),
+            customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
                     userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
@@ -65,14 +81,33 @@ public class NewCustomerForm extends JPanel {
                 customer.setSatisfactionDegree((Integer)degree.getValue());
 
             if(wantsLoyaltyCard.isSelected())
-                customer.addLoyaltyCard(new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), 100, customer));
-
-            JOptionPane.showMessageDialog(null, customer,
-                    "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                customer.addLoyaltyCard(new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), customer));
 
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
+        }
+        return customer;
+    }
+
+    public Customer updateCustomer() {
+        controller = new CustomerController();
+        Customer customer = null;
+        try {
+            customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
+                    userInfos.getGender(), wantsAdvertising.isSelected());
+
+            customer.setSatisfactionDegree(wantsSatisfactionDegree.isSelected() ? (Integer)degree.getValue() : null);
+
+            if(wantsLoyaltyCard.isSelected()) {
+                customer.addLoyaltyCard(customerToUpdate.getLoyaltyCard() != null ? customerToUpdate.getLoyaltyCard() :
+                        new LoyaltyCard((GregorianCalendar)Calendar.getInstance(), customer));
+            }
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
         return customer;
     }

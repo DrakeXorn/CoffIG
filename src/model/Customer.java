@@ -11,26 +11,32 @@ public class Customer extends User {
     private LoyaltyCard loyaltyCard;
     private ArrayList<Order> orders;
 
+    // pour la création avant l'insertion
     public Customer(String password, String lastName, String firstName, String secondName,
                     String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
                     String email, String phone, Character gender, Boolean wantsAdvertising)
-            throws DateException, StringInputException, CharacterInputException {
-        super(password, lastName, firstName, secondName, maidenName,
-                birthDate, streetName, locality, email, phone, gender);
-
+            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
+        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
         this.wantsAdvertising = wantsAdvertising;
         orders = new ArrayList<>();
     }
 
-    public Customer(String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
-                    String email, String phone, Character gender)
-            throws DateException, StringInputException, CharacterInputException {
-        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender, Boolean.FALSE);
+    // pour la modification d'un user
+    public Customer(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
+                GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
+                    Boolean wantsAdvertising)
+            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+        super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
+        this.wantsAdvertising = wantsAdvertising;
+        orders = new ArrayList<>();
     }
 
-    public Customer(String password, String lastName, String firstName, GregorianCalendar birthDateJava, String streetName, Locality locality, String email, String phone, char gender, boolean wantsAdvertising) throws StringInputException, DateException, CharacterInputException {
-        super(password, lastName, firstName, birthDateJava, streetName, locality, email, phone, gender);
+    // pour la récupération de la BD
+    public Customer(Integer userID, String password, String lastName, String firstName,
+                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
+                    Boolean wantsAdvertising)
+            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
+        this(userID, password, lastName, firstName,  null, null, birthDate,  streetName,  locality,  email,  phone,  gender, wantsAdvertising);
     }
 
     public Boolean getWantsAdvertising() {
@@ -50,13 +56,16 @@ public class Customer extends User {
     }
 
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
-        if (satisfactionDegree < 0 || satisfactionDegree > 5)
+        if (satisfactionDegree != null && (satisfactionDegree < 0 || satisfactionDegree > 5))
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
         this.satisfactionDegree = satisfactionDegree;
     }
 
     public void addLoyaltyCard(LoyaltyCard card) {
         loyaltyCard = card;
+    }
+    public void removeLoyaltyCard() {
+        loyaltyCard = null;
     }
 
     public void addOrder(Order order) {
@@ -67,8 +76,8 @@ public class Customer extends User {
         orders.addAll(newOrders);
     }
 
-    public String toString() {
-        return super.toString() + ", " +
+    public String description() {
+        return super.description() + ", " +
                 (wantsAdvertising ? " souhaite" : " ne souhaite pas") +
                 " recevoir la newsletter" +
                 (satisfactionDegree != null ? " et a un degré de satisfaction de  " + satisfactionDegree : "");

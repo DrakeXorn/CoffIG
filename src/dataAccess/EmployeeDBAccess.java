@@ -85,7 +85,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
             String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date,street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
-            userStatement.setInt(1, employee.getUserId());
+            userStatement.setInt(1, employee.getUserID());
             userStatement.setString(2, employee.getPassword());
             userStatement.setString(3, employee.getLastName());
             userStatement.setString(4, employee.getFirstName());
@@ -103,7 +103,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getSecondName());
-                userStatement.setInt(2, employee.getUserId());
+                userStatement.setInt(2, employee.getUserID());
                 userStatement.executeUpdate();
             }
 
@@ -112,13 +112,13 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlUser = "update user set maiden_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getMaidenName());
-                userStatement.setInt(2, employee.getUserId());
+                userStatement.setInt(2, employee.getUserID());
                 userStatement.executeUpdate();
             }
 
             String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount,parking_space_number) values (?,?,?,?,?)";
             PreparedStatement employeeStatement = connection.prepareStatement(sqlEmployee);
-            employeeStatement.setInt(1, employee.getUserId());
+            employeeStatement.setInt(1, employee.getUserID());
             employeeStatement.setDate(2, new java.sql.Date(employee.getHireDate().getTimeInMillis()));
             employeeStatement.setBoolean(3, employee.getEmployeeOfMonth());
             employeeStatement.setDouble(4, employee.getDiscount());
@@ -130,7 +130,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlEmployee = "update employee set end_contract_date = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
                 employeeStatement.setDate(1, new java.sql.Date(employee.getEndContractDate().getTimeInMillis()));
-                employeeStatement.setInt(2, employee.getUserId());
+                employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
 
@@ -138,7 +138,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlEmployee = "update employee set manager_id = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
                 employeeStatement.setObject(1, employee.getManager());
-                employeeStatement.setInt(2, employee.getUserId());
+                employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
 

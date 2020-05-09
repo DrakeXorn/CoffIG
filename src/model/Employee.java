@@ -18,7 +18,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr, gender);
         this.hireDate = hireDate;
         setEndContractDate(endContractDate);
@@ -36,7 +36,7 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender);
         this.hireDate = hireDate;
@@ -56,13 +56,13 @@ public class Employee extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException {
+            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
-    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException {
-        super(employeeId, password, lastName, firstName, birthDate, streetName, locality, email, phone, gender);
+    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
+        super(employeeId, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender);
         this.isEmployeeOfMonth = isEmployeeOfMonth;
         this.discount = discount;
     }
@@ -106,9 +106,9 @@ public class Employee extends User {
     }
 
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
-        if (endContractDate != null) {
-            if (endContractDate.before(hireDate))
-                throw new DateException(endContractDate, hireDate);
+        if(endContractDate != null){
+            if(endContractDate.before(hireDate))
+                throw new DateException(endContractDate, "La date de fin de contrat ne doit pas se trouver avant la date de début !");
             this.endContractDate = endContractDate;
         }
     }

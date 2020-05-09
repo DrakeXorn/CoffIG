@@ -7,20 +7,21 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
-    private String loyaltyCardId;
+    private String loyaltyCardID;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
-    private ArrayList<Right> rights;
+    private ArrayList<Advantage> advantages;
     private Customer customer;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
             throws IntegerInputException {
-        this.loyaltyCardId = customer.getPhone();
+        this.customer = customer;
+        if(customer != null)
+            this.loyaltyCardID = customer.getPhone();
+
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
-        this.customer = customer;
-        customer.addLoyaltyCard(this);
-        rights = new ArrayList<>();
+        advantages = new ArrayList<>();
     }
 
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
@@ -28,11 +29,25 @@ public class LoyaltyCard {
         this(registrationDate, 100, customer);
     }
 
-    public LoyaltyCard(String loyaltyCardId, GregorianCalendar registrationDateJava, Integer pointsNumber, Customer customer) throws IntegerInputException {
-        this.loyaltyCardId = loyaltyCardId;
-        registrationDate = registrationDateJava;
+    // constructeur pour récupérer AllCustomers dans DBAccess
+    public LoyaltyCard(String loyaltyCardID, GregorianCalendar registrationDate, Integer pointsNumber)
+            throws IntegerInputException {
+        this.loyaltyCardID = loyaltyCardID;
+        this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
-        this.customer = customer;
+        advantages = new ArrayList<>();
+    }
+
+    public String getLoyaltyCardID() {
+        return loyaltyCardID;
+    }
+
+    public GregorianCalendar getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public Integer getPointsNumber() {
+        return pointsNumber;
     }
 
     public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
@@ -40,17 +55,17 @@ public class LoyaltyCard {
         else this.pointsNumber = pointsNumber;
     }
 
-    public void addAdvantages(ArrayList<Right> newRights) {
-        rights.addAll(newRights);
+    public void addAdvantages(ArrayList<Advantage> newRights) {
+        advantages.addAll(newRights);
     }
 
-    public void removeAdvantages(ArrayList<Right> rightsToDelete) {
-        rights.removeAll(rightsToDelete);
+    public void removeAdvantages(ArrayList<Advantage> rightsToDelete) {
+        advantages.removeAll(rightsToDelete);
     }
 
     public String toString() {
         // TODO: à modifier
-        return "Carte de fidélité numéro : " + loyaltyCardId + " créée le "
+        return "Carte de fidélité numéro : " + loyaltyCardID + " créée le "
                 + registrationDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
                 "/" + registrationDate.get(Calendar.YEAR) +
