@@ -2,9 +2,7 @@ package controller;
 
 import business.CoffeeManager;
 import model.Coffee;
-import model.exceptions.AddCoffeeException;
-import model.exceptions.AllDataException;
-import model.exceptions.ConnectionException;
+import model.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -15,15 +13,15 @@ public class CoffeeController {
         coffeeManager = new CoffeeManager();
     }
 
-    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException {
+    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException {
         return coffeeManager.getAllCoffees();
     }
 
-    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddCoffeeException {
+    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
         return coffeeManager.addCoffee(coffee);
     }
 
-    public int getNbrCoffees() throws ConnectionException, AddCoffeeException {
+    public int getNbrCoffees() throws ConnectionException, AddDataException {
         return coffeeManager.getNbrCoffees();
     }
 }

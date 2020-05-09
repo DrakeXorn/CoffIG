@@ -26,7 +26,7 @@ public class Customer extends User {
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
             throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
-        super(userID, password, lastName, firstName, secondName, maidenName,birthDate, streetName, locality, email, phone, gender);
+        super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
         this.wantsAdvertising = wantsAdvertising;
         orders = new ArrayList<>();
     }
@@ -37,10 +37,6 @@ public class Customer extends User {
                     Boolean wantsAdvertising)
             throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
         this(userID, password, lastName, firstName,  null, null, birthDate,  streetName,  locality,  email,  phone,  gender, wantsAdvertising);
-    }
-  
-    public Customer(String password, String lastName, String firstName, GregorianCalendar birthDateJava, String streetName, Locality locality, String email, String phone, char gender, boolean wantsAdvertising) throws StringInputException, DateException, CharacterInputException {
-        super(password, lastName, firstName, birthDateJava, streetName, locality, email, phone, gender);
     }
 
     public Boolean getWantsAdvertising() {
@@ -58,23 +54,11 @@ public class Customer extends User {
     public ArrayList<Order> getOrders() {
         return orders;
     }
-  
+
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree != null && (satisfactionDegree < 0 || satisfactionDegree > 5))
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
         this.satisfactionDegree = satisfactionDegree;
-    }
-
-    public Boolean getWantsAdvertising() {
-        return wantsAdvertising;
-    }
-
-    public Integer getSatisfactionDegree() {
-        return satisfactionDegree;
-    }
-
-    public LoyaltyCard getLoyaltyCard() {
-        return loyaltyCard;
     }
 
     public void addLoyaltyCard(LoyaltyCard card) {

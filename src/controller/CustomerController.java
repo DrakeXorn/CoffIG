@@ -28,9 +28,4 @@ public class CustomerController {
     public void modifyCustomer(Customer customer) throws ModifyException, ConnectionException {
         manager.modifyCustomer(customer);
     }
-
-    public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
-            throws AllDataException, ConnectionException, StringInputException, IntegerInputException, DoubleInputException {
-        return manager.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
-    }
 }

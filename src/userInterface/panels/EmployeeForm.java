@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.panels;
 
 import model.*;
 import org.jdatepicker.JDatePicker;

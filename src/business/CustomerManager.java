@@ -4,12 +4,10 @@ import dataAccess.*;
 import model.*;
 import model.exceptions.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class CustomerManager {
-    private DataAccess dao;
+    private CustomerDataAccess dao;
 
     public CustomerManager(){
         dao = new CustomerDBAccess();
@@ -30,9 +28,5 @@ public class CustomerManager {
     }
     public void modifyCustomer(Customer customer) throws ModifyException, ConnectionException {
         dao.modifyCustomer(customer);
-    }
-    public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
-            throws AllDataException, ConnectionException, IntegerInputException, StringInputException, DoubleInputException {
-        return dao.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
 }

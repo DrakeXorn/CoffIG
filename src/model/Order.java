@@ -10,7 +10,7 @@ public class Order {
     private static int nbrOrders = 1;
     private Integer orderNumber;
     private GregorianCalendar date;
-    private Boolean isToTakeAway;
+    private Boolean toTakeAway;
     private Customer beneficiary;
     private Employee orderPicker;
     private double price;
@@ -18,12 +18,12 @@ public class Order {
     private ArrayList<FoodOrdering> foodOrderings;
     private ArrayList<DrinkOrdering> drinkOrderings;
 
-    public Order(GregorianCalendar date, Boolean isToTakeAway,
+    public Order(GregorianCalendar date, Boolean toTakeAway,
                  Customer beneficiary, Employee orderPicker) {
         orderNumber = nbrOrders;
         nbrOrders++;
         this.date = date;
-        this.isToTakeAway = isToTakeAway;
+        this.toTakeAway = toTakeAway;
 
         this.beneficiary = beneficiary;
         if(beneficiary != null)
@@ -39,31 +39,11 @@ public class Order {
     public Order(Integer orderNumber, GregorianCalendar date, Boolean isToTakeAway) {
         this.orderNumber = orderNumber;
         this.date = date;
-        this.isToTakeAway = isToTakeAway;
+        this.toTakeAway = isToTakeAway;
         this.price = 0;
 
         foodOrderings = new ArrayList<>();
         drinkOrderings = new ArrayList<>();
-    }
-
-    public ArrayList<FoodOrdering> getFoodOrderings() {
-        return foodOrderings;
-    }
-
-    public ArrayList<DrinkOrdering> getDrinkOrderings() {
-        return drinkOrderings;
-    }
-
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public GregorianCalendar getDate() {
-        return date;
-    }
-
-    public Boolean getToTakeAway() {
-        return isToTakeAway;
     }
 
     public double getPrice() {
@@ -96,12 +76,47 @@ public class Order {
         drinkOrderings.add(drinkOrdering);
     }
 
+    public void removeDrinkOrdering(DrinkOrdering drinkOrdering) {
+        drinkOrderings.remove(drinkOrdering);
+    }
+
+    public static int getNbrOrders() {
+        return nbrOrders;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public GregorianCalendar getDate() {
+        return date;
+    }
+
+    public Boolean isToTakeAway() {
+        return toTakeAway;
+    }
+
+    public Customer getBeneficiary() {
+        return beneficiary;
+    }
+
+    public Employee getOrderPicker() {
+        return orderPicker;
+    }
+
+    public ArrayList<FoodOrdering> getFoodOrderings() {
+        return foodOrderings;
+    }
+
+    public ArrayList<DrinkOrdering> getDrinkOrderings() {
+        return drinkOrderings;
+    }
+
     public String toString (){
         return "Commande " + orderNumber +
-                (isToTakeAway ? " à emporter" : " sur place") +
+                (toTakeAway ? " à emporter" : " sur place") +
                 " passée le " + date.get(Calendar.DAY_OF_MONTH)
                 + "/" + (date.get(Calendar.MONTH ) + 1) +
                 "/" + date.get(Calendar.YEAR);
-
     }
 }

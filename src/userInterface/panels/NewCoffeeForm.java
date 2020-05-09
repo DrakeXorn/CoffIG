@@ -63,7 +63,7 @@ public class NewCoffeeForm extends JPanel {
             alley = new JSpinner(alleyConstraints);
             shelf = new JSpinner(shelfConstraints);
             number = new JSpinner(numberConstraints);
-            countries = new JComboBox<>();
+            setCountries();
             intensity = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
             discoveryDatePicker = new JDatePicker(new UtilDateModel(), "yyyy");
             expirationDatePicker = new JDatePicker();
@@ -76,7 +76,6 @@ public class NewCoffeeForm extends JPanel {
             coffeeID.setEnabled(false);
             coffeeID.setText(String.valueOf(controller.getNbrCoffees() + 1));
 
-            setCountries();
             discoveryDatePicker.setTextEditable(true);
             expirationDatePicker.setTextEditable(true);
 
@@ -141,7 +140,9 @@ public class NewCoffeeForm extends JPanel {
 
     public void setCountries() {
         if (countries == null) {
+            countries = new JComboBox<>();
             ArrayList<String> countriesList = new ArrayList<>();
+
             countriesList.add("");
             for (String country : Locale.getISOCountries()) {
                 Locale locale = new Locale("fr", country);
@@ -163,38 +164,37 @@ public class NewCoffeeForm extends JPanel {
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-           InputCheck.checkInputs(label, weightNeeded, price, packaging, alley, shelf, number, countries,
-                    intensity, expirationDatePicker, quantityBought);
-           JOptionPane.showMessageDialog(NewCoffeeForm.this, "Vous devez remplir tous les champs obligatoires !", "Erreur", JOptionPane.ERROR_MESSAGE);
+            if (!InputCheck.areInputsFilled(label, weightNeeded, price, packaging, alley, shelf, number, countries,
+                    intensity, expirationDatePicker, quantityBought))
+                JOptionPane.showMessageDialog(NewCoffeeForm.this, "Vous devez remplir tous les champs obligatoires !", "Erreur", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    Coffee coffee = new Coffee(label.getText(),
+                            Objects.requireNonNull(countries.getSelectedItem()).toString(),
+                            (Integer) intensity.getValue(),
+                            Double.parseDouble(weightNeeded.getText()),
+                            (discoveryDatePicker.getFormattedTextField().getText().isEmpty() ? null : discoveryDatePicker.getModel().getYear()),
+                            isInGrains.isSelected(),
+                            isEnvironmentFriendly.isSelected(),
+                            Double.parseDouble(price.getText()),
+                            Double.parseDouble(packaging.getText()),
+                            recommendedMoment.getText().toLowerCase(),
+                            new StockLocation(Integer.parseInt(alley.getValue().toString()),
+                                    Integer.parseInt(shelf.getValue().toString()),
+                                    Integer.parseInt(number.getValue().toString()),
+                                    Double.parseDouble(price.getText()),
+                                    Integer.parseInt(quantityBought.getValue().toString()),
+                                    (GregorianCalendar) expirationDatePicker.getModel().getValue()));
 
-           try {
-               Coffee coffee = new Coffee(label.getText(),
-                       Objects.requireNonNull(countries.getSelectedItem()).toString(),
-                       (Integer) intensity.getValue(),
-                       Double.parseDouble(weightNeeded.getText()),
-                       (discoveryDatePicker.getFormattedTextField().getText().isEmpty() ? null : discoveryDatePicker.getModel().getYear()),
-                       isInGrains.isSelected(),
-                       isEnvironmentFriendly.isSelected(),
-                       Double.parseDouble(price.getText()),
-                       Double.parseDouble(packaging.getText()),
-                       recommendedMoment.getText().toLowerCase(),
-                       new StockLocation(Integer.parseInt(alley.getValue().toString()),
-                               Integer.parseInt(shelf.getValue().toString()),
-                               Integer.parseInt(number.getValue().toString()),
-                               Double.parseDouble(price.getText()),
-                               Integer.parseInt(quantityBought.getValue().toString()),
-                               new GregorianCalendar(expirationDatePicker.getModel().getYear(),
-                                       expirationDatePicker.getModel().getMonth(),
-                                       expirationDatePicker.getModel().getDay())));
-
-                if (JOptionPane.showConfirmDialog(NewCoffeeForm.this, coffee, "Confirmer l'ajout ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-                    controller.addCoffee(coffee);
-            } catch (IntegerInputException | DoubleInputException exception) {
-                JOptionPane.showMessageDialog(NewCoffeeForm.this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (ConnectionException connectionException) {
-                JOptionPane.showMessageDialog(NewCoffeeForm.this, connectionException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
-            } catch (AddCoffeeException addCoffeeException) {
-                JOptionPane.showMessageDialog(NewCoffeeForm.this, addCoffeeException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
+                    if (JOptionPane.showConfirmDialog(NewCoffeeForm.this, coffee, "Confirmer l'ajout ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+                        controller.addCoffee(coffee);
+                } catch (IntegerInputException | DoubleInputException exception) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (ConnectionException connectionException) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, connectionException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
+                } catch (AddDataException addDataException) {
+                    JOptionPane.showMessageDialog(NewCoffeeForm.this, addDataException.getMessage(), "Erreur lors de l'ajout dans la base de données", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }

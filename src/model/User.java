@@ -47,6 +47,58 @@ public class User {
         this.userID = userID;
     }
 
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getMaidenName() {
+        return maidenName;
+    }
+
+    public GregorianCalendar getBirthDate() {
+        return birthDate;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public Locality getLocality() {
+        return locality;
+    }
+
+    public String getIdentity() {
+        return firstName + " " + lastName;
+    }
+
     public void setUserID() throws AllDataException, ConnectionException {
         if(userID == null) {
             controller = new CustomerController();
@@ -135,56 +187,8 @@ public class User {
         this.gender = gender;
     }
 
-    public Integer getUserID() {
-        return userID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public String getMaidenName() {
-        return maidenName;
-    }
-
-    public GregorianCalendar getBirthDate() {
-        return birthDate;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Character getGender() {
-        return gender;
-    }
-
-    public Locality getLocality() {
-        return locality;
-    }
-
     public String description () {
-        return firstName + " " + lastName + " (" + userID + ")" +
+        return toString() +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +
                 " et habitant " + streetName + " " + locality + " a l'email " + email +
@@ -192,6 +196,6 @@ public class User {
     }
 
     public String toString(){
-        return lastName + " " + firstName + " (" + userID + ")";
+        return getIdentity() + " (" + userID + ")";
     }
 }

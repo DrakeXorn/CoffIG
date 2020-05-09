@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.tableModels;
 
 import model.DrinkOrdering;
 import model.exceptions.AllDataException;
@@ -38,7 +38,7 @@ public class AllDrinksModel extends AbstractTableModel {
         DrinkOrdering drinkOrdering = contents.get(row);
         return switch(column) {
             case 0 -> drinkOrdering.getDrink().getLabel();
-            case 1 -> drinkOrdering.getDrink().getCold();
+            case 1 -> drinkOrdering.getDrink().isCold();
             case 2 -> drinkOrdering.getSize();
             case 3 -> drinkOrdering.getNbrPieces();
             case 4 -> drinkOrdering.getSellingPrice();

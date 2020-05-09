@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
-    private String loyaltyCardId;
+    private String loyaltyCardID;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
     private ArrayList<Advantage> advantages;
@@ -65,7 +65,7 @@ public class LoyaltyCard {
 
     public String toString() {
         // TODO: à modifier
-        return "Carte de fidélité numéro : " + loyaltyCardId + " créée le "
+        return "Carte de fidélité numéro : " + loyaltyCardID + " créée le "
                 + registrationDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
                 "/" + registrationDate.get(Calendar.YEAR) +

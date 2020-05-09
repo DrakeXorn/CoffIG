@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.tableModels;
 
 import model.Order;
 import model.exceptions.AllDataException;
@@ -38,7 +38,7 @@ public class AllOrdersModel extends AbstractTableModel {
         return switch(column) {
             case 0 -> order.getOrderNumber();
             case 1 -> order.getDate().getTime();
-            case 2 -> order.getToTakeAway();
+            case 2 -> order.isToTakeAway();
             case 3 -> order.getPrice();
             default -> null;
         };

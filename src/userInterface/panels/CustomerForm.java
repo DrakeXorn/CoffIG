@@ -1,7 +1,8 @@
-package userInterface;
+package userInterface.panels;
 
 import controller.CustomerController;
 import model.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

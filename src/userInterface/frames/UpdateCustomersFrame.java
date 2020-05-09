@@ -1,13 +1,18 @@
-package userInterface;
+package userInterface.frames;
 
 import controller.CustomerController;
 import model.Customer;
+import userInterface.panels.ButtonsModifyUserForm;
+import userInterface.panels.CustomerForm;
+import userInterface.tableModels.UpdateCustomersModel;
+import userInterface.panels.UserForm;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class UpdateCustomersFrame extends JFrame {
+public class UpdateCustomersFrame extends JFrame {
     private UpdateCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
@@ -54,9 +59,9 @@ class UpdateCustomersFrame extends JFrame {
             if(!listSelect.isSelectionEmpty()){
                 Customer customerToModify = model.getRow(listSelect.getMinSelectionIndex());
                 mainWindow.getWindowContainer().removeAll();
-                UserForm user = new UserForm(customerToModify);
-                CustomerForm customerForm = new CustomerForm(user, customerToModify);
-                mainWindow.getWindowContainer().add(user, BorderLayout.NORTH);
+                UserForm userForm = new UserForm(customerToModify);
+                CustomerForm customerForm = new CustomerForm(userForm, customerToModify);
+                mainWindow.getWindowContainer().add(userForm, BorderLayout.NORTH);
                 mainWindow.getWindowContainer().add(customerForm, BorderLayout.CENTER);
                 mainWindow.getWindowContainer().add(new ButtonsModifyUserForm(mainWindow, customerForm), BorderLayout.SOUTH);
                 mainWindow.getWindowContainer().repaint();

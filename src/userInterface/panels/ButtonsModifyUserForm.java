@@ -1,7 +1,10 @@
-package userInterface;
+package userInterface.panels;
 
 import controller.CustomerController;
 import model.*;
+import userInterface.frames.MainWindow;
+import userInterface.frames.UpdateCustomersFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -60,6 +63,8 @@ public class ButtonsModifyUserForm extends JPanel{
         public void actionPerformed(ActionEvent event) {
             parent.getWindowContainer().removeAll();
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(parent);
+            parent.getWindowContainer().repaint();
+            parent.setVisible(true);
         }
     }
 }

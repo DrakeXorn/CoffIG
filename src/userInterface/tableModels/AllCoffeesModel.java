@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.tableModels;
 
 import model.Coffee;
 

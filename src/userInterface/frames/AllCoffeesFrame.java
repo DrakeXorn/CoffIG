@@ -3,12 +3,12 @@ package userInterface.frames;
 import controller.CoffeeController;
 import model.exceptions.AllDataException;
 import model.exceptions.ConnectionException;
-import userInterface.AllCoffeesModel;
+import model.exceptions.DoubleInputException;
+import model.exceptions.IntegerInputException;
+import userInterface.tableModels.AllCoffeesModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AllCoffeesFrame extends JFrame {
     private JScrollPane scrollPane;
@@ -44,7 +44,7 @@ public class AllCoffeesFrame extends JFrame {
 
             add(scrollPane);
             setVisible(true);
-        } catch (AllDataException | ConnectionException exception) {
+        } catch (AllDataException | ConnectionException | IntegerInputException | DoubleInputException exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
     }

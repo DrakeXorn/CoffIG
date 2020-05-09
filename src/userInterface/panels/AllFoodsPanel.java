@@ -1,7 +1,8 @@
-package userInterface;
+package userInterface.panels;
 
-import model.DrinkOrdering;
 import model.FoodOrdering;
+import userInterface.tableModels.AllFoodsModel;
+import userInterface.frames.AllOrdersFrame;
 
 import javax.swing.*;
 import java.awt.*;

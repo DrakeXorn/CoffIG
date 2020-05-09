@@ -16,7 +16,7 @@ public class NewCoffeeFrame extends JFrame {
         setBounds(250, 300, 500, 400);
         container.add(new NewCoffeeForm(this));
 
-        this.setVisible(true);
+        setVisible(true);
     }
 
     public void resetForm() {

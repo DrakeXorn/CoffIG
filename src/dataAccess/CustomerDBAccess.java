@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class CustomerDBAccess implements DataAccess{
+public class CustomerDBAccess implements CustomerDataAccess {
     @Override
     public void addCustomer(Customer customer) throws AddException, ConnectionException {
         try {
@@ -107,7 +107,7 @@ public class CustomerDBAccess implements DataAccess{
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlCustomer = "select * from customer c join user u on c.customer_id = u.user_id left outer join loyalty_card lc on c.loyalty_card = lc.loyalty_card_id";
+            String sqlCustomer = "select * from customer c join user u on c.customer_id = u.user_id left outer join loyalty_card lc on c.loyalty_card = lc.loyalty_card_id order by user_id";
             PreparedStatement customerStatement = connection.prepareStatement(sqlCustomer);
             ResultSet datasCustomer = customerStatement.executeQuery();
 
@@ -157,7 +157,7 @@ public class CustomerDBAccess implements DataAccess{
                 customers.add(customer);
             }
         } catch (IOException exception) {
-            throw new AllDataException("la récupération des clients", exception.getMessage());
+            throw new AllDataException(exception.getMessage(), "la récupération des clients");
         } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -330,94 +330,5 @@ public class CustomerDBAccess implements DataAccess{
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-    }
-
-    public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
-            throws AllDataException, ConnectionException, DoubleInputException, StringInputException, IntegerInputException {
-        ArrayList<Order> orders = new ArrayList<>();
-        try {
-            Connection connection = SingletonConnection.getInstance();
-
-            String sqlOrder = "select o.order_number OrderNumber, o.date, o.is_to_take_away, " +
-                    "do.order_number DrinkOrderNumber, do.drink_id, do.drink_label, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
-                    "d.coffee_id, d.label DrinkLabel, d.is_cold, " +
-                    "fo.order_number FoodOrderNumber, fo.nbr_pieces, fo.selling_price FoodPrice, " +
-                    "f.food_id, f.label FoodLabel from `order` o" +
-                    " left outer join drink_ordering do on o.order_number = do.order_number" +
-                    " left outer join drink d on (d.coffee_id = do.drink_id and d.label = do.drink_label)" +
-                    " left outer join food_ordering fo on o.order_number = fo.order_number" +
-                    " left outer join food f on f.food_id = fo.food_id" +
-                    " where o.beneficiary = ?" +
-                    " and o.date between ? and ?";
-
-            if(isToTakeAway && !isOnSite)
-                sqlOrder += " and o.is_to_take_away = true";
-            if(!isToTakeAway && isOnSite)
-                sqlOrder += " and o.is_to_take_away = false";
-
-            PreparedStatement orderStatement = connection.prepareStatement(sqlOrder);
-            orderStatement.setInt(1, customerId);
-            orderStatement.setDate(2, new java.sql.Date(startDate.getTimeInMillis()));
-            orderStatement.setDate(3, new java.sql.Date(endDate.getTimeInMillis()));
-
-            ResultSet datasOrder = orderStatement.executeQuery();
-
-            Order order = null;
-            DrinkOrdering drinkOrdering;
-            int drinkId;
-            FoodOrdering foodOrdering;
-            int foodId;
-            int previousOrderNumber = 0;
-            int currentOrderNumber;
-
-            while(datasOrder.next()) {
-                currentOrderNumber = datasOrder.getInt("OrderNumber");
-
-                if(previousOrderNumber != currentOrderNumber) {
-                    GregorianCalendar dateJava = new GregorianCalendar();
-                    java.sql.Date dateSql = datasOrder.getDate("date");
-                    dateJava.setTime(dateSql);
-
-                    order = new Order(currentOrderNumber,
-                            dateJava,
-                            datasOrder.getBoolean("is_to_take_away"));
-
-                    orders.add(order);
-                    previousOrderNumber = datasOrder.getInt("OrderNumber");
-                }
-
-                drinkId = datasOrder.getInt("DrinkOrderNumber");
-                if(!datasOrder.wasNull()){
-                    drinkOrdering = new DrinkOrdering(
-                                        new Drink(datasOrder.getString("DrinkLabel"), datasOrder.getBoolean("is_cold")),
-                                        datasOrder.getString("size"),
-                                        datasOrder.getInt("nbr_drinks"),
-                                        datasOrder.getDouble("DrinkPrice"));
-
-                    if(!order.getDrinkOrderings().contains(drinkOrdering)){
-                        order.addDrinkOrdering(drinkOrdering);
-                        order.setPrice(datasOrder.getDouble("DrinkPrice"));
-                    }
-                }
-
-                foodId = datasOrder.getInt("FoodOrderNumber");
-                if(!datasOrder.wasNull()){
-                    foodOrdering = new FoodOrdering(
-                            new Food(datasOrder.getInt("food_id"), datasOrder.getString("FoodLabel")),
-                            datasOrder.getInt("nbr_pieces"),
-                            datasOrder.getDouble("FoodPrice"));
-
-                    if(!order.getFoodOrderings().contains(foodOrdering)){
-                        order.addFoodOrdering(foodOrdering);
-                        order.setPrice(datasOrder.getDouble("FoodPrice"));
-                    }
-                }
-            }
-        } catch (IOException exception) {
-            throw new AllDataException("la récupération des commandes", exception.getMessage());
-        } catch (SQLException exception) {
-            throw new ConnectionException(exception.getMessage());
-        }
-        return orders;
     }
 }

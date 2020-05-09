@@ -2,23 +2,32 @@ package model;
 
 import model.exceptions.TimeException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Service {
     private static int nbrServices = 1;
     private Integer serviceID;
-    private Date startTime;
-    private Date endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
-    public Service(Date startTime, Date endTime) throws TimeException {
+    public Service(LocalTime startTime, LocalTime endTime) throws TimeException {
         serviceID = nbrServices;
         nbrServices++;
         this.startTime = startTime;
         setEndTime(endTime);
     }
 
-    public void setEndTime(Date endTime) throws TimeException {
-        if(endTime.before(startTime))
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) throws TimeException {
+        if(endTime.isBefore(startTime))
             throw new TimeException(endTime);
         else this.endTime = endTime;
     }

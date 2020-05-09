@@ -1,6 +1,8 @@
-package userInterface;
+package userInterface.frames;
 
 import controller.CustomerController;
+import userInterface.tableModels.AllCustomersModel;
+
 import javax.swing.*;
 import java.awt.*;
 

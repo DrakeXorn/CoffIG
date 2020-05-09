@@ -1,4 +1,6 @@
-package userInterface;
+package userInterface.frames;
+
+import userInterface.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +41,7 @@ public class MainWindow extends JFrame {
 
         addCoffee = new JMenuItem("Ajouter un café");
         addNew.add(addCoffee);
-
+        addCoffee.addActionListener(new AddCoffeeListener());
 
         upDate = new JMenu("Modifier");
         menuBar.add(upDate);
@@ -82,6 +84,7 @@ public class MainWindow extends JFrame {
 
         searchServices = new JMenuItem("Rechercher les services d'un employé");
         search.add(searchServices);
+        searchServices.addActionListener(new SearchServicesListener());
 
 
         setVisible(true);
@@ -115,6 +118,14 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
+
+    }
+
+    private class AddCoffeeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            NewCoffeeFrame coffeeFrame = new NewCoffeeFrame();
+        }
     }
 
     private class ModifyCustomerListener implements ActionListener{
@@ -132,7 +143,17 @@ public class MainWindow extends JFrame {
     private class SearchOrdersListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
-            windowContainer.add(new SearchOldOrders());
+            windowContainer.add(new SearchOldOrdersPanel());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+        }
+    }
+
+    private class SearchServicesListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            windowContainer.removeAll();
+            windowContainer.add(new SearchAssignmentsPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }

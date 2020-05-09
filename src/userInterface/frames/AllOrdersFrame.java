@@ -1,6 +1,10 @@
-package userInterface;
+package userInterface.frames;
 
 import model.*;
+import userInterface.panels.AllDrinksPanel;
+import userInterface.panels.AllFoodsPanel;
+import userInterface.tableModels.AllOrdersModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

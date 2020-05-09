@@ -61,8 +61,46 @@ public class Employee extends User {
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
+    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
+        super(employeeId, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender);
+        this.isEmployeeOfMonth = isEmployeeOfMonth;
+        this.discount = discount;
+    }
+
+    public GregorianCalendar getHireDate() {
+        return hireDate;
+    }
+
+    public GregorianCalendar getEndContractDate() {
+        return endContractDate;
+    }
+
+    public Boolean getEmployeeOfMonth() {
+        return isEmployeeOfMonth;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public static int getNbrParkingSpaces() {
+        return nbrParkingSpaces;
+    }
+
+    public Integer getParkingSpaceNumber() {
+        return parkingSpaceNumber;
+    }
+
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
     public void setDiscount(Double discount) throws DoubleInputException {
-        if(discount < 0 || discount > 100)
+        if (discount < 0 || discount > 100)
             throw new DoubleInputException(discount, "la remise", "Elle doit être comprise entre 0 et 100%");
         this.discount = discount;
     }
@@ -73,6 +111,14 @@ public class Employee extends User {
                 throw new DateException(endContractDate, "La date de fin de contrat ne doit pas se trouver avant la date de début !");
             this.endContractDate = endContractDate;
         }
+    }
+
+    public void setParkingSpaceNumber(Integer parkingSpaceNumber) {
+        this.parkingSpaceNumber = parkingSpaceNumber;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 
     public void addAssignments(ArrayList<Assignment> newAssignments) {

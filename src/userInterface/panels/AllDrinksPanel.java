@@ -1,6 +1,9 @@
-package userInterface;
+package userInterface.panels;
 
 import model.DrinkOrdering;
+import userInterface.tableModels.AllDrinksModel;
+import userInterface.frames.AllOrdersFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
