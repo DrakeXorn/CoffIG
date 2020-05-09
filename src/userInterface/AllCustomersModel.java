@@ -45,27 +45,27 @@ public class AllCustomersModel extends AbstractTableModel {
 
     public Object getValueAt (int row, int column) {
         Customer customer = contents.get(row);
-        switch(column) {
-            case 0 : return customer.getUserID();
-            case 1: return customer.getLastName();
-            case 2 : return customer.getFirstName();
-            case 3 : return customer.getSecondName();
-            case 4 : return customer.getMaidenName();
-            case 5 : return customer.getBirthDate().getTime();
-            case 6 : return customer.getStreetName();
-            case 7 : return customer.getLocality();
-            case 8 : return customer.getEmail();
-            case 9 : return customer.getPhone();
-            case 10 : return customer.getGender();
-            case 11 : return customer.getWantsAdvertising();
-            case 12 : return customer.getSatisfactionDegree();
-            case 13 : return customer.getLoyaltyCard() != null ? customer.getLoyaltyCard().getLoyaltyCardID() : null;
-            default : return null;
-        }
+        return switch (column) {
+            case 0 -> customer.getUserID();
+            case 1 -> customer.getLastName();
+            case 2 -> customer.getFirstName();
+            case 3 -> customer.getSecondName();
+            case 4 -> customer.getMaidenName();
+            case 5 -> customer.getBirthDate().getTime();
+            case 6 -> customer.getStreetName();
+            case 7 -> customer.getLocality();
+            case 8 -> customer.getEmail();
+            case 9 -> customer.getPhone();
+            case 10 -> customer.getGender();
+            case 11 -> customer.getWantsAdvertising();
+            case 12 -> customer.getSatisfactionDegree();
+            case 13 -> customer.getLoyaltyCard() != null ? customer.getLoyaltyCard().getLoyaltyCardID() : null;
+            default -> null;
+        };
     }
 
-    public Class getColumnClass (int column)
-    { Class c;
+    public Class getColumnClass (int column) {
+        Class c;
         switch (column) {
             case 0: c = String.class; break; // id
             case 1: c = String.class; break; // last name

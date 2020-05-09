@@ -4,7 +4,6 @@ import controller.CustomerController;
 import model.*;
 import model.exceptions.BooleanInputException;
 import model.exceptions.DateException;
-import model.exceptions.StringInputException;
 import org.jdatepicker.JDatePicker;
 import javax.swing.*;
 import java.awt.*;
@@ -34,8 +33,8 @@ public class SearchOldOrders extends JPanel {
         try {
             customers = controller.getAllCustomers();
             customersBox = new JComboBox<>();
-            for(int i = 0; i < customers.size(); i++)
-                customersBox.addItem(customers.get(i));
+            for (Customer customer : customers)
+                customersBox.addItem(customer);
             customersBox.setMaximumRowCount(3);
             this.add(customersBox);
 

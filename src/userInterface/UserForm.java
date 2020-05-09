@@ -22,51 +22,51 @@ public class UserForm extends JPanel {
 
     private CustomerController controller;
 
-    public UserForm(Customer customerToModify) {
+    public UserForm(User userToUpdate) {
         controller = new CustomerController();
         this.setLayout(new GridLayout(13, 2, 5, 5));
 
         userIdLabel = new JLabel("Identifiant : ");
         userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(userIdLabel);
-        userId = new JTextField(customerToModify != null ? customerToModify.getUserID().toString() : null);
+        userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : null);
         userId.setEnabled(false);
         this.add(userId);
 
         passwordLabel = new JLabel("Mot de passe* :");
         passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(passwordLabel);
-        password = new JPasswordField(customerToModify != null ? customerToModify.getPassword() : null);
+        password = new JPasswordField(userToUpdate != null ? userToUpdate.getPassword() : null);
         this.add(password);
 
         lastNameLabel = new JLabel("Nom de famille* :");
         lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(lastNameLabel);
-        lastName = new JTextField(customerToModify != null ? customerToModify.getLastName() : null);
+        lastName = new JTextField(userToUpdate != null ? userToUpdate.getLastName() : null);
         this.add(lastName);
 
         firstNameLabel = new JLabel("Prénom* :");
         firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(firstNameLabel);
-        firstName = new JTextField(customerToModify != null ? customerToModify.getFirstName() : null);
+        firstName = new JTextField(userToUpdate != null ? userToUpdate.getFirstName() : null);
         this.add(firstName);
 
         secondNameLabel = new JLabel("Second prénom :");
         secondNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(secondNameLabel);
-        secondName = new JTextField(customerToModify != null ? customerToModify.getSecondName() : null);
+        secondName = new JTextField(userToUpdate != null ? userToUpdate.getSecondName() : null);
         this.add(secondName);
 
         maidenNameLabel = new JLabel("Nom de jeune fille :");
         maidenNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(maidenNameLabel);
-        maidenName = new JTextField(customerToModify != null ? customerToModify.getMaidenName() : null);
+        maidenName = new JTextField(userToUpdate != null ? userToUpdate.getMaidenName() : null);
         this.add(maidenName);
 
-        male = new JRadioButton("Homme", customerToModify != null ? customerToModify.getGender() == 'M' ? true : false : true);
+        male = new JRadioButton("Homme", userToUpdate == null || userToUpdate.getGender() == 'M');
         male.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(male);
-        female = new JRadioButton("Femme", customerToModify != null ? customerToModify.getGender() == 'F' ? true : false : false);
+        female = new JRadioButton("Femme", userToUpdate != null && userToUpdate.getGender() == 'F');
         female.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(female);
 
@@ -79,10 +79,10 @@ public class UserForm extends JPanel {
         this.add(birthdateLabel);
         birthdate = new JDatePicker();
         birthdate.setShowYearButtons(true);
-        if(customerToModify != null) {
-            birthdate.getModel().setYear(customerToModify.getBirthDate().get(Calendar.YEAR));
-            birthdate.getModel().setMonth(customerToModify.getBirthDate().get(Calendar.MONTH));
-            birthdate.getModel().setDay(customerToModify.getBirthDate().get(Calendar.DAY_OF_MONTH));
+        if(userToUpdate != null) {
+            birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
+            birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
+            birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
         } else {
             birthdate.getModel().setYear(2020);
             birthdate.getModel().setMonth(0);
@@ -94,13 +94,13 @@ public class UserForm extends JPanel {
         streetNameLabel = new JLabel("Adresse* :");
         streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(streetNameLabel);
-        streetName = new JTextField(customerToModify != null ? customerToModify.getStreetName().split(", ", 2)[0] : null);
+        streetName = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[0] : null);
         this.add(streetName);
 
         numberStreetLabel = new JLabel("Numéro* :");
         numberStreetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberStreetLabel);
-        numberStreet = new JTextField(customerToModify != null ? customerToModify.getStreetName().split(", ", 2)[1] : null);
+        numberStreet = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[1] : null);
         this.add(numberStreet);
 
         localityLabel = new JLabel("Localité* :");
@@ -110,11 +110,11 @@ public class UserForm extends JPanel {
         try {
             localities = controller.getAllLocalities();
             localitiesBox = new JComboBox<>();
-            for (int i = 0; i < localities.size(); i++)
-                localitiesBox.addItem(localities.get(i));
+            for (Locality locality : localities)
+                localitiesBox.addItem(locality);
             localitiesBox.setMaximumRowCount(5);
-            if(customerToModify != null)
-                localitiesBox.setSelectedItem(customerToModify.getLocality());
+            if(userToUpdate != null)
+                localitiesBox.setSelectedItem(userToUpdate.getLocality());
             this.add(localitiesBox);
 
         } catch (AllDataException | ConnectionException exception) {
@@ -125,13 +125,13 @@ public class UserForm extends JPanel {
         emailLabel = new JLabel("Email* :");
         emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(emailLabel);
-        email = new JTextField(customerToModify != null ? customerToModify.getEmail() : null);
+        email = new JTextField(userToUpdate != null ? userToUpdate.getEmail() : null);
         this.add(email);
 
         phoneLabel = new JLabel("Numéro de GSM* :");
         phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(phoneLabel);
-        phone = new JTextField(customerToModify != null ? customerToModify.getPhone() : null);
+        phone = new JTextField(userToUpdate != null ? userToUpdate.getPhone() : null);
         this.add(phone);
     }
 

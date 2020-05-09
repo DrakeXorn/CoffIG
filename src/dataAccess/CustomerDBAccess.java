@@ -111,7 +111,7 @@ public class CustomerDBAccess implements DataAccess{
             PreparedStatement customerStatement = connection.prepareStatement(sqlCustomer);
             ResultSet datasCustomer = customerStatement.executeQuery();
 
-            Customer customer = null;
+            Customer customer;
             String secondName, maidenName, loyaltyCard;
             Integer satisfactionDegree;
 
@@ -164,12 +164,8 @@ public class CustomerDBAccess implements DataAccess{
         return customers;
     }
 
-<<<<<<< HEAD
     public int getLastCustomerId() throws AllDataException, ConnectionException {
         int nbrCustomers;
-=======
-    public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException {
->>>>>>> 5dd7335b6321737fe7fdcb23581e5105ed2e6c5e
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlInstruction = "select max(customer_id) from customer";
@@ -290,13 +286,13 @@ public class CustomerDBAccess implements DataAccess{
                             loyaltyCardStatement.setString(2, oldPhone);
                             loyaltyCardStatement.executeUpdate();
 
-                            String sqlRight = "select * from right where loyalty_card_id = ?";
+                            String sqlRight = "select * from `right` where loyalty_card_id = ?";
                             PreparedStatement rightStatement = connection.prepareStatement(sqlRight);
                             rightStatement.setString(1, oldPhone);
                             ResultSet datasRight = rightStatement.executeQuery();
 
                             while (datasRight.next()) {
-                                String sqlRightUpdate = "update right set loyalty_card_id = ? where loyalty_card_id = ?";
+                                String sqlRightUpdate = "update `right` set loyalty_card_id = ? where loyalty_card_id = ?";
                                 rightStatement = connection.prepareStatement(sqlRightUpdate);
                                 rightStatement.setString(1, customer.getPhone());
                                 rightStatement.setString(2, oldPhone);
@@ -315,7 +311,7 @@ public class CustomerDBAccess implements DataAccess{
                         PreparedStatement loyaltyCardStatement = connection.prepareStatement(sqlLoyaltyCard);
                         loyaltyCardStatement.setString(1, oldPhone);
 
-                        String sqlRight = "delete from right where loyalty_card_id = ?";
+                        String sqlRight = "delete from `right` where loyalty_card_id = ?";
                         PreparedStatement rightStatement = connection.prepareStatement(sqlRight);
                         rightStatement.setString(1, oldPhone);
 
@@ -335,7 +331,6 @@ public class CustomerDBAccess implements DataAccess{
             throw new ConnectionException(exception.getMessage());
         }
     }
-<<<<<<< HEAD
 
     public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
             throws AllDataException, ConnectionException, DoubleInputException, StringInputException, IntegerInputException {
@@ -425,6 +420,4 @@ public class CustomerDBAccess implements DataAccess{
         }
         return orders;
     }
-=======
->>>>>>> 5dd7335b6321737fe7fdcb23581e5105ed2e6c5e
 }

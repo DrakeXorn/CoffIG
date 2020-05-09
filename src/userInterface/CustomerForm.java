@@ -110,6 +110,4 @@ public class CustomerForm extends JPanel {
         }
         return customer;
     }
-
-
 }
