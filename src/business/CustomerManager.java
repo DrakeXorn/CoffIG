@@ -25,9 +25,7 @@ public class CustomerManager {
         return dao.getAllCustomers();
     }
 
-
     public void modifyCustomer(Customer customer) throws AddCustomerException, ConnectionException{
         dao.modifyCustomer(customer);
     }
-
 }
