@@ -50,6 +50,7 @@ public class ButtonsAddUserForm extends JPanel {
                 }
                 JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
 
+                form.setVisible(false);
             } catch (AddException | ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
@@ -76,13 +77,6 @@ public class ButtonsAddUserForm extends JPanel {
             }
             parent.getWindowContainer().repaint();
             parent.setVisible(true);
-        }
-    }
-
-    private class GoBackListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            // TODO faire listener
         }
     }
 }

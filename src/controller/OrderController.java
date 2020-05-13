@@ -18,4 +18,12 @@ public class OrderController {
             throws AllDataException, ConnectionException, StringInputException, IntegerInputException, DoubleInputException {
         return manager.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
+
+    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
+        return manager.addPointsToLoyaltyCard(cardId, orderPrice);
+    }
+
+    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
+        return manager.removePointsToLoyaltyCard(cardId, numberPoints);
+    }
 }

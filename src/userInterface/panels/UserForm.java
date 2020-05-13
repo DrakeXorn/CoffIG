@@ -87,7 +87,7 @@ public class UserForm extends JPanel {
                 birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
                 birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
             } else {
-                birthdate.getModel().setYear(2020);
+                birthdate.getModel().setYear(2004);
                 birthdate.getModel().setMonth(0);
                 birthdate.getModel().setDay(1);
             }

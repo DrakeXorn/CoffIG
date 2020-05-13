@@ -59,16 +59,6 @@ public class OrderDBAccess implements OrderDataAccess {
     }
 
     @Override
-    public boolean removeOrder(Order order) throws ConnectionException, AddDataException {
-        return false;
-    }
-
-    @Override
-    public boolean updateOrder(Order order) throws ConnectionException, AddDataException {
-        return false;
-    }
-
-    @Override
     public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
         int nbrOrders;
 
@@ -176,5 +166,59 @@ public class OrderDBAccess implements OrderDataAccess {
             throw new ConnectionException(exception.getMessage());
         }
         return orders;
+    }
+
+    public String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInsert = "update loyalty_card set points_number = points_number + ? where loyalty_card_id = ?";
+            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
+            insertStatement.setInt(1, numberPoints);
+            insertStatement.setString(2, cardId);
+            insertStatement.executeUpdate();
+
+        } catch (IOException exception) {
+            throw new AllDataException("la mise à jour des points de la carte de fidélité'", exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajouté à" : "supprimé de") + " la carte de fidélité";
+    }
+
+    public int getPointsLoyaltyCard(String cardId) throws AllDataException, ConnectionException {
+        int points = 0;
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInsert = "select points_number from loyalty_card where loyalty_card_id = ?";
+            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
+            insertStatement.setString(1, cardId);
+            ResultSet data = insertStatement.executeQuery();
+            if(data.next())
+                points = data.getInt("points_number");
+        } catch (IOException exception) {
+            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return points;
+    }
+
+    public ArrayList<Integer> getPointsAdvantage(String cardId) throws AllDataException, ConnectionException {
+        ArrayList<Integer> points = new ArrayList<>();
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInsert = "select points_required from advantage a join `right` r on a.advantage_id = r.advantage_id where r.loyalty_card_id = ?";
+            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
+            insertStatement.setString(1, cardId);
+            ResultSet data = insertStatement.executeQuery();
+            while(data.next())
+                points.add(data.getInt("points_number"));
+
+        } catch (IOException exception) {
+            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return points;
     }
 }

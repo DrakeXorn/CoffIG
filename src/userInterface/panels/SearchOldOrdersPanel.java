@@ -39,7 +39,7 @@ public class SearchOldOrdersPanel extends JPanel {
                 OrderController controller = new OrderController();
                 GregorianCalendar endDateConverted = (GregorianCalendar)form.getEndDate().getModel().getValue();
                 GregorianCalendar startDateConverted = (GregorianCalendar)form.getStartDate().getModel().getValue();
-                GregorianCalendar today = (GregorianCalendar) Calendar.getInstance();
+                GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
 
                 if(startDateConverted.after(today))
                     throw new DateException(startDateConverted, "La date de début ne doit pas se trouver après aujourd'hui !");
@@ -55,7 +55,7 @@ public class SearchOldOrdersPanel extends JPanel {
                         form.getTakeAway().isSelected(), form.getOnSite().isSelected());
                 if(orders.isEmpty()){
                     JOptionPane.showMessageDialog(null, "La recherche n'a trouvé aucune commande correspondant aux critères demandés",
-                            "Recherche non aboutie !", JOptionPane.ERROR_MESSAGE);
+                            "Recherche non aboutie !", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
                     AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders);

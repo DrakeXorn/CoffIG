@@ -1,28 +1,37 @@
 package userInterface.frames;
 
+import dataAccess.SingletonConnection;
 import userInterface.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
-    private JMenu addNew, upDate, displayAll, search;
+    private JMenu addNew, upDate, displayAll, search, exit;
     private JMenuItem addCustomer, addEmployee, addCoffee,
             updateCustomer, updateEmployee, updateCoffee,
             allCustomers, allEmployees, allCoffees,
-            searchOrders, searchAdvantages, searchServices;
+            searchOrders, searchAdvantages, searchServices,
+            exitItem;
+
+    private MainPanel mainPanel;
     private Container windowContainer;
 
     public MainWindow(){
-        super("Menu");
+        super("CoffIG");
         this.setBounds(100, 50, 800, 600);
         this.addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) { System.exit(0); } } );
+        this.setResizable(false);
 
         windowContainer = this.getContentPane();
         windowContainer.setLayout(new BorderLayout());
+        mainPanel = new MainPanel();
+        windowContainer.add(mainPanel, BorderLayout.CENTER);
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -86,6 +95,13 @@ public class MainWindow extends JFrame {
         search.add(searchServices);
         searchServices.addActionListener(new SearchServicesListener());
 
+        exit = new JMenu("Quitter");
+        menuBar.add(exit);
+
+        exitItem = new JMenuItem("Quitter");
+        exit.add(exitItem);
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+        exitItem.addActionListener(new ExitListener());
 
         setVisible(true);
     }
@@ -118,7 +134,6 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
-
     }
 
     private class AddCoffeeListener implements ActionListener {
@@ -156,6 +171,19 @@ public class MainWindow extends JFrame {
             windowContainer.add(new SearchAssignmentsPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+        }
+    }
+
+    private class ExitListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            System.exit(0);
+            /*try {
+                SingletonConnection.getInstance().close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }*/
         }
     }
 }
