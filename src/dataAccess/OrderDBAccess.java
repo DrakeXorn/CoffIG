@@ -171,12 +171,11 @@ public class OrderDBAccess implements OrderDataAccess {
     public String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInsert = "update loyalty_card set points_number = points_number + ? where loyalty_card_id = ?";
-            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
-            insertStatement.setInt(1, numberPoints);
-            insertStatement.setString(2, cardId);
-            insertStatement.executeUpdate();
-
+            String sql = "update loyalty_card set points_number = points_number + ? where loyalty_card_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, numberPoints);
+            statement.setString(2, cardId);
+            statement.executeUpdate();
         } catch (IOException exception) {
             throw new AllDataException("la mise à jour des points de la carte de fidélité'", exception.getMessage());
         } catch (SQLException exception) {
@@ -189,10 +188,10 @@ public class OrderDBAccess implements OrderDataAccess {
         int points = 0;
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInsert = "select points_number from loyalty_card where loyalty_card_id = ?";
-            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
-            insertStatement.setString(1, cardId);
-            ResultSet data = insertStatement.executeQuery();
+            String sql = "select points_number from loyalty_card where loyalty_card_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cardId);
+            ResultSet data = statement.executeQuery();
             if(data.next())
                 points = data.getInt("points_number");
         } catch (IOException exception) {
@@ -207,10 +206,10 @@ public class OrderDBAccess implements OrderDataAccess {
         ArrayList<Integer> points = new ArrayList<>();
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInsert = "select points_required from advantage a join `right` r on a.advantage_id = r.advantage_id where r.loyalty_card_id = ?";
-            PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
-            insertStatement.setString(1, cardId);
-            ResultSet data = insertStatement.executeQuery();
+            String sql = "select points_required from advantage a join `right` r on a.advantage_id = r.advantage_id where r.loyalty_card_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cardId);
+            ResultSet data = statement.executeQuery();
             while(data.next())
                 points.add(data.getInt("points_number"));
 
@@ -220,5 +219,50 @@ public class OrderDBAccess implements OrderDataAccess {
             throw new ConnectionException(exception.getMessage());
         }
         return points;
+    }
+
+
+    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sql = "update stock_location set quantity = quantity - ? " +
+                    "where alley = ? and shelf  = ? and number = ?";
+            PreparedStatement updateStatement = connection.prepareStatement(sql);
+            updateStatement.setInt(1, removeQuantity);
+            updateStatement.setInt(2, alley);
+            updateStatement.setInt(3, shelf);
+            updateStatement.setInt(4, number);
+            updateStatement.executeUpdate();
+        } catch (IOException exception) {
+            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+    }
+
+    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
+        boolean isEmpty = false;
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sql = "select quantity from stock_location where alley = ? and shelf  = ? and number = ?";
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setInt(1, alley);
+            selectStatement.setInt(2, shelf);
+            selectStatement.setInt(3, number);
+            ResultSet data = selectStatement.executeQuery();
+
+            int quantity;
+            if(data.next()){
+                quantity = data.getInt("quantity");
+                if(quantity == 0)
+                    isEmpty = true;
+            }
+        } catch (IOException exception) {
+            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return isEmpty;
     }
 }

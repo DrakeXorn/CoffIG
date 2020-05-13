@@ -26,4 +26,10 @@ public class OrderController {
     public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
         return manager.removePointsToLoyaltyCard(cardId, numberPoints);
     }
+
+    public boolean updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+        return manager.updateStockLocation(alley, shelf, number, removeQuantity);
+    }
+
+
 }

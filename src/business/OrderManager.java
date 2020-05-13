@@ -21,18 +21,26 @@ public class OrderManager {
     }
 
     public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
-        int price = (int)orderPrice;
+        int price = (int) orderPrice;
 
-        if(cardId != null && price > 0)
+        if (cardId != null && price > 0)
             return orderDataAccess.updatePointsToLoyaltyCard(cardId, price * 10);
         else
             return "Les points n'ont pas été ajouté à la carte de fidélité !";
     }
 
     public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
-        if(cardId != null && numberPoints > 0)
+        if (cardId != null && numberPoints > 0)
             return orderDataAccess.updatePointsToLoyaltyCard(cardId, -numberPoints);
         else
             return "Les points n'ont pas été supprimé de la carte de fidélité !";
     }
+
+    public boolean updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+        if(removeQuantity > 0)
+            orderDataAccess.updateStockLocation(alley, shelf, number, removeQuantity);
+        return orderDataAccess.isEmptyStockLocation(alley, shelf, number);
+    }
+
+
 }

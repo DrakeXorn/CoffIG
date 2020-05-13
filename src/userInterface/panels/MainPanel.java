@@ -73,6 +73,7 @@ public class MainPanel extends JPanel {
             try {
                 // charger le form de la commande
                 // getAllAdvantages (selon cardId et période validité) pour les afficher dans un JCombobox
+
                 OrderController controller = new OrderController();
 
                 // valeurs à récupérer du formulaire
@@ -80,11 +81,13 @@ public class MainPanel extends JPanel {
                 double orderPrice = 5.25;
                 int points = 50;
 
-                String message = controller.addPointsToLoyaltyCard(cardId, orderPrice);
+                //String message = controller.addPointsToLoyaltyCard(cardId, orderPrice);
                 //String message = controller.removePointsToLoyaltyCard(cardId, points);
+                boolean isEmptyStockLocation =  controller.updateStockLocation(1, 2, 1, 2);
 
-                JOptionPane.showMessageDialog(null, message,
-                        "Ajout de points", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        isEmptyStockLocation ? "Le stock est vide" : "Quantité encore disponible",
+                        "Update stock", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
