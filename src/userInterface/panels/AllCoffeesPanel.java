@@ -1,27 +1,26 @@
-package userInterface.frames;
+package userInterface.panels;
 
 import controller.CoffeeController;
+import model.Coffee;
 import userInterface.tableModels.AllCoffeesModel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AllCoffeesFrame extends JFrame {
+public class AllCoffeesPanel extends JPanel {
     private JScrollPane scrollPane;
+    private AllCoffeesModel coffeeTableModel;
     private JTable coffeeTable;
-    private ListSelectionModel listSelect;
     private CoffeeController controller;
-    private Container container;
+    private JFrame parent;
 
-    public AllCoffeesFrame() {
-        super("Tous les cafés");
-
-        setBounds(50, 200, 1250, 600);
-        container = getContentPane();
+    public AllCoffeesPanel(JFrame window) {
         controller = new CoffeeController();
+        parent = window;
 
         try {
-            coffeeTable = new JTable(new AllCoffeesModel(controller.getAllCoffees()));
+            coffeeTableModel = new AllCoffeesModel(controller.getAllCoffees());
+            coffeeTable = new JTable(coffeeTableModel);
             coffeeTable.getColumnModel().getColumn(2).setPreferredWidth(40);
             coffeeTable.getColumnModel().getColumn(3).setPreferredWidth(50);
             coffeeTable.getColumnModel().getColumn(4).setPreferredWidth(50);
@@ -35,14 +34,17 @@ public class AllCoffeesFrame extends JFrame {
 
             coffeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             coffeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = coffeeTable.getSelectionModel();
+            setLayout(new BorderLayout());
             scrollPane = new JScrollPane(coffeeTable);
+            add(scrollPane, BorderLayout.CENTER);
 
-            add(scrollPane);
             setVisible(true);
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public Coffee getChosenCoffee() {
+        return coffeeTable.getSelectionModel().getMinSelectionIndex() != -1 ? coffeeTableModel.getRow(coffeeTable.getSelectedRow()) : null;
     }
 }

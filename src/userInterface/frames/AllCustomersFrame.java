@@ -10,8 +10,6 @@ public class AllCustomersFrame extends JFrame {
     private AllCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
-    private ListSelectionModel listSelect;
-    private JButton modify, delete;
     private CustomerController controller;
     private MainWindow mainWindow;
     private Container container;

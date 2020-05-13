@@ -22,7 +22,7 @@ public class UpdateCustomersFrame extends JFrame {
     private MainWindow mainWindow;
     private Container container;
 
-    public UpdateCustomersFrame(MainWindow window){
+    public UpdateCustomersFrame(MainWindow window) {
         super("Modifier un client");
         this.setBounds(90, 90, 800, 400);
         container = this.getContentPane();
@@ -56,7 +56,7 @@ public class UpdateCustomersFrame extends JFrame {
     private class ModifyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            if(!listSelect.isSelectionEmpty()){
+            if(!listSelect.isSelectionEmpty()) {
                 Customer customerToModify = model.getRow(listSelect.getMinSelectionIndex());
                 mainWindow.getWindowContainer().removeAll();
                 UserForm userForm = new UserForm(customerToModify);

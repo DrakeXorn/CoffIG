@@ -44,7 +44,7 @@ public class UpdateCustomersModel extends AbstractTableModel {
         };
     }
 
-    public Class getColumnClass (int column) {
+    public Class<?> getColumnClass (int column) {
         return switch (column) {
             case 0, 1, 2 -> String.class; // id, last name, first name
             case 3 -> Date.class;  // birth date

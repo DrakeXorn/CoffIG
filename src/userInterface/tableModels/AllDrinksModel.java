@@ -46,7 +46,7 @@ public class AllDrinksModel extends AbstractTableModel {
         };
     }
 
-    public Class getColumnClass (int column)
+    public Class<?> getColumnClass (int column)
     {
         return switch (column) {
             case 0, 2 -> String.class; // label, size

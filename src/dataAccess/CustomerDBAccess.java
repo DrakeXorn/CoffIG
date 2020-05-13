@@ -113,7 +113,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
 
             Customer customer;
             String secondName, maidenName, loyaltyCard;
-            Integer satisfactionDegree;
+            int satisfactionDegree;
 
             while(datasCustomer.next()) {
                 GregorianCalendar birthDateJava = new GregorianCalendar();

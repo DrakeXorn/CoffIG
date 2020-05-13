@@ -13,15 +13,19 @@ public class CoffeeController {
         coffeeManager = new CoffeeManager();
     }
 
-    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException {
+    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException, DateException {
         return coffeeManager.getAllCoffees();
     }
 
-    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
-        return coffeeManager.addCoffee(coffee);
+    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+        coffeeManager.addCoffee(coffee);
     }
 
-    public int getNbrCoffees() throws ConnectionException, AddDataException {
+    public int getLastCoffeeID() throws ConnectionException, AddDataException {
         return coffeeManager.getNbrCoffees();
+    }
+
+    public void updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+        coffeeManager.updateCoffee(coffee);
     }
 }

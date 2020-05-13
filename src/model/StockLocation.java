@@ -4,7 +4,6 @@ import model.exceptions.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class StockLocation {
@@ -16,13 +15,13 @@ public class StockLocation {
     private GregorianCalendar expirationDate;
 
     public StockLocation(Integer alley, Integer shelf, Integer number, Double buyingPrice, Integer quantity, GregorianCalendar expirationDate)
-            throws IntegerInputException, DoubleInputException {
+            throws IntegerInputException, DoubleInputException, DateException {
         setAlley(alley);
         setShelf(shelf);
         setNumber(number);
         setBuyingPrice(buyingPrice);
         setQuantity(quantity);
-        this.expirationDate = expirationDate;
+        setExpirationDate(expirationDate);
     }
 
     public Integer getAlley() {
@@ -77,6 +76,17 @@ public class StockLocation {
         if (quantity < 0)
             throw new IntegerInputException(quantity, "la quantité", "La quantité doit être positive !");
         this.quantity = quantity;
+    }
+
+    public void setExpirationDate(GregorianCalendar expirationDate) throws DateException {
+        if (expirationDate.before(GregorianCalendar.getInstance()))
+            throw new DateException(expirationDate, "La date de péremption doit être ultérieure à la date d'aujourd'hui !");
+        this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof StockLocation && ((StockLocation) obj).getAlley().equals(alley) && ((StockLocation) obj).getShelf().equals(shelf) && ((StockLocation) obj).getNumber().equals(number);
     }
 
     public String toString() {

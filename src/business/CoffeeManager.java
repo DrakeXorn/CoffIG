@@ -14,15 +14,19 @@ public class CoffeeManager {
         dataAccessor = new CoffeeDBAccess();
     }
 
-    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException {
+    public ArrayList<Coffee> getAllCoffees() throws AllDataException, ConnectionException, DoubleInputException, IntegerInputException, DateException {
         return dataAccessor.getAllCoffees();
     }
 
-    public boolean addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
-        return dataAccessor.addCoffee(coffee);
+    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+        dataAccessor.addCoffee(coffee);
     }
 
     public int getNbrCoffees() throws ConnectionException, AddDataException {
         return dataAccessor.getLastId();
+    }
+
+    public void updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+        dataAccessor.updateCoffee(coffee);
     }
 }

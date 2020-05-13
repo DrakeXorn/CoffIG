@@ -3,6 +3,8 @@ package model;
 import model.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Coffee {
     private static int nbrCoffees = 1;
@@ -24,27 +26,23 @@ public class Coffee {
                   Double weightNeededForPreparation, Boolean inGrains,
                   Boolean environmentFriendly, Double price, Double packaging,
                   StockLocation stockLocation)
-            throws IntegerInputException, DoubleInputException {
-        this(label, null, intensity, weightNeededForPreparation, null, inGrains, environmentFriendly, price,
+            throws IntegerInputException, DoubleInputException, DateException {
+        this(coffeeID, label, null, intensity, weightNeededForPreparation, null, inGrains, environmentFriendly, price,
                 packaging, null, stockLocation);
-        if (coffeeID > nbrCoffees) {
-            this.coffeeID = coffeeID;
-            nbrCoffees = coffeeID + 1;
-        }
     }
 
     public Coffee(String label, String originCountry, Integer intensity,
-                  Double weightNeededForPreparation, Integer discoveryYear, Boolean inGrains,
+                  Double weightNeededForPreparation, GregorianCalendar discoveryDate, Boolean inGrains,
                   Boolean environmentFriendly, Double price, Double packaging,
                   String recommendedConsumingMoment, StockLocation stockLocation)
-            throws IntegerInputException, DoubleInputException {
+            throws IntegerInputException, DoubleInputException, DateException {
         coffeeID = nbrCoffees;
         nbrCoffees++;
         this.label = label;
         this.originCountry = originCountry;
         setIntensity(intensity);
         setWeightNeededForPreparation(weightNeededForPreparation);
-        this.discoveryYear = discoveryYear;
+        setDiscoveryYear(discoveryDate);
         this.inGrains = inGrains;
         this.environmentFriendly = environmentFriendly;
         setPrice(price);
@@ -55,12 +53,29 @@ public class Coffee {
         features = new ArrayList<>();
     }
 
+    public Coffee(Integer coffeeID, String label, String country, Integer intensity, Double weightNeeded, GregorianCalendar discoveryDate, Boolean inGrains, Boolean environmentFriendly, Double price, Double packaging, String recommendedMoment, StockLocation stockLocation) throws DoubleInputException, IntegerInputException, DateException {
+        this(label, country, intensity, weightNeeded, discoveryDate, inGrains, environmentFriendly, price, packaging, recommendedMoment, stockLocation);
+        if (coffeeID > nbrCoffees) {
+            nbrCoffees = coffeeID + 1;
+        }
+        this.coffeeID = coffeeID;
+    }
+
     public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
     }
 
     public void setRecommendedConsumingMoment(String recommendedConsumingMoment) {
         this.recommendedConsumingMoment = recommendedConsumingMoment;
+    }
+
+    public void setDiscoveryYear(GregorianCalendar discoveryDate) throws DateException {
+        if (discoveryDate != null) {
+            if (discoveryDate.after(GregorianCalendar.getInstance().get(GregorianCalendar.YEAR)))
+                throw new DateException(discoveryDate, "La date doit être antérieure à la date d'aujourd'hui !");
+            this.discoveryYear = discoveryDate.get(Calendar.YEAR);
+        } else
+            discoveryYear = null;
     }
 
     public void setDiscoveryYear(Integer discoveryYear) {
@@ -74,8 +89,8 @@ public class Coffee {
     }
 
     public void setWeightNeededForPreparation(Double weightNeededForPreparation) throws DoubleInputException {
-        if (weightNeededForPreparation <= 0)
-            throw new DoubleInputException(weightNeededForPreparation, "le poids nécessaire pour la préparation");
+        if (weightNeededForPreparation < 0 || weightNeededForPreparation > 50)
+            throw new DoubleInputException(weightNeededForPreparation, "le poids nécessaire pour la préparation", "Le poids nécessaire doit être compris entre 0 et 50 grammes !");
         this.weightNeededForPreparation = weightNeededForPreparation;
     }
 
@@ -88,6 +103,7 @@ public class Coffee {
     public void setPackaging(Double packaging) throws DoubleInputException {
         if (packaging <= 0)
             throw new DoubleInputException(packaging, "le packaging", "Le packaging doit être positif et différent de 0 !");
+
         this.packaging = packaging;
     }
 

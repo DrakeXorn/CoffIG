@@ -4,7 +4,6 @@ import business.CustomerManager;
 import model.*;
 import model.exceptions.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class CustomerController {
     private CustomerManager manager;

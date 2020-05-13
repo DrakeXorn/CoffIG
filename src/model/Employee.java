@@ -131,13 +131,11 @@ public class Employee extends User {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder(super.toString());
 
-        res.append("(embauché le ");
-        res.append(hireDate.get(Calendar.DAY_OF_MONTH));
-        res.append(" ").append(hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE));
-        res.append(" ").append(hireDate.get(Calendar.YEAR));
-        res.append(")");
-        return res.toString();
+        return super.toString() + "(embauché le " +
+                hireDate.get(Calendar.DAY_OF_MONTH) +
+                " " + hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE) +
+                " " + hireDate.get(Calendar.YEAR) +
+                ")";
     }
 }

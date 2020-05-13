@@ -33,10 +33,7 @@ public class Topping {
     }
 
     public String toString() {
-        StringBuilder res = new StringBuilder(label);
 
-        res.append(" (").append(price).append(" €).");
-
-        return res.toString();
+        return label + " (" + price + " €).";
     }
 }

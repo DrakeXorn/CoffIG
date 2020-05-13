@@ -1,15 +1,12 @@
 package userInterface.panels;
 
-import controller.CustomerController;
 import controller.OrderController;
 import model.*;
 import model.exceptions.BooleanInputException;
 import model.exceptions.DateException;
-import org.jdatepicker.JDatePicker;
 import userInterface.frames.AllOrdersFrame;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

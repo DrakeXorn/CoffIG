@@ -18,7 +18,7 @@ public class ButtonsModifyUserForm extends JPanel{
     private JPanel form;
     private CustomerController controller;
 
-    public ButtonsModifyUserForm(MainWindow window, JPanel form){
+    public ButtonsModifyUserForm(MainWindow window, JPanel form) {
         this.parent = window;
         this.form = form;
         controller = new CustomerController();
@@ -41,7 +41,7 @@ public class ButtonsModifyUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                if(form instanceof CustomerForm){
+                if (form instanceof CustomerForm){
                     user = ((CustomerForm)form).updateCustomer();
 
                     controller.modifyCustomer((Customer)user);

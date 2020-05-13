@@ -38,7 +38,7 @@ public class FoodOrdering {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof FoodOrdering && ((FoodOrdering)object).toString().equals(toString());
+        return object instanceof FoodOrdering && object.toString().equals(toString());
     }
 
     public void setPieces(Integer nbrPieces) throws IntegerInputException {

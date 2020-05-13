@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class EmployeeDBAccess implements EmployeeDataAccess {
     @Override
-    public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, AddDataException, DateException, CharacterInputException, StringInputException {
+    public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, DateException, CharacterInputException, StringInputException {
         ArrayList<Employee> employees = new ArrayList<>();
 
         try {
@@ -70,7 +70,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 employees.add(employee);
             }
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "employé");
+            throw new AllDataException(exception.getMessage(), "employé");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -79,7 +79,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
     }
 
     @Override
-    public boolean addEmployee(Employee employee) throws ConnectionException, AddDataException {
+    public void addEmployee(Employee employee) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
 
@@ -122,7 +122,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             employeeStatement.setDate(2, new java.sql.Date(employee.getHireDate().getTimeInMillis()));
             employeeStatement.setBoolean(3, employee.getEmployeeOfMonth());
             employeeStatement.setDouble(4, employee.getDiscount());
-            employeeStatement.setInt(5, employee.getNbrParkingSpaces());
+            employeeStatement.setInt(5, employee.getParkingSpaceNumber());
             employeeStatement.executeUpdate();
 
 
@@ -141,25 +141,20 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
-
-            connection.close();
-
         } catch (SQLException exception) {
             throw new AddDataException(exception.getMessage(), "employé");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-
-        return true;
     }
 
     @Override
-    public boolean removeEmployee(Employee employee) throws ConnectionException, AddDataException {
-        return false;
+    public void removeEmployee(Employee employee) {
+
     }
 
     @Override
-    public boolean updateEmployee(Employee employee) throws ConnectionException, AddDataException {
-        return false;
+    public void updateEmployee(Employee employee) {
+
     }
 }
