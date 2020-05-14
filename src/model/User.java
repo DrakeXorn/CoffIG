@@ -100,14 +100,13 @@ public class User {
     }
 
     public void setUserID() throws AllDataException, ConnectionException {
-        if(userID == null) {
+        if (userID == null) {
             controller = new CustomerController();
             this.userID = controller.getLastCustomerId() + 1;
         }
     }
 
     public void setPassword(String password) throws StringInputException {
-
         if (password.isEmpty())
             throw new StringInputException(password, null, "Le mot de passe est un champ obligatoire !");
         this.password = password;
@@ -116,7 +115,7 @@ public class User {
     public void setLastName(String lastName) throws StringInputException {
         if (lastName.isEmpty())
             throw new StringInputException(lastName, null, "Le nom est un champ obligatoire !");
-        if (!lastName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
+        if (!lastName.matches("^[a-zA-ZÀ-ÿ]+-? ?[a-zA-ZÀ-ÿ]*$"))
             throw new StringInputException(lastName, null, "Le nom se compose uniquement de lettres !");
         this.lastName = lastName;
     }

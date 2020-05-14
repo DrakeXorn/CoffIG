@@ -36,11 +36,12 @@ public class OrderManager {
             return "Les points n'ont pas été supprimé de la carte de fidélité !";
     }
 
-    public boolean updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
         if(removeQuantity > 0)
             orderDataAccess.updateStockLocation(alley, shelf, number, removeQuantity);
-        return orderDataAccess.isEmptyStockLocation(alley, shelf, number);
     }
 
-
+    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
+        return orderDataAccess.quantityStockLocation(alley, shelf, number) == 0;
+    }
 }

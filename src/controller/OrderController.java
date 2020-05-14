@@ -27,9 +27,10 @@ public class OrderController {
         return manager.removePointsToLoyaltyCard(cardId, numberPoints);
     }
 
-    public boolean updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
-        return manager.updateStockLocation(alley, shelf, number, removeQuantity);
+    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+        manager.updateStockLocation(alley, shelf, number, removeQuantity);
     }
-
-
+    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
+        return manager.isEmptyStockLocation(alley, shelf, number);
+    }
 }

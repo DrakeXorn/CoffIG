@@ -41,6 +41,8 @@ public class MainPanel extends JPanel {
         thread.start();
 
         newOrder = new JButton("Passer une commande");
+        newOrder.setBackground(new Color(10, 161, 231));
+        newOrder.setForeground(Color.white);
         this.add(newOrder, BorderLayout.SOUTH);
         newOrder.addActionListener(new NewOrderListener());
     }
@@ -83,11 +85,9 @@ public class MainPanel extends JPanel {
 
                 //String message = controller.addPointsToLoyaltyCard(cardId, orderPrice);
                 //String message = controller.removePointsToLoyaltyCard(cardId, points);
-                boolean isEmptyStockLocation =  controller.updateStockLocation(1, 2, 1, 2);
+                //controller.updateStockLocation(1, 2, 1, 2);
+                //boolean isEmptyStock = controller.isEmptyStockLocation(1, 2, 1);
 
-                JOptionPane.showMessageDialog(null,
-                        isEmptyStockLocation ? "Le stock est vide" : "Quantité encore disponible",
-                        "Update stock", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),

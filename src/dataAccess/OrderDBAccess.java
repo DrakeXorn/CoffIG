@@ -9,12 +9,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class OrderDBAccess implements OrderDataAccess {
-    @Override
-    public ArrayList<Order> getAllOrders() throws AllDataException {
-        return null;
-    }
-
-    @Override
+       @Override
     public boolean addOrder(Order order) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -240,9 +235,8 @@ public class OrderDBAccess implements OrderDataAccess {
         }
     }
 
-    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
-        boolean isEmpty = false;
-
+    public Integer quantityStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
+        int quantity = 0;
         try {
             Connection connection = SingletonConnection.getInstance();
             String sql = "select quantity from stock_location where alley = ? and shelf  = ? and number = ?";
@@ -252,17 +246,14 @@ public class OrderDBAccess implements OrderDataAccess {
             selectStatement.setInt(3, number);
             ResultSet data = selectStatement.executeQuery();
 
-            int quantity;
             if(data.next()){
                 quantity = data.getInt("quantity");
-                if(quantity == 0)
-                    isEmpty = true;
             }
         } catch (IOException exception) {
             throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
         } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-        return isEmpty;
+        return quantity;
     }
 }

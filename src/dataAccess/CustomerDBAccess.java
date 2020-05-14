@@ -96,13 +96,14 @@ public class CustomerDBAccess implements CustomerDataAccess {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlCustomer = "select * from customer c join user u on c.customer_id = u.user_id left outer join loyalty_card lc on c.loyalty_card = lc.loyalty_card_id order by user_id";
+            String sqlCustomer = "select * from customer c join user u on c.customer_id = u.user_id " +
+                    "left outer join loyalty_card lc on c.loyalty_card = lc.loyalty_card_id order by user_id";
             PreparedStatement customerStatement = connection.prepareStatement(sqlCustomer);
             ResultSet datasCustomer = customerStatement.executeQuery();
 
             Customer customer;
             String secondName, maidenName, loyaltyCard;
-            Integer satisfactionDegree;
+            int satisfactionDegree;
 
             while(datasCustomer.next()) {
                 GregorianCalendar birthDateJava = new GregorianCalendar();
