@@ -11,7 +11,7 @@ public class MainWindow extends JFrame {
     private JMenu infos, addNew, upDate, displayAll, search;
     private JMenuItem home, about, exitItem,
             addCustomer, addEmployee, addCoffee,
-            updateCustomer, updateEmployee, updateCoffee,
+            updateCustomer, updateCoffee,
             allCustomers, allEmployees, allCoffees,
             searchOrders, searchAdvantages, searchServices;
 
@@ -39,8 +39,8 @@ public class MainWindow extends JFrame {
         this.setJMenuBar(menuBar);
 
 
-        infos = new JMenu("");
-        ImageIcon beanIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeCupCropped.png"));
+        infos = new JMenu();
+        ImageIcon beanIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeCup.png"));
         Image beanImage = beanIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon coffeeBean = new ImageIcon(beanImage);
         infos.setIcon(coffeeBean);
@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
         infos.add(home);
         home.addActionListener(new HomeListener());
 
-        about = new JMenuItem("A propos");
+        about = new JMenuItem("À propos");
         infos.add(about);
 
         exitItem = new JMenuItem("Quitter");
@@ -81,9 +81,6 @@ public class MainWindow extends JFrame {
         updateCustomer = new JMenuItem("Modifier un client");
         upDate.add(updateCustomer);
         updateCustomer.addActionListener(new ModifyCustomerListener());
-
-        updateEmployee = new JMenuItem("Modifier un employé");
-        upDate.add(updateEmployee);
 
         updateCoffee = new JMenuItem("Modifier un café");
         upDate.add(updateCoffee);

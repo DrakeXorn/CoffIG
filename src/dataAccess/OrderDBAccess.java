@@ -216,7 +216,6 @@ public class OrderDBAccess implements OrderDataAccess {
         return points;
     }
 
-
     public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();

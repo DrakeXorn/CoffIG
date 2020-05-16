@@ -1,9 +1,6 @@
 package userInterface.panels;
 
 import controller.OrderController;
-import model.exceptions.AllDataException;
-import model.exceptions.ConnectionException;
-import userInterface.frames.MainWindow;
 import userInterface.thread.CoffeeBean;
 import userInterface.thread.CoffeeThread;
 
@@ -18,11 +15,11 @@ import java.util.List;
 import java.util.Collections;
 
 public class MainPanel extends JPanel {
-    private final static int range = 60;
-    private final static int min = 370;
+    private final static int range = 50;
+    private final static int min = 360;
     private final static int width = 20;
     private final static int height = 20;
-    private final static int deltaY = 10;
+    private final static int deltaY = 5;
     private ArrayList<CoffeeBean> coffeeBeansArray = new ArrayList<>();
     private List<CoffeeBean> coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
     private CoffeeThread thread;
@@ -59,7 +56,7 @@ public class MainPanel extends JPanel {
         super.paint(g);
         try {
             coffeeCup = ImageIO.read(ClassLoader.getSystemResource("coffeeCup.png"));
-            g.drawImage(coffeeCup, 280, 200, 300, 300, this);
+            g.drawImage(coffeeCup, 330, 290, 180, 180, this);
 
             for(CoffeeBean bean : coffeeBeans)
                 bean.draw(g);
