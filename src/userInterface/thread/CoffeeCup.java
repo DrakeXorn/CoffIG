@@ -16,7 +16,6 @@ public class CoffeeCup extends JPanel {
     private final static int deltaY = 10;
     private ArrayList<CoffeeBean> coffeeBeansArray = new ArrayList<>();
     private List<CoffeeBean> coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
-    private Image coffeeCup;
 
     public CoffeeCup(){
         this.setBackground(new Color(207, 233, 255));
@@ -36,7 +35,7 @@ public class CoffeeCup extends JPanel {
     public void paint (Graphics g) {
         super.paint(g);
         try {
-            coffeeCup = ImageIO.read(ClassLoader.getSystemResource("coffeeCup.png"));
+            Image coffeeCup = ImageIO.read(ClassLoader.getSystemResource("coffeeCup.png"));
             g.drawImage(coffeeCup, 330, 290, 180, 180, this);
 
             for(CoffeeBean bean : coffeeBeans)

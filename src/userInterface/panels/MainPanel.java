@@ -14,15 +14,18 @@ public class MainPanel extends JPanel {
 
     public MainPanel(){
         this.setLayout(new BorderLayout());
+
         cup = new CoffeeCup();
         this.add(cup, BorderLayout.CENTER);
 
         thread = new CoffeeThread(cup);
         thread.start();
 
-        newOrder = new JButton("Passer une commande");
-        newOrder.setBackground(new Color(10, 161, 231));
-        newOrder.setForeground(Color.white);
+        newOrder = new JButton("Commander");
+        newOrder.setBackground(new Color(255, 255, 255));
+        newOrder.setForeground(new Color(10, 161, 231));
+        newOrder.setFont(new Font("Arial", Font.BOLD, 30));
+        newOrder.setPreferredSize(new Dimension(100, 50));
         this.add(newOrder, BorderLayout.SOUTH);
         newOrder.addActionListener(new NewOrderListener());
     }
