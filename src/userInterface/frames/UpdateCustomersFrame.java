@@ -2,7 +2,7 @@ package userInterface.frames;
 
 import controller.CustomerController;
 import model.Customer;
-import userInterface.panels.ButtonsModifyUserForm;
+import userInterface.panels.ButtonsUpdateUserForm;
 import userInterface.panels.CustomerForm;
 import userInterface.tableModels.UpdateCustomersModel;
 import userInterface.panels.UserForm;
@@ -63,7 +63,7 @@ public class UpdateCustomersFrame extends JFrame {
                 CustomerForm customerForm = new CustomerForm(userForm, customerToModify);
                 mainWindow.getWindowContainer().add(userForm, BorderLayout.NORTH);
                 mainWindow.getWindowContainer().add(customerForm, BorderLayout.CENTER);
-                mainWindow.getWindowContainer().add(new ButtonsModifyUserForm(mainWindow, customerForm), BorderLayout.SOUTH);
+                mainWindow.getWindowContainer().add(new ButtonsUpdateUserForm(mainWindow, customerForm), BorderLayout.SOUTH);
                 mainWindow.getWindowContainer().repaint();
                 mainWindow.setVisible(true);
                 setVisible(false);
