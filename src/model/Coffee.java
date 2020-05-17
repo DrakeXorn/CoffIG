@@ -95,14 +95,14 @@ public class Coffee {
     }
 
     public void setPrice(Double price) throws DoubleInputException {
-        if (price <= 0)
-            throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");
+        if (price < 1 || price > 2000)
+            throw new DoubleInputException(price, "le prix", "Le prix doit être compris entre 0 et 2000€ !");
         this.price = price;
     }
 
     public void setPackaging(Double packaging) throws DoubleInputException {
-        if (packaging <= 0)
-            throw new DoubleInputException(packaging, "le packaging", "Le packaging doit être positif et différent de 0 !");
+        if (packaging < 1 || packaging > 40)
+            throw new DoubleInputException(packaging, "le packaging", "Le packaging doit compris entre 0 et 40kg !");
 
         this.packaging = packaging;
     }

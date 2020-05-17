@@ -84,6 +84,14 @@ public class StockLocation {
         this.expirationDate = expirationDate;
     }
 
+    public void removeNToQuantity(int n) {
+        quantity -= n;
+    }
+
+    public void addNToQuantity(int n) {
+        quantity += n;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof StockLocation && ((StockLocation) obj).getAlley().equals(alley) && ((StockLocation) obj).getShelf().equals(shelf) && ((StockLocation) obj).getNumber().equals(number);

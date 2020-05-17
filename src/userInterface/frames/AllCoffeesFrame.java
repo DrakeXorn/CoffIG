@@ -12,6 +12,7 @@ public class AllCoffeesFrame extends JFrame {
     private ListSelectionModel listSelect;
     private CoffeeController controller;
     private Container container;
+    private MainWindow parent;
 
     public AllCoffeesFrame() {
         super("Tous les cafés");

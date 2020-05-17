@@ -168,22 +168,22 @@ public class CoffeeForm extends JPanel {
             setCoffeeData(coffeeToUpdate);
 
             this.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur lors de la création de l'identifiant du café", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur lors de la création de l'identifiant du café", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void setCoffeeData(Coffee coffee) throws ConnectionException, AddDataException {
         if (coffee != null) {
-            UtilDateModel dateModel = new UtilDateModel(coffee.getStockLocation().getExpirationDate().getTime());
-
             this.coffee = coffee;
             coffeeID.setText(String.valueOf(coffee.getCoffeeID()));
             coffeeName.setText(coffee.getLabel());
             countries.setSelectedItem(coffee.getOriginCountry());
             intensity.setValue(coffee.getIntensity());
-            if (coffee.getDiscoveryYear() != null)
-                discoveryDatePicker.getFormattedTextField().setText(String.valueOf(coffee.getDiscoveryYear()));
+            if (coffee.getDiscoveryYear() != null) {
+                discoveryDatePicker.getModel().setYear(coffee.getDiscoveryYear());
+                discoveryDatePicker.getModel().setSelected(true);
+            }
             expirationDatePicker.getModel().setYear(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.YEAR));
             expirationDatePicker.getModel().setMonth(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.MONTH));
             expirationDatePicker.getModel().setDay(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.DAY_OF_MONTH));

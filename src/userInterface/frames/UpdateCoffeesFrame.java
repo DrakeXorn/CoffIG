@@ -37,12 +37,13 @@ public class UpdateCoffeesFrame extends JFrame {
 
     private class UpdateButtonListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent event) {
-            Coffee coffeeToUpdate = coffeesPanel.getChosenCoffee();
+        public void actionPerformed(ActionEvent e) {
+            Coffee chosenCoffee = coffeesPanel.getChosenCoffee();
 
-            if (coffeeToUpdate != null) {
+            if (chosenCoffee != null) {
+                parent.resetSize();
                 parent.getWindowContainer().removeAll();
-                CoffeeForm coffeeForm = new CoffeeForm(parent, coffeeToUpdate);
+                CoffeeForm coffeeForm = new CoffeeForm(parent, chosenCoffee);
                 parent.getWindowContainer().add(coffeeForm, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsUpdateCoffeeForm(parent), BorderLayout.SOUTH);
 
@@ -51,7 +52,7 @@ public class UpdateCoffeesFrame extends JFrame {
                 dispose();
             } else
                 JOptionPane.showMessageDialog(null, "Sélectionnez un café à modifier !",
-                    "Erreur !", JOptionPane.ERROR_MESSAGE);
+                        "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

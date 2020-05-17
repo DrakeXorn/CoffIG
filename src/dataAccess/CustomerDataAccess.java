@@ -18,5 +18,5 @@ public interface CustomerDataAccess {
     void modifyCustomer(Customer customer) throws ModifyException, ConnectionException;
 
     // delete
-
+    void removeCustomer(Customer customer) throws ModifyException, ConnectionException;
 }

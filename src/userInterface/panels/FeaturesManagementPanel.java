@@ -18,8 +18,8 @@ public class FeaturesManagementPanel extends JPanel {
     private JList<String> chosenFeaturesList;
     private ButtonsFeatureManagementPanel buttonsPanel;
     private ArrayList<String> features;
-    private DefaultListModel<String> featuresModel = new DefaultListModel<>();
-    private DefaultListModel<String> chosenFeaturesModel = new DefaultListModel<>();
+    private DefaultListModel<String> featuresModel;
+    private DefaultListModel<String> chosenFeaturesModel;
 
     public FeaturesManagementPanel(FeaturesManagementFrame parent) {
         try {
@@ -39,6 +39,7 @@ public class FeaturesManagementPanel extends JPanel {
             addFeatureButton.addActionListener(new AddFeatureButtonListener());
             add(addFeatureButton);
 
+            featuresModel = new DefaultListModel<>();
             for (String feature : features)
                 featuresModel.addElement(feature);
 
@@ -49,11 +50,13 @@ public class FeaturesManagementPanel extends JPanel {
             buttonsPanel = new ButtonsFeatureManagementPanel(this);
             add(buttonsPanel, BorderLayout.SOUTH);
 
+            chosenFeaturesModel = new DefaultListModel<>();
             if (parent.getParent().getFeatures() != null)
                 for (String feature : parent.getParent().getFeatures()) {
                     chosenFeaturesModel.addElement(feature);
                     featuresModel.removeElement(feature);
                 }
+
             chosenFeaturesList = new JList<>(chosenFeaturesModel);
             chosenFeaturesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             add(new JScrollPane(chosenFeaturesList));
@@ -96,7 +99,7 @@ public class FeaturesManagementPanel extends JPanel {
                 chosenFeaturesModel.addElement(addFeatureField.getText().toLowerCase());
                 addFeatureField.setText("");
             } else
-                JOptionPane.showMessageDialog(FeaturesManagementPanel.this, "Vous devez remplir la zone de texte pour ajouter une caractéristique", "Erreur", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(FeaturesManagementPanel.this, "Vous devez remplir la zone de texte pour ajouter une caractéristique", "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

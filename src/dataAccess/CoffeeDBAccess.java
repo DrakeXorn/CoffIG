@@ -22,8 +22,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
 
             while (coffeeData.next()) {
                 GregorianCalendar calendar = new GregorianCalendar();
-                java.sql.Date expirationDate = coffeeData.getDate("expiration_date");
-                calendar.setTime(expirationDate);
+                calendar.setTime(coffeeData.getDate("expiration_date"));
 
                 Coffee coffee = new Coffee(coffeeData.getInt("coffee_id"),
                         coffeeData.getString("label"),
@@ -135,27 +134,6 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 descriptionStatement.setString(1, feature);
                 descriptionStatement.executeUpdate();
             }
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "café");
-        }
-    }
-
-    @Override
-    public void removeCoffee(Coffee coffee) throws ConnectionException, AddDataException {
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String descriptionSqlInstruction = "delete from description where coffee_id = ?";
-            String coffeeSqlInstruction = "delete from coffee where coffee_id = ?";
-            PreparedStatement descriptionStatement = connection.prepareStatement(descriptionSqlInstruction);
-            PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
-
-            descriptionStatement.setInt(1, coffee.getCoffeeID());
-            descriptionStatement.executeUpdate();
-
-            coffeeStatement.setInt(1, coffee.getCoffeeID());
-            coffeeStatement.executeUpdate();
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {

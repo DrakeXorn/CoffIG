@@ -26,6 +26,10 @@ public class Topping {
         this.stock = stock;
     }
 
+    public StockLocation getStock() {
+        return stock;
+    }
+
     public void setPrice(Double price) throws DoubleInputException {
         if (price < 0)
             throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");

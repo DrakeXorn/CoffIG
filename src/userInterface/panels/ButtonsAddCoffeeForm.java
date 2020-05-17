@@ -2,7 +2,6 @@ package userInterface.panels;
 
 import controller.StockLocationController;
 import model.Coffee;
-import model.StockLocation;
 import userInterface.frames.MainWindow;
 import userInterface.utils.InputCheck;
 
@@ -32,8 +31,10 @@ public class ButtonsAddCoffeeForm extends JPanel {
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            parent.resetSize();
             parent.getWindowContainer().removeAll();
-            parent.getWindowContainer().add(new CoffeeForm(parent, null));
+            parent.getWindowContainer().add(new CoffeeForm(parent, null), BorderLayout.CENTER);
+            parent.getWindowContainer().add(new ButtonsAddCoffeeForm(parent), BorderLayout.SOUTH);
             parent.repaint();
             parent.setVisible(true);
         }
@@ -44,7 +45,7 @@ public class ButtonsAddCoffeeForm extends JPanel {
         public void actionPerformed(ActionEvent e) {
             CoffeeForm form = ((CoffeeForm) parent.getWindowContainer().getComponent(0));
             if (!InputCheck.areInputsFilled(form.getCoffeeID(), form.getWeightNeeded(), form.getPrice(), form.getPackaging(), form.getAlley(), form.getShelf(), form.getNumber(), form.getCountries(), form.getIntensity(), form.getExpirationDatePicker(), form.getQuantityBought()))
-                JOptionPane.showMessageDialog(parent, "Vous devez remplir tous les champs obligatoires !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(parent, "Vous devez remplir tous les champs obligatoires !", "Attention", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
                     Coffee coffee = form.createCoffee();
@@ -59,7 +60,7 @@ public class ButtonsAddCoffeeForm extends JPanel {
                             form.getController().addCoffee(coffee);
                         }
                     } else
-                        JOptionPane.showMessageDialog(parent, "Vous devez choisir un emplacement qui n'est pas encore utilisé !", "Erreur", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(parent, "Vous devez choisir un emplacement qui n'est pas encore utilisé !", "Attention", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exception){
                     JOptionPane.showMessageDialog(parent, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
                 }

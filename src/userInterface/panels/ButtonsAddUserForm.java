@@ -19,6 +19,7 @@ public class ButtonsAddUserForm extends JPanel {
 
     public ButtonsAddUserForm(MainWindow window, JPanel form){
         this.parent = window;
+        parent.resetSize();
         this.form = form;
         controller = new CustomerController();
         this.setLayout(new FlowLayout());
@@ -32,15 +33,17 @@ public class ButtonsAddUserForm extends JPanel {
         reset = new JButton("Réinitialisation");
         this.add(reset);
 
-
         validation.addActionListener(new ValidationListener());
         reset.addActionListener(new ResetListener());
+
+        setVisible(true);
     }
 
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
+
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
                     controller.addCustomer((Customer)user);
@@ -62,12 +65,11 @@ public class ButtonsAddUserForm extends JPanel {
             UserForm user = new UserForm(null);
             parent.getWindowContainer().add(user, BorderLayout.NORTH);
 
-            if (form instanceof CustomerForm){
+            if (form instanceof CustomerForm) {
                 CustomerForm customer = new CustomerForm(user, null);
                 parent.getWindowContainer().add(customer, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, customer), BorderLayout.SOUTH);
-            }
-            else {
+            } else {
                 EmployeeForm employee = new EmployeeForm(user);
                 parent.getWindowContainer().add(employee, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, employee), BorderLayout.SOUTH);

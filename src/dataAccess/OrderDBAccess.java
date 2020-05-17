@@ -26,6 +26,20 @@ public class OrderDBAccess implements OrderDataAccess {
             String insertDrinksInstruction = "insert into drink_ordering (order_number, drink_label, drink_id, size, nbr_drinks, selling_price) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement insertDrinksStatement = connection.prepareStatement(insertDrinksInstruction);
             for (DrinkOrdering drinkOrdering : order.getDrinkOrderings()) {
+                for (Topping topping : drinkOrdering.getDrink().getSupplements()) {
+                    String updateStockInstruction = "update stock_location set quantity = ((select quantity from stock_location where alley = ? and shelf = ? and number = ?) - ?) where alley = ? and shelf = ? and number = ?";
+                    PreparedStatement updateStockStatement = connection.prepareStatement(updateStockInstruction);
+
+                    updateStockStatement.setInt(1, topping.getStock().getAlley());
+                    updateStockStatement.setInt(2, topping.getStock().getShelf());
+                    updateStockStatement.setInt(3, topping.getStock().getNumber());
+                    updateStockStatement.setInt(4, drinkOrdering.getNbrPieces());
+                    updateStockStatement.setInt(5, topping.getStock().getAlley());
+                    updateStockStatement.setInt(6, topping.getStock().getShelf());
+                    updateStockStatement.setInt(7, topping.getStock().getNumber());
+                    updateStockStatement.executeUpdate();
+                }
+
                 insertDrinksStatement.setInt(1, order.getOrderNumber());
                 insertDrinksStatement.setString(2, drinkOrdering.getDrink().getLabel());
                 insertDrinksStatement.setInt(3, drinkOrdering.getDrink().getCoffee().getCoffeeID());
@@ -38,6 +52,18 @@ public class OrderDBAccess implements OrderDataAccess {
             String insertFoodInstruction = "insert into food_ordering (food_id, order_number, nbr_pieces, selling_price) values (?, ?, ?, ?)";
             PreparedStatement insertFoodStatement = connection.prepareStatement(insertFoodInstruction);
             for (FoodOrdering foodOrdering : order.getFoodOrderings()) {
+                String updateStockInstruction = "update stock_location set quantity = ((select quantity from stock_location where alley = ? and shelf = ? and number = ?) - ?) where alley = ? and shelf = ? and number = ?";
+                PreparedStatement updateStockStatement = connection.prepareStatement(updateStockInstruction);
+
+                updateStockStatement.setInt(1, foodOrdering.getFood().getStockLocation().getAlley());
+                updateStockStatement.setInt(2, foodOrdering.getFood().getStockLocation().getShelf());
+                updateStockStatement.setInt(3, foodOrdering.getFood().getStockLocation().getNumber());
+                updateStockStatement.setInt(4, foodOrdering.getNbrPieces());
+                updateStockStatement.setInt(5, foodOrdering.getFood().getStockLocation().getAlley());
+                updateStockStatement.setInt(6, foodOrdering.getFood().getStockLocation().getShelf());
+                updateStockStatement.setInt(7, foodOrdering.getFood().getStockLocation().getNumber());
+                updateStockStatement.executeUpdate();
+
                 insertFoodStatement.setInt(1, foodOrdering.getFood().getFoodId());
                 insertFoodStatement.setInt(2, order.getOrderNumber());
                 insertFoodStatement.setInt(3, foodOrdering.getNbrPieces());
@@ -62,7 +88,7 @@ public class OrderDBAccess implements OrderDataAccess {
             ResultSet result = statement.executeQuery(sqlInstruction);
 
             result.next();
-            nbrOrders = result.getInt("max(coffee_id)");
+            nbrOrders = result.getInt("max(order_number)");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {

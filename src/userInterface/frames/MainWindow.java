@@ -95,6 +95,11 @@ public class MainWindow extends JFrame {
         return windowContainer;
     }
 
+    public void resetSize() {
+        if (getHeight() != 800)
+            setSize(800, 600);
+    }
+
     private class AddCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
@@ -106,8 +111,7 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
 
-            if (getHeight() != 800)
-                setSize(800, 600);
+            resetSize();
         }
     }
 
@@ -119,6 +123,9 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
+
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
         }
     }
 
@@ -131,8 +138,7 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
 
-            if (getHeight() != 800)
-                setSize(800, 600);
+            resetSize();
         }
     }
 
@@ -152,13 +158,18 @@ public class MainWindow extends JFrame {
     private class AllCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+            resetSize();
         }
     }
 
     private class AllCoffeesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AllCoffeesFrame allCoffeesFrame = new AllCoffeesFrame();
+            windowContainer.removeAll();
+            windowContainer.add(new OrderForm());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+            setSize(getWidth(), 200);
         }
     }
 
@@ -179,7 +190,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(new SearchAssignmentsPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
-            setSize(getWidth(), 150);
+            setSize(getWidth(), 160);
         }
     }
 }

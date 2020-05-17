@@ -326,9 +326,56 @@ public class CustomerDBAccess implements CustomerDataAccess {
                 connection.rollback(save);
             }
         } catch (SQLException exception) {
-            throw new ModifyException("client", exception.getMessage());
+            throw new ModifyException("client", exception.getMessage(), "modification");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
+    }
+
+    @Override
+    public void removeCustomer(Customer customer) throws ModifyException, ConnectionException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String updateOrderInstruction = "update `order` set beneficiary = ? where beneficiary = ?";
+            String removeCustomerInstruction = "delete from customer where customer_id = ?";
+            String removeUserInstruction = "delete from user where user_id = ?";
+            PreparedStatement updateOrderStatement = connection.prepareStatement(updateOrderInstruction);
+            PreparedStatement removeCustomerStatement = connection.prepareStatement(removeCustomerInstruction);
+            PreparedStatement removeUserStatement = connection.prepareStatement(removeUserInstruction);
+
+            deleteLoyaltyCard(connection, customer.getUserID(), customer.getPhone());
+
+            updateOrderStatement.setNull(1, Types.INTEGER);
+            updateOrderStatement.setInt(2, customer.getUserID());
+            updateOrderStatement.executeUpdate();
+
+            removeCustomerStatement.setInt(1, customer.getUserID());
+            removeCustomerStatement.executeUpdate();
+
+            removeUserStatement.setInt(1, customer.getUserID());
+            removeUserStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new ModifyException("client", exception.getMessage(), "suppression");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+    }
+
+    private void deleteLoyaltyCard(Connection connection, int customerId, String oldPhone) throws SQLException {
+        String sqlCustomer = "update customer set loyalty_card = ? where customer_id = ?";
+        PreparedStatement customerStatement = connection.prepareStatement(sqlCustomer);
+        customerStatement.setNull(1, Types.INTEGER);
+        customerStatement.setInt(2, customerId);
+        customerStatement.executeUpdate();
+
+        String sqlRight = "delete from `right` where loyalty_card_id = ?";
+        PreparedStatement rightStatement = connection.prepareStatement(sqlRight);
+        rightStatement.setString(1, oldPhone);
+        rightStatement.executeUpdate();
+
+        String sqlLoyaltyCard = "delete from loyalty_card where loyalty_card_id = ?";
+        PreparedStatement loyaltyCardStatement = connection.prepareStatement(sqlLoyaltyCard);
+        loyaltyCardStatement.setString(1, oldPhone);
+        loyaltyCardStatement.executeUpdate();
     }
 }

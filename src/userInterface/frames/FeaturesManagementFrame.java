@@ -1,6 +1,5 @@
 package userInterface.frames;
 
-import userInterface.panels.ButtonsFeatureManagementPanel;
 import userInterface.panels.CoffeeForm;
 import userInterface.panels.FeaturesManagementPanel;
 
@@ -8,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class FeaturesManagementFrame extends JFrame {
     private Container container;

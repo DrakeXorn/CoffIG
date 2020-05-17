@@ -19,4 +19,8 @@ public class OrderManager {
             throws AllDataException, ConnectionException, IntegerInputException, StringInputException, DoubleInputException {
         return orderDataAccess.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
+
+    public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
+        return orderDataAccess.getLastOrderNumber();
+    }
 }
