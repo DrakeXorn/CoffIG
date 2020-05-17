@@ -8,24 +8,56 @@ import java.awt.event.*;
 
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
-    private JMenu addNew, upDate, displayAll, search;
-    private JMenuItem addCustomer, addEmployee, addCoffee,
-            updateCustomer, updateEmployee, updateCoffee,
+    private JMenu infos, addNew, upDate, displayAll, search;
+    private JMenuItem home, about, exitItem,
+            addCustomer, addEmployee, addCoffee,
+            updateCustomer, updateCoffee,
             allCustomers, allEmployees, allCoffees,
             searchOrders, searchAdvantages, searchServices;
+
+    private MainPanel mainPanel;
     private Container windowContainer;
 
-    public MainWindow() {
-        super("Menu");
+    public MainWindow(){
+        super("CoffIG");
         this.setBounds(100, 50, 800, 600);
         this.addWindowListener (new WindowAdapter() {
-            public void windowClosing (WindowEvent e) { System.exit(0); }});
+            public void windowClosing (WindowEvent e) { System.exit(0); } } );
+        this.setResizable(false);
+
+        ImageIcon cupIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeBean.png"));
+        Image cupImage = cupIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon coffeeCup = new ImageIcon(cupImage);
+        this.setIconImage(coffeeCup.getImage());
 
         windowContainer = this.getContentPane();
         windowContainer.setLayout(new BorderLayout());
+        mainPanel = new MainPanel();
+        windowContainer.add(mainPanel, BorderLayout.CENTER);
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
+
+
+        infos = new JMenu();
+        ImageIcon beanIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeCup.png"));
+        Image beanImage = beanIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon coffeeBean = new ImageIcon(beanImage);
+        infos.setIcon(coffeeBean);
+        menuBar.add(infos);
+
+        home = new JMenuItem("Accueil");
+        infos.add(home);
+        home.addActionListener(new HomeListener());
+
+        about = new JMenuItem("À propos");
+        infos.add(about);
+
+        exitItem = new JMenuItem("Quitter");
+        infos.add(exitItem);
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+        exitItem.addActionListener(new ExitListener());
+
 
 
         addNew = new JMenu("Ajouter");
@@ -48,10 +80,7 @@ public class MainWindow extends JFrame {
 
         updateCustomer = new JMenuItem("Modifier un client");
         upDate.add(updateCustomer);
-        updateCustomer.addActionListener(new ModifyCustomerListener());
-
-        updateEmployee = new JMenuItem("Modifier un employé");
-        upDate.add(updateEmployee);
+        updateCustomer.addActionListener(new UpdateCustomerListener());
 
         updateCoffee = new JMenuItem("Modifier un café");
         upDate.add(updateCoffee);
@@ -87,7 +116,6 @@ public class MainWindow extends JFrame {
         search.add(searchServices);
         searchServices.addActionListener(new SearchServicesListener());
 
-
         setVisible(true);
     }
 
@@ -100,7 +128,29 @@ public class MainWindow extends JFrame {
             setSize(800, 600);
     }
 
-    private class AddCustomerListener implements ActionListener {
+    private class HomeListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            windowContainer.removeAll();
+            windowContainer.add(new MainPanel());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+        }
+    }
+
+    private class ExitListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            System.exit(0);
+            /*try {
+                SingletonConnection.getInstance().close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }*/
+        }
+    }
+
+    private class AddCustomerListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
             UserForm user = new UserForm(null);
@@ -142,7 +192,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class ModifyCustomerListener implements ActionListener {
+    private class UpdateCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(MainWindow.this);
         }
@@ -193,4 +243,6 @@ public class MainWindow extends JFrame {
             setSize(getWidth(), 160);
         }
     }
+
+
 }

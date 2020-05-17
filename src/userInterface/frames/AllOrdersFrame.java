@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AllOrdersFrame extends JFrame{
-
+public class AllOrdersFrame extends JFrame {
     private AllOrdersModel model;
     private JTable ordersTable;
     private JScrollPane scrollPane;
@@ -20,9 +19,11 @@ public class AllOrdersFrame extends JFrame{
     private JButton select, goBack;
     private Container container;
     private ArrayList<Order> orders;
+    private Customer customer;
 
-    public AllOrdersFrame(ArrayList<Order> orders){
-        super("Résultat de la recherche des commandes d'un client");
+    public AllOrdersFrame(ArrayList<Order> orders, Customer customer){
+        super("Recherche des anciennes commandes de/d' " + customer);
+        this.customer = customer;
         this.setBounds(90, 90, 800, 400);
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
@@ -65,11 +66,11 @@ public class AllOrdersFrame extends JFrame{
 
                 ArrayList<DrinkOrdering> drinkOrderings = orderToDisplay.getDrinkOrderings();
                 if(!drinkOrderings.isEmpty())
-                    tabbedPane.insertTab("Boisson(s)", null, new AllDrinksPanel(drinkOrderings, AllOrdersFrame.this), "Détail des boissons", 0);
+                    tabbedPane.insertTab("Boisson(s)", null, new AllDrinksPanel(drinkOrderings), "Détail des boissons", 0);
 
                 ArrayList<FoodOrdering> foodOrderings = orderToDisplay.getFoodOrderings();
                 if(!foodOrderings.isEmpty())
-                    tabbedPane.insertTab("Nourriture(s)", null, new AllFoodsPanel(foodOrderings, AllOrdersFrame.this), "Détail de la nourriture", 1);
+                    tabbedPane.insertTab("Nourriture(s)", null, new AllFoodsPanel(foodOrderings), "Détail de la nourriture", 1);
 
                 container.add(tabbedPane, BorderLayout.CENTER);
 
@@ -91,7 +92,7 @@ public class AllOrdersFrame extends JFrame{
         @Override
         public void actionPerformed(ActionEvent event) {
             setVisible(false);
-            AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders);
+            AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
         }
     }
 }

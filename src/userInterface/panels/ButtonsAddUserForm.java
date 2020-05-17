@@ -46,11 +46,19 @@ public class ButtonsAddUserForm extends JPanel {
 
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
-                    controller.addCustomer((Customer)user);
-                } else
+                    if(user != null){
+                        controller.addCustomer((Customer)user);
+                        JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
                     user = ((EmployeeForm)form).createEmployee();
-                JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    if(user != null){
+                        //controller.addEmployee((Employee)user);
+                        JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
 
+                form.setVisible(false);
             } catch (AddException | ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
@@ -76,13 +84,6 @@ public class ButtonsAddUserForm extends JPanel {
             }
             parent.getWindowContainer().repaint();
             parent.setVisible(true);
-        }
-    }
-
-    private class GoBackListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            // TODO faire listener
         }
     }
 }

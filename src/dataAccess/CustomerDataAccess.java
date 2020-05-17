@@ -15,7 +15,7 @@ public interface CustomerDataAccess {
     int getLastCustomerId() throws AllDataException, ConnectionException;
 
     // update
-    void modifyCustomer(Customer customer) throws ModifyException, ConnectionException;
+    void updateCustomer(Customer customer) throws ModifyException, ConnectionException;
 
     // delete
     void removeCustomer(Customer customer) throws ModifyException, ConnectionException;

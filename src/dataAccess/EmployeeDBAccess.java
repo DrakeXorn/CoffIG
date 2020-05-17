@@ -26,7 +26,9 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 GregorianCalendar hireDate = new GregorianCalendar();
                 Date birthDateSql = data.getDate("birth_date");
                 Date hireDateSql = data.getDate("hire_date");
+                
                 birthDate.setTime(birthDateSql);
+                hireDate.setTime(hireDateSql);
 
                 Employee employee = new Employee(data.getInt("employee_id"),
                         data.getString("password"),
@@ -147,16 +149,6 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-    }
-
-    @Override
-    public void removeEmployee(Employee employee) {
-
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
-
     }
 
     @Override

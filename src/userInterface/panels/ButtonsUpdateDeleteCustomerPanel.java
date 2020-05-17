@@ -39,10 +39,10 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
                 parent.getParent().getWindowContainer().removeAll();
                 parent.getParent().getWindowContainer().add(userForm, BorderLayout.NORTH);
                 parent.getParent().getWindowContainer().add(customerForm, BorderLayout.CENTER);
-                parent.getParent().getWindowContainer().add(new ButtonsModifyUserForm(parent.getParent(), customerForm), BorderLayout.SOUTH);
+                parent.getParent().getWindowContainer().add(new ButtonsUpdateUserForm(parent.getParent(), customerForm), BorderLayout.SOUTH);
                 parent.getParent().getWindowContainer().repaint();
                 parent.getParent().setVisible(true);
-                setVisible(false);
+                parent.dispose();
             } else
                 JOptionPane.showMessageDialog(null, "Sélectionnez un café à modifier !",
                         "Attention", JOptionPane.WARNING_MESSAGE);
@@ -67,7 +67,7 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
                     }
                 }
             } else
-                JOptionPane.showMessageDialog(null, "Sélectionnez un café à supprimer !",
+                JOptionPane.showMessageDialog(null, "Sélectionnez un client à supprimer !",
                         "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }

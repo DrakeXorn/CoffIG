@@ -26,8 +26,8 @@ public class CustomerManager {
     public int getLastCustomerId() throws AllDataException, ConnectionException {
         return dao.getLastCustomerId();
     }
-    public void modifyCustomer(Customer customer) throws ModifyException, ConnectionException {
-        dao.modifyCustomer(customer);
+    public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
+        dao.updateCustomer(customer);
     }
 
     public void removeCustomer(Customer customer) throws ConnectionException, ModifyException {

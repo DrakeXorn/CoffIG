@@ -16,14 +16,26 @@ public class Topping {
         setPrice(price);
         this.stock = stock;
     }
-
-    public Topping(Integer toppingID, String label, Double price, StockLocation stock) throws DoubleInputException {
+    
+    // pour la recherche des anciennes commandes
+    public Topping(Integer toppingID, String label, Double price) throws DoubleInputException {
         this.toppingID = toppingID;
         if (toppingID > nbrToppings)
             nbrToppings = toppingID + 1;
         this.label = label;
         setPrice(price);
-        this.stock = stock;
+    }
+
+    public Integer getToppingID() {
+        return toppingID;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public StockLocation getStock() {
