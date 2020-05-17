@@ -13,7 +13,7 @@ public class AllFoodsPanel extends JPanel{
     private JTable foodsTable;
     private JScrollPane scrollPane;
 
-    public AllFoodsPanel(ArrayList<FoodOrdering> foods, AllOrdersFrame parent){
+    public AllFoodsPanel(ArrayList<FoodOrdering> foods){
         try {
             model = new AllFoodsModel(foods);
             foodsTable = new JTable(model);

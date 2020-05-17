@@ -43,8 +43,8 @@ public class SearchOldOrdersPanel extends JPanel {
 
                 if(startDateConverted.after(today))
                     throw new DateException(startDateConverted, "La date de début ne doit pas se trouver après aujourd'hui !");
-                if(endDateConverted.after(today))
-                    throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver après aujourd'hui !");
+                //if(endDateConverted.after(today))
+                   // throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver après aujourd'hui !");
                 if(endDateConverted.before(startDateConverted))
                     throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver avant la date de début !");
                 if(!form.getTakeAway().isSelected() && !form.getOnSite().isSelected())

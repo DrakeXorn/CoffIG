@@ -23,7 +23,7 @@ public class AllOrdersFrame extends JFrame{
     private Customer customer;
 
     public AllOrdersFrame(ArrayList<Order> orders, Customer customer){
-        super("Résultat de la recherche des commandes de/d'" + customer);
+        super("Recherche des anciennes commandes de/d' " + customer);
         this.customer = customer;
         this.setBounds(90, 90, 800, 400);
         container = this.getContentPane();
@@ -67,11 +67,11 @@ public class AllOrdersFrame extends JFrame{
 
                 ArrayList<DrinkOrdering> drinkOrderings = orderToDisplay.getDrinkOrderings();
                 if(!drinkOrderings.isEmpty())
-                    tabbedPane.insertTab("Boisson(s)", null, new AllDrinksPanel(drinkOrderings, AllOrdersFrame.this), "Détail des boissons", 0);
+                    tabbedPane.insertTab("Boisson(s)", null, new AllDrinksPanel(drinkOrderings), "Détail des boissons", 0);
 
                 ArrayList<FoodOrdering> foodOrderings = orderToDisplay.getFoodOrderings();
                 if(!foodOrderings.isEmpty())
-                    tabbedPane.insertTab("Nourriture(s)", null, new AllFoodsPanel(foodOrderings, AllOrdersFrame.this), "Détail de la nourriture", 1);
+                    tabbedPane.insertTab("Nourriture(s)", null, new AllFoodsPanel(foodOrderings), "Détail de la nourriture", 1);
 
                 container.add(tabbedPane, BorderLayout.CENTER);
 

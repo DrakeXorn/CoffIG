@@ -26,6 +26,27 @@ public class Topping {
         this.stock = stock;
     }
 
+    // pour la recherche des anciennes commandes
+    public Topping(Integer toppingID, String label, Double price) throws DoubleInputException {
+        this.toppingID = toppingID;
+        if (toppingID > nbrToppings)
+            nbrToppings = toppingID + 1;
+        this.label = label;
+        setPrice(price);
+    }
+
+    public Integer getToppingID() {
+        return toppingID;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
     public void setPrice(Double price) throws DoubleInputException {
         if (price < 0)
             throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");

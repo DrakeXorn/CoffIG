@@ -3,6 +3,7 @@ package dataAccess;
 import model.*;
 import model.exceptions.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class OrderDBAccess implements OrderDataAccess {
             Connection connection = SingletonConnection.getInstance();
 
             String sqlOrder = "select o.order_number OrderNumber, o.date, o.is_to_take_away, " +
-                    "do.order_number DrinkOrderNumber, do.drink_id, do.drink_label, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
+                    "do.order_number DrinkOrderNumber, do.drink_id DrinkIdDO, do.drink_label, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
                     "d.coffee_id, d.label DrinkLabel, d.is_cold, " +
                     "fo.order_number FoodOrderNumber, fo.nbr_pieces, fo.selling_price FoodPrice, " +
                     "f.food_id, f.label FoodLabel from `order` o" +
@@ -107,6 +108,7 @@ public class OrderDBAccess implements OrderDataAccess {
             Order order = null;
             DrinkOrdering drinkOrdering;
             int drinkId;
+            String drinkLabel;
             FoodOrdering foodOrdering;
             int foodId;
             int previousOrderNumber = 0;
@@ -128,10 +130,11 @@ public class OrderDBAccess implements OrderDataAccess {
                     previousOrderNumber = datasOrder.getInt("OrderNumber");
                 }
 
-                drinkId = datasOrder.getInt("DrinkOrderNumber");
+                drinkId = datasOrder.getInt("DrinkIdDO");
+                drinkLabel = datasOrder.getString("DrinkLabel");
                 if(!datasOrder.wasNull()){
                     drinkOrdering = new DrinkOrdering(
-                            new Drink(datasOrder.getString("DrinkLabel"), datasOrder.getBoolean("is_cold")),
+                            new Drink(drinkLabel, datasOrder.getBoolean("is_cold")),
                             datasOrder.getString("size"),
                             datasOrder.getInt("nbr_drinks"),
                             datasOrder.getDouble("DrinkPrice"));
@@ -140,6 +143,24 @@ public class OrderDBAccess implements OrderDataAccess {
                         order.addDrinkOrdering(drinkOrdering);
                         order.setPrice(datasOrder.getDouble("DrinkPrice"));
                     }
+
+                    String sqlTopping = "select distinct t.topping_id, t.label, t.price from topping t " +
+                            "join supplement s on s.topping_id = t.topping_id " +
+                            "join drink_ordering d on (s.drink_label = ? and s.drink_id = ?)" +
+                            "where s.order_number = ?";
+                    PreparedStatement toppingStatement = connection.prepareStatement(sqlTopping);
+                    toppingStatement.setString(1, drinkLabel);
+                    toppingStatement.setInt(2, drinkId);
+                    toppingStatement.setInt(3, currentOrderNumber);
+                    ResultSet datasTopping = toppingStatement.executeQuery();
+
+                    while(datasTopping.next()){
+                        System.out.println("topping" +  datasTopping.getString("label"));
+                        drinkOrdering.addTopping(new Topping(datasTopping.getInt("topping_id"),
+                                datasTopping.getString("label"),
+                                datasTopping.getDouble("price")));
+                    }
+
                 }
 
                 foodId = datasOrder.getInt("FoodOrderNumber");

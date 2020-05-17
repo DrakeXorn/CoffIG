@@ -4,8 +4,11 @@ import model.exceptions.DoubleInputException;
 import model.exceptions.IntegerInputException;
 import model.exceptions.StringInputException;
 
+import java.util.ArrayList;
+
 public class DrinkOrdering {
     private Drink drink;
+    private ArrayList<Topping> toppings;
     private Order order;
     private Integer nbrPieces;
     private Double sellingPrice;
@@ -22,6 +25,7 @@ public class DrinkOrdering {
     // pour la recherche des anciennes commandes
     public DrinkOrdering(Drink drink, String size, Integer nbrPieces, Double sellingPrice) throws StringInputException, DoubleInputException, IntegerInputException {
         this.drink = drink;
+        toppings = new ArrayList<>();
         setSize(size);
         setPieces(nbrPieces);
         setPrice(sellingPrice);
@@ -41,6 +45,14 @@ public class DrinkOrdering {
 
     public String getSize() {
         return size;
+    }
+
+    public void addTopping(Topping topping){
+        toppings.add(topping);
+    }
+
+    public ArrayList<Topping> getToppings() {
+        return toppings;
     }
 
     @Override
