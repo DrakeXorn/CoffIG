@@ -9,10 +9,7 @@ public class ConnectionException extends Exception {
 
     @Override
     public String getMessage() {
-        StringBuilder res = new StringBuilder("Erreur lors de la connexion à la base de données :\n");
 
-        res.append(exceptionMessage);
-
-        return res.toString();
+        return "Erreur lors de la connexion à la base de données :\n" + exceptionMessage;
     }
 }

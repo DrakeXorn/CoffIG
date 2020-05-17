@@ -1,6 +1,5 @@
 package userInterface.tableModels;
 
-import model.DrinkOrdering;
 import model.FoodOrdering;
 import model.exceptions.AllDataException;
 
@@ -43,7 +42,7 @@ public class AllFoodsModel extends AbstractTableModel {
         };
     }
 
-    public Class getColumnClass (int column)
+    public Class<?> getColumnClass (int column)
     {
         return switch (column) {
             case 0 -> String.class; // label

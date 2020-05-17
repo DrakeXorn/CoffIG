@@ -47,7 +47,7 @@ public class AllToppingsFrame extends JFrame {
     private class CloseListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            setVisible(false);
+            AllToppingsFrame.this.dispose();
         }
     }
 }

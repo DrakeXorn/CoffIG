@@ -28,7 +28,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
             userStatement.setString(11, customer.getLocality().getCity());
             userStatement.executeUpdate();
 
-            if(customer.getSecondName() != null){
+            if(customer.getSecondName() != null) {
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, customer.getSecondName());
@@ -50,7 +50,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
             customerStatement.setBoolean(2, customer.getWantsAdvertising());
             customerStatement.executeUpdate();
 
-            if(customer.getSatisfactionDegree() != null){
+            if(customer.getSatisfactionDegree() != null) {
                 sqlCustomer = "update customer set satisfaction_degree = ? where customer_id = ?";
                 customerStatement = connection.prepareStatement(sqlCustomer);
                 customerStatement.setInt(1, customer.getSatisfactionDegree());
@@ -141,7 +141,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
                     GregorianCalendar registrationDateJava = new GregorianCalendar();
                     registrationDateJava.setTime(registrationDateSql);
 
-                    customer.addLoyaltyCard(new LoyaltyCard(datasCustomer.getString("loyalty_card_id"),
+                    customer.addLoyaltyCard(new LoyaltyCard(loyaltyCard,
                             registrationDateJava, datasCustomer.getInt("points_number")));
                 }
                 customers.add(customer);
@@ -235,7 +235,36 @@ public class CustomerDBAccess implements CustomerDataAccess {
                 }
             }
         } catch (SQLException exception) {
-            throw new ModifyException("client", exception.getMessage());
+            throw new ModifyException("client", exception.getMessage(), "modification");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public void removeCustomer(Customer customer) throws ModifyException, ConnectionException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String updateOrderInstruction = "update `order` set beneficiary = ? where beneficiary = ?";
+            String removeCustomerInstruction = "delete from customer where customer_id = ?";
+            String removeUserInstruction = "delete from user where user_id = ?";
+            PreparedStatement updateOrderStatement = connection.prepareStatement(updateOrderInstruction);
+            PreparedStatement removeCustomerStatement = connection.prepareStatement(removeCustomerInstruction);
+            PreparedStatement removeUserStatement = connection.prepareStatement(removeUserInstruction);
+
+            deleteLoyaltyCard(connection, customer.getUserID(), customer.getPhone());
+
+            updateOrderStatement.setNull(1, Types.INTEGER);
+            updateOrderStatement.setInt(2, customer.getUserID());
+            updateOrderStatement.executeUpdate();
+
+            removeCustomerStatement.setInt(1, customer.getUserID());
+            removeCustomerStatement.executeUpdate();
+
+            removeUserStatement.setInt(1, customer.getUserID());
+            removeUserStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new ModifyException("client", exception.getMessage(), "suppression");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -280,7 +309,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
         customerStatement.setInt(2, customerId);
         customerStatement.executeUpdate();
 
-         String sqlRight = "delete from `right` where loyalty_card_id = ?";
+        String sqlRight = "delete from `right` where loyalty_card_id = ?";
         PreparedStatement rightStatement = connection.prepareStatement(sqlRight);
         rightStatement.setString(1, oldPhone);
         rightStatement.executeUpdate();

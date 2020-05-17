@@ -4,7 +4,6 @@ import business.CustomerManager;
 import model.*;
 import model.exceptions.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class CustomerController {
     private CustomerManager manager;
@@ -27,5 +26,9 @@ public class CustomerController {
     }
     public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
         manager.updateCustomer(customer);
+    }
+
+    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException {
+        manager.removeCustomer(customer);
     }
 }

@@ -72,7 +72,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 
@@ -94,7 +94,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 

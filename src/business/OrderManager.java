@@ -20,6 +20,10 @@ public class OrderManager {
         return orderDataAccess.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
 
+    public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
+        return orderDataAccess.getLastOrderNumber();
+    }
+
     public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
         int price = (int) orderPrice;
 

@@ -3,6 +3,7 @@ package userInterface.panels;
 import model.DrinkOrdering;
 import model.Topping;
 import userInterface.tableModels.AllDrinksModel;
+import userInterface.frames.AllToppingsFrame;
 
 import javax.swing.*;
 import java.awt.*;

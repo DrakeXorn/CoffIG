@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AllOrdersFrame extends JFrame{
-
+public class AllOrdersFrame extends JFrame {
     private AllOrdersModel model;
     private JTable ordersTable;
     private JScrollPane scrollPane;

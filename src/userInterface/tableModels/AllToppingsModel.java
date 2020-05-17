@@ -42,7 +42,7 @@ public class AllToppingsModel extends AbstractTableModel  {
         };
     }
 
-    public Class getColumnClass (int column)
+    public Class<?> getColumnClass (int column)
     {
         return switch (column) {
             case 0 -> Integer.class; // id

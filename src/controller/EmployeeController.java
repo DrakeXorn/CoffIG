@@ -13,7 +13,11 @@ public class EmployeeController {
         manager = new EmployeeManager();
     }
 
-    public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, AddDataException, CharacterInputException, DateException, StringInputException {
+    public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException {
         return manager.getAllEmployees();
+    }
+
+    public ArrayList<Employee> getCurrentlyWorkingEmployees() throws ConnectionException, AllDataException, CharacterInputException, DateException, StringInputException {
+        return manager.getCurrentlyWorkingEmployees();
     }
 }

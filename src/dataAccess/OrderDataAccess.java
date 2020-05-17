@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public interface OrderDataAccess {
-    boolean addOrder(Order order) throws ConnectionException, AddDataException;
+    void addOrder(Order order) throws ConnectionException, AddDataException;
     Integer getLastOrderNumber() throws ConnectionException, AddDataException;
     ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite) throws AllDataException, ConnectionException, DoubleInputException, StringInputException, IntegerInputException;
     String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException;

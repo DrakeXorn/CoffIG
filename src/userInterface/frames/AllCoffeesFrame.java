@@ -1,10 +1,6 @@
 package userInterface.frames;
 
 import controller.CoffeeController;
-import model.exceptions.AllDataException;
-import model.exceptions.ConnectionException;
-import model.exceptions.DoubleInputException;
-import model.exceptions.IntegerInputException;
 import userInterface.tableModels.AllCoffeesModel;
 
 import javax.swing.*;
@@ -16,6 +12,7 @@ public class AllCoffeesFrame extends JFrame {
     private ListSelectionModel listSelect;
     private CoffeeController controller;
     private Container container;
+    private MainWindow parent;
 
     public AllCoffeesFrame() {
         super("Tous les cafés");
@@ -37,14 +34,15 @@ public class AllCoffeesFrame extends JFrame {
             coffeeTable.getColumnModel().getColumn(11).setPreferredWidth(30);
             coffeeTable.getColumnModel().getColumn(12).setPreferredWidth(50);
 
-            coffeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            coffeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             coffeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSelect = coffeeTable.getSelectionModel();
             scrollPane = new JScrollPane(coffeeTable);
 
             add(scrollPane);
             setVisible(true);
-        } catch (AllDataException | ConnectionException | IntegerInputException | DoubleInputException exception) {
+        } catch (Exception exception) {
+            exception.printStackTrace();
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
     }

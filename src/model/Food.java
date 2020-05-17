@@ -9,19 +9,8 @@ public class Food {
     private Double price;
     private StockLocation stockLocation;
 
-    public Food(String label, Double price, StockLocation stockLocation)
-            throws DoubleInputException {
-        foodId = nbrFoods;
-        nbrFoods++;
-        this.label = label;
-        setPrice(price);
-        this.stockLocation = stockLocation;
-    }
-
     public Food(Integer foodId, String label, Double price, StockLocation stockLocation) throws DoubleInputException {
         this.foodId = foodId;
-        if (foodId > nbrFoods)
-            nbrFoods = foodId + 1;
         this.label = label;
         setPrice(price);
         this.stockLocation = stockLocation;
@@ -61,7 +50,12 @@ public class Food {
         this.price = price;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Food && foodId.equals(((Food) object).getFoodId());
+    }
+
     public String toString() {
-        return foodId + ", " + label + " : " + price;
+        return getLabel();
     }
 }

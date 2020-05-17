@@ -4,7 +4,6 @@ import model.Coffee;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class AllCoffeesModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
@@ -66,12 +65,16 @@ public class AllCoffeesModel extends AbstractTableModel {
     }
 
     @Override
-    public Class getColumnClass(int column) {
+    public Class<?> getColumnClass(int column) {
         return switch (column) {
             case 2, 3, 10, 11, 12 -> Integer.class;
             case 4, 5, 6 -> Double.class;
             case 8, 9 -> Boolean.class;
             default -> String.class;
         };
+    }
+
+    public Coffee getRow(int row) {
+        return contents.get(row);
     }
 }

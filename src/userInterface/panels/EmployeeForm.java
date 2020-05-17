@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 public class EmployeeForm extends JPanel {
     private JLabel hireDateLabel, endContractDateLabel, discountLabel;
     private JDatePicker hireDate, endContractDate;
-    private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContrat;
+    private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContract;
     private JSpinner discount;
     private UserForm userInfos;
 
@@ -33,10 +33,10 @@ public class EmployeeForm extends JPanel {
 
         this.add(new JLabel(""));
 
-        wantsEndContrat = new JCheckBox("Choisir une date de fin de contrat");
-        wantsEndContrat.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(wantsEndContrat);
-        wantsEndContrat.addItemListener(new WantsEndContractDateListener());
+        wantsEndContract = new JCheckBox("Choisir une date de fin de contrat");
+        wantsEndContract.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(wantsEndContract);
+        wantsEndContract.addItemListener(new WantsEndContractDateListener());
 
         endContractDateLabel = new JLabel("Date de fin de contrat :");
         endContractDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -82,9 +82,9 @@ public class EmployeeForm extends JPanel {
         Employee employee = null;
         try {
             employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
-                    userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
+                    userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
-                    (wantsEndContrat.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
+                    (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
                     isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
 
             JOptionPane.showMessageDialog(null, employee,

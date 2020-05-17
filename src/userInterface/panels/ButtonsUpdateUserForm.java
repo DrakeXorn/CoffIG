@@ -40,7 +40,7 @@ public class ButtonsUpdateUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                if(form instanceof CustomerForm){
+                if (form instanceof CustomerForm){
                     user = ((CustomerForm)form).updateCustomer();
 
                     if(user != null){

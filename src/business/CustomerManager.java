@@ -29,4 +29,8 @@ public class CustomerManager {
     public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
         dao.updateCustomer(customer);
     }
+
+    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException {
+        dao.removeCustomer(customer);
+    }
 }

@@ -37,7 +37,6 @@ public class AssignmentDBAccess implements AssignmentDataAccess {
             while (data.next()) {
                 int serviceId = data.getInt("service_id");
                 GregorianCalendar date = new GregorianCalendar();
-                Assignment assignment;
 
                 if (!services.containsKey(serviceId))
                     services.put(serviceId, new Service(data.getTime("start_time").toLocalTime(), data.getTime("end_time").toLocalTime()));

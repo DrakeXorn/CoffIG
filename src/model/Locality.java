@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.IntegerInputException;
-
 public class Locality {
     private Integer postalCode;
     private String city;

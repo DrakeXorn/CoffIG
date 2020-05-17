@@ -80,10 +80,11 @@ public class MainWindow extends JFrame {
 
         updateCustomer = new JMenuItem("Modifier un client");
         upDate.add(updateCustomer);
-        updateCustomer.addActionListener(new ModifyCustomerListener());
+        updateCustomer.addActionListener(new UpdateCustomerListener());
 
         updateCoffee = new JMenuItem("Modifier un café");
         upDate.add(updateCoffee);
+        updateCoffee.addActionListener(new UpdateCoffeeListener());
 
 
         displayAll = new JMenu("Afficher");
@@ -98,7 +99,7 @@ public class MainWindow extends JFrame {
 
         allCoffees = new JMenuItem("Afficher tous les cafés");
         displayAll.add(allCoffees);
-
+        allCoffees.addActionListener(new AllCoffeesListener());
 
 
         search = new JMenu("Rechercher");
@@ -120,6 +121,11 @@ public class MainWindow extends JFrame {
 
     public Container getWindowContainer() {
         return windowContainer;
+    }
+
+    public void resetSize() {
+        if (getHeight() != 800)
+            setSize(800, 600);
     }
 
     private class HomeListener implements ActionListener{
@@ -154,10 +160,12 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, customerForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+
+            resetSize();
         }
     }
 
-    private class AddEmployeeListener implements ActionListener{
+    private class AddEmployeeListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
             UserForm user = new UserForm(null);
@@ -165,6 +173,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
+
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
@@ -173,28 +182,54 @@ public class MainWindow extends JFrame {
     private class AddCoffeeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            NewCoffeeFrame coffeeFrame = new NewCoffeeFrame();
+            windowContainer.removeAll();
+            windowContainer.add(new CoffeeForm(MainWindow.this, null), BorderLayout.CENTER);
+            windowContainer.add(new ButtonsAddCoffeeForm(MainWindow.this), BorderLayout.SOUTH);
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+
+            resetSize();
         }
     }
 
-    private class ModifyCustomerListener implements ActionListener{
+    private class UpdateCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(MainWindow.this);
         }
     }
 
-    private class AllCustomerListener implements ActionListener{
-        public void actionPerformed(ActionEvent event){
-            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+    private class UpdateCoffeeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            UpdateCoffeesFrame updateCoffeesFrame = new UpdateCoffeesFrame(MainWindow.this);
         }
     }
 
-    private class SearchOrdersListener implements ActionListener{
+    private class AllCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
+            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+            resetSize();
+        }
+    }
+
+    private class AllCoffeesListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            windowContainer.removeAll();
+            windowContainer.add(new OrderForm());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+            setSize(getWidth(), 200);
+        }
+    }
+
+    private class SearchOrdersListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             windowContainer.removeAll();
             windowContainer.add(new SearchOldOrdersPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            setSize(getWidth(), 200);
         }
     }
 
@@ -205,6 +240,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(new SearchAssignmentsPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            setSize(getWidth(), 160);
         }
     }
 

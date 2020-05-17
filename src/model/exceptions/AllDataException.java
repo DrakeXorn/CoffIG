@@ -11,11 +11,8 @@ public class AllDataException extends Exception {
 
     @Override
     public String getMessage() {
-        StringBuilder res = new StringBuilder("Erreur lors de ");
 
-        res.append(attemptDescription).append(" dans la base de données :\n");
-        res.append(exceptionMessage);
-
-        return res.toString();
+        return "Erreur lors de la récupération des " + attemptDescription + " dans la base de données :\n" +
+                exceptionMessage;
     }
 }
