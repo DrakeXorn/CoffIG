@@ -101,8 +101,8 @@ public class Coffee {
     }
 
     public void setPackaging(Double packaging) throws DoubleInputException {
-        if (packaging < 1 || packaging > 40)
-            throw new DoubleInputException(packaging, "le packaging", "Le packaging doit compris entre 0 et 40kg !");
+        if (packaging < 1 || packaging > 50)
+            throw new DoubleInputException(packaging, "le packaging", "Le packaging doit compris entre 0 et 50kg !");
 
         this.packaging = packaging;
     }

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CoffeeCup extends JPanel {
-    private final static int range = 50;
+    private final static int range = 60;
     private final static int min = 360;
     private final static int width = 20;
     private final static int height = 20;

@@ -17,13 +17,13 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
     public ButtonsUpdateDeleteCustomerPanel(UpdateCustomersFrame parent) {
         this.parent = parent;
 
-        deleteButton = new JButton("Supprimer le client");
-        deleteButton.addActionListener(new DeleteButtonListener());
-        add(deleteButton);
-
         updateButton = new JButton("Modifier le client");
         updateButton.addActionListener(new UpdateButtonListener());
         add(updateButton);
+
+        deleteButton = new JButton("Supprimer le client");
+        deleteButton.addActionListener(new DeleteButtonListener());
+        add(deleteButton);
     }
 
     private class UpdateButtonListener implements ActionListener {
@@ -44,7 +44,7 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
                 parent.getParent().setVisible(true);
                 parent.dispose();
             } else
-                JOptionPane.showMessageDialog(null, "Sélectionnez un café à modifier !",
+                JOptionPane.showMessageDialog(null, "Sélectionnez un client à modifier !",
                         "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }

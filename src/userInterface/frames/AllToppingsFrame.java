@@ -1,4 +1,4 @@
-package userInterface.panels;
+package userInterface.frames;
 
 import model.Topping;
 import model.exceptions.AllDataException;

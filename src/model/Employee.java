@@ -108,8 +108,8 @@ public class Employee extends User {
     }
 
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
-        if(endContractDate != null){
-            if(endContractDate.before(hireDate))
+        if (endContractDate != null){
+            if (endContractDate.before(hireDate))
                 throw new DateException(endContractDate, "La date de fin de contrat ne doit pas se trouver avant la date de début !");
             this.endContractDate = endContractDate;
         }
@@ -121,14 +121,6 @@ public class Employee extends User {
 
     public void setManager(Employee manager) {
         this.manager = manager;
-    }
-
-    public void addAssignments(ArrayList<Assignment> newAssignments) {
-        assignments.addAll(newAssignments);
-    }
-
-    public void removeAssignments(ArrayList<Assignment> assignmentsToDelete) {
-        assignments.removeAll(assignmentsToDelete);
     }
 
     @Override

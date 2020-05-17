@@ -1,6 +1,7 @@
 package userInterface.panels;
 
 import controller.OrderController;
+import userInterface.frames.MainWindow;
 import userInterface.thread.*;
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +12,12 @@ public class MainPanel extends JPanel {
     private CoffeeCup cup;
     private CoffeeThread thread;
     private JButton newOrder;
+    private MainWindow parent;
 
-    public MainPanel(){
+    public MainPanel(MainWindow parent) {
         this.setLayout(new BorderLayout());
+
+        this.parent = parent;
 
         cup = new CoffeeCup();
         this.add(cup, BorderLayout.CENTER);
@@ -38,11 +42,16 @@ public class MainPanel extends JPanel {
                 // getAllAdvantages (selon cardId et période validité) pour les afficher dans un JCombobox
 
                 OrderController controller = new OrderController();
+                parent.getWindowContainer().removeAll();
+                parent.getWindowContainer().add(new OrderForm());
+                parent.repaint();
+                parent.setVisible(true);
+                parent.setSize(1190, 500);
 
                 // valeurs à récupérer du formulaire
-                String cardId = "0495505955";
+                /*String cardId = "0495505955";
                 double orderPrice = 5.25;
-                int points = 50;
+                int points = 50;*/
 
                 //String message = controller.addPointsToLoyaltyCard(cardId, orderPrice);
                 //String message = controller.removePointsToLoyaltyCard(cardId, points);

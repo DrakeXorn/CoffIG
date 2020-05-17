@@ -7,9 +7,9 @@ public class CoffeeThread extends Thread {
         this.parent = parent;
     }
 
-    public void run(){
+    public void run() {
         try{
-            while(true){
+            while (true) {
                 for(CoffeeBean bean : parent.getCoffeeBeans())
                     bean.move();
                 parent.repaint();

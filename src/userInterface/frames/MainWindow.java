@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
     private MainPanel mainPanel;
     private Container windowContainer;
 
-    public MainWindow(){
+    public MainWindow() {
         super("CoffIG");
         this.setBounds(100, 50, 800, 600);
         this.addWindowListener (new WindowAdapter() {
@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
 
         windowContainer = this.getContentPane();
         windowContainer.setLayout(new BorderLayout());
-        mainPanel = new MainPanel();
+        mainPanel = new MainPanel(this);
         windowContainer.add(mainPanel, BorderLayout.CENTER);
 
         menuBar = new JMenuBar();
@@ -131,9 +131,10 @@ public class MainWindow extends JFrame {
     private class HomeListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
-            windowContainer.add(new MainPanel());
+            windowContainer.add(new MainPanel(MainWindow.this));
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            resetSize();
         }
     }
 
@@ -215,11 +216,11 @@ public class MainWindow extends JFrame {
     private class AllCoffeesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            AllCoffeesFrame frame = new AllCoffeesFrame();
             windowContainer.removeAll();
-            windowContainer.add(new OrderForm());
+            windowContainer.add(new MainPanel(MainWindow.this));
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
-            setSize(getWidth(), 200);
         }
     }
 

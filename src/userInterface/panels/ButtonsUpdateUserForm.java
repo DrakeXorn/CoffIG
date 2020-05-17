@@ -63,8 +63,9 @@ public class ButtonsUpdateUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             parent.getWindowContainer().removeAll();
-            parent.getWindowContainer().add(new MainPanel());
+            parent.getWindowContainer().add(new MainPanel(parent));
             parent.getWindowContainer().repaint();
+            parent.setVisible(true);
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(parent);
         }
     }

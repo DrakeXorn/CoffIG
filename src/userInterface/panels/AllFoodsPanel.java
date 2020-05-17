@@ -2,7 +2,6 @@ package userInterface.panels;
 
 import model.FoodOrdering;
 import userInterface.tableModels.AllFoodsModel;
-import userInterface.frames.AllOrdersFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,7 @@ public class AllFoodsPanel extends JPanel{
     private JTable foodsTable;
     private JScrollPane scrollPane;
 
-    public AllFoodsPanel(ArrayList<FoodOrdering> foods){
+    public AllFoodsPanel(ArrayList<FoodOrdering> foods) {
         try {
             model = new AllFoodsModel(foods);
             foodsTable = new JTable(model);
