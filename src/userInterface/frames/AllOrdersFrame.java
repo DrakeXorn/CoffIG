@@ -20,9 +20,11 @@ public class AllOrdersFrame extends JFrame{
     private JButton select, goBack;
     private Container container;
     private ArrayList<Order> orders;
+    private Customer customer;
 
-    public AllOrdersFrame(ArrayList<Order> orders){
-        super("Résultat de la recherche des commandes d'un client");
+    public AllOrdersFrame(ArrayList<Order> orders, Customer customer){
+        super("Résultat de la recherche des commandes de/d'" + customer);
+        this.customer = customer;
         this.setBounds(90, 90, 800, 400);
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
@@ -91,7 +93,7 @@ public class AllOrdersFrame extends JFrame{
         @Override
         public void actionPerformed(ActionEvent event) {
             setVisible(false);
-            AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders);
+            AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
         }
     }
 }

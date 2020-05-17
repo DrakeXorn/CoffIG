@@ -10,16 +10,16 @@ public class CoffeeThread extends Thread {
     }
 
     public void run(){
-        while(true){
-            try{
+        try{
+            while(true){
                 for(CoffeeBean drop : parent.getCoffeeBeans())
                     drop.move();
                 parent.repaint();
                 Thread.sleep(80);
             }
-            catch (InterruptedException exception){
-                exception.printStackTrace( ) ;
-            }
+        }
+        catch (InterruptedException exception){
+            exception.printStackTrace( ) ;
         }
     }
 }

@@ -50,7 +50,8 @@ public class SearchOldOrdersPanel extends JPanel {
                 if(!form.getTakeAway().isSelected() && !form.getOnSite().isSelected())
                     throw new BooleanInputException("Veuillez sélectionner au moins une des deux options : à emporter ou sur place");
 
-                ArrayList<Order> orders = controller.searchOrders(form.getCustomers().get(form.getCustomersBox().getSelectedIndex()).getUserID(),
+                Customer customer = form.getCustomers().get(form.getCustomersBox().getSelectedIndex());
+                ArrayList<Order> orders = controller.searchOrders(customer.getUserID(),
                         startDateConverted, endDateConverted,
                         form.getTakeAway().isSelected(), form.getOnSite().isSelected());
                 if(orders.isEmpty()){
@@ -58,7 +59,7 @@ public class SearchOldOrdersPanel extends JPanel {
                             "Recherche non aboutie !", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
-                    AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders);
+                    AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
                 }
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
