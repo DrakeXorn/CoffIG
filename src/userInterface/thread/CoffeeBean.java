@@ -1,8 +1,5 @@
 package userInterface.thread;
 
-import dataAccess.SingletonConnection;
-import userInterface.panels.MainPanel;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +11,9 @@ public class CoffeeBean {
     private Image coffeeBean;
     private Rectangle placement;
     private int deltaY;
-    private MainPanel parent;
+    private CoffeeCup parent;
 
-    public CoffeeBean(int x, int y, int width, int height, int deltaY, MainPanel parent){
+    public CoffeeBean(int x, int y, int width, int height, int deltaY, CoffeeCup parent){
         placement = new Rectangle(x, y, width, height);
         this.deltaY = deltaY;
         this.parent = parent;

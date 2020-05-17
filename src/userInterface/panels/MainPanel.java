@@ -1,40 +1,23 @@
 package userInterface.panels;
 
 import controller.OrderController;
-import userInterface.thread.CoffeeBean;
-import userInterface.thread.CoffeeThread;
-
-import javax.imageio.ImageIO;
+import userInterface.thread.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.*;
-import java.util.List;
-import java.util.Collections;
 
 public class MainPanel extends JPanel {
-    private final static int range = 50;
-    private final static int min = 360;
-    private final static int width = 20;
-    private final static int height = 20;
-    private final static int deltaY = 5;
-    private ArrayList<CoffeeBean> coffeeBeansArray = new ArrayList<>();
-    private List<CoffeeBean> coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
+    private CoffeeCup cup;
     private CoffeeThread thread;
-    private Image coffeeCup;
     private JButton newOrder;
 
     public MainPanel(){
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(207, 233, 255));
+        cup = new CoffeeCup();
+        this.add(cup, BorderLayout.CENTER);
 
-        coffeeBeans.add(new CoffeeBean(xRandom(range, min), 80, width, height, deltaY, this));
-        coffeeBeans.add(new CoffeeBean(xRandom(range, min), 180, width, height, deltaY, this));
-        coffeeBeans.add(new CoffeeBean(xRandom(range, min), 280, width, height, deltaY, this));
-
-        thread = new CoffeeThread(this);
+        thread = new CoffeeThread(cup);
         thread.start();
 
         newOrder = new JButton("Passer une commande");
@@ -42,28 +25,6 @@ public class MainPanel extends JPanel {
         newOrder.setForeground(Color.white);
         this.add(newOrder, BorderLayout.SOUTH);
         newOrder.addActionListener(new NewOrderListener());
-    }
-
-    public List<CoffeeBean> getCoffeeBeans() {
-        return coffeeBeans;
-    }
-
-    public int xRandom(int range, int min){
-        return (int)(Math.random() * range + min);
-    }
-
-    public void paint (Graphics g) {
-        super.paint(g);
-        try {
-            coffeeCup = ImageIO.read(ClassLoader.getSystemResource("coffeeCup.png"));
-            g.drawImage(coffeeCup, 330, 290, 180, 180, this);
-
-            for(CoffeeBean bean : coffeeBeans)
-                bean.draw(g);
-        } catch (IOException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private class NewOrderListener implements ActionListener {

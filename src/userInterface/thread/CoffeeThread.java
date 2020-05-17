@@ -1,21 +1,19 @@
 package userInterface.thread;
 
-import userInterface.panels.MainPanel;
-
 public class CoffeeThread extends Thread {
-    private MainPanel parent;
+    private CoffeeCup parent;
 
-    public CoffeeThread(MainPanel parent){
+    public CoffeeThread(CoffeeCup parent){
         this.parent = parent;
     }
 
     public void run(){
         try{
             while(true){
-                for(CoffeeBean drop : parent.getCoffeeBeans())
-                    drop.move();
+                for(CoffeeBean bean : parent.getCoffeeBeans())
+                    bean.move();
                 parent.repaint();
-                Thread.sleep(80);
+                Thread.sleep(100);
             }
         }
         catch (InterruptedException exception){
