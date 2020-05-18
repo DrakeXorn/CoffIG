@@ -54,8 +54,8 @@ public class Advantage {
         return "Avantage id : "+advantageID+
                 "\nLabel : "+label+
                 "\nRemise : "+discount+
-                "\nDate de début : "+startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH ) + 1)+"/"+startDate.get(Calendar.YEAR)+
-                "\nDate de fin : "+endDate.get(Calendar.DAY_OF_MONTH)+"/"+ (endDate.get(Calendar.MONTH ) + 1)+"/"+endDate.get(Calendar.YEAR)+
+                "\nDate de début : "+startDate.get(GregorianCalendar.DAY_OF_MONTH)+"/"+(startDate.get(GregorianCalendar.MONTH ) + 1)+"/"+startDate.get(GregorianCalendar.YEAR)+
+                "\nDate de fin : "+endDate.get(GregorianCalendar.DAY_OF_MONTH)+"/"+ (endDate.get(GregorianCalendar.MONTH ) + 1)+"/"+endDate.get(GregorianCalendar.YEAR)+
                 "\nPoints requis : "+pointsRequired+"\n";
     }
 }

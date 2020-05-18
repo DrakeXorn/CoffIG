@@ -11,17 +11,17 @@ public class SingletonConnection {
 
     public static Connection getInstance() throws IOException, SQLException {
         if (uniqueConnexion == null) {
-            //String username;
-            //String password;
-            //Properties properties = new Properties();
-            //InputStream stream = SingletonConnection.class.getClassLoader().getResourceAsStream("dbConfig.properties");
+            String username;
+            String password;
+            Properties properties = new Properties();
+            InputStream stream = SingletonConnection.class.getClassLoader().getResourceAsStream("dbConfig.properties");
 
-            //if (stream != null) properties.load(stream);
-            //else throw new FileNotFoundException("dbConfig.properties non trouvé. Veuillez le créer.");
+            if (stream != null) properties.load(stream);
+            else throw new FileNotFoundException("dbConfig.properties non trouvé. Veuillez le créer.");
 
-            //username = properties.getProperty("user");
-            //password = properties.getProperty("password");
-            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/coff-ig?serverTimezone=UTC", "root", "aqw741zsx");
+            username = properties.getProperty("user");
+            password = properties.getProperty("password");
+            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/coff-ig?serverTimezone=UTC", username, password);
         }
         return uniqueConnexion;
     }
