@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class OrderFormDrinkOrderingPanel extends JPanel {
+public class OrderFormDrinkOrderingsPanel extends JPanel {
     private JList<DrinkOrdering> orderingsList;
     private JScrollPane orderingsScrollPane;
     private JButton removeFromListButton;
     private OrderFormRecapPanel parent;
     private DefaultListModel<DrinkOrdering> listModel;
 
-    public OrderFormDrinkOrderingPanel(OrderFormRecapPanel parent) {
+    public OrderFormDrinkOrderingsPanel(OrderFormRecapPanel parent) {
         listModel = new DefaultListModel<>();
 
         setLayout(new BorderLayout());
@@ -29,7 +29,16 @@ public class OrderFormDrinkOrderingPanel extends JPanel {
     }
 
     public void addLine(DrinkOrdering orderLine) {
-        listModel.addElement(orderLine);
+        if (listModel.contains(orderLine)) {
+            int i = 0;
+
+            while (i < listModel.size() && !listModel.get(i).equals(orderLine))
+                i++;
+
+            listModel.get(i).addPieces(orderLine.getNbrPieces());
+            orderingsList.repaint();
+        } else
+            listModel.addElement(orderLine);
     }
 
     public ArrayList<DrinkOrdering> getAllLines() {

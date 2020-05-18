@@ -38,7 +38,6 @@ public class AllToppingsFrame extends JFrame {
             setVisible(true);
 
         } catch (AllDataException exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.ERROR_MESSAGE);
         }

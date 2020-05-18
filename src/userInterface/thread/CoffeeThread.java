@@ -8,16 +8,15 @@ public class CoffeeThread extends Thread {
     }
 
     public void run() {
-        try{
+        try {
             while (true) {
                 for(CoffeeBean bean : parent.getCoffeeBeans())
                     bean.move();
                 parent.repaint();
                 Thread.sleep(100);
             }
-        }
-        catch (InterruptedException exception){
-            exception.printStackTrace( ) ;
+        } catch (InterruptedException exception){
+            exception.printStackTrace();
         }
     }
 }

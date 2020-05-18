@@ -57,9 +57,19 @@ public class DrinkOrdering {
         return toppings;
     }
 
+    private boolean allToppingsMatch(DrinkOrdering drinkOrdering) {
+        if (drinkOrdering.getToppings().size() == toppings.size()) {
+            for (int i = 0; i < toppings.size(); i++)
+                if (!toppings.get(i).equals(drinkOrdering.getToppings().get(i)))
+                    return false;
+        } else return false;
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object object) {
-        return object instanceof DrinkOrdering && object.toString().equals(toString());
+        return object instanceof DrinkOrdering && ((DrinkOrdering) object).getSize().equals(size) && ((DrinkOrdering) object).getDrink().equals(drink) && allToppingsMatch((DrinkOrdering) object);
     }
 
     public void setPieces(Integer nbrPieces) throws IntegerInputException {
@@ -80,6 +90,10 @@ public class DrinkOrdering {
         this.size = size;
     }
 
+    public void addPieces(int number) {
+        nbrPieces += number;
+    }
+
     public double price() {
         return nbrPieces * sellingPrice;
     }
@@ -89,6 +103,11 @@ public class DrinkOrdering {
         DecimalFormat formatter = new DecimalFormat("0.00");
 
         formatter.setRoundingMode(RoundingMode.CEILING);
-        return nbrPieces + " * " + drink + "(" + size + ") : " + formatter.format(price()) + "€";
+        StringBuilder res = new StringBuilder(nbrPieces + " * " + drink + "(" + size + ") : " + formatter.format(price()) + "€\n");
+
+        for (Topping topping : toppings)
+            res.append(topping);
+
+        return res.toString();
     }
 }

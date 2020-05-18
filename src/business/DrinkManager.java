@@ -3,8 +3,7 @@ package business;
 import dataAccess.DrinkDBAccess;
 import dataAccess.DrinkDataAccess;
 import model.Drink;
-import model.exceptions.AllDataException;
-import model.exceptions.ConnectionException;
+import model.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ public class DrinkManager {
         accessor = new DrinkDBAccess();
     }
 
-    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException {
+    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return accessor.getAllDrinks();
     }
 }

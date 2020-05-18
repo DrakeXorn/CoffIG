@@ -4,17 +4,23 @@ import userInterface.panels.CheckoutPanel;
 import userInterface.panels.OrderForm;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class CheckoutFrame extends JFrame {
     private CheckoutPanel panel;
+    private Container container;
     private OrderForm parent;
 
     public CheckoutFrame(OrderForm parent) {
         super("Confirmation de la commande");
 
+        setSize(600, 450);
         this.parent = parent;
+
+        container = getContentPane();
+
         panel = new CheckoutPanel(this);
-        add(panel);
+        container.add(panel);
 
         setVisible(true);
     }

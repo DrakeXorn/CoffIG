@@ -54,7 +54,7 @@ public class FoodOrderingForm extends JPanel {
             add(addToListButton);
 
             setSpinnerValues();
-            setPrice();
+            updatePrice();
             foodBox.addActionListener(new FoodBoxListener());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -80,7 +80,7 @@ public class FoodOrderingForm extends JPanel {
         }
     }
 
-    private void setPrice() {
+    private void updatePrice() {
         DecimalFormat formatter = new DecimalFormat("0.00");
 
         formatter.setRoundingMode(RoundingMode.CEILING);
@@ -91,14 +91,14 @@ public class FoodOrderingForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             setSpinnerValues();
-            setPrice();
+            updatePrice();
         }
     }
 
     private class NumberChosenListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
-            setPrice();
+            updatePrice();
         }
     }
 
@@ -109,7 +109,7 @@ public class FoodOrderingForm extends JPanel {
             try {
                 parent.addToFoodsList(new FoodOrdering((Food) foodBox.getSelectedItem(), (int) numberPiecesSpinner.getValue(), ((Food) foodBox.getSelectedItem()).getPrice()));
                 setSpinnerValues();
-                setPrice();
+                updatePrice();
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(parent.getParent(), exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }

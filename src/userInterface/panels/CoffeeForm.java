@@ -189,7 +189,7 @@ public class CoffeeForm extends JPanel {
             expirationDatePicker.getModel().setDay(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.DAY_OF_MONTH));
             expirationDatePicker.getModel().setSelected(true);
             quantityBought.getModel().setValue(coffee.getStockLocation().getQuantity());
-            weightNeeded.setText(String.valueOf(coffee.getWeightNeededForPreparation()));
+            weightNeeded.setText(String.valueOf(coffee.getWeightNeededForPreparation() * 1000));
             price.setText(String.valueOf(coffee.getPrice()));
             packaging.setText(coffee.getPackaging().toString());
             recommendedMoment.setText(coffee.getRecommendedConsumingMoment());
@@ -225,7 +225,7 @@ public class CoffeeForm extends JPanel {
                 coffeeName.getText(),
                 Objects.requireNonNull(countries.getSelectedItem()).toString(),
                 (Integer) intensity.getValue(),
-                Double.parseDouble(weightNeeded.getText()),
+                Double.parseDouble(weightNeeded.getText()) / 1000,
                 discoveryDate,
                 isInGrains.isSelected(),
                 isEnvironmentFriendly.isSelected(),
