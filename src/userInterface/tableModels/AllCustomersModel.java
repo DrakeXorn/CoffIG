@@ -6,7 +6,6 @@ import javax.swing.table.*;
 import java.util.*;
 
 public class AllCustomersModel extends AbstractTableModel {
-
     private ArrayList<String> columnNames;
     private ArrayList<Customer> contents;
 
@@ -35,8 +34,11 @@ public class AllCustomersModel extends AbstractTableModel {
         this.contents = contents;
     }
 
+    @Override
     public int getColumnCount( ) { return columnNames.size( ); }
+    @Override
     public int getRowCount( ) { return contents.size( ); }
+    @Override
     public String getColumnName(int column) { return columnNames.get(column); }
 
     public Customer getRow(int row){
@@ -85,5 +87,4 @@ public class AllCustomersModel extends AbstractTableModel {
         }
         return c;
     }
-
 }

@@ -17,4 +17,8 @@ public class EmployeeManager {
     public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, AddDataException, CharacterInputException, DateException, StringInputException {
         return employeeAccessor.getAllEmployees();
     }
+
+    public void addEmployee(Employee employee) throws AddDataException, ConnectionException {
+        employeeAccessor.addEmployee(employee);
+    }
 }

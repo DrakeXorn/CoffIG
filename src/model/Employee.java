@@ -70,31 +70,24 @@ public class Employee extends User {
     public GregorianCalendar getHireDate() {
         return hireDate;
     }
-
     public GregorianCalendar getEndContractDate() {
         return endContractDate;
     }
-
     public Boolean getEmployeeOfMonth() {
         return isEmployeeOfMonth;
     }
-
     public Double getDiscount() {
         return discount;
     }
-
     public static int getNbrParkingSpaces() {
         return nbrParkingSpaces;
     }
-
     public Integer getParkingSpaceNumber() {
         return parkingSpaceNumber;
     }
-
     public ArrayList<Assignment> getAssignments() {
         return assignments;
     }
-
     public Employee getManager() {
         return manager;
     }

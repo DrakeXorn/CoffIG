@@ -66,7 +66,6 @@ public class SearchAssignmentsPanel extends JPanel {
                     JOptionPane.showMessageDialog(SearchAssignmentsPanel.this, "Vous devez remplir tous les champs !", "Erreur d'encodage", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception exception) {
-                exception.printStackTrace();
                 JOptionPane.showMessageDialog(SearchAssignmentsPanel.this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
         }

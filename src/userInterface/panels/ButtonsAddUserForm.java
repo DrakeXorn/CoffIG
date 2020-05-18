@@ -1,6 +1,7 @@
 package userInterface.panels;
 
 import controller.CustomerController;
+import controller.EmployeeController;
 import model.*;
 import model.exceptions.*;
 import userInterface.frames.MainWindow;
@@ -15,12 +16,14 @@ public class ButtonsAddUserForm extends JPanel {
     private MainWindow parent;
     private User user;
     private JPanel form;
-    private CustomerController controller;
+    private CustomerController customerController;
+    private EmployeeController employeeController;
 
     public ButtonsAddUserForm(MainWindow window, JPanel form){
         this.parent = window;
         this.form = form;
-        controller = new CustomerController();
+        customerController = new CustomerController();
+        employeeController = new EmployeeController();
         this.setLayout(new FlowLayout());
 
         requiredFields = new JLabel("*champs obligatoires");
@@ -43,14 +46,14 @@ public class ButtonsAddUserForm extends JPanel {
             try {
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
-                    controller.addCustomer((Customer)user);
+                    customerController.addCustomer((Customer)user);
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
-                    //controller.addEmployee((Employee)user);
+                    employeeController.addEmployee((Employee)user);
                 }
                 JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (AddException | ConnectionException exception) {
+            } catch (AddException | ConnectionException | AddDataException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
