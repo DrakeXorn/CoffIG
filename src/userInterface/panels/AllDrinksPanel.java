@@ -49,6 +49,9 @@ public class AllDrinksPanel extends JPanel {
 
                 if(!toppings.isEmpty()) {
                     AllToppingsFrame toppingsFrame = new AllToppingsFrame(toppings);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aucun topping n'a été ajouté à cette boisson !",
+                            "Aucun topping !", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } else {

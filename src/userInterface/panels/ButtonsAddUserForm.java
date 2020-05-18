@@ -3,6 +3,7 @@ package userInterface.panels;
 import controller.CustomerController;
 import model.*;
 import model.exceptions.*;
+import userInterface.frames.AllCoffeesFrame;
 import userInterface.frames.MainWindow;
 
 import javax.swing.*;
@@ -43,22 +44,21 @@ public class ButtonsAddUserForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
                     if(user != null){
                         controller.addCustomer((Customer)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
                     if(user != null){
                         //controller.addEmployee((Employee)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
                 }
-
-                form.setVisible(false);
             } catch (AddException | ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);

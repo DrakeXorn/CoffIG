@@ -10,8 +10,8 @@ import java.util.*;
 
 public class UserForm extends JPanel {
     private JLabel  userIdLabel, passwordLabel, lastNameLabel, firstNameLabel, secondNameLabel, maidenNameLabel,
-            birthDateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
-    private JDatePicker birthDate;
+            birthdateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
+    private JDatePicker birthdate;
     private JPasswordField password;
     private JTextField userId, lastName, firstName, secondName, maidenName,
             streetName, numberStreet, email, phone;
@@ -77,22 +77,22 @@ public class UserForm extends JPanel {
             buttonGroup.add(male);
             buttonGroup.add(female);
 
-            birthDateLabel = new JLabel("Date de naissance* :");
-            birthDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            this.add(birthDateLabel);
-            birthDate = new JDatePicker();
-            birthDate.setShowYearButtons(true);
+            birthdateLabel = new JLabel("Date de naissance* :");
+            birthdateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            this.add(birthdateLabel);
+            birthdate = new JDatePicker();
+            birthdate.setShowYearButtons(true);
             if(userToUpdate != null) {
-                birthDate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
-                birthDate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
-                birthDate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
+                birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
+                birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
+                birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
             } else {
-                birthDate.getModel().setYear(2004);
-                birthDate.getModel().setMonth(0);
-                birthDate.getModel().setDay(1);
+                birthdate.getModel().setYear(2004);
+                birthdate.getModel().setMonth(0);
+                birthdate.getModel().setDay(1);
             }
-            birthDate.getModel().setSelected(true);
-            this.add(birthDate);
+            birthdate.getModel().setSelected(true);
+            this.add(birthdate);
 
             streetNameLabel = new JLabel("Adresse* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -110,14 +110,14 @@ public class UserForm extends JPanel {
             localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(localityLabel);
 
-                localities = controller.getAllLocalities();
-                localitiesBox = new JComboBox<>();
-                for (Locality locality : localities)
-                    localitiesBox.addItem(locality);
-                localitiesBox.setMaximumRowCount(5);
-                if(userToUpdate != null)
-                    localitiesBox.setSelectedItem(userToUpdate.getLocality());
-                this.add(localitiesBox);
+            localities = controller.getAllLocalities();
+            localitiesBox = new JComboBox<>();
+            for (Locality locality : localities)
+                localitiesBox.addItem(locality);
+            localitiesBox.setMaximumRowCount(5);
+            if(userToUpdate != null)
+                localitiesBox.setSelectedItem(userToUpdate.getLocality());
+            this.add(localitiesBox);
 
             emailLabel = new JLabel("Email* :");
             emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,8 +160,8 @@ public class UserForm extends JPanel {
         return maidenName.getText();
     }
 
-    public GregorianCalendar getBirthDate() {
-        return (GregorianCalendar) birthDate.getModel().getValue();
+    public GregorianCalendar getBirthdate() {
+        return (GregorianCalendar)birthdate.getModel().getValue();
     }
 
     public String getStreetName() throws StringInputException {

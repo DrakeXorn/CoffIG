@@ -174,7 +174,6 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
-
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
@@ -245,5 +244,11 @@ public class MainWindow extends JFrame {
         }
     }
 
+    public void goBackHome(){
+        windowContainer.removeAll();
+        windowContainer.add(new MainPanel(MainWindow.this));
+        windowContainer.repaint();
+        setVisible(true);
+    }
 
 }

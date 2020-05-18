@@ -82,14 +82,16 @@ public class EmployeeForm extends JPanel {
         Employee employee = null;
         try {
             employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
-                    userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
+                    userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
                     (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
                     isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
 
-            JOptionPane.showMessageDialog(null, employee,
-                    "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception exception) {
+            if(employee != null){
+                JOptionPane.showMessageDialog(null, employee,
+                        "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+            }
+           } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.INFORMATION_MESSAGE);
         }
