@@ -8,14 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class OrderFormFoodOrderingPanel extends JPanel {
+public class OrderFormFoodOrderingsPanel extends JPanel {
     private JList<FoodOrdering> orderingsList;
     private JScrollPane orderingsScrollPane;
     private JButton removeFromListButton;
     private OrderFormRecapPanel parent;
     private DefaultListModel<FoodOrdering> listModel;
 
-    public OrderFormFoodOrderingPanel(OrderFormRecapPanel parent) {
+    public OrderFormFoodOrderingsPanel(OrderFormRecapPanel parent) {
         listModel = new DefaultListModel<>();
         this.parent = parent;
 
@@ -34,17 +34,16 @@ public class OrderFormFoodOrderingPanel extends JPanel {
     }
 
     public void addLine(FoodOrdering orderLine) {
-        int i = 0;
+        if (listModel.contains(orderLine)) {
+            int i = 0;
 
-        while (i < listModel.size() && !listModel.get(i).equals(orderLine))
-            i++;
+            while (i < listModel.size() && !listModel.get(i).equals(orderLine))
+                i++;
 
-        if (i == listModel.size()) {
-            listModel.addElement(orderLine);
-        } else {
             listModel.get(i).addPieces(orderLine.getNbrPieces());
             orderingsList.repaint();
-        }
+        } else
+            listModel.addElement(orderLine);
     }
 
     public ArrayList<FoodOrdering> getAllLines() {

@@ -52,7 +52,6 @@ public class OrderFormBottomPanel extends JPanel {
             add(new JLabel(""));
             add(new JLabel(""));
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

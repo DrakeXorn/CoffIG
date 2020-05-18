@@ -179,8 +179,7 @@ public class UserForm extends JPanel {
     }
 
     public Locality getLocality (){
-        Locality locality = localities.get(localitiesBox.getSelectedIndex());
-        return new Locality(locality.getPostalCode(), locality.getCity());
+        return localities.get(localitiesBox.getSelectedIndex());
     }
 
     public Character getGender() {

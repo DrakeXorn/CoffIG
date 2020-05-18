@@ -12,8 +12,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderFormRecapPanel extends JPanel {
-    private OrderFormDrinkOrderingPanel drinkOrderingPanel;
-    private OrderFormFoodOrderingPanel foodOrderingPanel;
+    private OrderFormDrinkOrderingsPanel drinkOrderingPanel;
+    private OrderFormFoodOrderingsPanel foodOrderingPanel;
     private JButton orderButton;
     private OrderForm parent;
 
@@ -22,10 +22,10 @@ public class OrderFormRecapPanel extends JPanel {
         setLayout(new GridLayout(3, 1));
         setBorder(BorderFactory.createTitledBorder("Récapitulatif de la commande"));
 
-        drinkOrderingPanel = new OrderFormDrinkOrderingPanel(this);
+        drinkOrderingPanel = new OrderFormDrinkOrderingsPanel(this);
         add(drinkOrderingPanel);
 
-        foodOrderingPanel = new OrderFormFoodOrderingPanel(this);
+        foodOrderingPanel = new OrderFormFoodOrderingsPanel(this);
         add(foodOrderingPanel);
 
         orderButton = new JButton();
