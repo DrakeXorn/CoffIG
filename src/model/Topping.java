@@ -50,6 +50,6 @@ public class Topping {
 
     public String toString() {
 
-        return label + " (" + price + " €).";
+        return label + " (" + price + " €)";
     }
 }

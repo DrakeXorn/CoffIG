@@ -51,14 +51,14 @@ public class ButtonsAddUserForm extends JPanel {
                     user = ((CustomerForm)form).createCustomer();
 
                     if(user != null){
-                        controller.addCustomer((Customer)user);
+                        customerController.addCustomer((Customer)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
                         parent.goBackHome();
                     }
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
                     if(user != null){
-                        controller.addEmployee((Employee)user);
+                        employeeController.addEmployee((Employee)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
                         parent.goBackHome();
                     }
