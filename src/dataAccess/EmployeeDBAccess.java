@@ -128,7 +128,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             employeeStatement.executeUpdate();
 
 
-            if (employee.getEndContractDate() != null){
+            if (employee.getEndContractDate() != null) {
                 sqlEmployee = "update employee set end_contract_date = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
                 employeeStatement.setDate(1, new java.sql.Date(employee.getEndContractDate().getTimeInMillis()));
@@ -136,10 +136,10 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 employeeStatement.executeUpdate();
             }
 
-            if (employee.getManager() != null){
+            if (employee.getManager() != null) {
                 sqlEmployee = "update employee set manager_id = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
-                employeeStatement.setObject(1, employee.getManager());
+                employeeStatement.setInt(1, employee.getManager().getUserID());
                 employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
