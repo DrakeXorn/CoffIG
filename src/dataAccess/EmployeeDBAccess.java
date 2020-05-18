@@ -102,7 +102,6 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             userStatement.executeUpdate();
 
             if(employee.getSecondName() != null){
-                System.out.println("Ajout second nom dans DB : " + employee.getSecondName());
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getSecondName());
@@ -111,7 +110,6 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             }
 
             if(employee.getMaidenName() != null){
-                System.out.println("Ajout maiden name dans DB : " + employee.getMaidenName());
                 sqlUser = "update user set maiden_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getMaidenName());

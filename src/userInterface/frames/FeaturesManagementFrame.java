@@ -17,7 +17,7 @@ public class FeaturesManagementFrame extends JFrame {
     public FeaturesManagementFrame(CoffeeForm parent) {
         super("Ajout/retrait de caractéristiques");
 
-        setSize(785, 170);
+        setSize(800, 210);
         setLayout(new BorderLayout());
         this.parent = parent;
         container = getContentPane();

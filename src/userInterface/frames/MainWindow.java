@@ -51,6 +51,7 @@ public class MainWindow extends JFrame {
         home.addActionListener(new HomeListener());
 
         about = new JMenuItem("À propos");
+        about.addActionListener(new AboutListener());
         infos.add(about);
 
         exitItem = new JMenuItem("Quitter");
@@ -135,6 +136,13 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
             resetSize();
+        }
+    }
+
+    private class AboutListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AboutFrame frame = new AboutFrame();
         }
     }
 
@@ -244,6 +252,4 @@ public class MainWindow extends JFrame {
             setSize(getWidth(), 160);
         }
     }
-
-
 }

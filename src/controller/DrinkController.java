@@ -2,8 +2,7 @@ package controller;
 
 import business.DrinkManager;
 import model.Drink;
-import model.exceptions.AllDataException;
-import model.exceptions.ConnectionException;
+import model.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ public class DrinkController {
         manager = new DrinkManager();
     }
 
-    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException {
+    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return manager.getAllDrinks();
     }
 }

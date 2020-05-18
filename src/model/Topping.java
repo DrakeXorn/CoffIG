@@ -9,9 +9,8 @@ public class Topping {
     private Double price;
     private StockLocation stock;
 
-    public Topping(String label, Double price, StockLocation stock) throws DoubleInputException {
-        toppingID = nbrToppings;
-        nbrToppings++;
+    public Topping(Integer toppingID, String label, Double price, StockLocation stock) throws DoubleInputException {
+        this.toppingID = toppingID;
         this.label = label;
         setPrice(price);
         this.stock = stock;
@@ -50,6 +49,6 @@ public class Topping {
 
     public String toString() {
 
-        return label + " (" + price + " €).";
+        return label + " (" + price + " €)";
     }
 }

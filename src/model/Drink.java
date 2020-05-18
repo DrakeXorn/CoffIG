@@ -30,6 +30,6 @@ public class Drink {
     }
 
     public String toString(){
-        return label + (cold ? " froid " : " chaud ");
+        return label + " (" + (cold ? "froid" : "chaud") + ")";
     }
 }

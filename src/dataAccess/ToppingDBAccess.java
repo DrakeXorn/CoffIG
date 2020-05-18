@@ -1,7 +1,7 @@
 package dataAccess;
 
-import model.Food;
 import model.StockLocation;
+import model.Topping;
 import model.exceptions.*;
 
 import java.io.IOException;
@@ -9,17 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class FoodDBAccess implements FoodDataAccess {
+public class ToppingDBAccess implements ToppingDataAccess {
     @Override
-    public ArrayList<Food> getAllAvailableFoods() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
-        ArrayList<Food> availableFoods = new ArrayList<>();
+    public ArrayList<Topping> getAllAvailableToppings() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        ArrayList<Topping> toppings = new ArrayList<>();
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select food_id, label, price, alley, shelf, number, buying_price, quantity, expiration_date from food\n" +
-                    " join stock_location sl on food.stock_location_alley = sl.alley and food.stock_location_shelf = sl.shelf and food.stock_location_number = sl.number\n" +
-                    " where expiration_date > ? and sl.quantity > 0" +
-                    " order by food_id";
+            String sqlInstruction = "select * from topping t join stock_location sl on t.stock_location_alley = sl.alley and t.stock_location_shelf = sl.shelf and t.stock_location_number = sl.number where sl.expiration_date >= ? and sl.quantity > 0 order by t.topping_id";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data;
 
@@ -30,7 +27,8 @@ public class FoodDBAccess implements FoodDataAccess {
                 GregorianCalendar expirationDate = new GregorianCalendar();
 
                 expirationDate.setTime(data.getDate("expiration_date"));
-                availableFoods.add(new Food(data.getInt("food_id"),
+
+                toppings.add(new Topping(data.getInt("topping_id"),
                         data.getString("label"),
                         data.getDouble("price"),
                         new StockLocation(data.getInt("alley"),
@@ -41,11 +39,11 @@ public class FoodDBAccess implements FoodDataAccess {
                                 expirationDate)));
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "nourritures");
+            throw new AllDataException(exception.getMessage(), "toppings");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
 
-        return availableFoods;
+        return toppings;
     }
 }

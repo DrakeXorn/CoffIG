@@ -42,7 +42,6 @@ public class AllCoffeesFrame extends JFrame {
             add(scrollPane);
             setVisible(true);
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
     }

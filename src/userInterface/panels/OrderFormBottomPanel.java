@@ -41,10 +41,10 @@ public class OrderFormBottomPanel extends JPanel {
             add(willBeServedByLabel);
 
             Random random = new Random(System.currentTimeMillis());
-            orderPicker = currentlyWorkingEmployees.get(currentlyWorkingEmployees.size() > 1 ? random.nextInt( currentlyWorkingEmployees.size()) : 0);
+            // orderPicker = currentlyWorkingEmployees.get(currentlyWorkingEmployees.size() > 1 ? random.nextInt( currentlyWorkingEmployees.size()) : 0);
 
             willBeServedByField = new JTextField();
-            willBeServedByField.setText(orderPicker.getIdentity());
+            // willBeServedByField.setText(orderPicker.getIdentity());
             willBeServedByField.setEditable(false);
 
             add(willBeServedByField);
@@ -52,7 +52,6 @@ public class OrderFormBottomPanel extends JPanel {
             add(new JLabel(""));
             add(new JLabel(""));
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

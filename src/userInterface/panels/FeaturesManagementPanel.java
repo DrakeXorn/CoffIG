@@ -10,16 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class FeaturesManagementPanel extends JPanel {
+public class FeaturesManagementPanel extends JPanel implements ManagementPanel {
     private JLabel addFeatureLabel;
     private JTextField addFeatureField;
     private JButton addFeatureButton;
-    private JList<String> featuresList;
-    private JList<String> chosenFeaturesList;
-    private ButtonsFeatureManagementPanel buttonsPanel;
+    private JList<String> featuresList, chosenFeaturesList;
+    private JScrollPane featuresScrollPane, chosenFeaturesScrollPane;
+    private ButtonsManagementPanel buttonsPanel;
     private ArrayList<String> features;
-    private DefaultListModel<String> featuresModel;
-    private DefaultListModel<String> chosenFeaturesModel;
+    private DefaultListModel<String> featuresModel, chosenFeaturesModel;
 
     public FeaturesManagementPanel(FeaturesManagementFrame parent) {
         try {
@@ -45,9 +44,11 @@ public class FeaturesManagementPanel extends JPanel {
 
             featuresList = new JList<>(featuresModel);
             featuresList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            add(new JScrollPane(featuresList));
+            featuresScrollPane = new JScrollPane(featuresList);
+            featuresScrollPane.setBorder(BorderFactory.createTitledBorder("Caractéristiques disponibles"));
+            add(featuresScrollPane);
 
-            buttonsPanel = new ButtonsFeatureManagementPanel(this);
+            buttonsPanel = new ButtonsManagementPanel(this);
             add(buttonsPanel, BorderLayout.SOUTH);
 
             chosenFeaturesModel = new DefaultListModel<>();
@@ -59,7 +60,9 @@ public class FeaturesManagementPanel extends JPanel {
 
             chosenFeaturesList = new JList<>(chosenFeaturesModel);
             chosenFeaturesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            add(new JScrollPane(chosenFeaturesList));
+            chosenFeaturesScrollPane = new JScrollPane(chosenFeaturesList);
+            chosenFeaturesScrollPane.setBorder(BorderFactory.createTitledBorder("Caractéristiques choisies"));
+            add(chosenFeaturesScrollPane);
 
             setVisible(true);
         } catch (Exception exception) {
@@ -76,17 +79,19 @@ public class FeaturesManagementPanel extends JPanel {
         return features;
     }
 
-    public void moveToChosenList() {
-        for (String feature : featuresList.getSelectedValuesList()) {
-            chosenFeaturesModel.addElement(feature);
-            featuresModel.removeElement(feature);
-        }
-    }
-
+    @Override
     public void moveToList() {
         for (String feature : chosenFeaturesList.getSelectedValuesList()) {
             featuresModel.addElement(feature);
             chosenFeaturesModel.removeElement(feature);
+        }
+    }
+
+    @Override
+    public void moveToChosenList() {
+        for (String feature : featuresList.getSelectedValuesList()) {
+            chosenFeaturesModel.addElement(feature);
+            featuresModel.removeElement(feature);
         }
     }
 

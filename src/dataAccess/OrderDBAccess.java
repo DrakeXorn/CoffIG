@@ -178,7 +178,6 @@ public class OrderDBAccess implements OrderDataAccess {
                     ResultSet datasTopping = toppingStatement.executeQuery();
 
                     while(datasTopping.next()){
-                        System.out.println("topping" +  datasTopping.getString("label"));
                         drinkOrdering.addTopping(new Topping(datasTopping.getInt("topping_id"),
                                 datasTopping.getString("label"),
                                 datasTopping.getDouble("price")));

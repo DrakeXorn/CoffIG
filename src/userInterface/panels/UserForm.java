@@ -110,14 +110,14 @@ public class UserForm extends JPanel {
             localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(localityLabel);
 
-                localities = controller.getAllLocalities();
-                localitiesBox = new JComboBox<>();
-                for (Locality locality : localities)
-                    localitiesBox.addItem(locality);
-                localitiesBox.setMaximumRowCount(5);
-                if(userToUpdate != null)
-                    localitiesBox.setSelectedItem(userToUpdate.getLocality());
-                this.add(localitiesBox);
+            localities = controller.getAllLocalities();
+            localitiesBox = new JComboBox<>();
+            for (Locality locality : localities)
+                localitiesBox.addItem(locality);
+            localitiesBox.setMaximumRowCount(5);
+            if(userToUpdate != null)
+                localitiesBox.setSelectedItem(userToUpdate.getLocality());
+            this.add(localitiesBox);
 
             emailLabel = new JLabel("Email* :");
             emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -179,8 +179,7 @@ public class UserForm extends JPanel {
     }
 
     public Locality getLocality (){
-        Locality locality = localities.get(localitiesBox.getSelectedIndex());
-        return new Locality(locality.getPostalCode(), locality.getCity());
+        return localities.get(localitiesBox.getSelectedIndex());
     }
 
     public Character getGender() {
