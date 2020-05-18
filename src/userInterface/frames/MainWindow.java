@@ -131,6 +131,13 @@ public class MainWindow extends JFrame {
         if (getHeight() != 800)
             setSize(800, 600);
     }
+  
+    public void goBackHome(){
+        windowContainer.removeAll();
+        windowContainer.add(new MainPanel(MainWindow.this));
+        windowContainer.repaint();
+        setVisible(true);
+    }
 
     private class HomeListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
@@ -178,7 +185,6 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
-
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
@@ -216,6 +222,7 @@ public class MainWindow extends JFrame {
             resetSize();
         }
     }
+  
     private class AllEmployeesListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             AllEmployeesFrame allEmployeesFrame = new AllEmployeesFrame(MainWindow.this);

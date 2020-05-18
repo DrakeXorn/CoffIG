@@ -58,6 +58,7 @@ public class ButtonsAddCoffeeForm extends JPanel {
                             stockController.updateStockLocation(coffee.getStockLocation());
 
                             form.getController().addCoffee(coffee);
+                            parent.goBackHome();
                         }
                     } else
                         JOptionPane.showMessageDialog(parent, "Vous devez choisir un emplacement qui n'est pas encore utilisé !", "Attention", JOptionPane.WARNING_MESSAGE);

@@ -46,13 +46,11 @@ public class CustomerForm extends JPanel {
         wantsLoyaltyCard = new JCheckBox("Je souhaite posséder une carte de fidélité");
         wantsLoyaltyCard.setHorizontalAlignment(SwingConstants.CENTER);
         wantsLoyaltyCard.setSelected(customerToUpdate != null && customerToUpdate.getLoyaltyCard() != null);
-
         this.add(wantsLoyaltyCard);
 
         wantsAdvertising = new JCheckBox("Je souhaite recevoir la newsletter");
         wantsAdvertising.setHorizontalAlignment(SwingConstants.CENTER);
         wantsAdvertising.setSelected(customerToUpdate != null && customerToUpdate.getWantsAdvertising());
-
         this.add(wantsAdvertising);
     }
 
@@ -72,7 +70,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 
@@ -94,7 +92,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 

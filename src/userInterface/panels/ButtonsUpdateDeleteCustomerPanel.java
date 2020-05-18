@@ -33,7 +33,7 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
 
             if (chosenCustomer != null) {
                 UserForm userForm = new UserForm(chosenCustomer);
-                CustomerForm customerForm = new CustomerForm(new UserForm(chosenCustomer), chosenCustomer);
+                CustomerForm customerForm = new CustomerForm(userForm, chosenCustomer);
 
                 parent.getParent().resetSize();
                 parent.getParent().getWindowContainer().removeAll();

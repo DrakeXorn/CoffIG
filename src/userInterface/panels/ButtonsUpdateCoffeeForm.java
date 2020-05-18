@@ -51,6 +51,7 @@ public class ButtonsUpdateCoffeeForm extends JPanel {
                             coffee.setFeatures(form.getFeatures());
                         if (JOptionPane.showConfirmDialog(parent, coffee, "Confirmer la modification ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                             form.getController().updateCoffee(coffee);
+                            parent.goBackHome();
                         }
                     } else
                         JOptionPane.showMessageDialog(parent, "Vous devez choisir un emplacement qui n'est pas encore utilisé !", "Attention", JOptionPane.WARNING_MESSAGE);

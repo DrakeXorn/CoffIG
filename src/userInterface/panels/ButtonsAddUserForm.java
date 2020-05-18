@@ -4,6 +4,7 @@ import controller.CustomerController;
 import controller.EmployeeController;
 import model.*;
 import model.exceptions.*;
+import userInterface.frames.AllCoffeesFrame;
 import userInterface.frames.MainWindow;
 
 import javax.swing.*;
@@ -52,14 +53,15 @@ public class ButtonsAddUserForm extends JPanel {
                     if(user != null){
                         controller.addCustomer((Customer)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
                     if(user != null){
                         controller.addEmployee((Employee)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
-
                 }
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
