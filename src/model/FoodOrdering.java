@@ -3,6 +3,9 @@ package model;
 import model.exceptions.DoubleInputException;
 import model.exceptions.IntegerInputException;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class FoodOrdering {
     private Food food;
     private Order order;
@@ -17,7 +20,7 @@ public class FoodOrdering {
         this.sellingPrice = sellingPrice;
     }
 
-    // pour le recherche des anciennes commandes
+    // pour la recherche des anciennes commandes
     public FoodOrdering(Food food, Integer nbrPieces, Double sellingPrice) throws DoubleInputException, IntegerInputException {
         this.food = food;
         setPieces(nbrPieces);
@@ -38,12 +41,12 @@ public class FoodOrdering {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof FoodOrdering && ((FoodOrdering)object).toString().equals(toString());
+        return object instanceof FoodOrdering && food.toString().equals(((FoodOrdering) object).getFood().toString());
     }
 
     public void setPieces(Integer nbrPieces) throws IntegerInputException {
         if (nbrPieces < 0)
-            throw new IntegerInputException(nbrPieces, "le nombre d'article(s)", "Le nombre d'aliment doit être positif et différent de 0 !");
+            throw new IntegerInputException(nbrPieces, "le nombre d'article(s)", "Le nombre d'aliments doit être positif et différent de 0 !");
         this.nbrPieces = nbrPieces;
     }
 
@@ -53,7 +56,19 @@ public class FoodOrdering {
         sellingPrice = price;
     }
 
+    public void addPieces(int number) {
+        nbrPieces += number;
+    }
+
+    public double price() {
+        return nbrPieces * sellingPrice;
+    }
+
+    @Override
     public String toString() {
-        return food + "\tnombre d'article(s) : " + nbrPieces + "\tprix unitaire : " + sellingPrice + ")";
+        DecimalFormat formatter = new DecimalFormat("0.00");
+
+        formatter.setRoundingMode(RoundingMode.CEILING);
+        return nbrPieces + " * " + food + " :  " + formatter.format(price()) + "€";
     }
 }

@@ -1,8 +1,6 @@
 package userInterface.tableModels;
 
 import model.Assignment;
-import model.Order;
-import model.Service;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalTime;
@@ -49,7 +47,7 @@ public class AssignmentsModel extends AbstractTableModel {
     }
 
     @Override
-    public Class getColumnClass(int column) {
+    public Class<?> getColumnClass(int column) {
         return column == 0 ? Date.class : LocalTime.class;
     }
 }

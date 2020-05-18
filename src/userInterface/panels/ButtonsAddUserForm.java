@@ -21,6 +21,7 @@ public class ButtonsAddUserForm extends JPanel {
 
     public ButtonsAddUserForm(MainWindow window, JPanel form){
         this.parent = window;
+        parent.resetSize();
         this.form = form;
         customerController = new CustomerController();
         employeeController = new EmployeeController();
@@ -35,9 +36,10 @@ public class ButtonsAddUserForm extends JPanel {
         reset = new JButton("Réinitialisation");
         this.add(reset);
 
-
         validation.addActionListener(new ValidationListener());
         reset.addActionListener(new ResetListener());
+
+        setVisible(true);
     }
 
     private class ValidationListener implements ActionListener {
@@ -46,14 +48,20 @@ public class ButtonsAddUserForm extends JPanel {
             try {
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
-                    customerController.addCustomer((Customer)user);
+
+                    if(user != null){
+                        controller.addCustomer((Customer)user);
+                        JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
-                    employeeController.addEmployee((Employee)user);
-                }
-                JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    if(user != null){
+                        controller.addEmployee((Employee)user);
+                        JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    }
 
-            } catch (AddException | ConnectionException | AddDataException exception) {
+                }
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
@@ -67,25 +75,17 @@ public class ButtonsAddUserForm extends JPanel {
             UserForm user = new UserForm(null);
             parent.getWindowContainer().add(user, BorderLayout.NORTH);
 
-            if (form instanceof CustomerForm){
+            if (form instanceof CustomerForm) {
                 CustomerForm customer = new CustomerForm(user, null);
                 parent.getWindowContainer().add(customer, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, customer), BorderLayout.SOUTH);
-            }
-            else {
+            } else {
                 EmployeeForm employee = new EmployeeForm(user);
                 parent.getWindowContainer().add(employee, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsAddUserForm(parent, employee), BorderLayout.SOUTH);
             }
             parent.getWindowContainer().repaint();
             parent.setVisible(true);
-        }
-    }
-
-    private class GoBackListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            // TODO faire listener
         }
     }
 }

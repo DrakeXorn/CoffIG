@@ -61,10 +61,12 @@ public class Employee extends User {
                 gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
     }
 
-    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
+    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount, Integer parkingSpaceNumber) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
         super(employeeId, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender);
         this.isEmployeeOfMonth = isEmployeeOfMonth;
         this.discount = discount;
+        this.hireDate = hireDate;
+        this.parkingSpaceNumber = parkingSpaceNumber;
     }
 
     public GregorianCalendar getHireDate() {
@@ -79,15 +81,19 @@ public class Employee extends User {
     public Double getDiscount() {
         return discount;
     }
-    public static int getNbrParkingSpaces() {
+  
+    public int getNbrParkingSpaces() {
         return nbrParkingSpaces;
     }
+  
     public Integer getParkingSpaceNumber() {
         return parkingSpaceNumber;
     }
+  
     public ArrayList<Assignment> getAssignments() {
         return assignments;
     }
+  
     public Employee getManager() {
         return manager;
     }
@@ -99,8 +105,8 @@ public class Employee extends User {
     }
 
     public void setEndContractDate(GregorianCalendar endContractDate) throws DateException {
-        if(endContractDate != null){
-            if(endContractDate.before(hireDate))
+        if (endContractDate != null){
+            if (endContractDate.before(hireDate))
                 throw new DateException(endContractDate, "La date de fin de contrat ne doit pas se trouver avant la date de début !");
             this.endContractDate = endContractDate;
         }
@@ -114,23 +120,12 @@ public class Employee extends User {
         this.manager = manager;
     }
 
-    public void addAssignments(ArrayList<Assignment> newAssignments) {
-        assignments.addAll(newAssignments);
-    }
-
-    public void removeAssignments(ArrayList<Assignment> assignmentsToDelete) {
-        assignments.removeAll(assignmentsToDelete);
-    }
-
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder(super.toString());
-
-        res.append("(embauché le ");
-        res.append(hireDate.get(Calendar.DAY_OF_MONTH));
-        res.append(" ").append(hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE));
-        res.append(" ").append(hireDate.get(Calendar.YEAR));
-        res.append(")");
-        return res.toString();
+        return super.toString() + "(embauché le " +
+                hireDate.get(Calendar.DAY_OF_MONTH) +
+                " " + hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE) +
+                " " + hireDate.get(Calendar.YEAR) +
+                ")";
     }
 }

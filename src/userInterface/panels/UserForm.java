@@ -10,8 +10,8 @@ import java.util.*;
 
 public class UserForm extends JPanel {
     private JLabel  userIdLabel, passwordLabel, lastNameLabel, firstNameLabel, secondNameLabel, maidenNameLabel,
-            birthdateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
-    private JDatePicker birthdate;
+            birthDateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
+    private JDatePicker birthDate;
     private JPasswordField password;
     private JTextField userId, lastName, firstName, secondName, maidenName,
             streetName, numberStreet, email, phone;
@@ -31,7 +31,7 @@ public class UserForm extends JPanel {
             userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(userIdLabel);
 
-                userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
+            userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
 
             userId.setEnabled(false);
             this.add(userId);
@@ -77,22 +77,22 @@ public class UserForm extends JPanel {
             buttonGroup.add(male);
             buttonGroup.add(female);
 
-            birthdateLabel = new JLabel("Date de naissance* :");
-            birthdateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            this.add(birthdateLabel);
-            birthdate = new JDatePicker();
-            birthdate.setShowYearButtons(true);
+            birthDateLabel = new JLabel("Date de naissance* :");
+            birthDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            this.add(birthDateLabel);
+            birthDate = new JDatePicker();
+            birthDate.setShowYearButtons(true);
             if(userToUpdate != null) {
-                birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
-                birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
-                birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
+                birthDate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
+                birthDate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
+                birthDate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
             } else {
-                birthdate.getModel().setYear(2020);
-                birthdate.getModel().setMonth(0);
-                birthdate.getModel().setDay(1);
+                birthDate.getModel().setYear(2004);
+                birthDate.getModel().setMonth(0);
+                birthDate.getModel().setDay(1);
             }
-            birthdate.getModel().setSelected(true);
-            this.add(birthdate);
+            birthDate.getModel().setSelected(true);
+            this.add(birthDate);
 
             streetNameLabel = new JLabel("Adresse* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,8 +160,8 @@ public class UserForm extends JPanel {
         return maidenName.getText();
     }
 
-    public GregorianCalendar getBirthdate() {
-        return (GregorianCalendar)birthdate.getModel().getValue();
+    public GregorianCalendar getBirthDate() {
+        return (GregorianCalendar) birthDate.getModel().getValue();
     }
 
     public String getStreetName() throws StringInputException {

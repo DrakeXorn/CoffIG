@@ -3,9 +3,7 @@ package dataAccess;
 import model.*;
 import model.exceptions.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public interface CustomerDataAccess {
     // create
@@ -17,8 +15,8 @@ public interface CustomerDataAccess {
     int getLastCustomerId() throws AllDataException, ConnectionException;
 
     // update
-    void modifyCustomer(Customer customer) throws ModifyException, ConnectionException;
+    void updateCustomer(Customer customer) throws ModifyException, ConnectionException;
 
     // delete
-
+    void removeCustomer(Customer customer) throws ModifyException, ConnectionException;
 }

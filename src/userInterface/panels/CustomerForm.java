@@ -17,16 +17,16 @@ public class CustomerForm extends JPanel {
     private CustomerController controller;
     private Customer customerToUpdate;
 
-    public CustomerForm(UserForm userInfos, Customer customerToModify){
+    public CustomerForm(UserForm userInfos, Customer customerToUpdate){
         this.setLayout(new GridLayout(4, 1, 5, 5));
         this.userInfos = userInfos;
-        customerToUpdate = customerToModify;
+        this.customerToUpdate = customerToUpdate;
 
         this.add(new JLabel(""));
 
         wantsSatisfactionDegree = new JCheckBox("Je souhaite partager mon degré de satisfaction");
         wantsSatisfactionDegree.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsSatisfactionDegree.setSelected(customerToModify != null && customerToModify.getSatisfactionDegree() != null);
+        wantsSatisfactionDegree.setSelected(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null);
         this.add(wantsSatisfactionDegree);
         wantsSatisfactionDegree.addItemListener(new WantsSatisfactionDegreeListener());
 
@@ -34,25 +34,24 @@ public class CustomerForm extends JPanel {
         satisfactionDegreeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(satisfactionDegreeLabel);
 
-        if(customerToModify != null && customerToModify.getSatisfactionDegree() != null){
-            degree = new JSpinner(new SpinnerNumberModel((int)customerToModify.getSatisfactionDegree(), 1, 5, 1));
+        if(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null){
+            degree = new JSpinner(new SpinnerNumberModel((int) customerToUpdate.getSatisfactionDegree(), 1, 5, 1));
             degree.setEnabled(true);
         } else {
             degree = new JSpinner(new SpinnerNumberModel( 1, 1, 5, 1));
             degree.setEnabled(false);
         }
-
         this.add(degree);
 
         wantsLoyaltyCard = new JCheckBox("Je souhaite posséder une carte de fidélité");
         wantsLoyaltyCard.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsLoyaltyCard.setSelected(customerToModify != null && customerToModify.getLoyaltyCard() != null);
+        wantsLoyaltyCard.setSelected(customerToUpdate != null && customerToUpdate.getLoyaltyCard() != null);
 
         this.add(wantsLoyaltyCard);
 
         wantsAdvertising = new JCheckBox("Je souhaite recevoir la newsletter");
         wantsAdvertising.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsAdvertising.setSelected(customerToModify != null && customerToModify.getWantsAdvertising());
+        wantsAdvertising.setSelected(customerToUpdate != null && customerToUpdate.getWantsAdvertising());
 
         this.add(wantsAdvertising);
     }
@@ -73,7 +72,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 
@@ -95,7 +94,7 @@ public class CustomerForm extends JPanel {
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 

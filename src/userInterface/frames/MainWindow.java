@@ -10,24 +10,56 @@ import java.awt.event.*;
 
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
-    private JMenu addNew, upDate, displayAll, search;
-    private JMenuItem addCustomer, addEmployee, addCoffee,
-            updateCustomer, updateEmployee, updateCoffee,
+    private JMenu infos, addNew, upDate, displayAll, search;
+    private JMenuItem home, about, exitItem,
+            addCustomer, addEmployee, addCoffee,
+            updateCustomer, updateCoffee,
             allCustomers, allEmployees, allCoffees,
             searchOrders, searchAdvantages, searchServices;
+
+    private MainPanel mainPanel;
     private Container windowContainer;
 
-    public MainWindow(){
-        super("Menu");
+    public MainWindow() {
+        super("CoffIG");
         this.setBounds(100, 50, 800, 600);
         this.addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) { System.exit(0); } } );
+        this.setResizable(false);
+
+        ImageIcon cupIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeBean.png"));
+        Image cupImage = cupIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon coffeeCup = new ImageIcon(cupImage);
+        this.setIconImage(coffeeCup.getImage());
 
         windowContainer = this.getContentPane();
         windowContainer.setLayout(new BorderLayout());
+        mainPanel = new MainPanel(this);
+        windowContainer.add(mainPanel, BorderLayout.CENTER);
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
+
+
+        infos = new JMenu();
+        ImageIcon beanIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeCup.png"));
+        Image beanImage = beanIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon coffeeBean = new ImageIcon(beanImage);
+        infos.setIcon(coffeeBean);
+        menuBar.add(infos);
+
+        home = new JMenuItem("Accueil");
+        infos.add(home);
+        home.addActionListener(new HomeListener());
+
+        about = new JMenuItem("À propos");
+        infos.add(about);
+
+        exitItem = new JMenuItem("Quitter");
+        infos.add(exitItem);
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+        exitItem.addActionListener(new ExitListener());
+
 
 
         addNew = new JMenu("Ajouter");
@@ -50,13 +82,11 @@ public class MainWindow extends JFrame {
 
         updateCustomer = new JMenuItem("Modifier un client");
         upDate.add(updateCustomer);
-        updateCustomer.addActionListener(new ModifyCustomerListener());
-
-        updateEmployee = new JMenuItem("Modifier un employé");
-        upDate.add(updateEmployee);
+        updateCustomer.addActionListener(new UpdateCustomerListener());
 
         updateCoffee = new JMenuItem("Modifier un café");
         upDate.add(updateCoffee);
+        updateCoffee.addActionListener(new UpdateCoffeeListener());
 
 
         displayAll = new JMenu("Afficher");
@@ -72,7 +102,7 @@ public class MainWindow extends JFrame {
 
         allCoffees = new JMenuItem("Afficher tous les cafés");
         displayAll.add(allCoffees);
-
+        allCoffees.addActionListener(new AllCoffeesListener());
 
 
         search = new JMenu("Rechercher");
@@ -90,12 +120,39 @@ public class MainWindow extends JFrame {
         search.add(searchServices);
         searchServices.addActionListener(new SearchServicesListener());
 
-
         setVisible(true);
     }
 
     public Container getWindowContainer() {
         return windowContainer;
+    }
+
+    public void resetSize() {
+        if (getHeight() != 800)
+            setSize(800, 600);
+    }
+
+    private class HomeListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            windowContainer.removeAll();
+            windowContainer.add(new MainPanel(MainWindow.this));
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+            resetSize();
+        }
+    }
+
+    private class ExitListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            System.exit(0);
+            /*try {
+                SingletonConnection.getInstance().close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }*/
+        }
     }
 
     private class AddCustomerListener implements ActionListener{
@@ -108,10 +165,12 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, customerForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+
+            resetSize();
         }
     }
 
-    private class AddEmployeeListener implements ActionListener{
+    private class AddEmployeeListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             windowContainer.removeAll();
             UserForm user = new UserForm(null);
@@ -119,43 +178,68 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
+
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
-
     }
 
     private class AddCoffeeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            NewCoffeeFrame coffeeFrame = new NewCoffeeFrame();
+            windowContainer.removeAll();
+            windowContainer.add(new CoffeeForm(MainWindow.this, null), BorderLayout.CENTER);
+            windowContainer.add(new ButtonsAddCoffeeForm(MainWindow.this), BorderLayout.SOUTH);
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+
+            resetSize();
         }
     }
 
-    private class ModifyCustomerListener implements ActionListener{
+    private class UpdateCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(MainWindow.this);
         }
     }
 
-    private class AllCustomerListener implements ActionListener{
-        public void actionPerformed(ActionEvent event){
-            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+    private class UpdateCoffeeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            UpdateCoffeesFrame updateCoffeesFrame = new UpdateCoffeesFrame(MainWindow.this);
         }
     }
 
+    private class AllCustomerListener implements ActionListener {
+        public void actionPerformed(ActionEvent event){
+            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+            resetSize();
+        }
+    }
     private class AllEmployeesListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             AllEmployeesFrame allEmployeesFrame = new AllEmployeesFrame(MainWindow.this);
         }
     }
+  
+    private class AllCoffeesListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AllCoffeesFrame frame = new AllCoffeesFrame();
+            windowContainer.removeAll();
+            windowContainer.add(new MainPanel(MainWindow.this));
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
+        }
+    }
 
-    private class SearchOrdersListener implements ActionListener{
-        public void actionPerformed(ActionEvent event){
+    private class SearchOrdersListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             windowContainer.removeAll();
             windowContainer.add(new SearchOldOrdersPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            setSize(getWidth(), 200);
         }
     }
 
@@ -166,6 +250,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(new SearchAssignmentsPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            setSize(getWidth(), 160);
         }
     }
 
@@ -178,5 +263,4 @@ public class MainWindow extends JFrame {
             MainWindow.this.setVisible(true);
         }
     }
-
 }

@@ -67,24 +67,14 @@ public class AllCustomersModel extends AbstractTableModel {
     }
 
     public Class getColumnClass (int column) {
-        Class c;
-        switch (column) {
-            case 0: c = String.class; break; // id
-            case 1: c = String.class; break; // last name
-            case 2: c = String.class; break;// first name
-            case 3: c = String.class; break; // second name
-            case 4: c = String.class; break; // maiden name
-            case 5: c = Date.class; break; // birth date
-            case 6: c = String.class; break; // street
-            case 7: c = String.class; break; // locality
-            case 8: c = String.class; break; // email
-            case 9: c = String.class; break; // phone
-            case 10: c = Character.class; break; // gender
-            case 11: c = Boolean.class; break; // wants advertising
-            case 12: c = Integer.class; break; // degree
-            case 13: c = String.class; break; // loyalty card
-            default: c = String.class;
-        }
-        return c;
+        return switch (column) {
+            case 0, 1, 2, 3, 4, 6, 7, 8, 9, 13 -> String.class;
+            // id, last name, first name, second name, maiden name, street, locality, email, phone, loyalty card
+            case 5 -> Date.class; // birth date
+            case 10 -> Character.class; // gender
+            case 11 -> Boolean.class; // wants advertising
+            case 12 -> Integer.class; // degree
+            default -> String.class;
+        };
     }
 }

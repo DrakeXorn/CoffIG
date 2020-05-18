@@ -7,6 +7,8 @@ import org.jdatepicker.JDatePicker;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class SearchOldOrdersForm extends JPanel {
     private JLabel customerIdLabel, startDateLabel, endDateLabel;
@@ -25,14 +27,12 @@ public class SearchOldOrdersForm extends JPanel {
             customerIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(customerIdLabel);
 
-
             customers = controller.getAllCustomers();
             customersBox = new JComboBox<>();
             for (Customer customer : customers)
                 customersBox.addItem(customer);
             customersBox.setMaximumRowCount(5);
             this.add(customersBox);
-
 
             startDateLabel = new JLabel("Date de début :");
             startDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -52,12 +52,12 @@ public class SearchOldOrdersForm extends JPanel {
 
             endDate = new JDatePicker();
             endDate.setShowYearButtons(true);
-            endDate.getModel().setYear(2020);
-            endDate.getModel().setMonth(0);
-            endDate.getModel().setDay(1);
+            GregorianCalendar today = (GregorianCalendar) Calendar.getInstance();
+            endDate.getModel().setYear(today.get(Calendar.YEAR));
+            endDate.getModel().setMonth(today.get(Calendar.MONTH));
+            endDate.getModel().setDay(today.get(Calendar.DAY_OF_MONTH) - 1);
             endDate.getModel().setSelected(true);
             this.add(endDate);
-
 
             takeAway = new JCheckBox("à emporter");
             takeAway.setHorizontalAlignment(SwingConstants.CENTER);

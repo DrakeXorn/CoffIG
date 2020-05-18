@@ -1,7 +1,6 @@
 package model.exceptions;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 public class TimeException extends Exception {
     private LocalTime wrongEndTime;

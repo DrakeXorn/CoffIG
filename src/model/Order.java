@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Order {
-    private static int nbrOrders = 1;
     private Integer orderNumber;
     private GregorianCalendar date;
     private Boolean toTakeAway;
@@ -18,10 +17,8 @@ public class Order {
     private ArrayList<FoodOrdering> foodOrderings;
     private ArrayList<DrinkOrdering> drinkOrderings;
 
-    public Order(GregorianCalendar date, Boolean toTakeAway,
+    public Order(Integer orderNumber, GregorianCalendar date, Boolean toTakeAway,
                  Customer beneficiary, Employee orderPicker) {
-        orderNumber = nbrOrders;
-        nbrOrders++;
         this.date = date;
         this.toTakeAway = toTakeAway;
 
@@ -64,6 +61,14 @@ public class Order {
         this.orderPicker = orderPicker;
     }
 
+    public void setFoodOrderings(ArrayList<FoodOrdering> foodOrderings) {
+        this.foodOrderings = foodOrderings;
+    }
+
+    public void setDrinkOrderings(ArrayList<DrinkOrdering> drinkOrderings) {
+        this.drinkOrderings = drinkOrderings;
+    }
+
     public void addFoodOrdering(FoodOrdering foodOrdering) {
         foodOrderings.add(foodOrdering);
     }
@@ -78,10 +83,6 @@ public class Order {
 
     public void removeDrinkOrdering(DrinkOrdering drinkOrdering) {
         drinkOrderings.remove(drinkOrdering);
-    }
-
-    public static int getNbrOrders() {
-        return nbrOrders;
     }
 
     public Integer getOrderNumber() {
