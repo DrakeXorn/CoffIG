@@ -30,7 +30,8 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 birthDate.setTime(birthDateSql);
                 hireDate.setTime(hireDateSql);
 
-                Employee employee = new Employee(data.getInt("employee_id"),
+                Employee employee = new Employee(
+                        data.getInt("employee_id"),
                         data.getString("password"),
                         data.getString("last_name"),
                         data.getString("first_name"),

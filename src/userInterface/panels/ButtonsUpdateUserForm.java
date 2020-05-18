@@ -14,11 +14,11 @@ public class ButtonsUpdateUserForm extends JPanel{
     private JLabel requiredFields;
     private JButton modify, goBack;
     private MainWindow parent;
-    private User user;
-    private JPanel form;
+    private Customer user;
+    private CustomerForm form;
     private CustomerController controller;
 
-    public ButtonsUpdateUserForm(MainWindow window, JPanel form){
+    public ButtonsUpdateUserForm(MainWindow window, CustomerForm form){
         this.parent = window;
         this.form = form;
         controller = new CustomerController();
@@ -40,18 +40,13 @@ public class ButtonsUpdateUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                if (form instanceof CustomerForm){
-                    user = ((CustomerForm)form).updateCustomer();
+                user = form.updateCustomer();
 
-                    if(user != null){
-                        controller.updateCustomer((Customer)user);
-                        JOptionPane.showMessageDialog(null, user + " a été modifié" , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } else {
-                    user = ((EmployeeForm)form).createEmployee();
-                    //controller.modifyEmployee((Employee)user);
+                if(user != null){
+                    controller.updateCustomer(user);
+                    JOptionPane.showMessageDialog(null, user + " a été modifié" , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                    parent.goBackHome();
                 }
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
@@ -62,10 +57,7 @@ public class ButtonsUpdateUserForm extends JPanel{
     private class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            parent.getWindowContainer().removeAll();
-            parent.getWindowContainer().add(new MainPanel(parent));
-            parent.getWindowContainer().repaint();
-            parent.setVisible(true);
+            parent.goBackHome();
             UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(parent);
         }
     }

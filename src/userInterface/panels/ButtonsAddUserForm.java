@@ -1,8 +1,10 @@
 package userInterface.panels;
 
 import controller.CustomerController;
+import controller.EmployeeController;
 import model.*;
 import model.exceptions.*;
+import userInterface.frames.AllCoffeesFrame;
 import userInterface.frames.MainWindow;
 
 import javax.swing.*;
@@ -15,13 +17,15 @@ public class ButtonsAddUserForm extends JPanel {
     private MainWindow parent;
     private User user;
     private JPanel form;
-    private CustomerController controller;
+    private CustomerController customerController;
+    private EmployeeController employeeController;
 
     public ButtonsAddUserForm(MainWindow window, JPanel form){
         this.parent = window;
         parent.resetSize();
         this.form = form;
-        controller = new CustomerController();
+        customerController = new CustomerController();
+        employeeController = new EmployeeController();
         this.setLayout(new FlowLayout());
 
         requiredFields = new JLabel("*champs obligatoires");
@@ -43,23 +47,23 @@ public class ButtonsAddUserForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-
                 if(form instanceof CustomerForm){
                     user = ((CustomerForm)form).createCustomer();
+
                     if(user != null){
                         controller.addCustomer((Customer)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
                 } else {
                     user = ((EmployeeForm)form).createEmployee();
                     if(user != null){
-                        //controller.addEmployee((Employee)user);
+                        controller.addEmployee((Employee)user);
                         JOptionPane.showMessageDialog(null, user.description(), "Validation de l'inscription", JOptionPane.INFORMATION_MESSAGE);
+                        parent.goBackHome();
                     }
                 }
-
-                form.setVisible(false);
-            } catch (AddException | ConnectionException exception) {
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }

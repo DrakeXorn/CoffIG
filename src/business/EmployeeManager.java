@@ -18,6 +18,10 @@ public class EmployeeManager {
         return employeeAccessor.getAllEmployees();
     }
 
+    public void addEmployee(Employee employee) throws AddDataException, ConnectionException {
+        employeeAccessor.addEmployee(employee);
+    }
+
     public ArrayList<Employee> getCurrentlyWorkingEmployees() throws ConnectionException, CharacterInputException, DateException, StringInputException, AllDataException {
         return employeeAccessor.getCurrentlyWorkingEmployees();
     }

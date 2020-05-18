@@ -1,5 +1,7 @@
 package userInterface.frames;
 
+import model.exceptions.AddDataException;
+import model.exceptions.ConnectionException;
 import userInterface.panels.*;
 
 import javax.swing.*;
@@ -97,6 +99,7 @@ public class MainWindow extends JFrame {
 
         allEmployees = new JMenuItem("Afficher tous les employés");
         displayAll.add(allEmployees);
+        allEmployees.addActionListener(new AllEmployeesListener());
 
         allCoffees = new JMenuItem("Afficher tous les cafés");
         displayAll.add(allCoffees);
@@ -112,6 +115,7 @@ public class MainWindow extends JFrame {
 
         searchAdvantages = new JMenuItem("Rechercher les avantages d'un client");
         search.add(searchAdvantages);
+        searchAdvantages.addActionListener(new SearchAdvantagesListener());
 
         searchServices = new JMenuItem("Rechercher les services d'un employé");
         search.add(searchServices);
@@ -127,6 +131,13 @@ public class MainWindow extends JFrame {
     public void resetSize() {
         if (getHeight() != 800)
             setSize(800, 600);
+    }
+  
+    public void goBackHome(){
+        windowContainer.removeAll();
+        windowContainer.add(new MainPanel(MainWindow.this));
+        windowContainer.repaint();
+        setVisible(true);
     }
 
     private class HomeListener implements ActionListener{
@@ -182,7 +193,6 @@ public class MainWindow extends JFrame {
             windowContainer.add(user, BorderLayout.NORTH);
             windowContainer.add(employeeForm, BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
-
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
         }
@@ -220,7 +230,13 @@ public class MainWindow extends JFrame {
             resetSize();
         }
     }
-
+  
+    private class AllEmployeesListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            AllEmployeesFrame allEmployeesFrame = new AllEmployeesFrame(MainWindow.this);
+        }
+    }
+  
     private class AllCoffeesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -250,6 +266,16 @@ public class MainWindow extends JFrame {
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
             setSize(getWidth(), 160);
+        }
+    }
+
+    private class SearchAdvantagesListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            windowContainer.removeAll();
+            windowContainer.add(new SearchAdvantagesPanel());
+            windowContainer.repaint();
+            MainWindow.this.setVisible(true);
         }
     }
 }
