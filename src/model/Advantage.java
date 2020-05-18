@@ -5,7 +5,6 @@ import model.exceptions.*;
 import java.util.GregorianCalendar;
 
 public class Advantage {
-    private static int nbrAdvantages = 0;
     private Integer advantageID;
     private String label;
     private Double discount;
@@ -13,17 +12,24 @@ public class Advantage {
     private GregorianCalendar endDate;
     private Integer pointsRequired;
 
-    public Advantage(String label, Double discount,
+    // Pour la recherche
+    public Advantage(Integer advantageID, String label, Double discount,
                      GregorianCalendar startDate, GregorianCalendar endDate, Integer pointsRequired)
                     throws IntegerInputException, DoubleInputException, DateException {
-        nbrAdvantages++;
-        this.advantageID = nbrAdvantages;
+        this.advantageID = advantageID;
         this.label = label;
         setDiscount(discount);
         this.startDate = startDate;
         setEndDate(endDate);
         setPointsRequired(pointsRequired);
     }
+
+    public Integer getAdvantageID() { return advantageID; }
+    public String getLabel() { return label; }
+    public Double getDiscount() { return discount; }
+    public GregorianCalendar getStartDate() { return startDate; }
+    public GregorianCalendar getEndDate() { return endDate; }
+    public Integer getPointsRequired() { return pointsRequired; }
 
     public void setDiscount(Double discount) throws DoubleInputException {
         if (discount <= 0 || discount > 100)
@@ -42,4 +48,15 @@ public class Advantage {
             throw new DateException(endDate, "La date de fin ne doit pas se trouver avant la date de début !");
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Avantage id : "+advantageID+
+                "\nLabel : "+label+
+                "\nRemise : "+discount+
+                "\nDate de début : "+startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH ) + 1)+"/"+startDate.get(Calendar.YEAR)+
+                "\nDate de fin : "+endDate.get(Calendar.DAY_OF_MONTH)+"/"+ (endDate.get(Calendar.MONTH ) + 1)+"/"+endDate.get(Calendar.YEAR)+
+                "\nPoints requis : "+pointsRequired+"\n";
+    }
 }
+
