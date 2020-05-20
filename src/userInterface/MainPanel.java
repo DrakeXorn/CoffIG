@@ -3,10 +3,13 @@ package userInterface;
 import controller.OrderController;
 import userInterface.order.OrderForm;
 import userInterface.thread.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainPanel extends JPanel {
     private CoffeeCup cup;
@@ -47,6 +50,7 @@ public class MainPanel extends JPanel {
                 parent.repaint();
                 parent.setVisible(true);
                 parent.setSize(1200, 500);
+                repaint();
 
                 // valeurs à récupérer du formulaire
                 /*String cardId = "0495505955";

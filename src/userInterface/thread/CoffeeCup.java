@@ -12,11 +12,15 @@ public class CoffeeCup extends JPanel {
     private final static int width = 20;
     private final static int height = 20;
     private final static int deltaY = 10;
-    private ArrayList<CoffeeBean> coffeeBeansArray = new ArrayList<>();
-    private List<CoffeeBean> coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
+    private ArrayList<CoffeeBean> coffeeBeansArray;
+    private List<CoffeeBean> coffeeBeans;
 
     public CoffeeCup(){
         this.setBackground(new Color(207, 233, 255));
+
+        coffeeBeansArray = new ArrayList<>();
+        coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
+
         coffeeBeans.add(new CoffeeBean(80, width, height, deltaY, this));
         coffeeBeans.add(new CoffeeBean(180, width, height, deltaY, this));
         coffeeBeans.add(new CoffeeBean(280, width, height, deltaY, this));

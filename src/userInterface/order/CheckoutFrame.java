@@ -1,8 +1,5 @@
 package userInterface.order;
 
-import userInterface.order.CheckoutPanel;
-import userInterface.order.OrderForm;
-
 import javax.swing.*;
 import java.awt.*;
 

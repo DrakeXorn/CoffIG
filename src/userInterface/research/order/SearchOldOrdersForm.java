@@ -1,11 +1,13 @@
 package userInterface.research.order;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import controller.CustomerController;
 import model.Customer;
-import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -14,7 +16,7 @@ public class SearchOldOrdersForm extends JPanel {
     private JLabel customerIdLabel, startDateLabel, endDateLabel;
     private ArrayList<Customer> customers;
     private JComboBox <Customer> customersBox;
-    private JDatePicker startDate, endDate;
+    private DatePicker startDate, endDate;
     private JCheckBox takeAway, onSite;
     private CustomerController controller;
 
@@ -38,25 +40,16 @@ public class SearchOldOrdersForm extends JPanel {
             startDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(startDateLabel);
 
-            startDate = new JDatePicker();
-            startDate.setShowYearButtons(true);
-            startDate.getModel().setYear(2019);
-            startDate.getModel().setMonth(0);
-            startDate.getModel().setDay(1);
-            startDate.getModel().setSelected(true);
+            startDate = new DatePicker();
+            startDate.setDate(LocalDate.of(2019, Month.JANUARY, 1));
+
             this.add(startDate);
 
             endDateLabel = new JLabel("Date de fin :");
             endDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(endDateLabel);
 
-            endDate = new JDatePicker();
-            endDate.setShowYearButtons(true);
-            GregorianCalendar today = (GregorianCalendar) Calendar.getInstance();
-            endDate.getModel().setYear(today.get(Calendar.YEAR));
-            endDate.getModel().setMonth(today.get(Calendar.MONTH));
-            endDate.getModel().setDay(today.get(Calendar.DAY_OF_MONTH) - 1);
-            endDate.getModel().setSelected(true);
+            endDate = new DatePicker();
             this.add(endDate);
 
             takeAway = new JCheckBox("à emporter");
@@ -82,11 +75,11 @@ public class SearchOldOrdersForm extends JPanel {
         return customersBox;
     }
 
-    public JDatePicker getStartDate() {
+    public DatePicker getStartDate() {
         return startDate;
     }
 
-    public JDatePicker getEndDate() {
+    public DatePicker getEndDate() {
         return endDate;
     }
 

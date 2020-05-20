@@ -17,7 +17,8 @@ public class SearchAdvantagesForm extends JPanel {
     private JLabel customerIdLabel, dateOfDaysLabel, discountLabel;
     private ArrayList<Customer> customers;
     private JTextField dateOfDays;
-    private JComboBox customersBox, discount;
+    private JComboBox<Customer> customersBox;
+    private JComboBox<Double> discount;
     private JRadioButton anyAdvantage, accessibleAdvantage, inaccessibleAdvantage;
     private ButtonGroup buttonGroup;
     private CustomerController customerController;
@@ -116,6 +117,6 @@ public class SearchAdvantagesForm extends JPanel {
     public JComboBox<Customer> getCustomersBox() { return customersBox; }
     public GregorianCalendar getToday() { return today; }
     public ArrayList<Double> getDiscounts() { return advantageController.getDiscounts(); }
-    public JComboBox getDiscountsBox() { return discount; }
+    public JComboBox<Double> getDiscountsBox() { return discount; }
     public int getTypeAdvantage() { return anyAdvantage.isSelected() ? 1 : accessibleAdvantage.isSelected() ? 2 : 3; }
 }

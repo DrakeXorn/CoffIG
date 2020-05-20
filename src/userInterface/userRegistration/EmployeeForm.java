@@ -1,16 +1,19 @@
 package userInterface.userRegistration;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import model.*;
-import org.jdatepicker.JDatePicker;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 
 public class EmployeeForm extends JPanel {
     private JLabel hireDateLabel, endContractDateLabel, discountLabel;
-    private JDatePicker hireDate, endContractDate;
+    private DatePicker hireDate, endContractDate;
     private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContract;
     private JSpinner discount;
     private UserForm userInfos;
@@ -23,12 +26,8 @@ public class EmployeeForm extends JPanel {
         hireDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(hireDateLabel);
 
-        hireDate = new JDatePicker();
-        hireDate.setShowYearButtons(true);
-        hireDate.getModel().setYear(2020);
-        hireDate.getModel().setMonth(0);
-        hireDate.getModel().setDay(1);
-        hireDate.getModel().setSelected(true);
+        hireDate = new DatePicker();
+        hireDate.setDate(LocalDate.of(2000, Month.JANUARY, 1));
         this.add(hireDate);
 
         this.add(new JLabel(""));
@@ -42,13 +41,9 @@ public class EmployeeForm extends JPanel {
         endContractDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(endContractDateLabel);
 
-        endContractDate = new JDatePicker();
+        endContractDate = new DatePicker();
         endContractDate.setEnabled(false);
-        endContractDate.setShowYearButtons(true);
-        endContractDate.getModel().setYear(2020);
-        endContractDate.getModel().setMonth(0);
-        endContractDate.getModel().setDay(1);
-        endContractDate.getModel().setSelected(false);
+        endContractDate.setDate(LocalDate.of(2000, Month.JANUARY, 1));
         this.add(endContractDate);
 
         discountLabel = new JLabel("Remise* :");
@@ -69,12 +64,7 @@ public class EmployeeForm extends JPanel {
     private class WantsEndContractDateListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
-            if(event.getStateChange() == ItemEvent.SELECTED)
-                endContractDate.setEnabled(true);
-            else{
-                endContractDate.setEnabled(false);
-                endContractDate.getModel().setSelected(false);
-            }
+            endContractDate.setEnabled(event.getStateChange() == ItemEvent.SELECTED);
         }
     }
 
@@ -85,9 +75,9 @@ public class EmployeeForm extends JPanel {
             //  récupère le manager de la base de données pour l'ajouter dans ton employee. Ton employee est automatiquement un manager tel que tu le crées ici.
 
             employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
-                    userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
-                    userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
-                    (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
+                    userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
+                    userInfos.getPhone(), userInfos.getGender(), GregorianCalendar.from(ZonedDateTime.from(hireDate.getDate())),
+                    (wantsEndContract.isSelected() ? GregorianCalendar.from(ZonedDateTime.from(hireDate.getDate())) : null),
                     isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),

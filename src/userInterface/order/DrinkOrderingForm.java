@@ -3,6 +3,7 @@ package userInterface.order;
 import controller.DrinkController;
 import model.Drink;
 import model.DrinkOrdering;
+import model.Food;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class DrinkOrderingForm extends JPanel {
     private JLabel drinkLabel, numberChosenLabel, sizeLabel;
@@ -20,9 +22,11 @@ public class DrinkOrderingForm extends JPanel {
     private JSpinner numberSpinner;
     private JButton addToListButton, manageToppingsButton;
     private OrderFormCentralPanel parent;
+    private Integer drinksAlreadyOrdered;
 
     public DrinkOrderingForm(OrderFormCentralPanel parent) {
         this.parent = parent;
+        drinksAlreadyOrdered = 0;
 
         try {
             DrinkController controller = new DrinkController();
@@ -80,7 +84,7 @@ public class DrinkOrderingForm extends JPanel {
     }
 
     private void resetSpinnerState() {
-        numberSpinner.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
+        numberSpinner.setModel(new SpinnerNumberModel(1, 1, 50 - drinksAlreadyOrdered, 1));
     }
 
     private Double getSizePrice() {
@@ -92,7 +96,7 @@ public class DrinkOrderingForm extends JPanel {
     }
 
     private Double getLinePrice() {
-        return (int) numberSpinner.getValue() * (((((Drink) drinkBox.getSelectedItem()).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice());
+        return (int) numberSpinner.getValue() * (((((Drink) Objects.requireNonNull(drinkBox.getSelectedItem())).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice());
     }
 
     private void updatePrice() {
@@ -136,7 +140,8 @@ public class DrinkOrderingForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) sizeBox.getSelectedItem()).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice()));
+                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) Objects.requireNonNull(sizeBox.getSelectedItem())).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice()));
+                drinksAlreadyOrdered += (int) numberSpinner.getValue();
                 resetSpinnerState();
                 updatePrice();
             } catch (Exception exception) {

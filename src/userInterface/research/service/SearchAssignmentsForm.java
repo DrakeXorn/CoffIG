@@ -1,8 +1,8 @@
 package userInterface.research.service;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import controller.EmployeeController;
 import model.Employee;
-import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SearchAssignmentsForm extends JPanel {
     private JLabel employeesBoxLabel, startDateLabel, durationLabel;
     private JComboBox<String> employeesBox, durationBox;
-    private JDatePicker startDatePicker;
+    private DatePicker startDatePicker;
 
     public SearchAssignmentsForm() {
         try {
@@ -35,7 +35,7 @@ public class SearchAssignmentsForm extends JPanel {
             durationBox.addItem("15 jours");
             durationBox.addItem("1 mois (31 jours)");
 
-            startDatePicker = new JDatePicker();
+            startDatePicker = new DatePicker();
 
             employeesBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             startDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -62,7 +62,7 @@ public class SearchAssignmentsForm extends JPanel {
         return durationBox;
     }
 
-    public JDatePicker getStartDatePicker() {
+    public DatePicker getStartDatePicker() {
         return startDatePicker;
     }
 }

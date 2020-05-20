@@ -9,8 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class SearchOldOrdersPanel extends JPanel {
@@ -33,14 +36,16 @@ public class SearchOldOrdersPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 OrderController controller = new OrderController();
-                GregorianCalendar endDateConverted = (GregorianCalendar)form.getEndDate().getModel().getValue();
-                GregorianCalendar startDateConverted = (GregorianCalendar)form.getStartDate().getModel().getValue();
+                GregorianCalendar endDateConverted = new GregorianCalendar();
+                GregorianCalendar startDateConverted = new GregorianCalendar();
                 GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
 
+                endDateConverted.setTime(Date.from(form.getEndDate().getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                startDateConverted.setTime(Date.from(form.getStartDate().getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 if(startDateConverted.after(today))
                     throw new DateException(startDateConverted, "La date de début ne doit pas se trouver après aujourd'hui !");
-                //if(endDateConverted.after(today))
-                   // throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver après aujourd'hui !");
+                if(endDateConverted.after(today))
+                    throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver après aujourd'hui !");
                 if(endDateConverted.before(startDateConverted))
                     throw new DateException(endDateConverted, "La date de fin ne doit pas se trouver avant la date de début !");
                 if(!form.getTakeAway().isSelected() && !form.getOnSite().isSelected())

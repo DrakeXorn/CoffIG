@@ -1,25 +1,27 @@
 package userInterface.userRegistration;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import controller.CustomerController;
 import model.*;
 import model.exceptions.*;
-import org.jdatepicker.JDatePicker;
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.*;
 
 public class UserForm extends JPanel {
     private JLabel  userIdLabel, passwordLabel, lastNameLabel, firstNameLabel, secondNameLabel, maidenNameLabel,
-            birthdateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
-    private JDatePicker birthdate;
+            birthDateLabel, streetNameLabel, numberStreetLabel, emailLabel, phoneLabel, localityLabel;
     private JPasswordField password;
     private JTextField userId, lastName, firstName, secondName, maidenName,
-            streetName, numberStreet, email, phone;
-    private JRadioButton male, female;
+            streetName, streetNumber, email, phone;
+    private JRadioButton maleButton, femaleButton;
     private ButtonGroup buttonGroup;
+    private DatePicker birthDatePicker;
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
-
     private CustomerController controller;
 
     public UserForm(User userToUpdate) {
@@ -66,33 +68,24 @@ public class UserForm extends JPanel {
             maidenName = new JTextField(userToUpdate != null ? userToUpdate.getMaidenName() : null);
             this.add(maidenName);
 
-            male = new JRadioButton("Homme", userToUpdate == null || userToUpdate.getGender() == 'M');
-            male.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(male);
-            female = new JRadioButton("Femme", userToUpdate != null && userToUpdate.getGender() == 'F');
-            female.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(female);
+            maleButton = new JRadioButton("Homme", userToUpdate == null || userToUpdate.getGender() == 'M');
+            maleButton.setHorizontalAlignment(SwingConstants.CENTER);
+            this.add(maleButton);
+            femaleButton = new JRadioButton("Femme", userToUpdate != null && userToUpdate.getGender() == 'F');
+            femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
+            this.add(femaleButton);
 
             buttonGroup = new ButtonGroup();
-            buttonGroup.add(male);
-            buttonGroup.add(female);
+            buttonGroup.add(maleButton);
+            buttonGroup.add(femaleButton);
 
-            birthdateLabel = new JLabel("Date de naissance* :");
-            birthdateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            this.add(birthdateLabel);
-            birthdate = new JDatePicker();
-            birthdate.setShowYearButtons(true);
-            if(userToUpdate != null) {
-                birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
-                birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
-                birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
-            } else {
-                birthdate.getModel().setYear(2004);
-                birthdate.getModel().setMonth(0);
-                birthdate.getModel().setDay(1);
-            }
-            birthdate.getModel().setSelected(true);
-            this.add(birthdate);
+            birthDateLabel = new JLabel("Date de naissance* :");
+            birthDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            this.add(birthDateLabel);
+
+            birthDatePicker = new DatePicker();
+            birthDatePicker.setDate(userToUpdate != null ? userToUpdate.getBirthDate().toZonedDateTime().toLocalDate() : LocalDate.of(2004, Month.JANUARY, 1));
+            this.add(birthDatePicker);
 
             streetNameLabel = new JLabel("Adresse* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -103,8 +96,8 @@ public class UserForm extends JPanel {
             numberStreetLabel = new JLabel("Numéro* :");
             numberStreetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(numberStreetLabel);
-            numberStreet = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[1] : null);
-            this.add(numberStreet);
+            streetNumber = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[1] : null);
+            this.add(streetNumber);
 
             localityLabel = new JLabel("Localité* :");
             localityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -128,6 +121,7 @@ public class UserForm extends JPanel {
             phoneLabel = new JLabel("Numéro de GSM* :");
             phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(phoneLabel);
+
             phone = new JTextField(userToUpdate != null ? userToUpdate.getPhone() : null);
             this.add(phone);
         } catch (Exception exception) {
@@ -160,14 +154,18 @@ public class UserForm extends JPanel {
         return maidenName.getText();
     }
 
-    public GregorianCalendar getBirthdate() {
-        return (GregorianCalendar)birthdate.getModel().getValue();
+    public GregorianCalendar getBirthDate() {
+        GregorianCalendar birthDate = new GregorianCalendar();
+
+        birthDate.setTime(Date.from(birthDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        birthDate.add(GregorianCalendar.HOUR, 1);
+        return birthDate;
     }
 
     public String getStreetName() throws StringInputException {
-        if(!numberStreet.getText().matches("^\\d*\\D?$"))
-            throw new StringInputException(numberStreet.getText(), "le numéro de l'adresse", "Le numéro se compose d'un ou de plusieurs chiffres et peut parfois être suivi d'une lettre");
-        return streetName.getText() + ", " + numberStreet.getText();
+        if(!streetNumber.getText().matches("^\\d*\\D?$"))
+            throw new StringInputException(streetNumber.getText(), "le numéro de l'adresse", "Le numéro se compose d'un ou de plusieurs chiffres et peut parfois être suivi d'une lettre");
+        return streetName.getText() + ", " + streetNumber.getText();
     }
 
     public String getEmail() {
@@ -183,6 +181,6 @@ public class UserForm extends JPanel {
     }
 
     public Character getGender() {
-        return male.isSelected() ? 'M' : 'F';
+        return maleButton.isSelected() ? 'M' : 'F';
     }
 }

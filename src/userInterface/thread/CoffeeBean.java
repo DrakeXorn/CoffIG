@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CoffeeBean {
     private final static int goBack = 0;
-    private final static int limit = 315;
+    private final static int limit = 330;
     private final static int range = 60;
     private final static int min = 360;
     private Image coffeeBean;
