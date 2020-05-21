@@ -9,8 +9,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class SearchOldOrdersForm extends JPanel {
     private JLabel customerIdLabel, startDateLabel, endDateLabel;

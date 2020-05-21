@@ -4,12 +4,10 @@ import controller.OrderController;
 import userInterface.order.OrderForm;
 import userInterface.thread.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class MainPanel extends JPanel {
     private CoffeeCup cup;

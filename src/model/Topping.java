@@ -47,6 +47,16 @@ public class Topping {
         this.price = price;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Topping && ((Topping) o).getToppingID().equals(toppingID) && ((Topping) o).getLabel().equals(label);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
     public String toString() {
 
         return label + " (" + price + " €)";

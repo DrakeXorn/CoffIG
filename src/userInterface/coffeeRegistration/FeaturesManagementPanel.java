@@ -3,7 +3,6 @@ package userInterface.coffeeRegistration;
 import controller.FeatureController;
 import userInterface.ButtonsManagementPanel;
 import userInterface.ManagementPanel;
-import userInterface.order.FeaturesManagementFrame;
 import userInterface.utils.InputCheck;
 
 import javax.swing.*;

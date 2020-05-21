@@ -3,7 +3,7 @@ package userInterface.order;
 import controller.DrinkController;
 import model.Drink;
 import model.DrinkOrdering;
-import model.Food;
+import model.Topping;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DrinkOrderingForm extends JPanel {
@@ -23,9 +24,11 @@ public class DrinkOrderingForm extends JPanel {
     private JButton addToListButton, manageToppingsButton;
     private OrderFormCentralPanel parent;
     private Integer drinksAlreadyOrdered;
+    private ArrayList<Topping> toppings;
 
     public DrinkOrderingForm(OrderFormCentralPanel parent) {
         this.parent = parent;
+        toppings = new ArrayList<>();
         drinksAlreadyOrdered = 0;
 
         try {
@@ -77,7 +80,6 @@ public class DrinkOrderingForm extends JPanel {
             drinkBox.addActionListener(new DrinkBoxListener());
             resetSpinnerState();
             updatePrice();
-
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -96,14 +98,26 @@ public class DrinkOrderingForm extends JPanel {
     }
 
     private Double getLinePrice() {
-        return (int) numberSpinner.getValue() * (((((Drink) Objects.requireNonNull(drinkBox.getSelectedItem())).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice());
+        double totalToppings = 0;
+
+        for (Topping topping : toppings)
+            totalToppings += topping.getPrice();
+        return ((int) numberSpinner.getValue()) * (((((Drink) Objects.requireNonNull(drinkBox.getSelectedItem())).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice() + totalToppings);
     }
 
-    private void updatePrice() {
+    public void updatePrice() {
         DecimalFormat formatter = new DecimalFormat("0.00");
 
         formatter.setRoundingMode(RoundingMode.CEILING);
         addToListButton.setText("Ajouter à la commande (" + formatter.format(getLinePrice()) + "€)");
+    }
+
+    public ArrayList<Topping> getToppings() {
+        return toppings;
+    }
+
+    public void setToppings(ArrayList<Topping> toppings) {
+        this.toppings = toppings;
     }
 
     private class DrinkBoxListener implements ActionListener {
@@ -140,8 +154,9 @@ public class DrinkOrderingForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) Objects.requireNonNull(sizeBox.getSelectedItem())).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice()));
+                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) Objects.requireNonNull(sizeBox.getSelectedItem())).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice(), new ArrayList<>(toppings)));
                 drinksAlreadyOrdered += (int) numberSpinner.getValue();
+                toppings.clear();
                 resetSpinnerState();
                 updatePrice();
             } catch (Exception exception) {
