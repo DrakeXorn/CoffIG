@@ -48,7 +48,7 @@ public class EmployeeForm extends JPanel {
         endContractDate.setEnabled(false);
         endContractDate.setShowYearButtons(true);
         endContractDate.getModel().setYear(2020);
-        endContractDate.getModel().setMonth(0);
+        endContractDate.getModel().setMonth(6);
         endContractDate.getModel().setDay(1);
         endContractDate.getModel().setSelected(false);
         this.add(endContractDate);

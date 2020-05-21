@@ -123,7 +123,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date,street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
             userStatement.setInt(1, employee.getUserID());
             userStatement.setString(2, employee.getPassword());
@@ -138,7 +138,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             userStatement.setString(11, employee.getLocality().getCity());
             userStatement.executeUpdate();
 
-            if(employee.getSecondName() != null){
+            if(employee.getSecondName() != null) {
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getSecondName());
@@ -146,7 +146,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            if(employee.getMaidenName() != null){
+            if(employee.getMaidenName() != null) {
                 sqlUser = "update user set maiden_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getMaidenName());
@@ -205,8 +205,6 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
             preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
             data = preparedStatement.executeQuery();
-
-            while (data.next()) {
                 Employee employee = createEmployee(data);
                 workingEmployees.add(employee);
             }

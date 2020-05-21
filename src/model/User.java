@@ -38,52 +38,57 @@ public class User {
         setGender(gender);
         this.locality = locality;
     }
-
+  
     public Integer getUserID() {
         return userID;
     }
+  
     public String getPassword() {
         return password;
     }
+  
     public String getLastName() {
         return lastName;
     }
+  
     public String getFirstName() {
         return firstName;
     }
+  
     public String getSecondName() {
         return secondName;
     }
+  
     public String getMaidenName() {
         return maidenName;
     }
+  
     public GregorianCalendar getBirthDate() {
         return birthDate;
     }
+  
     public String getStreetName() {
         return streetName;
     }
+  
     public String getPhone() {
         return phone;
     }
+  
     public String getEmail() {
         return email;
     }
+  
     public Character getGender() {
         return gender;
     }
+  
     public Locality getLocality() {
         return locality;
     }
+  
     public String getIdentity() {
         return firstName + " " + lastName;
-    }
-
-    public void setUserID() throws AllDataException, ConnectionException {
-        if (userID == null) {
-            controller = new CustomerController();
-            this.userID = controller.getLastCustomerId() + 1;
-        }
     }
 
     public void setPassword(String password) throws StringInputException {
@@ -125,7 +130,8 @@ public class User {
             if(!maidenName.matches("^[a-zA-ZÀ-ÿ]+-?[a-zA-ZÀ-ÿ]*$"))
                 throw new StringInputException(maidenName, null, "Le nom de jeune fille se compose uniquement de lettres !");
             this.maidenName = maidenName;
-        }    }
+        }
+    }
 
     public void setBirthDate(GregorianCalendar birthDate) throws DateException {
         GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();

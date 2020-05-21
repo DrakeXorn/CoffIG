@@ -26,7 +26,7 @@ public class Customer extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
             throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        this(userID, password, lastName, firstName,  null, null, birthDate,  streetName,  locality,  email,  phone,  gender, wantsAdvertising);
+        this(userID, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender, wantsAdvertising);
     }
 
     public Boolean getWantsAdvertising() {

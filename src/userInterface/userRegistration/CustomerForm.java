@@ -15,7 +15,6 @@ public class CustomerForm extends JPanel {
     private JLabel satisfactionDegreeLabel;
     private JSpinner degree;
     private UserForm userInfos;
-    private UserController controller;
     private Customer customerToUpdate;
 
     public CustomerForm(UserForm userInfos, Customer customerToUpdate){
@@ -69,8 +68,7 @@ public class CustomerForm extends JPanel {
 
     public Customer createCustomer() {
         Customer customer = null;
-        controller = new UserController();
-
+        UserController controller = new UserController();
         try {
             customer = new Customer(controller.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
                     userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),

@@ -21,19 +21,15 @@ public class UserForm extends JPanel {
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
 
-    private UserController controller;
-
     public UserForm(User userToUpdate) {
         try {
-            controller = new UserController();
+            UserController controller = new UserController();
             this.setLayout(new GridLayout(13, 2, 5, 5));
 
-            userIdLabel = new JLabel("Identifiant : ");
+            userIdLabel = new JLabel("Identifiant :");
             userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(userIdLabel);
-
             userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
-
             userId.setEnabled(false);
             this.add(userId);
 
@@ -83,7 +79,7 @@ public class UserForm extends JPanel {
             this.add(birthdateLabel);
             birthdate = new JDatePicker();
             birthdate.setShowYearButtons(true);
-            if(userToUpdate != null) {
+            if (userToUpdate != null) {
                 birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
                 birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
                 birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
@@ -95,7 +91,7 @@ public class UserForm extends JPanel {
             birthdate.getModel().setSelected(true);
             this.add(birthdate);
 
-            streetNameLabel = new JLabel("Adresse* :");
+            streetNameLabel = new JLabel("Rue* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(streetNameLabel);
             streetName = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[0] : null);
@@ -116,7 +112,7 @@ public class UserForm extends JPanel {
             for (Locality locality : localities)
                 localitiesBox.addItem(locality);
             localitiesBox.setMaximumRowCount(5);
-            if(userToUpdate != null)
+            if (userToUpdate != null)
                 localitiesBox.setSelectedItem(userToUpdate.getLocality());
             this.add(localitiesBox);
 
@@ -145,7 +141,9 @@ public class UserForm extends JPanel {
         return new String(password.getPassword());
     }
 
-    public String getLastName() { return lastName.getText(); }
+    public String getLastName() {
+        return lastName.getText();
+    }
 
     public String getFirstName() {
         return firstName.getText();
@@ -164,7 +162,7 @@ public class UserForm extends JPanel {
     }
 
     public String getStreetName() throws StringInputException {
-        if(!numberStreet.getText().matches("^\\d*\\D?$"))
+        if (!numberStreet.getText().matches("^\\d*\\D?$"))
             throw new StringInputException(numberStreet.getText(), "le numéro de l'adresse", "Le numéro se compose d'un ou de plusieurs chiffres et peut parfois être suivi d'une lettre");
         return streetName.getText() + ", " + numberStreet.getText();
     }
