@@ -2,6 +2,7 @@ package userInterface.order;
 
 import controller.EmployeeController;
 import model.Employee;
+import model.exceptions.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +18,7 @@ public class OrderFormBottomPanel extends JPanel {
     private OrderForm parent;
     private Employee orderPicker;
 
-    public OrderFormBottomPanel(OrderForm parent) {
-        try {
+    public OrderFormBottomPanel(OrderForm parent) throws ConnectionException, StringInputException, CharacterInputException, DateException, AllDataException, ClosedShopException {
             EmployeeController controller = new EmployeeController();
             ArrayList<Employee> currentlyWorkingEmployees = controller.getCurrentlyWorkingEmployees();
 
@@ -40,8 +40,10 @@ public class OrderFormBottomPanel extends JPanel {
             willBeServedByLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             add(willBeServedByLabel);
 
+            if (currentlyWorkingEmployees.size() == 0)
+                throw new ClosedShopException();
             Random random = new Random(System.currentTimeMillis());
-            orderPicker = currentlyWorkingEmployees.get(currentlyWorkingEmployees.size() > 1 ? random.nextInt( currentlyWorkingEmployees.size()) : 0);
+            orderPicker = currentlyWorkingEmployees.get(currentlyWorkingEmployees.size() > 1 ? random.nextInt(currentlyWorkingEmployees.size()) : 0);
 
             willBeServedByField = new JTextField();
             willBeServedByField.setText(orderPicker.getIdentity());
@@ -51,9 +53,6 @@ public class OrderFormBottomPanel extends JPanel {
 
             add(new JLabel(""));
             add(new JLabel(""));
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     public Employee getOrderPicker() {

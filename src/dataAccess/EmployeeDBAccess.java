@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class EmployeeDBAccess implements EmployeeDataAccess {
 
-    private Employee createEmployee(ResultSet data) throws SQLException, ConnectionException, AllDataException, CharacterInputException, DateException, StringInputException {
+    private Employee createEmployee(ResultSet data) throws SQLException, CharacterInputException, DateException, StringInputException {
         GregorianCalendar birthDate = new GregorianCalendar();
         GregorianCalendar hireDate = new GregorianCalendar();
         java.sql.Date birthDateSql = data.getDate("birth_date");
@@ -93,7 +93,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
     @Override
     public Employee getManager() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException {
-        Employee manager = null;
+        Employee manager;
 
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -154,7 +154,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount) values (?,?,?,?)";
+            String sqlEmployee = "insert into employee (employee_id, hire_date, is_employee_of_the_month, discount) values (?,?,?,?)";
             PreparedStatement employeeStatement = connection.prepareStatement(sqlEmployee);
             employeeStatement.setInt(1, employee.getUserID());
             employeeStatement.setDate(2, new java.sql.Date(employee.getHireDate().getTimeInMillis()));
@@ -199,14 +199,12 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select user_id, hire_date, end_contract_date, is_employee_of_the_month, discount, parking_space_number, manager_id, password, last_name, first_name, second_name, maiden_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city from employee e join user u on e.employee_id = u.user_id join assignment a on e.employee_id = a.employee_id join service s on a.service_id = s.service_id where date = ? and curtime() between start_time and end_time";
+            String sqlInstruction = "select e.employee_id, hire_date, end_contract_date, is_employee_of_the_month, discount, parking_space_number, manager_id, password, last_name, first_name, second_name, maiden_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city from employee e join user u on e.employee_id = u.user_id join assignment a on e.employee_id = a.employee_id join service s on a.service_id = s.service_id where date = sysdate() and curtime() between start_time and end_time";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data;
+            ResultSet data = preparedStatement.executeQuery();
 
-            preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
-            data = preparedStatement.executeQuery();
-                Employee employee = createEmployee(data);
-                workingEmployees.add(employee);
+            while (data.next()) {
+                workingEmployees.add(createEmployee(data));
             }
         } catch (SQLException exception) {
             throw new AllDataException(exception.getMessage(), "employés");
@@ -223,12 +221,12 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select parking_space_number from employee";
+            String sqlInstruction = "select max(parking_space_number) from employee";
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             ResultSet result = statement.executeQuery(sqlInstruction);
 
             result.next();
-            nbParkingSpaceNumber = result.getInt("parking_space_number");
+            nbParkingSpaceNumber = result.getInt("max(parking_space_number)");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {

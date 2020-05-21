@@ -24,7 +24,7 @@ public class CheckoutFrame extends JFrame {
         setLayout(new BorderLayout());
         container = getContentPane();
 
-        checkoutPanel = new CheckoutPanel(this);
+        checkoutPanel = new CheckoutPanel();
         container.add(checkoutPanel, BorderLayout.CENTER);
 
         confirmOrderButton = new JButton("Terminer la commande");

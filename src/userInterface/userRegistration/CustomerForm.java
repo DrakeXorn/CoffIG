@@ -71,7 +71,7 @@ public class CustomerForm extends JPanel {
         UserController controller = new UserController();
         try {
             customer = new Customer(controller.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 

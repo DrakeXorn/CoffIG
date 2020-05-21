@@ -18,7 +18,7 @@ public class Employee extends User {
     public Employee(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     GregorianCalendar hireDate, GregorianCalendar endContractDate, Boolean isEmployeeOfMonth, Double discount, Integer parkingSpaceNumber, Employee manager)
-            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+            throws StringInputException, DateException, CharacterInputException {
         super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
        this.hireDate = hireDate;
        this.endContractDate = endContractDate;
@@ -32,7 +32,7 @@ public class Employee extends User {
     public Employee(Integer userID, String password, String lastName, String firstName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount)
-            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
+            throws DateException, StringInputException, CharacterInputException {
         this(userID, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone,
                 gender, hireDate, null, isEmployeeOfMonth, discount, null, null);
     }
@@ -92,8 +92,8 @@ public class Employee extends User {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "(embauché le " +
+    public String description() {
+        return super.description() + "(embauché le " +
                 hireDate.get(Calendar.DAY_OF_MONTH) +
                 " " + hireDate.getDisplayName(GregorianCalendar.MONTH, GregorianCalendar.LONG, Locale.FRANCE) +
                 " " + hireDate.get(Calendar.YEAR) +

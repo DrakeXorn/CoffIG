@@ -4,18 +4,21 @@ import com.github.lgooddatepicker.components.DatePicker;
 import controller.EmployeeController;
 import controller.UserController;
 import model.*;
+import model.exceptions.DateException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class EmployeeForm extends JPanel {
     private JLabel hireDateLabel, endContractDateLabel, discountLabel;
-    private DatePicker hireDate, endContractDate;
+    private DatePicker hireDatePicker, endContractDatePicker;
     private JCheckBox isEmployeeOfMonth, wantsParkingSpace, wantsEndContract;
     private JSpinner discount;
     private UserForm userInfos;
@@ -28,9 +31,9 @@ public class EmployeeForm extends JPanel {
         hireDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(hireDateLabel);
 
-        hireDate = new DatePicker();
-        hireDate.setDate(LocalDate.of(2000, Month.JANUARY, 1));
-        this.add(hireDate);
+        hireDatePicker = new DatePicker();
+        hireDatePicker.setDateToToday();
+        this.add(hireDatePicker);
 
         this.add(new JLabel(""));
 
@@ -43,10 +46,9 @@ public class EmployeeForm extends JPanel {
         endContractDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(endContractDateLabel);
 
-        endContractDate = new DatePicker();
-        endContractDate.setEnabled(false);
-        endContractDate.setDate(LocalDate.of(2000, Month.JUNE, 1));
-        this.add(endContractDate);
+        endContractDatePicker = new DatePicker();
+        endContractDatePicker.setEnabled(false);
+        this.add(endContractDatePicker);
 
         discountLabel = new JLabel("Remise* :");
         discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -66,7 +68,7 @@ public class EmployeeForm extends JPanel {
     private class WantsEndContractDateListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
-            endContractDate.setEnabled(event.getStateChange() == ItemEvent.SELECTED);
+            endContractDatePicker.setEnabled(event.getStateChange() == ItemEvent.SELECTED);
         }
     }
 
@@ -75,19 +77,25 @@ public class EmployeeForm extends JPanel {
         try {
             EmployeeController employeeController = new EmployeeController();
             UserController userController =  new UserController();
+            GregorianCalendar hireDate = new GregorianCalendar();
+            GregorianCalendar endContractDate = new GregorianCalendar();
 
-            // todo changer condition pour wantsEndContract
+            hireDate.setTime(Date.from(hireDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            if (wantsEndContract.isSelected() && endContractDatePicker.getDate() != null)
+                throw new DateException(null, "Vous devez choisir une date de fin de contrat !");
+
+
+            endContractDate.setTime(Date.from(endContractDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             employee = new Employee(userController.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
-                    userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
-                    userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
-                    (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
+                    userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
+                    userInfos.getPhone(), userInfos.getGender(), hireDate, endContractDate,
                     isEmployeeOfMonth.isSelected(), (Double)discount.getValue(),  (wantsParkingSpace.isSelected() ? employeeController.getLastParkingSpaceNumber() + 1 : null), employeeController.getManager());
 
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
+
         return employee;
     }
 }

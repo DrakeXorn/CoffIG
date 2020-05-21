@@ -69,7 +69,6 @@ public class MainWindow extends JFrame {
         exitItem.addActionListener(new ExitListener());
 
 
-
         addNew = new JMenu("Ajouter");
         menuBar.add(addNew);
 
@@ -136,15 +135,16 @@ public class MainWindow extends JFrame {
     }
 
     public void resetSize() {
-        if (getHeight() != 800)
+        if (getHeight() != 800 && getWidth() != 600)
             setSize(800, 600);
     }
   
-    public void goBackHome(){
+    public void goBackHome() {
         windowContainer.removeAll();
         windowContainer.add(new MainPanel(MainWindow.this));
         windowContainer.repaint();
         setVisible(true);
+        resetSize();
     }
 
     private class HomeListener implements ActionListener{

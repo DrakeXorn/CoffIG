@@ -38,16 +38,16 @@ public class UserDBAccess implements UserDataAccess{
         int nbrCustomers;
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select max(customer_id) from customer";
+            String sqlInstruction = "select max(user_id) from user";
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             ResultSet result = statement.executeQuery(sqlInstruction);
 
             result.next();
-            nbrCustomers = result.getInt("max(customer_id)");
+            nbrCustomers = result.getInt("max(user_id)");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException("la récupération de l'identifiant maximal des clients", exception.getMessage());
+            throw new AllDataException("la récupération du dernier identifiant utilisateur", exception.getMessage());
         }
 
         return nbrCustomers;

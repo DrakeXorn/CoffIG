@@ -15,7 +15,7 @@ public class Customer extends User {
     public Customer(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
-            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+            throws StringInputException, DateException, CharacterInputException {
         super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
         this.wantsAdvertising = wantsAdvertising;
         orders = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Customer extends User {
     public Customer(Integer userID, String password, String lastName, String firstName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
-            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
+            throws DateException, StringInputException, CharacterInputException {
         this(userID, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender, wantsAdvertising);
     }
 
@@ -54,16 +54,9 @@ public class Customer extends User {
     public void addLoyaltyCard(LoyaltyCard card) {
         loyaltyCard = card;
     }
-    public void removeLoyaltyCard() {
-        loyaltyCard = null;
-    }
 
     public void addOrder(Order order) {
         orders.add(order);
-    }
-
-    public void addOrders(ArrayList<Order> newOrders) {
-        orders.addAll(newOrders);
     }
 
     public String description() {

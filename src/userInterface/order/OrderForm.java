@@ -4,6 +4,8 @@ import model.Customer;
 import model.DrinkOrdering;
 import model.Employee;
 import model.FoodOrdering;
+import model.exceptions.*;
+import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,19 +16,21 @@ public class OrderForm extends JPanel {
     private OrderFormRecapPanel recapPanel;
     private OrderFormCentralPanel centralPanel;
     private OrderFormBottomPanel bottomBar;
+    private MainWindow parent;
 
-    public OrderForm() {
+    public OrderForm(MainWindow parent) throws AllDataException, ConnectionException, ClosedShopException, StringInputException, DateException, CharacterInputException {
+        this.parent = parent;
+
         setLayout(new BorderLayout());
+
         topBar = new OrderFormTopPanel(this);
-        add(topBar, BorderLayout.NORTH);
-
         centralPanel = new OrderFormCentralPanel(this);
-        add(centralPanel, BorderLayout.CENTER);
-
         bottomBar = new OrderFormBottomPanel(this);
-        add(bottomBar, BorderLayout.SOUTH);
-
         recapPanel = new OrderFormRecapPanel(this);
+
+        add(topBar, BorderLayout.NORTH);
+        add(centralPanel, BorderLayout.CENTER);
+        add(bottomBar, BorderLayout.SOUTH);
         add(recapPanel, BorderLayout.EAST);
     }
 

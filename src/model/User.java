@@ -19,12 +19,11 @@ public class User {
     private String phone;
     private Character gender;
     private Locality locality;
-    private CustomerController controller;
 
     // pour la création avant l'insertion, la récupération et la modification d'un user
     public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
-            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+            throws StringInputException, DateException, CharacterInputException {
         this.userID = userID;
         setPassword(password);
         setLastName(lastName);
@@ -172,7 +171,7 @@ public class User {
         this.gender = gender;
     }
 
-    public String description () {
+    public String description() {
         return toString() +
                 (gender == 'F' ? " née le " : " né le ") + birthDate.get(Calendar.DAY_OF_MONTH)
                 + "/" + (birthDate.get(Calendar.MONTH ) + 1) + "/" + birthDate.get(Calendar.YEAR) +
@@ -180,7 +179,7 @@ public class User {
                 " et le numéro " + phone;
     }
 
-    public String toString(){
+    public String toString() {
         return getIdentity() + " (" + userID + ")";
     }
 }

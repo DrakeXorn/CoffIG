@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CoffeeBean {
     private final static int INITIAL_Y = 0;
-    private final static int LIMIT = 330;
+    private final static int LIMIT = 320;
     private final static int RANGE = 60;
     private final static int MINIMUM = 360;
     private Image coffeeBean;

@@ -41,14 +41,12 @@ public class ButtonsUpdateUserForm extends JPanel{
             try {
                 user = form.updateCustomer();
 
-                if(user != null){
+                if(user != null) {
                     controller.updateCustomer(user);
                     JOptionPane.showMessageDialog(null, user + " a été modifié" , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
                     parent.goBackHome();
                 }
             } catch (Exception exception) {
-                exception.printStackTrace();
-
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }

@@ -1,6 +1,5 @@
 package userInterface;
 
-import controller.OrderController;
 import userInterface.order.OrderForm;
 import userInterface.thread.*;
 
@@ -42,9 +41,8 @@ public class MainPanel extends JPanel {
                 // charger le form de la commande
                 // getAllAdvantages (selon cardId et période validité) pour les afficher dans un JCombobox
 
-                OrderController controller = new OrderController();
                 parent.getWindowContainer().removeAll();
-                parent.getWindowContainer().add(new OrderForm());
+                parent.getWindowContainer().add(new OrderForm(parent));
                 parent.repaint();
                 parent.setVisible(true);
                 parent.setSize(1200, 500);
@@ -59,11 +57,10 @@ public class MainPanel extends JPanel {
                 //String message = controller.removePointsToLoyaltyCard(cardId, points);
                 //controller.updateStockLocation(1, 2, 1, 2);
                 //boolean isEmptyStock = controller.isEmptyStockLocation(1, 2, 1);
-
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
+                parent.goBackHome();
             }
         }
     }

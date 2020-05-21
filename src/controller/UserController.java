@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class UserController {
     private UserManager manager;
 
+    public UserController() {
+        manager = new UserManager();
+    }
+
     public ArrayList<Locality> getAllLocalities() throws AllDataException, ConnectionException {
         return manager.getAllLocalities();
     }

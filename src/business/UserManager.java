@@ -1,6 +1,6 @@
 package business;
 
-import dataAccess.CustomerDataAccess;
+import dataAccess.UserDBAccess;
 import dataAccess.UserDataAccess;
 import model.Locality;
 import model.exceptions.AllDataException;
@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class UserManager {
     private UserDataAccess dao;
+
+    public UserManager() {
+        dao = new UserDBAccess();
+    }
 
     public int getLastCustomerId() throws AllDataException, ConnectionException {
         return dao.getLastCustomerId();
