@@ -1,6 +1,7 @@
 package userInterface.userRegistration;
 
 import controller.CustomerController;
+import controller.UserController;
 import model.*;
 import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
@@ -20,11 +21,11 @@ public class UserForm extends JPanel {
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
 
-    private CustomerController controller;
+    private UserController controller;
 
     public UserForm(User userToUpdate) {
         try {
-            controller = new CustomerController();
+            controller = new UserController();
             this.setLayout(new GridLayout(13, 2, 5, 5));
 
             userIdLabel = new JLabel("Identifiant : ");
@@ -144,9 +145,7 @@ public class UserForm extends JPanel {
         return new String(password.getPassword());
     }
 
-    public String getLastName() {
-        return lastName.getText();
-    }
+    public String getLastName() { return lastName.getText(); }
 
     public String getFirstName() {
         return firstName.getText();

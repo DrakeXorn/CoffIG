@@ -14,6 +14,34 @@ public class Employee extends User {
     private Employee manager;
     private ArrayList<Assignment> assignments;
 
+
+    // pour la création
+    public Employee(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
+                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
+                    GregorianCalendar hireDate, GregorianCalendar endContractDate, Boolean isEmployeeOfMonth, Double discount, Integer parkingSpaceNumber, Employee manager)
+            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
+        super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
+       this.hireDate = hireDate;
+       this.endContractDate = endContractDate;
+       this.isEmployeeOfMonth = isEmployeeOfMonth;
+       this.discount = discount;
+       this.parkingSpaceNumber = parkingSpaceNumber;
+       this.manager = manager;
+    }
+
+    // pour la récupération de la BD
+    public Employee(Integer userID, String password, String lastName, String firstName,
+                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
+                    GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount)
+            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
+        this(userID, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone,
+                gender, hireDate, null, isEmployeeOfMonth, discount, null, null);
+    }
+
+
+
+/*
+    // Pour création d'employee
     public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
@@ -27,12 +55,15 @@ public class Employee extends User {
         this.manager = manager;
         assignments = new ArrayList<>();
 
+
         this.parkingSpaceNumber = parkingSpaceNumber;
         if (parkingSpaceNumber > nbrParkingSpaces)
             nbrParkingSpaces = parkingSpaceNumber + 1;
     }
+*/
 
-    public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
+
+/*    public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
                     Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
                     Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
@@ -67,7 +98,7 @@ public class Employee extends User {
         this.discount = discount;
         this.hireDate = hireDate;
         this.parkingSpaceNumber = parkingSpaceNumber;
-    }
+    }*/
 
     public GregorianCalendar getHireDate() {
         return hireDate;
@@ -81,11 +112,9 @@ public class Employee extends User {
     public Double getDiscount() {
         return discount;
     }
-  
     public int getNbrParkingSpaces() {
         return nbrParkingSpaces;
     }
-  
     public Integer getParkingSpaceNumber() {
         return parkingSpaceNumber;
     }

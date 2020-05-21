@@ -1,5 +1,7 @@
 package userInterface.userRegistration;
 
+import controller.EmployeeController;
+import controller.UserController;
 import model.*;
 import org.jdatepicker.JDatePicker;
 import javax.swing.*;
@@ -81,17 +83,20 @@ public class EmployeeForm extends JPanel {
     public Employee createEmployee() {
         Employee employee = null;
         try {
-            // TODO pour Maxime :
-            //  récupère le manager de la base de données pour l'ajouter dans ton employee. Ton employee est automatiquement un manager tel que tu le crées ici.
+            EmployeeController employeeController = new EmployeeController();
+            UserController userController =  new UserController();
 
-            employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
+            // todo changer condition pour wantsEndContract
+
+            employee = new Employee(userController.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
                     userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
                     (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
-                    isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
+                    isEmployeeOfMonth.isSelected(), (Double)discount.getValue(),  (wantsParkingSpace.isSelected() ? employeeController.getLastParkingSpaceNumber() + 1 : null), employeeController.getManager());
         } catch (Exception exception) {
+            exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
         return employee;
     }
