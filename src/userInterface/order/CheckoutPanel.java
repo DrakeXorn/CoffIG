@@ -9,11 +9,8 @@ public class CheckoutPanel extends JPanel {
     private JLabel advantagesLabel;
     private JComboBox<Advantage> advantagesBox;
     private JCheckBox toTakeAwayBox;
-    private CheckoutFrame parent;
 
-    public CheckoutPanel(CheckoutFrame parent) {
-        this.parent = parent;
-
+    public CheckoutPanel() {
         setLayout(new GridLayout(2, 2));
 
         advantagesLabel = new JLabel("Vos avantages :");
