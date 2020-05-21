@@ -105,8 +105,8 @@ public class OrderDBAccess implements OrderDataAccess {
             Connection connection = SingletonConnection.getInstance();
 
             String sqlOrder = "select o.order_number OrderNumber, o.date, o.is_to_take_away, " +
-                    "do.order_number DrinkOrderNumber, do.drink_id DrinkIdDO, do.drink_label, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
-                    "d.coffee_id, d.label DrinkLabel, d.is_cold, " +
+                    "do.order_number DrinkOrderNumber, do.drink_id DrinkIdDO, do.drink_label DrinkLabel, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
+                    "d.coffee_id, d.label, d.is_cold, " +
                     "fo.order_number FoodOrderNumber, fo.nbr_pieces, fo.selling_price FoodPrice, " +
                     "f.food_id, f.label FoodLabel from `order` o" +
                     " left outer join drink_ordering do on o.order_number = do.order_number" +
@@ -162,11 +162,6 @@ public class OrderDBAccess implements OrderDataAccess {
                             datasOrder.getInt("nbr_drinks"),
                             datasOrder.getDouble("DrinkPrice"));
 
-                    if(!order.getDrinkOrderings().contains(drinkOrdering)){
-                        order.addDrinkOrdering(drinkOrdering);
-                        order.setPrice(datasOrder.getDouble("DrinkPrice"));
-                    }
-
                     String sqlTopping = "select distinct t.topping_id, t.label, t.price from topping t " +
                             "join supplement s on s.topping_id = t.topping_id " +
                             "join drink_ordering d on (s.drink_label = ? and s.drink_id = ?)" +
@@ -183,6 +178,10 @@ public class OrderDBAccess implements OrderDataAccess {
                                 datasTopping.getDouble("price")));
                     }
 
+                    if(!order.getDrinkOrderings().contains(drinkOrdering)){
+                        order.addDrinkOrdering(drinkOrdering);
+                        order.setPrice(datasOrder.getDouble("DrinkPrice"));
+                    }
                 }
 
                 foodId = datasOrder.getInt("FoodOrderNumber");

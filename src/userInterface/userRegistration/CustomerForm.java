@@ -1,6 +1,7 @@
 package userInterface.userRegistration;
 
 import controller.CustomerController;
+import controller.UserController;
 import model.*;
 
 import javax.swing.*;
@@ -14,7 +15,6 @@ public class CustomerForm extends JPanel {
     private JLabel satisfactionDegreeLabel;
     private JSpinner degree;
     private UserForm userInfos;
-    private CustomerController controller;
     private Customer customerToUpdate;
 
     public CustomerForm(UserForm userInfos, Customer customerToUpdate){
@@ -68,9 +68,10 @@ public class CustomerForm extends JPanel {
 
     public Customer createCustomer() {
         Customer customer = null;
+        UserController controller = new UserController();
         try {
-            customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
-                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthDate(),
+            customer = new Customer(controller.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
+                    userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());
 
@@ -88,7 +89,6 @@ public class CustomerForm extends JPanel {
     }
 
     public Customer updateCustomer() {
-        controller = new CustomerController();
         Customer customer = null;
         try {
             customer = new Customer(userInfos.getUserId(), userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),

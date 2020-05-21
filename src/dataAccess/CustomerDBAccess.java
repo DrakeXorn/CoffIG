@@ -68,26 +68,6 @@ public class CustomerDBAccess implements CustomerDataAccess {
         }
     }
 
-    @Override
-    public ArrayList<Locality> getAllLocalities() throws AllDataException, ConnectionException {
-        ArrayList<Locality> localities = new ArrayList<>();
-        try {
-            Connection connection = SingletonConnection.getInstance();
-
-            String sql = "select * from locality";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet datas = statement.executeQuery();
-
-            while(datas.next())
-                localities.add(new Locality(datas.getInt("postal_code"), datas.getString("city")));
-
-        } catch (IOException exception) {
-            throw new AllDataException("la récupération des localités", exception.getMessage());
-        } catch (SQLException exception) {
-            throw new ConnectionException(exception.getMessage());
-        }
-        return localities;
-    }
 
     @Override
     public ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException {
@@ -152,26 +132,6 @@ public class CustomerDBAccess implements CustomerDataAccess {
             throw new ConnectionException(exception.getMessage());
         }
         return customers;
-    }
-
-    @Override
-    public int getLastCustomerId() throws AllDataException, ConnectionException {
-        int nbrCustomers;
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select max(customer_id) from customer";
-            PreparedStatement statement = connection.prepareStatement(sqlInstruction);
-            ResultSet result = statement.executeQuery(sqlInstruction);
-
-            result.next();
-            nbrCustomers = result.getInt("max(customer_id)");
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        } catch (SQLException exception) {
-            throw new AllDataException("la récupération de l'identifiant maximal des clients", exception.getMessage());
-        }
-
-        return nbrCustomers;
     }
 
     @Override

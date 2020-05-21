@@ -2,6 +2,7 @@ package userInterface.userRegistration;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import controller.CustomerController;
+import controller.UserController;
 import model.*;
 import model.exceptions.*;
 import javax.swing.*;
@@ -22,19 +23,16 @@ public class UserForm extends JPanel {
     private DatePicker birthDatePicker;
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
-    private CustomerController controller;
 
     public UserForm(User userToUpdate) {
         try {
-            controller = new CustomerController();
+            UserController controller = new UserController();
             this.setLayout(new GridLayout(13, 2, 5, 5));
 
-            userIdLabel = new JLabel("Identifiant : ");
+            userIdLabel = new JLabel("Identifiant :");
             userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(userIdLabel);
-
             userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
-
             userId.setEnabled(false);
             this.add(userId);
 
@@ -87,7 +85,7 @@ public class UserForm extends JPanel {
             birthDatePicker.setDate(userToUpdate != null ? userToUpdate.getBirthDate().toZonedDateTime().toLocalDate() : LocalDate.of(2004, Month.JANUARY, 1));
             this.add(birthDatePicker);
 
-            streetNameLabel = new JLabel("Adresse* :");
+            streetNameLabel = new JLabel("Rue* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(streetNameLabel);
             streetName = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[0] : null);
@@ -108,7 +106,7 @@ public class UserForm extends JPanel {
             for (Locality locality : localities)
                 localitiesBox.addItem(locality);
             localitiesBox.setMaximumRowCount(5);
-            if(userToUpdate != null)
+            if (userToUpdate != null)
                 localitiesBox.setSelectedItem(userToUpdate.getLocality());
             this.add(localitiesBox);
 

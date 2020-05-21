@@ -1,6 +1,8 @@
 package userInterface.userRegistration;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import controller.EmployeeController;
+import controller.UserController;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +45,7 @@ public class EmployeeForm extends JPanel {
 
         endContractDate = new DatePicker();
         endContractDate.setEnabled(false);
-        endContractDate.setDate(LocalDate.of(2000, Month.JANUARY, 1));
+        endContractDate.setDate(LocalDate.of(2000, Month.JUNE, 1));
         this.add(endContractDate);
 
         discountLabel = new JLabel("Remise* :");
@@ -71,17 +73,20 @@ public class EmployeeForm extends JPanel {
     public Employee createEmployee() {
         Employee employee = null;
         try {
-            // TODO pour Maxime :
-            //  récupère le manager de la base de données pour l'ajouter dans ton employee. Ton employee est automatiquement un manager tel que tu le crées ici.
+            EmployeeController employeeController = new EmployeeController();
+            UserController userController =  new UserController();
 
-            employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
-                    userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
-                    userInfos.getPhone(), userInfos.getGender(), GregorianCalendar.from(ZonedDateTime.from(hireDate.getDate())),
-                    (wantsEndContract.isSelected() ? GregorianCalendar.from(ZonedDateTime.from(hireDate.getDate())) : null),
-                    isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
+            // todo changer condition pour wantsEndContract
+            employee = new Employee(userController.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
+                    userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
+                    userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
+                    (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
+                    isEmployeeOfMonth.isSelected(), (Double)discount.getValue(),  (wantsParkingSpace.isSelected() ? employeeController.getLastParkingSpaceNumber() + 1 : null), employeeController.getManager());
+
         } catch (Exception exception) {
+            exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "Erreur !", JOptionPane.INFORMATION_MESSAGE);
+                    "Erreur !", JOptionPane.ERROR_MESSAGE);
         }
         return employee;
     }

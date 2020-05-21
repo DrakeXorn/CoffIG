@@ -10,62 +10,71 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class EmployeeDBAccess implements EmployeeDataAccess {
+
+    private Employee createEmployee(ResultSet data) throws SQLException, ConnectionException, AllDataException, CharacterInputException, DateException, StringInputException {
+        GregorianCalendar birthDate = new GregorianCalendar();
+        GregorianCalendar hireDate = new GregorianCalendar();
+        java.sql.Date birthDateSql = data.getDate("birth_date");
+        java.sql.Date hireDateSql = data.getDate("hire_date");
+
+        birthDate.setTime(birthDateSql);
+        hireDate.setTime(hireDateSql);
+
+        Employee employee = new Employee(
+                data.getInt("employee_id"),
+                data.getString("password"),
+                data.getString("last_name"),
+                data.getString("first_name"),
+                birthDate,
+                data.getString("street_name"),
+                new Locality(data.getInt("locality_postal_code"),
+                        data.getString("locality_city")),
+                data.getString("email"),
+                data.getString("phone"),
+                data.getString("gender").charAt(0),
+                hireDate,
+                data.getBoolean("is_employee_of_the_month"),
+                data.getDouble("discount")
+        );
+
+        String secondName = data.getString("second_name");
+        if(!data.wasNull())
+            employee.setSecondName(secondName);
+
+        String maidenName = data.getString("maiden_name");
+        if(!data.wasNull())
+            employee.setMaidenName(maidenName);
+
+        java.sql.Date endContractDateSql = data.getDate("end_contract_date");
+        if (!data.wasNull()) {
+            GregorianCalendar endContractDate = new GregorianCalendar();
+            endContractDate.setTime(endContractDateSql);
+
+            employee.setEndContractDate(endContractDate);
+        }
+
+        Integer parkingSpaceNumber = data.getInt("parking_space_number");
+        if (!data.wasNull())
+            employee.setParkingSpaceNumber(parkingSpaceNumber);
+
+        return employee;
+    }
+
     @Override
     public ArrayList<Employee> getAllEmployees() throws AllDataException, ConnectionException, DateException, CharacterInputException, StringInputException {
         ArrayList<Employee> employees = new ArrayList<>();
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select * from employee join user on employee.employee_id = user.user_id order by employee.manager_id";
+            String sqlInstruction = "select * from employee"+
+                    " join user on employee.employee_id = user.user_id "+
+                    " order by employee.manager_id";
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             ResultSet data = statement.executeQuery();
             Employee manager = null;
 
             while (data.next()) {
-                GregorianCalendar birthDate = new GregorianCalendar();
-                GregorianCalendar hireDate = new GregorianCalendar();
-                Date birthDateSql = data.getDate("birth_date");
-                Date hireDateSql = data.getDate("hire_date");
-                
-                birthDate.setTime(birthDateSql);
-                hireDate.setTime(hireDateSql);
-
-                Employee employee = new Employee(
-                        data.getInt("employee_id"),
-                        data.getString("password"),
-                        data.getString("last_name"),
-                        data.getString("first_name"),
-                        birthDate,
-                        data.getString("street_name"),
-                        new Locality(data.getInt("locality_postal_code"),
-                                data.getString("locality_city")),
-                        data.getString("email"),
-                        data.getString("phone"),
-                        data.getString("gender").charAt(0),
-                        hireDate,
-                        data.getBoolean("is_employee_of_the_month"),
-                        data.getDouble("discount"),
-                        data.getInt("parking_space_number"));
-
-                String secondName = data.getString("second_name");
-                if(!data.wasNull())
-                    employee.setSecondName(secondName);
-
-                String maidenName = data.getString("maiden_name");
-                if(!data.wasNull())
-                    employee.setMaidenName(maidenName);
-
-                Date endContractDateSql = data.getDate("end_contract_date");
-                if (!data.wasNull()) {
-                    GregorianCalendar endContractDate = new GregorianCalendar();
-                    endContractDate.setTime(endContractDateSql);
-
-                    employee.setEndContractDate(endContractDate);
-                }
-
-                Integer parkingSpaceNumber = data.getInt("parking_space_number");
-                if (!data.wasNull())
-                    employee.setParkingSpaceNumber(parkingSpaceNumber);
+                Employee employee = createEmployee(data);
 
                 Integer managerId = data.getInt("manager_id");
                 if (!data.wasNull() && manager != null) employee.setManager(manager);
@@ -83,11 +92,38 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
     }
 
     @Override
+    public Employee getManager() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException {
+        Employee manager = null;
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInstruction = "select * from employee" +
+                    " join user on employee.employee_id = user.user_id " +
+                    " where employee.manager_id is null";
+
+            PreparedStatement statement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = statement.executeQuery();
+
+            data.next();
+            manager = createEmployee(data);
+
+        }
+        catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "manager");
+        }
+        catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+
+        return manager;
+    }
+
+    @Override
     public void addEmployee(Employee employee) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date,street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
             userStatement.setInt(1, employee.getUserID());
             userStatement.setString(2, employee.getPassword());
@@ -102,7 +138,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             userStatement.setString(11, employee.getLocality().getCity());
             userStatement.executeUpdate();
 
-            if(employee.getSecondName() != null){
+            if(employee.getSecondName() != null) {
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getSecondName());
@@ -110,7 +146,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            if(employee.getMaidenName() != null){
+            if(employee.getMaidenName() != null) {
                 sqlUser = "update user set maiden_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getMaidenName());
@@ -118,13 +154,12 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount,parking_space_number) values (?,?,?,?,?)";
+            String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount) values (?,?,?,?)";
             PreparedStatement employeeStatement = connection.prepareStatement(sqlEmployee);
             employeeStatement.setInt(1, employee.getUserID());
             employeeStatement.setDate(2, new java.sql.Date(employee.getHireDate().getTimeInMillis()));
             employeeStatement.setBoolean(3, employee.getEmployeeOfMonth());
             employeeStatement.setDouble(4, employee.getDiscount());
-            employeeStatement.setInt(5, employee.getParkingSpaceNumber());
             employeeStatement.executeUpdate();
 
 
@@ -132,6 +167,14 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlEmployee = "update employee set end_contract_date = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
                 employeeStatement.setDate(1, new java.sql.Date(employee.getEndContractDate().getTimeInMillis()));
+                employeeStatement.setInt(2, employee.getUserID());
+                employeeStatement.executeUpdate();
+            }
+
+            if (employee.getParkingSpaceNumber() != null) {
+                sqlEmployee = "update employee set parking_space_number = ? where employee_id = ?";
+                employeeStatement = connection.prepareStatement(sqlEmployee);
+                employeeStatement.setInt(1, employee.getParkingSpaceNumber());
                 employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
@@ -162,46 +205,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
             preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
             data = preparedStatement.executeQuery();
-
-            while (data.next()) {
-                GregorianCalendar birthDate = new GregorianCalendar();
-                GregorianCalendar hireDate = new GregorianCalendar();
-
-                birthDate.setTime(data.getDate("birth_date"));
-                hireDate.setTime(data.getDate("hire_date"));
-
-                Employee employee = new Employee(data.getInt("user_id"),
-                        data.getString("password"),
-                        data.getString("last_name"),
-                        data.getString("first_name"),
-                        birthDate,
-                        data.getString("street_name"),
-                        new Locality(data.getInt("locality_postal_code"),
-                                data.getString("locality_city")),
-                        data.getString("email"),
-                        data.getString("phone"),
-                        data.getString("gender").charAt(0),
-                        hireDate,
-                        data.getBoolean("is_employee_of_the_month"),
-                        data.getDouble("discount"),
-                        data.getInt("parking_space_number"));
-
-                String maidenName = data.getString("maiden_name");
-                if (!data.wasNull())
-                    employee.setMaidenName(maidenName);
-
-                String secondName = data.getString("second_name");
-                if (!data.wasNull())
-                    employee.setSecondName(secondName);
-
-                Date endContractDateSql = data.getDate("end_contract_date");
-                if (!data.wasNull()) {
-                    GregorianCalendar endContractDate = new GregorianCalendar();
-                    endContractDate.setTime(endContractDateSql);
-
-                    employee.setEndContractDate(endContractDate);
-                }
-
+                Employee employee = createEmployee(data);
                 workingEmployees.add(employee);
             }
         } catch (SQLException exception) {
@@ -211,5 +215,26 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
         }
 
         return workingEmployees;
+    }
+
+    @Override
+    public int getLastParkingSpaceNumber() throws ConnectionException, AddDataException {
+        int nbParkingSpaceNumber;
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInstruction = "select parking_space_number from employee";
+            PreparedStatement statement = connection.prepareStatement(sqlInstruction);
+            ResultSet result = statement.executeQuery(sqlInstruction);
+
+            result.next();
+            nbParkingSpaceNumber = result.getInt("parking_space_number");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AddDataException(exception.getMessage(), "numéro d'emplacement de parking !");
+        }
+
+        return nbParkingSpaceNumber;
     }
 }
