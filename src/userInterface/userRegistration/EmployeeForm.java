@@ -46,7 +46,7 @@ public class EmployeeForm extends JPanel {
         endContractDate.setEnabled(false);
         endContractDate.setShowYearButtons(true);
         endContractDate.getModel().setYear(2020);
-        endContractDate.getModel().setMonth(0);
+        endContractDate.getModel().setMonth(6);
         endContractDate.getModel().setDay(1);
         endContractDate.getModel().setSelected(false);
         this.add(endContractDate);
@@ -87,9 +87,10 @@ public class EmployeeForm extends JPanel {
             employee = new Employee(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
                     userInfos.getMaidenName(), userInfos.getBirthdate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),
                     userInfos.getPhone(), userInfos.getGender(), (GregorianCalendar)hireDate.getModel().getValue(),
-                    (wantsEndContract.isSelected() ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
+                    (wantsEndContract.isSelected() && endContractDate != null ? (GregorianCalendar)endContractDate.getModel().getValue() : null),
                     isEmployeeOfMonth.isSelected(), (Double)discount.getValue(), null, wantsParkingSpace.isSelected());
         } catch (Exception exception) {
+            exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.INFORMATION_MESSAGE);
         }

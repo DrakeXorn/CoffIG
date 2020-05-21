@@ -14,59 +14,19 @@ public class Employee extends User {
     private Employee manager;
     private ArrayList<Assignment> assignments;
 
-    public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
-                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
-                    Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
-                    Boolean isEmployeeOfMonth, Double discount, Employee manager, Integer parkingSpaceNumber)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr, gender);
-        this.hireDate = hireDate;
-        setEndContractDate(endContractDate);
-        this.isEmployeeOfMonth = isEmployeeOfMonth;
-        setDiscount(discount);
-        this.manager = manager;
-        assignments = new ArrayList<>();
 
-        this.parkingSpaceNumber = parkingSpaceNumber;
-        if (parkingSpaceNumber > nbrParkingSpaces)
-            nbrParkingSpaces = parkingSpaceNumber + 1;
-    }
 
-    public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
-                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
-                    Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
-                    Boolean isEmployeeOfMonth, Double discount, Employee manager, boolean wantsParkingSpace)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
-                gender);
-        this.hireDate = hireDate;
-        setEndContractDate(endContractDate);
-        this.isEmployeeOfMonth = isEmployeeOfMonth;
-        setDiscount(discount);
-        this.manager = manager;
-        assignments = new ArrayList<>();
 
-        if (wantsParkingSpace) {
-            parkingSpaceNumber = nbrParkingSpaces;
-            nbrParkingSpaces++;
-        }
-    }
 
-    public Employee(String password, String lastName, String firstName, String secondName, String maidenName,
-                    GregorianCalendar birthDate, String streetName, Locality locality, String email, String phoneNbr,
-                    Character gender, GregorianCalendar hireDate, GregorianCalendar endContractDate,
-                    Boolean isEmployeeOfMonth, Double discount, Employee manager)
-            throws DateException, DoubleInputException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        this(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phoneNbr,
-                gender, hireDate, endContractDate, isEmployeeOfMonth, discount, manager, Boolean.FALSE);
-    }
 
-    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate, Boolean isEmployeeOfMonth, Double discount, Integer parkingSpaceNumber) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
+
+    public Employee(Integer employeeId, String password, String lastName, String firstName, GregorianCalendar birthDate,
+                    String streetName, Locality locality, String email, String phone, Character gender, GregorianCalendar hireDate,
+                    Boolean isEmployeeOfMonth, Double discount) throws CharacterInputException, DateException, StringInputException, AllDataException, ConnectionException {
         super(employeeId, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender);
         this.isEmployeeOfMonth = isEmployeeOfMonth;
         this.discount = discount;
         this.hireDate = hireDate;
-        this.parkingSpaceNumber = parkingSpaceNumber;
     }
 
     public GregorianCalendar getHireDate() {

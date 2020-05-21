@@ -21,11 +21,11 @@ public class User {
     private Locality locality;
     private CustomerController controller;
 
-    // pour la création avant l'insertion
-    public User(String password, String lastName, String firstName, String secondName, String maidenName,
+    // pour la création avant l'insertion, la récupération et la modification d'un user
+    public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
             throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
-        setUserID();
+        this.userID = userID;
         setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
@@ -40,12 +40,12 @@ public class User {
     }
 
     // pour la récupération et la modification d'un user
-    public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
+    /*public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
             throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
         this(password, lastName, firstName, secondName, maidenName,birthDate, streetName, locality, email, phone, gender);
         this.userID = userID;
-    }
+    }*/
 
     public Integer getUserID() {
         return userID;
@@ -97,13 +97,6 @@ public class User {
 
     public String getIdentity() {
         return firstName + " " + lastName;
-    }
-
-    public void setUserID() throws AllDataException, ConnectionException {
-        if (userID == null) {
-            controller = new CustomerController();
-            this.userID = controller.getLastCustomerId() + 1;
-        }
     }
 
     public void setPassword(String password) throws StringInputException {

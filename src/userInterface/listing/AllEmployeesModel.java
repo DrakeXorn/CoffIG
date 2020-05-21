@@ -60,8 +60,8 @@ public class AllEmployeesModel extends AbstractTableModel {
             case 8 -> employee.getEmail();
             case 9 -> employee.getPhone();
             case 10 -> employee.getGender();
-            case 11 -> employee.getHireDate();
-            case 12 -> employee.getEndContractDate();
+            case 11 -> employee.getHireDate().getTime();
+            case 12 -> employee.getEndContractDate() != null ? employee.getEndContractDate().getTime() : null;
             case 13 -> employee.getEmployeeOfMonth();
             case 14 -> employee.getDiscount();
             case 15 -> employee.getParkingSpaceNumber();

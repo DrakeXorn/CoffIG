@@ -69,7 +69,13 @@ public class DrinkOrdering {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof DrinkOrdering && ((DrinkOrdering) object).getSize().equals(size) && ((DrinkOrdering) object).getDrink().equals(drink) && allToppingsMatch((DrinkOrdering) object);
+        return object instanceof DrinkOrdering &&
+                object.toString().equals(toString())
+                ||
+                (object instanceof DrinkOrdering &&
+                ((DrinkOrdering) object).getSize().equals(size) &&
+                ((DrinkOrdering) object).getDrink().equals(drink) &&
+                allToppingsMatch((DrinkOrdering) object));
     }
 
     public void setPieces(Integer nbrPieces) throws IntegerInputException {

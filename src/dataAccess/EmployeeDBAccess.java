@@ -44,8 +44,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                         data.getString("gender").charAt(0),
                         hireDate,
                         data.getBoolean("is_employee_of_the_month"),
-                        data.getDouble("discount"),
-                        data.getInt("parking_space_number"));
+                        data.getDouble("discount"));
 
                 String secondName = data.getString("second_name");
                 if(!data.wasNull())
@@ -87,7 +86,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date,street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlUser = "insert into user (user_id, password, last_name, first_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement userStatement = connection.prepareStatement(sqlUser);
             userStatement.setInt(1, employee.getUserID());
             userStatement.setString(2, employee.getPassword());
@@ -102,7 +101,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             userStatement.setString(11, employee.getLocality().getCity());
             userStatement.executeUpdate();
 
-            if(employee.getSecondName() != null){
+            if(employee.getSecondName() != null) {
                 sqlUser = "update user set second_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getSecondName());
@@ -110,7 +109,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            if(employee.getMaidenName() != null){
+            if(employee.getMaidenName() != null) {
                 sqlUser = "update user set maiden_name = ? where user_id = ?";
                 userStatement = connection.prepareStatement(sqlUser);
                 userStatement.setString(1, employee.getMaidenName());
@@ -118,13 +117,12 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 userStatement.executeUpdate();
             }
 
-            String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount,parking_space_number) values (?,?,?,?,?)";
+            String sqlEmployee = "insert into employee (employee_id,hire_date,is_employee_of_the_month,discount) values (?,?,?,?)";
             PreparedStatement employeeStatement = connection.prepareStatement(sqlEmployee);
             employeeStatement.setInt(1, employee.getUserID());
             employeeStatement.setDate(2, new java.sql.Date(employee.getHireDate().getTimeInMillis()));
             employeeStatement.setBoolean(3, employee.getEmployeeOfMonth());
             employeeStatement.setDouble(4, employee.getDiscount());
-            employeeStatement.setInt(5, employee.getParkingSpaceNumber());
             employeeStatement.executeUpdate();
 
 
@@ -132,6 +130,14 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 sqlEmployee = "update employee set end_contract_date = ? where employee_id = ?";
                 employeeStatement = connection.prepareStatement(sqlEmployee);
                 employeeStatement.setDate(1, new java.sql.Date(employee.getEndContractDate().getTimeInMillis()));
+                employeeStatement.setInt(2, employee.getUserID());
+                employeeStatement.executeUpdate();
+            }
+
+            if(employee.getParkingSpaceNumber() != null){
+                sqlEmployee = "update employee set parking_space_number = ? where employee_id = ?";
+                employeeStatement = connection.prepareStatement(sqlEmployee);
+                employeeStatement.setInt(1, employee.getParkingSpaceNumber());
                 employeeStatement.setInt(2, employee.getUserID());
                 employeeStatement.executeUpdate();
             }
@@ -183,8 +189,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                         data.getString("gender").charAt(0),
                         hireDate,
                         data.getBoolean("is_employee_of_the_month"),
-                        data.getDouble("discount"),
-                        data.getInt("parking_space_number"));
+                        data.getDouble("discount"));
 
                 String maidenName = data.getString("maiden_name");
                 if (!data.wasNull())

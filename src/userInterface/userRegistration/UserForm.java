@@ -19,7 +19,6 @@ public class UserForm extends JPanel {
     private ButtonGroup buttonGroup;
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
-
     private CustomerController controller;
 
     public UserForm(User userToUpdate) {
@@ -27,12 +26,10 @@ public class UserForm extends JPanel {
             controller = new CustomerController();
             this.setLayout(new GridLayout(13, 2, 5, 5));
 
-            userIdLabel = new JLabel("Identifiant : ");
+            userIdLabel = new JLabel("Identifiant :");
             userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(userIdLabel);
-
             userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
-
             userId.setEnabled(false);
             this.add(userId);
 
@@ -94,7 +91,7 @@ public class UserForm extends JPanel {
             birthdate.getModel().setSelected(true);
             this.add(birthdate);
 
-            streetNameLabel = new JLabel("Adresse* :");
+            streetNameLabel = new JLabel("Rue* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(streetNameLabel);
             streetName = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[0] : null);

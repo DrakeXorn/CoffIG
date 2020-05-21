@@ -68,8 +68,9 @@ public class CustomerForm extends JPanel {
 
     public Customer createCustomer() {
         Customer customer = null;
+        controller = new CustomerController();
         try {
-            customer = new Customer(userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
+            customer = new Customer(controller.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(),
                     userInfos.getSecondName(), userInfos.getMaidenName(), userInfos.getBirthdate(),
                     userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(), userInfos.getPhone(),
                     userInfos.getGender(), wantsAdvertising.isSelected());

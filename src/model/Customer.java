@@ -11,17 +11,7 @@ public class Customer extends User {
     private LoyaltyCard loyaltyCard;
     private ArrayList<Order> orders;
 
-    // pour la création avant l'insertion
-    public Customer(String password, String lastName, String firstName, String secondName,
-                    String maidenName, GregorianCalendar birthDate, String streetName, Locality locality,
-                    String email, String phone, Character gender, Boolean wantsAdvertising)
-            throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        super(password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
-        this.wantsAdvertising = wantsAdvertising;
-        orders = new ArrayList<>();
-    }
-
-    // pour la modification d'un user
+    // pour la création et la modification d'un user
     public Customer(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
@@ -36,7 +26,7 @@ public class Customer extends User {
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     Boolean wantsAdvertising)
             throws DateException, StringInputException, CharacterInputException, AllDataException, ConnectionException {
-        this(userID, password, lastName, firstName,  null, null, birthDate,  streetName,  locality,  email,  phone,  gender, wantsAdvertising);
+        this(userID, password, lastName, firstName, null, null, birthDate, streetName, locality, email, phone, gender, wantsAdvertising);
     }
 
     public Boolean getWantsAdvertising() {
