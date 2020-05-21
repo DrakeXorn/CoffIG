@@ -27,7 +27,7 @@ public class AllEmployeesModel extends AbstractTableModel {
         columnNames.add("Date d'embauche");
         columnNames.add("Date de fin de contra");
         columnNames.add("Est l'employé du mois");
-        columnNames.add("Remise atribuée");
+        columnNames.add("Remise attribuée");
         columnNames.add("Numéro de place de parking");
         columnNames.add("Manager");
         setContents(employees);
@@ -60,8 +60,8 @@ public class AllEmployeesModel extends AbstractTableModel {
             case 8 -> employee.getEmail();
             case 9 -> employee.getPhone();
             case 10 -> employee.getGender();
-            case 11 -> employee.getHireDate();
-            case 12 -> employee.getEndContractDate();
+            case 11 -> employee.getHireDate().getTime();
+            case 12 -> employee.getEndContractDate() != null ? employee.getEndContractDate().getTime() : null;
             case 13 -> employee.getEmployeeOfMonth();
             case 14 -> employee.getDiscount();
             case 15 -> employee.getParkingSpaceNumber();
@@ -72,13 +72,13 @@ public class AllEmployeesModel extends AbstractTableModel {
 
     public Class<?> getColumnClass (int column) {
         return switch (column) {
-            case 0 -> String.class;
+            //case 0 -> String.class;
             case 5, 11, 12 -> Date.class;   // birth date, hire date, end date
-            case 10 -> Character.class; // gender
-            case 13 -> Boolean.class; // isEmployeeOfTheMonth
-            case 14 -> Double.class;  // Discount
-            case 15 -> Integer.class; // getParkingSpaceNumber
-            default -> String.class; // id, last name, first name, second name, maiden name, street, locality, email, phone, LastName of Manager
+            case 10 -> Character.class;     // gender
+            case 13 -> Boolean.class;       // isEmployeeOfTheMonth
+            case 14 -> Double.class;        // Discount
+            case 15 -> Integer.class;       // getParkingSpaceNumber
+            default -> String.class;        // id, last name, first name, second name, maiden name, street, locality, email, phone, LastName of Manager
         };
     }
 }

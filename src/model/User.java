@@ -21,11 +21,11 @@ public class User {
     private Locality locality;
     private CustomerController controller;
 
-    // pour la création avant l'insertion
-    public User(String password, String lastName, String firstName, String secondName, String maidenName,
+    // pour la création avant l'insertion, la récupération et la modification d'un user
+    public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
             throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
-        setUserID();
+        this.userID = userID;
         setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
@@ -39,62 +39,42 @@ public class User {
         this.locality = locality;
     }
 
-    // pour la récupération et la modification d'un user
-    public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
-                GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
-            throws StringInputException, DateException, CharacterInputException, AllDataException, ConnectionException {
-        this(password, lastName, firstName, secondName, maidenName,birthDate, streetName, locality, email, phone, gender);
-        this.userID = userID;
-    }
-
     public Integer getUserID() {
         return userID;
     }
-
     public String getPassword() {
         return password;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getSecondName() {
         return secondName;
     }
-
     public String getMaidenName() {
         return maidenName;
     }
-
     public GregorianCalendar getBirthDate() {
         return birthDate;
     }
-
     public String getStreetName() {
         return streetName;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public String getEmail() {
         return email;
     }
-
     public Character getGender() {
         return gender;
     }
-
     public Locality getLocality() {
         return locality;
     }
-
     public String getIdentity() {
         return firstName + " " + lastName;
     }

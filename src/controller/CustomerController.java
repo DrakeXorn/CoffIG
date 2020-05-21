@@ -15,15 +15,11 @@ public class CustomerController {
     public void addCustomer(Customer customer) throws AddException, ConnectionException {
         manager.addCustomer(customer);
     }
-    public ArrayList<Locality> getAllLocalities() throws AllDataException, ConnectionException {
-        return manager.getAllLocalities();
-    }
+
     public ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException {
         return manager.getAllCustomers();
     }
-    public int getLastCustomerId() throws AllDataException, ConnectionException {
-        return manager.getLastCustomerId();
-    }
+
     public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
         manager.updateCustomer(customer);
     }

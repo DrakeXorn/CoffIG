@@ -11,7 +11,7 @@ import java.util.List;
 public class CoffeeCup extends JPanel {
     private final static int width = 20;
     private final static int height = 20;
-    private final static int deltaY = 10;
+    private final static int deltaY = 1;
     private ArrayList<CoffeeBean> coffeeBeansArray = new ArrayList<>();
     private List<CoffeeBean> coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
 
