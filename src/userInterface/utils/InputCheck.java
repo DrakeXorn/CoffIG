@@ -1,6 +1,7 @@
 package userInterface.utils;
 
-import org.jdatepicker.JDatePicker;
+
+import com.github.lgooddatepicker.components.DatePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class InputCheck {
         ArrayList<JComponent> components = new ArrayList<>(Arrays.asList(fields));
 
         components.forEach((component) -> {
-            if ((component instanceof JDatePicker && ((JDatePicker)component).getFormattedTextField().getText().isEmpty())
+            if ((component instanceof DatePicker && ((DatePicker)component).getComponentDateTextField().getText().isEmpty())
                     || (component instanceof JComboBox<?> && Objects.equals(((JComboBox<?>) component).getSelectedItem(), ""))
                     || (component instanceof JTextField && ((JTextField)component).getText().isEmpty())
                     || (component instanceof JSpinner && (Integer)((JSpinner)component).getValue() == 0)) {

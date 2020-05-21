@@ -1,7 +1,4 @@
-package userInterface.order;
-
-import userInterface.coffeeRegistration.CoffeeForm;
-import userInterface.coffeeRegistration.FeaturesManagementPanel;
+package userInterface.coffeeRegistration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,10 +27,6 @@ public class FeaturesManagementFrame extends JFrame {
         container.add(confirmButton, BorderLayout.SOUTH);
 
         setVisible(true);
-    }
-
-    public FeaturesManagementPanel getFeaturesManagementPanel() {
-        return featuresManagementPanel;
     }
 
     public CoffeeForm getParent() {

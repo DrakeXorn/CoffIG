@@ -14,16 +14,13 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
     private JList<Topping> chosenToppingsList;
     private JScrollPane toppingsScrollPane, chosenToppingsScrollPane;
     private ButtonsManagementPanel buttonsPanel;
-    private ArrayList<Topping> toppings;
     private DefaultListModel<Topping> toppingsModel;
     private DefaultListModel<Topping> chosenToppingsModel;
-    private ToppingsManagementFrame parent;
 
     public ToppingsManagementPanel(ToppingsManagementFrame parent) {
         try {
             ToppingController controller = new ToppingController();
-            toppings = controller.getAllAvailableToppings();
-            this.parent = parent;
+            ArrayList<Topping> toppings = controller.getAllAvailableToppings();
             setLayout(new GridLayout(1, 3));
 
             toppingsModel = new DefaultListModel<>();
@@ -39,8 +36,10 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
             add(buttonsPanel);
 
             chosenToppingsModel = new DefaultListModel<>();
-            /*for (Topping topping : parent.getParent().getToppings())
-                chosenToppingsModel.addElement(topping);*/
+            for (Topping topping : parent.getParent().getToppings()) {
+                toppingsModel.removeElement(topping);
+                chosenToppingsModel.addElement(topping);
+            }
 
             chosenToppingsList = new JList<>(chosenToppingsModel);
             chosenToppingsScrollPane = new JScrollPane(chosenToppingsList);
@@ -53,8 +52,13 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
         }
     }
 
-    public void setToppings() {
-        //parent.setToppings();
+    public ArrayList<Topping> getToppings() {
+        ArrayList<Topping> toppings = new ArrayList<>();
+
+        for (int iTopping = 0; iTopping < chosenToppingsModel.getSize(); iTopping++)
+            toppings.add(chosenToppingsModel.get(iTopping));
+
+        return toppings;
     }
 
     @Override

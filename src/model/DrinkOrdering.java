@@ -11,18 +11,9 @@ import java.util.ArrayList;
 public class DrinkOrdering {
     private Drink drink;
     private ArrayList<Topping> toppings;
-    private Order order;
     private Integer nbrPieces;
     private Double sellingPrice;
     private String size;
-
-    public DrinkOrdering(Drink drink, Order order, Integer nbrPieces, Double sellingPrice) {
-        this.drink = drink;
-        this.order = order;
-        order.addDrinkOrdering(this);
-        this.nbrPieces = nbrPieces;
-        this.sellingPrice = sellingPrice;
-    }
 
     // pour la recherche des anciennes commandes
     public DrinkOrdering(Drink drink, String size, Integer nbrPieces, Double sellingPrice) throws StringInputException, DoubleInputException, IntegerInputException {
@@ -31,6 +22,12 @@ public class DrinkOrdering {
         setSize(size);
         setPieces(nbrPieces);
         setPrice(sellingPrice);
+    }
+
+    public DrinkOrdering(Drink drink, String size, Integer nbrPieces, Double sellingPrice, ArrayList<Topping> toppings) throws IntegerInputException, StringInputException, DoubleInputException {
+        this(drink, size, nbrPieces, sellingPrice);
+
+        this.toppings = toppings;
     }
 
     public Drink getDrink() {
@@ -109,10 +106,12 @@ public class DrinkOrdering {
         DecimalFormat formatter = new DecimalFormat("0.00");
 
         formatter.setRoundingMode(RoundingMode.CEILING);
-        StringBuilder res = new StringBuilder(nbrPieces + " * " + drink + "(" + size + ") : " + formatter.format(price()) + "€\n");
+        StringBuilder res = new StringBuilder(nbrPieces + " * " + drink + "(" + size + ") : " + formatter.format(price()) + "€");
 
-        for (Topping topping : toppings)
+        for (Topping topping : toppings) {
+            res.append("\n\t");
             res.append(topping);
+        }
 
         return res.toString();
     }

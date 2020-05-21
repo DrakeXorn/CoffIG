@@ -1,19 +1,18 @@
 package userInterface.coffeeRegistration;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import controller.CoffeeController;
 import controller.StockLocationController;
 import model.Coffee;
 import model.StockLocation;
 import model.exceptions.*;
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.UtilDateModel;
-import userInterface.order.FeaturesManagementFrame;
 import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.ZoneId;
 import java.util.*;
 
 
@@ -22,10 +21,9 @@ public class CoffeeForm extends JPanel {
     private JLabel coffeeIDLabel, coffeeNameLabel, countryLabel, intensityLabel, weightLabel, discoveryDateLabel, priceLabel,
             packagingLabel, momentLabel, alleyLabel, shelfLabel, numberLabel, quantityLabel, expirationDateLabel, showFeaturesLabel;
     private JTextField coffeeID, coffeeName, weightNeeded, price, packaging, recommendedMoment;
-    private JSpinner alley, shelf, number;
+    private JSpinner alley, shelf, number, discoveryYear, intensity, quantityBought;
     private JComboBox<String> countries;
-    private JSpinner intensity, quantityBought;
-    private JDatePicker discoveryDatePicker, expirationDatePicker;
+    private DatePicker expirationDatePicker;
     private JCheckBox isInGrains, isEnvironmentFriendly;
     private JButton showFeaturesButton;
     private CoffeeController controller;
@@ -75,15 +73,17 @@ public class CoffeeForm extends JPanel {
             add(intensityLabel);
 
             intensity = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
+
             add(intensity);
 
             discoveryDateLabel = new JLabel("Année de découverte : ");
             discoveryDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             add(discoveryDateLabel);
 
-            discoveryDatePicker = new JDatePicker(new UtilDateModel(), "yyyy");
-            discoveryDatePicker.setTextEditable(true);
-            add(discoveryDatePicker);
+            discoveryYear = new JSpinner(new SpinnerNumberModel(GregorianCalendar.getInstance().get(Calendar.YEAR), 0, GregorianCalendar.getInstance().get(Calendar.YEAR), 1));
+            // Permet d'éviter les espaces après 3 chiffres
+            discoveryYear.setEditor(new JSpinner.NumberEditor(discoveryYear, "#"));
+            add(discoveryYear);
 
             quantityLabel = new JLabel("Nombre de paquets achetés* : ");
             quantityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -96,8 +96,7 @@ public class CoffeeForm extends JPanel {
             expirationDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             add(expirationDateLabel);
 
-            expirationDatePicker = new JDatePicker();
-            expirationDatePicker.setTextEditable(true);
+            expirationDatePicker = new DatePicker();
             add(expirationDatePicker);
 
             weightLabel = new JLabel("Poids requis pour la préparation (g)* : ");
@@ -181,13 +180,9 @@ public class CoffeeForm extends JPanel {
             countries.setSelectedItem(coffee.getOriginCountry());
             intensity.setValue(coffee.getIntensity());
             if (coffee.getDiscoveryYear() != null) {
-                discoveryDatePicker.getModel().setYear(coffee.getDiscoveryYear());
-                discoveryDatePicker.getModel().setSelected(true);
+                discoveryYear.setValue(coffee.getDiscoveryYear());
             }
-            expirationDatePicker.getModel().setYear(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.YEAR));
-            expirationDatePicker.getModel().setMonth(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.MONTH));
-            expirationDatePicker.getModel().setDay(coffee.getStockLocation().getExpirationDate().get(GregorianCalendar.DAY_OF_MONTH));
-            expirationDatePicker.getModel().setSelected(true);
+            expirationDatePicker.setDate(coffee.getStockLocation().getExpirationDate().toZonedDateTime().toLocalDate());
             quantityBought.getModel().setValue(coffee.getStockLocation().getQuantity());
             weightNeeded.setText(String.valueOf(coffee.getWeightNeededForPreparation() * 1000));
             price.setText(String.valueOf(coffee.getPrice()));
@@ -210,9 +205,11 @@ public class CoffeeForm extends JPanel {
     public Coffee createCoffee() throws ConnectionException, DoubleInputException, IntegerInputException, AllDataException, DateException {
         StockLocationController stockLocationController = new StockLocationController();
         ArrayList<StockLocation> stockLocations = stockLocationController.getAllStockLocations();
-        GregorianCalendar expirationDate = new GregorianCalendar(expirationDatePicker.getModel().getYear(), expirationDatePicker.getModel().getMonth() + 1, expirationDatePicker.getModel().getDay());
-        GregorianCalendar discoveryDate = new GregorianCalendar(discoveryDatePicker.getModel().getYear(), discoveryDatePicker.getModel().getMonth() + 1, discoveryDatePicker.getModel().getDay());
+        GregorianCalendar expirationDate = new GregorianCalendar();
+        GregorianCalendar discoveryDate = new GregorianCalendar((int) discoveryYear.getValue(), GregorianCalendar.JANUARY, 1);
         StockLocation coffeeLocation;
+
+        expirationDate.setTime(Date.from(expirationDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         coffeeLocation = new StockLocation(Integer.parseInt(alley.getValue().toString()),
                 Integer.parseInt(shelf.getValue().toString()),
@@ -221,18 +218,19 @@ public class CoffeeForm extends JPanel {
                 Integer.parseInt(quantityBought.getValue().toString()),
                 expirationDate);
 
-        return (!stockLocations.contains(coffeeLocation) || coffeeLocation.equals(coffee.getStockLocation())) ? new Coffee(Integer.parseInt(coffeeID.getText()),
-                coffeeName.getText(),
-                Objects.requireNonNull(countries.getSelectedItem()).toString(),
-                (Integer) intensity.getValue(),
-                Double.parseDouble(weightNeeded.getText()) / 1000,
-                discoveryDate,
-                isInGrains.isSelected(),
-                isEnvironmentFriendly.isSelected(),
-                Double.parseDouble(price.getText()),
-                Double.parseDouble(packaging.getText()),
-                recommendedMoment.getText().toLowerCase(),
-                coffeeLocation) : null;
+        return (!stockLocations.contains(coffeeLocation) || coffeeLocation.equals(coffee.getStockLocation())) ?
+                new Coffee(Integer.parseInt(coffeeID.getText()),
+                        coffeeName.getText(),
+                        String.valueOf(countries.getSelectedItem()),
+                        (Integer) intensity.getValue(),
+                        Double.parseDouble(weightNeeded.getText()) / 1000,
+                        discoveryDate,
+                        isInGrains.isSelected(),
+                        isEnvironmentFriendly.isSelected(),
+                        Double.parseDouble(price.getText()),
+                        Double.parseDouble(packaging.getText()),
+                        recommendedMoment.getText().toLowerCase(),
+                        coffeeLocation) : null;
     }
 
     public CoffeeController getController() {
@@ -279,7 +277,7 @@ public class CoffeeForm extends JPanel {
         return quantityBought;
     }
 
-    public JDatePicker getExpirationDatePicker() {
+    public DatePicker getExpirationDatePicker() {
         return expirationDatePicker;
     }
 

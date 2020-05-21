@@ -27,7 +27,7 @@ public class SearchAdvantagesPanel extends JPanel {
 
         this.add(form, BorderLayout.CENTER);
         this.add(searchButton, BorderLayout.SOUTH);
-        searchButton.addActionListener(new SearchAdvantagesPanel.SearchListener());
+        searchButton.addActionListener(new SearchListener());
         setVisible(true);
     }
 

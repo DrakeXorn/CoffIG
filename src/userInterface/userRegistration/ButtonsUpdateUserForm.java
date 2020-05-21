@@ -47,6 +47,8 @@ public class ButtonsUpdateUserForm extends JPanel{
                     parent.goBackHome();
                 }
             } catch (Exception exception) {
+                exception.printStackTrace();
+
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
             }
