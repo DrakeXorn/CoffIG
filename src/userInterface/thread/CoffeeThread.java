@@ -13,7 +13,7 @@ public class CoffeeThread extends Thread {
                 for(CoffeeBean bean : parent.getCoffeeBeans())
                     bean.move();
                 parent.repaint();
-                Thread.sleep(100);
+                Thread.sleep(9);
             }
         } catch (InterruptedException exception){
             exception.printStackTrace();

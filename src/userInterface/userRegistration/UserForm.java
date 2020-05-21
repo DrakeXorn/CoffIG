@@ -1,6 +1,7 @@
 package userInterface.userRegistration;
 
 import controller.CustomerController;
+import controller.UserController;
 import model.*;
 import model.exceptions.*;
 import org.jdatepicker.JDatePicker;
@@ -19,11 +20,10 @@ public class UserForm extends JPanel {
     private ButtonGroup buttonGroup;
     private JComboBox<Locality> localitiesBox;
     private static ArrayList<Locality> localities;
-    private CustomerController controller;
 
     public UserForm(User userToUpdate) {
         try {
-            controller = new CustomerController();
+            UserController controller = new UserController();
             this.setLayout(new GridLayout(13, 2, 5, 5));
 
             userIdLabel = new JLabel("Identifiant :");
@@ -79,7 +79,7 @@ public class UserForm extends JPanel {
             this.add(birthdateLabel);
             birthdate = new JDatePicker();
             birthdate.setShowYearButtons(true);
-            if(userToUpdate != null) {
+            if (userToUpdate != null) {
                 birthdate.getModel().setYear(userToUpdate.getBirthDate().get(Calendar.YEAR));
                 birthdate.getModel().setMonth(userToUpdate.getBirthDate().get(Calendar.MONTH));
                 birthdate.getModel().setDay(userToUpdate.getBirthDate().get(Calendar.DAY_OF_MONTH));
@@ -112,7 +112,7 @@ public class UserForm extends JPanel {
             for (Locality locality : localities)
                 localitiesBox.addItem(locality);
             localitiesBox.setMaximumRowCount(5);
-            if(userToUpdate != null)
+            if (userToUpdate != null)
                 localitiesBox.setSelectedItem(userToUpdate.getLocality());
             this.add(localitiesBox);
 
@@ -162,7 +162,7 @@ public class UserForm extends JPanel {
     }
 
     public String getStreetName() throws StringInputException {
-        if(!numberStreet.getText().matches("^\\d*\\D?$"))
+        if (!numberStreet.getText().matches("^\\d*\\D?$"))
             throw new StringInputException(numberStreet.getText(), "le numéro de l'adresse", "Le numéro se compose d'un ou de plusieurs chiffres et peut parfois être suivi d'une lettre");
         return streetName.getText() + ", " + numberStreet.getText();
     }

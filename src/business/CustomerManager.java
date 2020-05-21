@@ -16,16 +16,11 @@ public class CustomerManager {
     public void addCustomer(Customer customer) throws AddException, ConnectionException {
         dao.addCustomer(customer);
     }
-    public ArrayList<Locality> getAllLocalities() throws AllDataException, ConnectionException {
-        return dao.getAllLocalities();
-    }
+
     public ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException{
         return dao.getAllCustomers();
     }
 
-    public int getLastCustomerId() throws AllDataException, ConnectionException {
-        return dao.getLastCustomerId();
-    }
     public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
         dao.updateCustomer(customer);
     }
