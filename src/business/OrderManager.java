@@ -43,4 +43,12 @@ public class OrderManager {
         else
             return "Les points n'ont pas été supprimé de la carte de fidélité !";
     }
+
+    public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
+        orderDataAccess.removeRight(loyaltyCardId, advantageId);
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException{
+        orderDataAccess.closeConnexion();
+    }
 }

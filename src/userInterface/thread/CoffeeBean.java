@@ -6,18 +6,19 @@ import java.awt.*;
 import java.io.IOException;
 
 public class CoffeeBean {
-    private final static int INITIAL_Y = 0;
-    private final static int LIMIT = 320;
+    private final static int WIDTH = 20;
+    private final static int HEIGHT = 20;
+    private final static int DELTA_Y = 1;
     private final static int RANGE = 60;
     private final static int MINIMUM = 360;
+    private final static int LIMIT = 320;
+    private final static int INITIAL_Y = 0;
     private Image coffeeBean;
     private Rectangle placement;
-    private int deltaY;
     private CoffeeCup parent;
 
-    public CoffeeBean(int y, int width, int height, int deltaY, CoffeeCup parent) {
-        placement = new Rectangle(randomXPos(RANGE, MINIMUM), y, width, height);
-        this.deltaY = deltaY;
+    public CoffeeBean(int y, CoffeeCup parent) {
+        placement = new Rectangle(randomXPos(RANGE, MINIMUM), y, WIDTH, HEIGHT);
         this.parent = parent;
     }
 
@@ -36,7 +37,7 @@ public class CoffeeBean {
     }
 
     public void move() {
-        placement.y += deltaY;
+        placement.y += DELTA_Y;
         if (placement.y >= LIMIT) {
             placement.x = randomXPos(RANGE, MINIMUM);
             placement.y = INITIAL_Y;

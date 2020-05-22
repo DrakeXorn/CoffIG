@@ -272,4 +272,30 @@ public class OrderDBAccess implements OrderDataAccess {
             throw new AddDataException("la mise à jour du stock", exception.getMessage());
         }
     }
+
+    public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sql = "delete from `right` where loyalty_card_id = ? and advantage_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, loyaltyCardId);
+            statement.setInt(2, advantageId);
+            statement.executeUpdate();
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ModifyException("droit", exception.getMessage(), "suppression");
+        }
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException {
+        try {
+            SingletonConnection.getInstance().close();
+        } catch (SQLException exception) {
+            throw new ClosedConnexion(exception.getMessage());
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+    }
+
 }

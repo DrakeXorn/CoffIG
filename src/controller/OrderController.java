@@ -33,4 +33,12 @@ public class OrderController {
     public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
         return manager.removePointsToLoyaltyCard(cardId, numberPoints);
     }
+
+    public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
+        manager.removeRight(loyaltyCardId, advantageId);
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException{
+        manager.closeConnexion();
+    }
 }
