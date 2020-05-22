@@ -1,6 +1,7 @@
 package business;
 
 import dataAccess.AdvantageDBAccess;
+import dataAccess.AdvantageDataAccess;
 import model.Advantage;
 import model.Customer;
 import model.exceptions.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class AdvantageManager {
-    private AdvantageDBAccess dataAccessor;
+    private AdvantageDataAccess dataAccessor;
 
     public AdvantageManager() { dataAccessor = new AdvantageDBAccess(); }
 
