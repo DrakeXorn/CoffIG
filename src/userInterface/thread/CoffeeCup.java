@@ -9,9 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class CoffeeCup extends JPanel {
-    private final static int width = 20;
-    private final static int height = 20;
-    private final static int deltaY = 1;
     private ArrayList<CoffeeBean> coffeeBeansArray;
     private List<CoffeeBean> coffeeBeans;
 
@@ -21,9 +18,9 @@ public class CoffeeCup extends JPanel {
         coffeeBeansArray = new ArrayList<>();
         coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
 
-        coffeeBeans.add(new CoffeeBean(80, width, height, deltaY, this));
-        coffeeBeans.add(new CoffeeBean(180, width, height, deltaY, this));
-        coffeeBeans.add(new CoffeeBean(280, width, height, deltaY, this));
+        coffeeBeans.add(new CoffeeBean(80, this));
+        coffeeBeans.add(new CoffeeBean(180, this));
+        coffeeBeans.add(new CoffeeBean(280, this));
     }
 
     public List<CoffeeBean> getCoffeeBeans() {

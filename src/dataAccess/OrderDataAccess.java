@@ -15,5 +15,6 @@ public interface OrderDataAccess {
     ArrayList<Integer> getPointsAdvantage(String cardId) throws AllDataException, ConnectionException;
     void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException;
     Integer quantityStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException;
-
-    }
+    void removeRight(String loyaltyCardId, Integer avantageId) throws ConnectionException, ModifyException;
+    void closeConnexion() throws ClosedConnexion, ConnectionException;
+}

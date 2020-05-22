@@ -1,5 +1,6 @@
 package userInterface;
 
+import controller.OrderController;
 import userInterface.order.OrderForm;
 import userInterface.thread.*;
 
@@ -38,9 +39,6 @@ public class MainPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                // charger le form de la commande
-                // getAllAdvantages (selon cardId et période validité) pour les afficher dans un JCombobox
-
                 parent.getWindowContainer().removeAll();
                 parent.getWindowContainer().add(new OrderForm(parent));
                 parent.repaint();
@@ -48,15 +46,12 @@ public class MainPanel extends JPanel {
                 parent.setSize(1200, 500);
                 repaint();
 
-                // valeurs à récupérer du formulaire
-                /*String cardId = "0495505955";
-                double orderPrice = 5.25;
-                int points = 50;*/
-
+                // getAllAdvantages (selon cardId et période validité) pour les afficher dans un JCombobox
                 //String message = controller.addPointsToLoyaltyCard(cardId, orderPrice);
                 //String message = controller.removePointsToLoyaltyCard(cardId, points);
-                //controller.updateStockLocation(1, 2, 1, 2);
-                //boolean isEmptyStock = controller.isEmptyStockLocation(1, 2, 1);
+                //controller.updateStockLocation(alley, shelf, number, removeQuantity);
+                //boolean isEmptyStock = controller.isEmptyStockLocation(alley, shelf, number);
+                //controller.removeRight(loyaltyCardId, advantageId);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);
