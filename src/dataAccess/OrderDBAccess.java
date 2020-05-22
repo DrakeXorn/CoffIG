@@ -24,11 +24,27 @@ public class OrderDBAccess implements OrderDataAccess {
             insertStatement.executeUpdate();
 
             String insertDrinksInstruction = "insert into drink_ordering (order_number, drink_label, drink_id, size, nbr_drinks, selling_price) values (?, ?, ?, ?, ?, ?)";
-            PreparedStatement insertDrinksStatement = connection.prepareStatement(insertDrinksInstruction);
+            PreparedStatement insertDrinkStatement = connection.prepareStatement(insertDrinksInstruction);
             for (DrinkOrdering drinkOrdering : order.getDrinkOrderings()) {
+                insertDrinkStatement.setInt(1, order.getOrderNumber());
+                insertDrinkStatement.setString(2, drinkOrdering.getDrink().getLabel());
+                insertDrinkStatement.setInt(3, drinkOrdering.getDrink().getCoffee().getCoffeeID());
+                insertDrinkStatement.setString(4, drinkOrdering.getSize());
+                insertDrinkStatement.setInt(5, drinkOrdering.getNbrPieces());
+                insertDrinkStatement.setDouble(6, drinkOrdering.getSellingPrice());
+                insertDrinkStatement.executeUpdate();
+
                 for (Topping topping : drinkOrdering.getToppings()) {
+                    String linkToppingToOrderingInstruction = "insert into supplement (order_number, drink_id, drink_label, topping_id) values (?, ?, ?, ?)";
                     String updateStockInstruction = "update stock_location set quantity = ((select quantity from stock_location where alley = ? and shelf = ? and number = ?) - ?) where alley = ? and shelf = ? and number = ?";
+                    PreparedStatement linkToppingToOrderingStatement = connection.prepareStatement(linkToppingToOrderingInstruction);
                     PreparedStatement updateStockStatement = connection.prepareStatement(updateStockInstruction);
+
+                    linkToppingToOrderingStatement.setInt(1, order.getOrderNumber());
+                    linkToppingToOrderingStatement.setInt(2, drinkOrdering.getDrink().getCoffee().getCoffeeID());
+                    linkToppingToOrderingStatement.setString(3, drinkOrdering.getDrink().getCoffee().getLabel());
+                    linkToppingToOrderingStatement.setInt(4, topping.getToppingID());
+                    linkToppingToOrderingStatement.executeUpdate();
 
                     updateStockStatement.setInt(1, topping.getStock().getAlley());
                     updateStockStatement.setInt(2, topping.getStock().getShelf());
@@ -39,30 +55,15 @@ public class OrderDBAccess implements OrderDataAccess {
                     updateStockStatement.setInt(7, topping.getStock().getNumber());
                     updateStockStatement.executeUpdate();
                 }
-
-                insertDrinksStatement.setInt(1, order.getOrderNumber());
-                insertDrinksStatement.setString(2, drinkOrdering.getDrink().getLabel());
-                insertDrinksStatement.setInt(3, drinkOrdering.getDrink().getCoffee().getCoffeeID());
-                insertDrinksStatement.setString(4, drinkOrdering.getSize());
-                insertDrinksStatement.setInt(5, drinkOrdering.getNbrPieces());
-                insertDrinksStatement.setDouble(6, drinkOrdering.getSellingPrice());
-                insertDrinksStatement.executeUpdate();
             }
 
             String insertFoodInstruction = "insert into food_ordering (food_id, order_number, nbr_pieces, selling_price) values (?, ?, ?, ?)";
             PreparedStatement insertFoodStatement = connection.prepareStatement(insertFoodInstruction);
             for (FoodOrdering foodOrdering : order.getFoodOrderings()) {
-                String updateStockInstruction = "update stock_location set quantity = ((select quantity from stock_location where alley = ? and shelf = ? and number = ?) - ?) where alley = ? and shelf = ? and number = ?";
-                PreparedStatement updateStockStatement = connection.prepareStatement(updateStockInstruction);
-
-                updateStockStatement.setInt(1, foodOrdering.getFood().getStockLocation().getAlley());
-                updateStockStatement.setInt(2, foodOrdering.getFood().getStockLocation().getShelf());
-                updateStockStatement.setInt(3, foodOrdering.getFood().getStockLocation().getNumber());
-                updateStockStatement.setInt(4, foodOrdering.getNbrPieces());
-                updateStockStatement.setInt(5, foodOrdering.getFood().getStockLocation().getAlley());
-                updateStockStatement.setInt(6, foodOrdering.getFood().getStockLocation().getShelf());
-                updateStockStatement.setInt(7, foodOrdering.getFood().getStockLocation().getNumber());
-                updateStockStatement.executeUpdate();
+                updateStockLocation(foodOrdering.getFood().getStockLocation().getAlley(),
+                        foodOrdering.getFood().getStockLocation().getShelf(),
+                        foodOrdering.getFood().getStockLocation().getNumber(),
+                        foodOrdering.getNbrPieces());
 
                 insertFoodStatement.setInt(1, foodOrdering.getFood().getFoodId());
                 insertFoodStatement.setInt(2, order.getOrderNumber());
@@ -178,10 +179,8 @@ public class OrderDBAccess implements OrderDataAccess {
                                 datasTopping.getDouble("price")));
                     }
 
-                    if(!order.getDrinkOrderings().contains(drinkOrdering)){
+                    if(!order.getDrinkOrderings().contains(drinkOrdering))
                         order.addDrinkOrdering(drinkOrdering);
-                        order.setPrice(datasOrder.getDouble("DrinkPrice"));
-                    }
                 }
 
                 foodId = datasOrder.getInt("FoodOrderNumber");
@@ -191,16 +190,14 @@ public class OrderDBAccess implements OrderDataAccess {
                             datasOrder.getInt("nbr_pieces"),
                             datasOrder.getDouble("FoodPrice"));
 
-                    if(!order.getFoodOrderings().contains(foodOrdering)){
+                    if(!order.getFoodOrderings().contains(foodOrdering))
                         order.addFoodOrdering(foodOrdering);
-                        order.setPrice(datasOrder.getDouble("FoodPrice"));
-                    }
                 }
             }
         } catch (IOException exception) {
-            throw new AllDataException("la récupération des commandes", exception.getMessage());
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AllDataException("la récupération des commandes", exception.getMessage());
         }
         return orders;
     }
@@ -214,9 +211,9 @@ public class OrderDBAccess implements OrderDataAccess {
             statement.setString(2, cardId);
             statement.executeUpdate();
         } catch (IOException exception) {
-            throw new AllDataException("la mise à jour des points de la carte de fidélité'", exception.getMessage());
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AllDataException("la mise à jour des points de la carte de fidélité'", exception.getMessage());
         }
         return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajouté à" : "supprimé de") + " la carte de fidélité";
     }
@@ -232,9 +229,9 @@ public class OrderDBAccess implements OrderDataAccess {
             if(data.next())
                 points = data.getInt("points_number");
         } catch (IOException exception) {
-            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AllDataException("la récupération des points de la carte de fidélité", exception.getMessage());
         }
         return points;
     }
@@ -251,14 +248,14 @@ public class OrderDBAccess implements OrderDataAccess {
                 points.add(data.getInt("points_number"));
 
         } catch (IOException exception) {
-            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AllDataException("la récupération des points de l'avantage", exception.getMessage());
         }
         return points;
     }
 
-    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
+    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws ConnectionException, AddDataException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String sql = "update stock_location set quantity = quantity - ? " +
@@ -270,32 +267,10 @@ public class OrderDBAccess implements OrderDataAccess {
             updateStatement.setInt(4, number);
             updateStatement.executeUpdate();
         } catch (IOException exception) {
-            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
-        }
-    }
-
-    public Integer quantityStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
-        int quantity = 0;
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String sql = "select quantity from stock_location where alley = ? and shelf  = ? and number = ?";
-            PreparedStatement selectStatement = connection.prepareStatement(sql);
-            selectStatement.setInt(1, alley);
-            selectStatement.setInt(2, shelf);
-            selectStatement.setInt(3, number);
-            ResultSet data = selectStatement.executeQuery();
-
-            if(data.next()){
-                quantity = data.getInt("quantity");
-            }
-        } catch (IOException exception) {
-            throw new AllDataException("la récupération des points de la carte de fidélité'", exception.getMessage());
         } catch (SQLException exception) {
-            throw new ConnectionException(exception.getMessage());
+            throw new AddDataException("la mise à jour du stock", exception.getMessage());
         }
-        return quantity;
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {

@@ -12,45 +12,29 @@ public class Order {
     private Boolean toTakeAway;
     private Customer beneficiary;
     private Employee orderPicker;
-    private double price;
-
     private ArrayList<FoodOrdering> foodOrderings;
     private ArrayList<DrinkOrdering> drinkOrderings;
-
-    public Order(Integer orderNumber, GregorianCalendar date, Boolean toTakeAway,
-                 Customer beneficiary, Employee orderPicker) {
-        this.date = date;
-        this.toTakeAway = toTakeAway;
-
-        this.beneficiary = beneficiary;
-        if(beneficiary != null)
-            beneficiary.addOrder(this);
-
-        this.orderPicker = orderPicker;
-
-        foodOrderings = new ArrayList<>();
-        drinkOrderings = new ArrayList<>();
-    }
 
     // pour la recherche des anciennes commandes
     public Order(Integer orderNumber, GregorianCalendar date, Boolean isToTakeAway) {
         this.orderNumber = orderNumber;
         this.date = date;
         this.toTakeAway = isToTakeAway;
-        this.price = 0;
 
         foodOrderings = new ArrayList<>();
         drinkOrderings = new ArrayList<>();
     }
 
     public double getPrice() {
-        return price;
-    }
+        double price = 0;
 
-    public void setPrice(double price) throws DoubleInputException {
-        if(price < 0)
-            throw new DoubleInputException(price, "le prix", "Le prix doit être positif et différent de 0 !");
-        this.price += price;
+        for (FoodOrdering foodOrdering : foodOrderings)
+            price += foodOrdering.getPrice();
+
+        for (DrinkOrdering drinkOrdering : drinkOrderings)
+            price += drinkOrdering.getPrice();
+
+        return price;
     }
 
     public void setBeneficiary(Customer beneficiary) {
@@ -73,16 +57,8 @@ public class Order {
         foodOrderings.add(foodOrdering);
     }
 
-    public void removeFoodOrdering(FoodOrdering foodOrdering) {
-        foodOrderings.remove(foodOrdering);
-    }
-
     public void addDrinkOrdering(DrinkOrdering drinkOrdering) {
         drinkOrderings.add(drinkOrdering);
-    }
-
-    public void removeDrinkOrdering(DrinkOrdering drinkOrdering) {
-        drinkOrderings.remove(drinkOrdering);
     }
 
     public Integer getOrderNumber() {

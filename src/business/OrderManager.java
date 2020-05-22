@@ -15,6 +15,10 @@ public class OrderManager {
         orderDataAccess = new OrderDBAccess();
     }
 
+    public void addOrder(Order order) throws ConnectionException, AddDataException {
+        orderDataAccess.addOrder(order);
+    }
+
     public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
             throws AllDataException, ConnectionException, IntegerInputException, StringInputException, DoubleInputException {
         return orderDataAccess.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
@@ -40,15 +44,6 @@ public class OrderManager {
             return "Les points n'ont pas été supprimé de la carte de fidélité !";
     }
 
-    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
-        if(removeQuantity > 0)
-            orderDataAccess.updateStockLocation(alley, shelf, number, removeQuantity);
-    }
-
-    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
-        return orderDataAccess.quantityStockLocation(alley, shelf, number) == 0;
-    }
-
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
         orderDataAccess.removeRight(loyaltyCardId, advantageId);
     }
@@ -56,5 +51,4 @@ public class OrderManager {
     public void closeConnexion() throws ClosedConnexion, ConnectionException{
         orderDataAccess.closeConnexion();
     }
-
 }

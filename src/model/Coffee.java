@@ -111,10 +111,6 @@ public class Coffee {
         this.features = features;
     }
 
-    public void addFeature(String feature) {
-        features.add(feature);
-    }
-
     public Integer getCoffeeID() {
         return coffeeID;
     }

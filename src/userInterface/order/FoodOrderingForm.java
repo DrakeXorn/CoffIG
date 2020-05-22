@@ -11,8 +11,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 public class FoodOrderingForm extends JPanel {
     private JLabel foodLabel, numberChosenLabel;
@@ -82,10 +80,7 @@ public class FoodOrderingForm extends JPanel {
     }
 
     private void updatePrice() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
-
-        formatter.setRoundingMode(RoundingMode.CEILING);
-        addToListButton.setText("Ajouter à la commande (" + formatter.format((int) numberPiecesSpinner.getValue() * ((Food) foodBox.getSelectedItem()).getPrice()) + "€)");
+        addToListButton.setText("Ajouter à la commande (" + Math.floor((int) numberPiecesSpinner.getValue() * ((Food) foodBox.getSelectedItem()).getPrice() * 100) / 100 + "€)");
     }
 
     private class FoodBoxListener implements ActionListener {

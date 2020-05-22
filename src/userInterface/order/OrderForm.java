@@ -16,17 +16,14 @@ public class OrderForm extends JPanel {
     private OrderFormRecapPanel recapPanel;
     private OrderFormCentralPanel centralPanel;
     private OrderFormBottomPanel bottomBar;
-    private MainWindow parent;
 
     public OrderForm(MainWindow parent) throws AllDataException, ConnectionException, ClosedShopException, StringInputException, DateException, CharacterInputException {
-        this.parent = parent;
-
         setLayout(new BorderLayout());
 
         topBar = new OrderFormTopPanel(this);
+        recapPanel = new OrderFormRecapPanel(this);
         centralPanel = new OrderFormCentralPanel(this);
         bottomBar = new OrderFormBottomPanel(this);
-        recapPanel = new OrderFormRecapPanel(this);
 
         add(topBar, BorderLayout.NORTH);
         add(centralPanel, BorderLayout.CENTER);
@@ -64,5 +61,9 @@ public class OrderForm extends JPanel {
 
     public ArrayList<DrinkOrdering> getDrinkOrderings() {
         return recapPanel.getDrinkOrderings();
+    }
+
+    public OrderFormRecapPanel getRecapPanel() {
+        return recapPanel;
     }
 }

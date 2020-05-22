@@ -4,12 +4,12 @@ import controller.AdvantageController;
 import model.Advantage;
 import model.exceptions.AllDataException;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class SearchAdvantagesPanel extends JPanel {
     private SearchAdvantagesForm form;
@@ -46,8 +46,8 @@ public class SearchAdvantagesPanel extends JPanel {
 
                     ArrayList<Advantage> advantages = controller.searchAdvantages(
                             form.getCustomers().get(form.getCustomersBox().getSelectedIndex()),
-                            form.getToday(),
-                            form.getDiscounts().get(form.getDiscountsBox().getSelectedIndex()),
+                            (GregorianCalendar) GregorianCalendar.getInstance(),
+                            form.getSelectedDiscount(),
                             form.getTypeAdvantage()
                     );
 

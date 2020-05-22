@@ -9,81 +9,65 @@ import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class SearchAdvantagesForm extends JPanel {
     private JLabel customerIdLabel, dateOfDaysLabel, discountLabel;
     private ArrayList<Customer> customers;
-    private JTextField dateOfDays;
+    private JTextField dateOfDay;
     private JComboBox<Customer> customersBox;
-    private JComboBox<Double> discount;
+    private JComboBox<Double> discountsBox;
     private JRadioButton anyAdvantage, accessibleAdvantage, inaccessibleAdvantage;
     private ButtonGroup buttonGroup;
-    private CustomerController customerController;
-    private AdvantageController advantageController;
-    private GregorianCalendar today;
-    private DateFormat dateFormat;
-    private Date date;
 
     public SearchAdvantagesForm() {
         try {
-            this.setLayout(new GridLayout(2, 1, 5, 5));
+            CustomerController customerController = new CustomerController();
+            AdvantageController advantageController = new AdvantageController();
+            setLayout(new GridLayout(2, 1, 5, 5));
 
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new GridLayout(3, 2, 5, 5));
+            JPanel fieldsPanel = new JPanel();
+            fieldsPanel.setLayout(new GridLayout(3, 2, 5, 5));
 
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new GridLayout(1, 3, 5, 5));
-
-            customerController = new CustomerController();
-            advantageController = new AdvantageController();
-            advantageController.getAllAdvantageDiscount();
+            JPanel radioButtonsPanel = new JPanel();
+            radioButtonsPanel.setLayout(new GridLayout(1, 3, 5, 5));
 
 
-
-            customerIdLabel = new JLabel("Client :");
+            customerIdLabel = new JLabel("Client : ");
             customerIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
             customers = customerController.getAllCustomers();
             customersBox = new JComboBox<>();
-            for (Customer customer : customers) customersBox.addItem(customer);
+            for (Customer customer : customers)
+                customersBox.addItem(customer);
             customersBox.setMaximumRowCount(5);
-
-
 
             dateOfDaysLabel = new JLabel("Date du jour : ");
             dateOfDaysLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            today = (GregorianCalendar) Calendar.getInstance();
-            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            date = today.getTime();
-
-            dateOfDays = new JTextField(dateFormat.format(date));
-            dateOfDays.setEditable(false);
-
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateOfDay = new JTextField(dateFormat.format(GregorianCalendar.getInstance().getTime()));
+            dateOfDay.setEditable(false);
 
 
             discountLabel = new JLabel("Remise : ");
             discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            discount = new JComboBox<>();
-            discount.setMaximumRowCount(5);
 
-            for (Double val : advantageController.getDiscounts()) discount.addItem(val);
-
-
+            discountsBox = new JComboBox<>();
+            for (Double discount : advantageController.getAllAdvantageDiscount())
+                discountsBox.addItem(discount);
+            discountsBox.setMaximumRowCount(5);
 
 
             anyAdvantage = new JRadioButton("Tous les avantages", true);
             anyAdvantage.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(anyAdvantage);
+
             accessibleAdvantage = new JRadioButton("Avantages accessibles", false);
             accessibleAdvantage.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(accessibleAdvantage);
+
             inaccessibleAdvantage = new JRadioButton("Avantages inaccessibles", false);
             inaccessibleAdvantage.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(inaccessibleAdvantage);
+
 
             buttonGroup = new ButtonGroup();
             buttonGroup.add(anyAdvantage);
@@ -91,32 +75,40 @@ public class SearchAdvantagesForm extends JPanel {
             buttonGroup.add(inaccessibleAdvantage);
 
 
+            fieldsPanel.add(customerIdLabel);
+            fieldsPanel.add(customersBox);
+            fieldsPanel.add(dateOfDaysLabel);
+            fieldsPanel.add(dateOfDay);
+            fieldsPanel.add(discountLabel);
+            fieldsPanel.add(discountsBox);
+            add(fieldsPanel, BorderLayout.NORTH);
 
-            panel1.add(customerIdLabel);
-            panel1.add(customersBox);
-            panel1.add(dateOfDaysLabel);
-            panel1.add(dateOfDays);
-            panel1.add(discountLabel);
-            panel1.add(discount);
-            this.add(panel1, BorderLayout.NORTH);
-
-            panel2.add(anyAdvantage);
-            panel2.add(accessibleAdvantage);
-            panel2.add(inaccessibleAdvantage);
-            this.add(panel2, BorderLayout.CENTER);
+            radioButtonsPanel.add(anyAdvantage);
+            radioButtonsPanel.add(accessibleAdvantage);
+            radioButtonsPanel.add(inaccessibleAdvantage);
+            add(radioButtonsPanel, BorderLayout.CENTER);
 
 
             setVisible(true);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(),
-                    "Erreur lors de la récupération des remise", JOptionPane.ERROR_MESSAGE);
+                    "Erreur lors de la récupération des remises", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public ArrayList<Customer> getCustomers() { return customers; }
-    public JComboBox<Customer> getCustomersBox() { return customersBox; }
-    public GregorianCalendar getToday() { return today; }
-    public ArrayList<Double> getDiscounts() { return advantageController.getDiscounts(); }
-    public JComboBox<Double> getDiscountsBox() { return discount; }
-    public int getTypeAdvantage() { return anyAdvantage.isSelected() ? 1 : accessibleAdvantage.isSelected() ? 2 : 3; }
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public JComboBox<Customer> getCustomersBox() {
+        return customersBox;
+    }
+
+    public Double getSelectedDiscount() {
+        return (Double) discountsBox.getSelectedItem();
+    }
+
+    public int getTypeAdvantage() {
+        return anyAdvantage.isSelected() ? 1 : accessibleAdvantage.isSelected() ? 2 : 3;
+    }
 }

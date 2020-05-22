@@ -14,8 +14,8 @@ public class OrderController {
         manager = new OrderManager();
     }
 
-    public void addOrder(Order order) {
-        
+    public void addOrder(Order order) throws ConnectionException, AddDataException {
+        manager.addOrder(order);
     }
 
     public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
@@ -32,14 +32,6 @@ public class OrderController {
 
     public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
         return manager.removePointsToLoyaltyCard(cardId, numberPoints);
-    }
-
-    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws AllDataException, ConnectionException {
-        manager.updateStockLocation(alley, shelf, number, removeQuantity);
-    }
-
-    public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
-        return manager.isEmptyStockLocation(alley, shelf, number);
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {

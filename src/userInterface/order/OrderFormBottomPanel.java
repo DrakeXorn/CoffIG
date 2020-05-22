@@ -15,7 +15,6 @@ import java.util.Random;
 public class OrderFormBottomPanel extends JPanel {
     private JLabel dateLabel, willBeServedByLabel;
     private JTextField dateField, willBeServedByField;
-    private OrderForm parent;
     private Employee orderPicker;
 
     public OrderFormBottomPanel(OrderForm parent) throws ConnectionException, StringInputException, CharacterInputException, DateException, AllDataException, ClosedShopException {
@@ -23,7 +22,6 @@ public class OrderFormBottomPanel extends JPanel {
             ArrayList<Employee> currentlyWorkingEmployees = controller.getCurrentlyWorkingEmployees();
 
             DateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
-            this.parent = parent;
 
             setLayout(new GridLayout());
 

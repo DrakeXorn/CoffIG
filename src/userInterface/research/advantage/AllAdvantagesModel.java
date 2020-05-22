@@ -46,19 +46,12 @@ public class AllAdvantagesModel extends AbstractTableModel {
         };
     }
 
-    public Class getColumnClass (int column) {
-        Class c;
-        c = switch (column) {
-            case 0 -> String.class;
+    public Class<?> getColumnClass (int column) {
+        return switch (column) {
             case 1 -> Double.class;
-            case 2 -> Date.class;
-            case 3 -> Date.class;
+            case 2, 3 -> Date.class;
             case 4 -> Integer.class;
             default -> String.class;
         };
-        return c;
     }
-
-
-
 }

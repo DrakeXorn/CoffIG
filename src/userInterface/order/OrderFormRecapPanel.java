@@ -6,8 +6,6 @@ import model.FoodOrdering;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderFormRecapPanel extends JPanel {
@@ -34,11 +32,12 @@ public class OrderFormRecapPanel extends JPanel {
         add(orderButton);
     }
 
-    public void setButtonText() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
+    public double totalPrice() {
+        return Math.floor((foodOrderingPanel.totalPrice() + drinkOrderingPanel.totalPrice()) * 100) / 100;
+    }
 
-        formatter.setRoundingMode(RoundingMode.CEILING);
-        orderButton.setText("Commander (" + formatter.format(foodOrderingPanel.totalPrice() + drinkOrderingPanel.totalPrice()) + "€)");
+    public void setButtonText() {
+        orderButton.setText("Commander (" + totalPrice() + "€)");
     }
 
     public void addToDrinksList(DrinkOrdering drinkOrdering) {

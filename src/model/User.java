@@ -1,6 +1,5 @@
 package model;
 
-import controller.CustomerController;
 import model.exceptions.*;
 
 import java.time.LocalDate;

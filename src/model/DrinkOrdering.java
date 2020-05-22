@@ -4,8 +4,6 @@ import model.exceptions.DoubleInputException;
 import model.exceptions.IntegerInputException;
 import model.exceptions.StringInputException;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DrinkOrdering {
@@ -97,22 +95,7 @@ public class DrinkOrdering {
         nbrPieces += number;
     }
 
-    public double price() {
+    public double getPrice() {
         return nbrPieces * sellingPrice;
-    }
-
-    @Override
-    public String toString() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
-
-        formatter.setRoundingMode(RoundingMode.CEILING);
-        StringBuilder res = new StringBuilder(nbrPieces + " * " + drink + "(" + size + ") : " + formatter.format(price()) + "€");
-
-        for (Topping topping : toppings) {
-            res.append("\n\t");
-            res.append(topping);
-        }
-
-        return res.toString();
     }
 }

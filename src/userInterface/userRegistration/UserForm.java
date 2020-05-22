@@ -1,7 +1,6 @@
 package userInterface.userRegistration;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import controller.CustomerController;
 import controller.UserController;
 import model.*;
 import model.exceptions.*;
@@ -179,7 +178,6 @@ public class UserForm extends JPanel {
     public GregorianCalendar getBirthDate() {
         GregorianCalendar birthDate = new GregorianCalendar();
         birthDate.setTime(Date.from(birthDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        birthDate.add(GregorianCalendar.HOUR, 1);
         return birthDate;
     }
 

@@ -32,6 +32,10 @@ public class OrderFormCentralPanel extends JPanel {
         parent.addToDrinksList(drinkOrdering);
     }
 
+    public int getDrinksListSize() {
+        return parent.getDrinkOrderings().size();
+    }
+
     public void addToFoodsList(FoodOrdering foodOrdering) {
         parent.addToFoodsList(foodOrdering);
     }

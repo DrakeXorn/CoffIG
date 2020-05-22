@@ -1,6 +1,5 @@
 package userInterface.userRegistration;
 
-import controller.CustomerController;
 import controller.UserController;
 import model.*;
 
