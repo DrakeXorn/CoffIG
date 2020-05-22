@@ -41,4 +41,12 @@ public class OrderController {
     public boolean isEmptyStockLocation(Integer alley, Integer shelf, Integer number) throws AllDataException, ConnectionException {
         return manager.isEmptyStockLocation(alley, shelf, number);
     }
+
+    public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
+        manager.removeRight(loyaltyCardId, advantageId);
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException{
+        manager.closeConnexion();
+    }
 }

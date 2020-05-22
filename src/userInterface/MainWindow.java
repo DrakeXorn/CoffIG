@@ -1,5 +1,6 @@
 package userInterface;
 
+import controller.OrderController;
 import userInterface.coffeeRegistration.ButtonsAddCoffeeForm;
 import userInterface.coffeeRegistration.CoffeeForm;
 import userInterface.coffeeRegistration.UpdateCoffeesFrame;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
+    private final static int HEIGHT = 680;
     private JMenuBar menuBar;
     private JMenu infos, addNew, upDate, displayAll, search;
     private JMenuItem home, about, exitItem,
@@ -29,9 +31,9 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("CoffIG");
-        this.setBounds(100, 50, 800, 600);
+        this.setBounds(100, 50, 800, HEIGHT);
         this.addWindowListener (new WindowAdapter() {
-            public void windowClosing (WindowEvent e) { System.exit(0); } } );
+            public void windowClosing (WindowEvent e) { closeWindow(); }});
         this.setResizable(false);
 
         ImageIcon cupIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeBean.png"));
@@ -135,8 +137,8 @@ public class MainWindow extends JFrame {
     }
 
     public void resetSize() {
-        if (getHeight() != 800 && getWidth() != 600)
-            setSize(800, 600);
+        if (getHeight() != 800 && getWidth() != HEIGHT)
+            setSize(800, HEIGHT);
     }
   
     public void goBackHome() {
@@ -145,6 +147,17 @@ public class MainWindow extends JFrame {
         windowContainer.repaint();
         setVisible(true);
         resetSize();
+    }
+
+    public void closeWindow(){
+        try {
+            OrderController controller = new OrderController();
+            controller.closeConnexion();
+            System.exit(0);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur lors de la fermeture de la fenêtre!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private class HomeListener implements ActionListener{
@@ -166,14 +179,7 @@ public class MainWindow extends JFrame {
 
     private class ExitListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            System.exit(0);
-            /*try {
-                SingletonConnection.getInstance().close();
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }*/
+            closeWindow();
         }
     }
 
@@ -220,38 +226,41 @@ public class MainWindow extends JFrame {
 
     private class UpdateCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(MainWindow.this);
+            goBackHome();
+            new UpdateCustomersFrame(MainWindow.this);
         }
     }
 
     private class UpdateCoffeeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            UpdateCoffeesFrame updateCoffeesFrame = new UpdateCoffeesFrame(MainWindow.this);
+            goBackHome();
+            new UpdateCoffeesFrame(MainWindow.this);
         }
     }
 
     private class AllCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            AllCustomersFrame allCustomerFrame = new AllCustomersFrame(MainWindow.this);
+            goBackHome();
+            new AllCustomersFrame(MainWindow.this);
             resetSize();
         }
     }
   
     private class AllEmployeesListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            AllEmployeesFrame allEmployeesFrame = new AllEmployeesFrame(MainWindow.this);
+            goBackHome();
+            new AllEmployeesFrame(MainWindow.this);
+            resetSize();
         }
     }
   
     private class AllCoffeesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AllCoffeesFrame frame = new AllCoffeesFrame();
-            windowContainer.removeAll();
-            windowContainer.add(new MainPanel(MainWindow.this));
-            windowContainer.repaint();
-            MainWindow.this.setVisible(true);
+            goBackHome();
+            new AllCoffeesFrame();
+            resetSize();
         }
     }
 
@@ -283,6 +292,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(new SearchAdvantagesPanel());
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            setSize(getWidth(), 250);
         }
     }
 }

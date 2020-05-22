@@ -32,44 +32,44 @@ public class UserForm extends JPanel {
             userIdLabel = new JLabel("Identifiant :");
             userIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(userIdLabel);
-            userId = new JTextField(userToUpdate != null ? userToUpdate.getUserID().toString() : String.valueOf(controller.getLastCustomerId() + 1));
+            userId = new JTextField();
             userId.setEnabled(false);
             this.add(userId);
 
             passwordLabel = new JLabel("Mot de passe* :");
             passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(passwordLabel);
-            password = new JPasswordField(userToUpdate != null ? userToUpdate.getPassword() : null);
+            password = new JPasswordField();
             this.add(password);
 
             lastNameLabel = new JLabel("Nom de famille* :");
             lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(lastNameLabel);
-            lastName = new JTextField(userToUpdate != null ? userToUpdate.getLastName() : null);
+            lastName = new JTextField();
             this.add(lastName);
 
             firstNameLabel = new JLabel("Prénom* :");
             firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(firstNameLabel);
-            firstName = new JTextField(userToUpdate != null ? userToUpdate.getFirstName() : null);
+            firstName = new JTextField();
             this.add(firstName);
 
             secondNameLabel = new JLabel("Second prénom :");
             secondNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(secondNameLabel);
-            secondName = new JTextField(userToUpdate != null ? userToUpdate.getSecondName() : null);
+            secondName = new JTextField();
             this.add(secondName);
 
             maidenNameLabel = new JLabel("Nom de jeune fille :");
             maidenNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(maidenNameLabel);
-            maidenName = new JTextField(userToUpdate != null ? userToUpdate.getMaidenName() : null);
+            maidenName = new JTextField();
             this.add(maidenName);
 
-            maleButton = new JRadioButton("Homme", userToUpdate == null || userToUpdate.getGender() == 'M');
+            maleButton = new JRadioButton("Homme");
             maleButton.setHorizontalAlignment(SwingConstants.CENTER);
             this.add(maleButton);
-            femaleButton = new JRadioButton("Femme", userToUpdate != null && userToUpdate.getGender() == 'F');
+            femaleButton = new JRadioButton("Femme");
             femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
             this.add(femaleButton);
 
@@ -82,19 +82,18 @@ public class UserForm extends JPanel {
             this.add(birthDateLabel);
 
             birthDatePicker = new DatePicker();
-            birthDatePicker.setDate(userToUpdate != null ? userToUpdate.getBirthDate().toZonedDateTime().toLocalDate() : LocalDate.of(2004, Month.JANUARY, 1));
             this.add(birthDatePicker);
 
             streetNameLabel = new JLabel("Rue* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(streetNameLabel);
-            streetName = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[0] : null);
+            streetName = new JTextField();
             this.add(streetName);
 
             numberStreetLabel = new JLabel("Numéro* :");
             numberStreetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(numberStreetLabel);
-            streetNumber = new JTextField(userToUpdate != null ? userToUpdate.getStreetName().split(", ", 2)[1] : null);
+            streetNumber = new JTextField();
             this.add(streetNumber);
 
             localityLabel = new JLabel("Localité* :");
@@ -106,25 +105,50 @@ public class UserForm extends JPanel {
             for (Locality locality : localities)
                 localitiesBox.addItem(locality);
             localitiesBox.setMaximumRowCount(5);
-            if (userToUpdate != null)
-                localitiesBox.setSelectedItem(userToUpdate.getLocality());
             this.add(localitiesBox);
 
             emailLabel = new JLabel("Email* :");
             emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(emailLabel);
-            email = new JTextField(userToUpdate != null ? userToUpdate.getEmail() : null);
+            email = new JTextField();
             this.add(email);
 
             phoneLabel = new JLabel("Numéro de GSM* :");
             phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(phoneLabel);
-
-            phone = new JTextField(userToUpdate != null ? userToUpdate.getPhone() : null);
+            phone = new JTextField();
             this.add(phone);
+
+            setUserDatas(userToUpdate, controller);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
                     "Erreur !", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void setUserDatas(User userToUpdate, UserController controller) throws AllDataException, ConnectionException {
+        if(userToUpdate != null){
+            userId.setText(userToUpdate.getUserID().toString());
+            password.setText(userToUpdate.getPassword());
+            lastName.setText(userToUpdate.getLastName());
+            firstName.setText(userToUpdate.getFirstName());
+            secondName.setText(userToUpdate.getSecondName());
+            maidenName.setText(userToUpdate.getMaidenName());
+            maleButton.setSelected(userToUpdate.getGender() == 'M');
+            femaleButton.setSelected(userToUpdate.getGender() == 'F');
+            birthDatePicker.setDate(userToUpdate.getBirthDate().toZonedDateTime().toLocalDate());
+            String [] street;
+            street = userToUpdate.getStreetName().split(", ", 2);
+            streetName.setText(street[0]);
+            streetNumber.setText(street[1]);
+            localitiesBox.setSelectedItem(userToUpdate.getLocality());
+            email.setText(userToUpdate.getEmail());
+            phone.setText(userToUpdate.getPhone());
+        } else {
+            userId.setText(String.valueOf(controller.getLastCustomerId() + 1));
+            maleButton.setSelected(true);
+            femaleButton.setSelected(false);
+            birthDatePicker.setDate(LocalDate.of(2004, Month.JANUARY, 1));
         }
     }
 
@@ -154,7 +178,6 @@ public class UserForm extends JPanel {
 
     public GregorianCalendar getBirthDate() {
         GregorianCalendar birthDate = new GregorianCalendar();
-
         birthDate.setTime(Date.from(birthDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         birthDate.add(GregorianCalendar.HOUR, 1);
         return birthDate;

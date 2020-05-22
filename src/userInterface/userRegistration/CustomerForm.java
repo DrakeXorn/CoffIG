@@ -26,7 +26,7 @@ public class CustomerForm extends JPanel {
 
         wantsSatisfactionDegree = new JCheckBox("Je souhaite partager mon degré de satisfaction");
         wantsSatisfactionDegree.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsSatisfactionDegree.setSelected(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null);
+        //wantsSatisfactionDegree.setSelected(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null);
         this.add(wantsSatisfactionDegree);
         wantsSatisfactionDegree.addItemListener(new WantsSatisfactionDegreeListener());
 
@@ -34,24 +34,51 @@ public class CustomerForm extends JPanel {
         satisfactionDegreeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(satisfactionDegreeLabel);
 
-        if(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null){
+        /*if(customerToUpdate != null && customerToUpdate.getSatisfactionDegree() != null){
             degree = new JSpinner(new SpinnerNumberModel((int) customerToUpdate.getSatisfactionDegree(), 1, 5, 1));
+
             degree.setEnabled(true);
         } else {
             degree = new JSpinner(new SpinnerNumberModel( 1, 1, 5, 1));
             degree.setEnabled(false);
-        }
+        }*/
+        degree = new JSpinner();
         this.add(degree);
 
         wantsLoyaltyCard = new JCheckBox("Je souhaite posséder une carte de fidélité");
         wantsLoyaltyCard.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsLoyaltyCard.setSelected(customerToUpdate != null && customerToUpdate.getLoyaltyCard() != null);
+        //wantsLoyaltyCard.setSelected(customerToUpdate != null && customerToUpdate.getLoyaltyCard() != null);
         this.add(wantsLoyaltyCard);
 
         wantsAdvertising = new JCheckBox("Je souhaite recevoir la newsletter");
         wantsAdvertising.setHorizontalAlignment(SwingConstants.CENTER);
-        wantsAdvertising.setSelected(customerToUpdate != null && customerToUpdate.getWantsAdvertising());
+        //wantsAdvertising.setSelected(customerToUpdate != null && customerToUpdate.getWantsAdvertising());
         this.add(wantsAdvertising);
+
+        setCustomerDatas(customerToUpdate);
+    }
+
+    public void setCustomerDatas(Customer customerToUpdate){
+        if(customerToUpdate != null){
+            if(customerToUpdate.getSatisfactionDegree() != null){
+                wantsSatisfactionDegree.setSelected(true);
+                degree.setModel(new SpinnerNumberModel((int) customerToUpdate.getSatisfactionDegree(), 1, 5, 1));
+                degree.setEnabled(true);
+            } else {
+                wantsSatisfactionDegree.setSelected(false);
+                degree.setModel(new SpinnerNumberModel( 1, 1, 5, 1));
+                degree.setEnabled(false);
+            }
+            wantsLoyaltyCard.setSelected(customerToUpdate.getLoyaltyCard() != null);
+            wantsAdvertising.setSelected(customerToUpdate.getWantsAdvertising());
+        } else {
+            wantsSatisfactionDegree.setSelected(false);
+            degree.setModel(new SpinnerNumberModel( 1, 1, 5, 1));
+            degree.setEnabled(false);
+
+            wantsLoyaltyCard.setSelected(false);
+            wantsAdvertising.setSelected(false);
+        }
     }
 
     private class WantsSatisfactionDegreeListener implements ItemListener {
