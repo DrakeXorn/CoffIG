@@ -21,7 +21,7 @@ public class SingletonConnection {
 
             username = properties.getProperty("user");
             password = properties.getProperty("password");
-            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/coff-ig?serverTimezone=UTC", username, password);
+            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/coff-ig", username, password);
         }
         return uniqueConnexion;
     }

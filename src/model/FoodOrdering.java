@@ -3,22 +3,10 @@ package model;
 import model.exceptions.DoubleInputException;
 import model.exceptions.IntegerInputException;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 public class FoodOrdering {
     private Food food;
-    private Order order;
     private Integer nbrPieces;
     private Double sellingPrice;
-
-    public FoodOrdering(Food food, Order order, Integer nbrPieces, Double sellingPrice) {
-        this.food = food;
-        this.order = order;
-        order.addFoodOrdering(this);
-        this.nbrPieces = nbrPieces;
-        this.sellingPrice = sellingPrice;
-    }
 
     // pour la recherche des anciennes commandes
     public FoodOrdering(Food food, Integer nbrPieces, Double sellingPrice) throws DoubleInputException, IntegerInputException {
@@ -60,15 +48,12 @@ public class FoodOrdering {
         nbrPieces += number;
     }
 
-    public double price() {
+    public double getPrice() {
         return nbrPieces * sellingPrice;
     }
 
     @Override
     public String toString() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
-
-        formatter.setRoundingMode(RoundingMode.CEILING);
-        return nbrPieces + " * " + food + " :  " + formatter.format(price()) + "€";
+        return nbrPieces + " * " + food + " :  " + Math.floor(getPrice() * 100) / 100 + "€";
     }
 }

@@ -11,10 +11,10 @@ import java.util.GregorianCalendar;
 
 
 public class AdvantageDBAccess implements AdvantageDataAccess {
-    ArrayList<Double> discounts = new ArrayList<>();
-
     @Override
-    public void getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+        ArrayList<Double> discounts = new ArrayList<>();
+
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlInstruction = "select DISTINCT discount from advantage order by discount";
@@ -30,10 +30,6 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-    }
-
-    @Override
-    public ArrayList<Double> getDiscounts() {
         return discounts;
     }
 

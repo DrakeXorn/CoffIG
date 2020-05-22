@@ -199,7 +199,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select e.employee_id, hire_date, end_contract_date, is_employee_of_the_month, discount, parking_space_number, manager_id, password, last_name, first_name, second_name, maiden_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city from employee e join user u on e.employee_id = u.user_id join assignment a on e.employee_id = a.employee_id join service s on a.service_id = s.service_id where date = sysdate() and curtime() between start_time and end_time";
+            String sqlInstruction = "select e.employee_id, hire_date, end_contract_date, is_employee_of_the_month, discount, parking_space_number, manager_id, password, last_name, first_name, second_name, maiden_name, birth_date, street_name, email, phone, gender, locality_postal_code, locality_city from employee e join user u on e.employee_id = u.user_id join assignment a on e.employee_id = a.employee_id join service s on a.service_id = s.service_id where date = curdate() and curtime() between start_time and end_time";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
 

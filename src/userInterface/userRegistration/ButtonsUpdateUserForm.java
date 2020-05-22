@@ -41,7 +41,7 @@ public class ButtonsUpdateUserForm extends JPanel{
             try {
                 user = form.updateCustomer();
 
-                if(user != null) {
+                if(user != null && JOptionPane.showConfirmDialog(null, "Êtes-vous sûr(e) de vouloir modifier " + user + " ?", "Modification de l'inscription", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     controller.updateCustomer(user);
                     JOptionPane.showMessageDialog(null, user + " a été modifié" , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
                     parent.goBackHome();

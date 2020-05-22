@@ -15,15 +15,11 @@ public class AdvantageController {
         manager = new AdvantageManager();
     }
 
-    public void getAllAdvantageDiscount() throws ConnectionException, AddDataException {
-        manager.getAllAdvantageDiscount();
+    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+        return manager.getAllAdvantageDiscount();
     }
 
-    public ArrayList<Double> getDiscounts() {
-        return manager.getDiscounts();
-    }
-
-    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {
-        return manager.searchAdvantages(customer, today, discount, typAdvantage);
+    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {
+        return manager.searchAdvantages(customer, today, discount, typeAdvantage);
     }
 }

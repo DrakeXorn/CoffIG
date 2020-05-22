@@ -24,7 +24,7 @@ public class CheckoutFrame extends JFrame {
         setLayout(new BorderLayout());
         container = getContentPane();
 
-        checkoutPanel = new CheckoutPanel();
+        checkoutPanel = new CheckoutPanel(this);
         container.add(checkoutPanel, BorderLayout.CENTER);
 
         confirmOrderButton = new JButton("Terminer la commande");
@@ -43,14 +43,17 @@ public class CheckoutFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try {
                 OrderController controller = new OrderController();
-                Order order = new Order(parent.getOrderNumber(), (GregorianCalendar) GregorianCalendar.getInstance(), checkoutPanel.isToTakeAway(), parent.getBeneficiary(), parent.getOrderPicker());
+                Order order = new Order(parent.getOrderNumber(), (GregorianCalendar) GregorianCalendar.getInstance(), checkoutPanel.isToTakeAway());
 
+                order.setBeneficiary(parent.getBeneficiary());
+                order.setOrderPicker(parent.getOrderPicker());
                 order.setFoodOrderings(parent.getFoodOrderings());
                 order.setDrinkOrderings(parent.getDrinkOrderings());
                 controller.addOrder(order);
 
                 dispose();
             } catch (Exception exception) {
+                exception.printStackTrace();
                 JOptionPane.showMessageDialog(parent, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

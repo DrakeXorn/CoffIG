@@ -23,6 +23,7 @@ public class OrderFormFoodOrderingsPanel extends JPanel {
 
         orderingsList = new JList<>(listModel);
         orderingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        orderingsList.setFixedCellWidth(300);
         orderingsScrollPane = new JScrollPane(orderingsList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(orderingsScrollPane, BorderLayout.CENTER);
 
@@ -59,7 +60,7 @@ public class OrderFormFoodOrderingsPanel extends JPanel {
         double price = 0;
 
         for (int i = 0; i < listModel.getSize(); i++)
-            price += listModel.get(i).price();
+            price += listModel.get(i).getPrice();
 
         return price;
     }

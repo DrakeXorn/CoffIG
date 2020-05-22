@@ -27,7 +27,7 @@ public class OrderFormTopPanel extends JPanel {
 
             numberField = new JTextField();
             numberField.setEditable(false);
-            numberField.setText(String.valueOf(orderController.getLastOrderNumber()));
+            numberField.setText(String.valueOf(orderController.getLastOrderNumber() + 1));
             add(numberField);
 
             customerLabel = new JLabel("Client : ");

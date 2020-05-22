@@ -8,6 +8,7 @@ import userInterface.ManagementPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
     private JList<Topping> toppingsList;
@@ -58,6 +59,7 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
         for (int iTopping = 0; iTopping < chosenToppingsModel.getSize(); iTopping++)
             toppings.add(chosenToppingsModel.get(iTopping));
 
+        toppings.sort(Comparator.comparingInt(topping -> topping.getToppingID()));
         return toppings;
     }
 

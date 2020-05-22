@@ -45,7 +45,7 @@ public class MainPanel extends JPanel {
                 parent.getWindowContainer().add(new OrderForm(parent));
                 parent.repaint();
                 parent.setVisible(true);
-                parent.setSize(1200, 500);
+                parent.setSize(1300, 500);
                 repaint();
 
                 // valeurs à récupérer du formulaire
