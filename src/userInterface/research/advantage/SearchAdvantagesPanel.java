@@ -23,7 +23,7 @@ public class SearchAdvantagesPanel extends JPanel {
         isFirstWindow = true;
 
         form = new SearchAdvantagesForm();
-        searchButton = new JButton("Rechercher les Avantages");
+        searchButton = new JButton("Rechercher les avantages");
 
         this.add(form, BorderLayout.CENTER);
         this.add(searchButton, BorderLayout.SOUTH);

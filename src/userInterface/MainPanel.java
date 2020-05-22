@@ -17,7 +17,6 @@ public class MainPanel extends JPanel {
 
     public MainPanel(MainWindow parent) {
         this.setLayout(new BorderLayout());
-
         this.parent = parent;
 
         cup = new CoffeeCup();
@@ -28,7 +27,7 @@ public class MainPanel extends JPanel {
 
         newOrder = new JButton("Commander");
         newOrder.setBackground(new Color(255, 255, 255));
-        newOrder.setForeground(new Color(10, 161, 231));
+        newOrder.setForeground(new Color(19, 89, 194));
         newOrder.setFont(new Font("Arial", Font.BOLD, 30));
         newOrder.setPreferredSize(new Dimension(100, 50));
         this.add(newOrder, BorderLayout.SOUTH);

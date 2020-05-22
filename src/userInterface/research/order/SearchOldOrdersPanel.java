@@ -25,7 +25,7 @@ public class SearchOldOrdersPanel extends JPanel {
         form = new SearchOldOrdersForm();
         this.add(form, BorderLayout.CENTER);
 
-        search = new JButton("Rechercher");
+        search = new JButton("Rechercher les anciennes commandes");
         this.add(search, BorderLayout.SOUTH);
         search.addActionListener(new SearchListener());
     }

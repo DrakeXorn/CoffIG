@@ -9,11 +9,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class CoffeeCup extends JPanel {
+    private JLabel welcome;
     private ArrayList<CoffeeBean> coffeeBeansArray;
     private List<CoffeeBean> coffeeBeans;
 
     public CoffeeCup(){
         this.setBackground(new Color(207, 233, 255));
+
+        welcome = new JLabel("Bienvenue au CoffIG !");
+        welcome.setForeground(new Color(19, 89, 194));
+        welcome.setFont(new Font("Arial", Font.BOLD, 34));
+        welcome.setHorizontalAlignment(SwingConstants.CENTER);
+        welcome.setPreferredSize(new Dimension(420, 300));
+        this.add(welcome);
 
         coffeeBeansArray = new ArrayList<>();
         coffeeBeans = Collections.synchronizedList(coffeeBeansArray);
