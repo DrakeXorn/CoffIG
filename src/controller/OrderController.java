@@ -15,6 +15,7 @@ public class OrderController {
     }
 
     public void addOrder(Order order) throws ConnectionException, AddDataException {
+
         manager.addOrder(order);
     }
 
@@ -26,11 +27,11 @@ public class OrderController {
     public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
         return manager.getLastOrderNumber();
     }
-    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
+    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws ConnectionException, ModifyException {
         return manager.addPointsToLoyaltyCard(cardId, orderPrice);
     }
 
-    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
+    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws ConnectionException, ModifyException {
         return manager.removePointsToLoyaltyCard(cardId, numberPoints);
     }
 

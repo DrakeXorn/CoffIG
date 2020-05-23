@@ -215,7 +215,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             windowContainer.removeAll();
-            windowContainer.add(new CoffeeForm(MainWindow.this, null), BorderLayout.CENTER);
+            windowContainer.add(new CoffeeForm(null), BorderLayout.CENTER);
             windowContainer.add(new ButtonsAddCoffeeForm(MainWindow.this), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);

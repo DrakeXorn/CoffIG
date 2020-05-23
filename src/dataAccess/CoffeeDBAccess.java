@@ -26,6 +26,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
 
                 Coffee coffee = new Coffee(coffeeData.getInt("coffee_id"),
                         coffeeData.getString("label"),
+                        coffeeData.getString("origin_country"),
                         coffeeData.getInt("intensity"),
                         coffeeData.getDouble("weight_needed_for_preparation"),
                         coffeeData.getBoolean("is_in_grains"),
@@ -38,10 +39,6 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                                 coffeeData.getDouble("buying_price"),
                                 coffeeData.getInt("quantity"),
                                 calendar));
-
-                String originCountry = coffeeData.getString("origin_country");
-                if (!coffeeData.wasNull())
-                    coffee.setOriginCountry(originCountry);
 
                 int discoveryYear = coffeeData.getInt("discovery_year");
                 if (!coffeeData.wasNull())
@@ -147,9 +144,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         try {
             connection = SingletonConnection.getInstance();
             String updateCoffeeInstruction = "update coffee set label = ?, origin_country = ?, intensity = ?, weight_needed_for_preparation = ?, discovery_year = ?, is_in_grains = ?, is_environment_friendly = ?, price = ?, packaging = ?, recommended_consuming_moment = ? where coffee_id = ?";
-            String deleteDescriptionsInstruction = "delete from description where coffee_id = ?";
             PreparedStatement updateCoffeeStatement = connection.prepareStatement(updateCoffeeInstruction);
-            PreparedStatement deleteDescriptionStatement = connection.prepareStatement(deleteDescriptionsInstruction);
 
             updateCoffeeStatement.setString(1, coffee.getLabel());
             updateCoffeeStatement.setString(2, coffee.getOriginCountry());
@@ -173,9 +168,6 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
             updateCoffeeStatement.setInt(11, coffee.getCoffeeID());
             updateCoffeeStatement.executeUpdate();
 
-            deleteDescriptionStatement.setInt(1, coffee.getCoffeeID());
-
-            deleteDescriptionStatement.executeUpdate();
             for (String feature : coffee.getFeatures()) {
                 String addFeaturesToCoffeeInstruction = "insert ignore into feature (label) values (?)";
                 String insertDescriptionInstruction = "insert ignore into description (feature_label, coffee_id) values (?, ?)";

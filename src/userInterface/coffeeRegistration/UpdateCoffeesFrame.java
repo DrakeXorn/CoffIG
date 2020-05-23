@@ -41,7 +41,7 @@ public class UpdateCoffeesFrame extends JFrame {
             if (chosenCoffee != null) {
                 parent.resetSize();
                 parent.getWindowContainer().removeAll();
-                CoffeeForm coffeeForm = new CoffeeForm(parent, chosenCoffee);
+                CoffeeForm coffeeForm = new CoffeeForm(chosenCoffee);
                 parent.getWindowContainer().add(coffeeForm, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsUpdateCoffeeForm(parent), BorderLayout.SOUTH);
 

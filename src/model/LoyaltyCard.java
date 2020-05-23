@@ -3,7 +3,6 @@ package model;
 import model.exceptions.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {
@@ -11,11 +10,9 @@ public class LoyaltyCard {
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
     private ArrayList<Advantage> advantages;
-    private Customer customer;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
             throws IntegerInputException {
-        this.customer = customer;
         if(customer != null)
             this.loyaltyCardID = customer.getPhone();
 
@@ -53,22 +50,5 @@ public class LoyaltyCard {
     public void setPointsNumber(Integer pointsNumber) throws IntegerInputException {
         if (pointsNumber < 0) throw new IntegerInputException(pointsNumber, "le nombre de points", "Le nombre de points doit être positif");
         else this.pointsNumber = pointsNumber;
-    }
-
-    public void addAdvantages(ArrayList<Advantage> newRights) {
-        advantages.addAll(newRights);
-    }
-
-    public void removeAdvantages(ArrayList<Advantage> rightsToDelete) {
-        advantages.removeAll(rightsToDelete);
-    }
-
-    public String toString() {
-        // TODO: à modifier
-        return "Carte de fidélité numéro : " + loyaltyCardID + " créée le "
-                + registrationDate.get(Calendar.DAY_OF_MONTH)
-                + "/" + (registrationDate.get(Calendar.MONTH) + 1) +
-                "/" + registrationDate.get(Calendar.YEAR) +
-                " avec " + pointsNumber + " points de fidélité";
     }
 }

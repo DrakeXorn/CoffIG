@@ -13,6 +13,6 @@ public class ModifyException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Erreur lors de la " + modifyAttempt + " d'un " + object + "\n" + exceptionMessage;
+        return "Erreur lors de la " + modifyAttempt + " de/d'un " + object + "\n" + exceptionMessage;
     }
 }

@@ -1,5 +1,6 @@
 package userInterface.coffeeRegistration;
 
+import controller.CoffeeController;
 import controller.StockLocationController;
 import model.Coffee;
 import userInterface.MainWindow;
@@ -33,7 +34,7 @@ public class ButtonsAddCoffeeForm extends JPanel {
         public void actionPerformed(ActionEvent e) {
             parent.resetSize();
             parent.getWindowContainer().removeAll();
-            parent.getWindowContainer().add(new CoffeeForm(parent, null), BorderLayout.CENTER);
+            parent.getWindowContainer().add(new CoffeeForm(null), BorderLayout.CENTER);
             parent.getWindowContainer().add(new ButtonsAddCoffeeForm(parent), BorderLayout.SOUTH);
             parent.repaint();
             parent.setVisible(true);
@@ -54,10 +55,11 @@ public class ButtonsAddCoffeeForm extends JPanel {
                         if (form.getFeatures() != null)
                             coffee.setFeatures(form.getFeatures());
                         if (JOptionPane.showConfirmDialog(parent, coffee, "Confirmer l'ajout ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                            CoffeeController coffeeController = new CoffeeController();
                             StockLocationController stockController = new StockLocationController();
-                            stockController.updateStockLocation(coffee.getStockLocation());
 
-                            form.getController().addCoffee(coffee);
+                            stockController.updateStockLocation(coffee.getStockLocation());
+                            coffeeController.addCoffee(coffee);
                             parent.goBackHome();
                         }
                     } else

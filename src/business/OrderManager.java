@@ -28,27 +28,23 @@ public class OrderManager {
         return orderDataAccess.getLastOrderNumber();
     }
 
-    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
-        int price = (int) orderPrice;
-
-        if (cardId != null && price > 0)
-            return orderDataAccess.updatePointsToLoyaltyCard(cardId, price * 10);
-        else
-            return "Les points n'ont pas été ajouté à la carte de fidélité !";
+    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws ModifyException, ConnectionException {
+        return (cardId != null && (int) orderPrice > 0) ?
+                orderDataAccess.updatePointsToLoyaltyCard(cardId, (int) orderPrice * 10) :
+                "Les points n'ont pas été ajoutés à la carte de fidélité !";
     }
 
-    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
-        if (cardId != null && numberPoints > 0)
-            return orderDataAccess.updatePointsToLoyaltyCard(cardId, -numberPoints);
-        else
-            return "Les points n'ont pas été supprimé de la carte de fidélité !";
+    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws ModifyException, ConnectionException {
+        return (cardId != null && numberPoints > 0) ?
+                orderDataAccess.updatePointsToLoyaltyCard(cardId, -numberPoints) :
+                "Les points n'ont pas été supprimés de la carte de fidélité !";
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
         orderDataAccess.removeRight(loyaltyCardId, advantageId);
     }
 
-    public void closeConnexion() throws ClosedConnexion, ConnectionException{
+    public void closeConnexion() throws ClosedConnexion, ConnectionException {
         orderDataAccess.closeConnexion();
     }
 }

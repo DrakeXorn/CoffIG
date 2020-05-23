@@ -35,36 +35,21 @@ public class OrderDBAccess implements OrderDataAccess {
                 insertDrinkStatement.executeUpdate();
 
                 for (Topping topping : drinkOrdering.getToppings()) {
-                    String linkToppingToOrderingInstruction = "insert into supplement (order_number, drink_id, drink_label, topping_id) values (?, ?, ?, ?)";
-                    String updateStockInstruction = "update stock_location set quantity = ((select quantity from stock_location where alley = ? and shelf = ? and number = ?) - ?) where alley = ? and shelf = ? and number = ?";
+                    String linkToppingToOrderingInstruction = "insert into supplement (order_number, drink_label, drink_id, drink_size, topping_id) values (?, ?, ?, ?, ?)";
                     PreparedStatement linkToppingToOrderingStatement = connection.prepareStatement(linkToppingToOrderingInstruction);
-                    PreparedStatement updateStockStatement = connection.prepareStatement(updateStockInstruction);
 
                     linkToppingToOrderingStatement.setInt(1, order.getOrderNumber());
-                    linkToppingToOrderingStatement.setInt(2, drinkOrdering.getDrink().getCoffee().getCoffeeID());
-                    linkToppingToOrderingStatement.setString(3, drinkOrdering.getDrink().getCoffee().getLabel());
-                    linkToppingToOrderingStatement.setInt(4, topping.getToppingID());
+                    linkToppingToOrderingStatement.setString(2, drinkOrdering.getDrink().getLabel());
+                    linkToppingToOrderingStatement.setInt(3, drinkOrdering.getDrink().getCoffee().getCoffeeID());
+                    linkToppingToOrderingStatement.setString(4, drinkOrdering.getSize());
+                    linkToppingToOrderingStatement.setInt(5, topping.getToppingID());
                     linkToppingToOrderingStatement.executeUpdate();
-
-                    updateStockStatement.setInt(1, topping.getStock().getAlley());
-                    updateStockStatement.setInt(2, topping.getStock().getShelf());
-                    updateStockStatement.setInt(3, topping.getStock().getNumber());
-                    updateStockStatement.setInt(4, drinkOrdering.getNbrPieces());
-                    updateStockStatement.setInt(5, topping.getStock().getAlley());
-                    updateStockStatement.setInt(6, topping.getStock().getShelf());
-                    updateStockStatement.setInt(7, topping.getStock().getNumber());
-                    updateStockStatement.executeUpdate();
                 }
             }
 
             String insertFoodInstruction = "insert into food_ordering (food_id, order_number, nbr_pieces, selling_price) values (?, ?, ?, ?)";
             PreparedStatement insertFoodStatement = connection.prepareStatement(insertFoodInstruction);
             for (FoodOrdering foodOrdering : order.getFoodOrderings()) {
-                updateStockLocation(foodOrdering.getFood().getStockLocation().getAlley(),
-                        foodOrdering.getFood().getStockLocation().getShelf(),
-                        foodOrdering.getFood().getStockLocation().getNumber(),
-                        foodOrdering.getNbrPieces());
-
                 insertFoodStatement.setInt(1, foodOrdering.getFood().getFoodId());
                 insertFoodStatement.setInt(2, order.getOrderNumber());
                 insertFoodStatement.setInt(3, foodOrdering.getNbrPieces());
@@ -115,7 +100,7 @@ public class OrderDBAccess implements OrderDataAccess {
                     " left outer join food_ordering fo on o.order_number = fo.order_number" +
                     " left outer join food f on f.food_id = fo.food_id" +
                     " where o.beneficiary = ?" +
-                    " and o.date between ? and ?";
+                    " and o.`date` between ? and ?";
 
             if(isToTakeAway && !isOnSite)
                 sqlOrder += " and o.is_to_take_away = true";
@@ -123,9 +108,11 @@ public class OrderDBAccess implements OrderDataAccess {
                 sqlOrder += " and o.is_to_take_away = false";
 
             PreparedStatement orderStatement = connection.prepareStatement(sqlOrder);
+            endDate.add(GregorianCalendar.HOUR, 23);
+            endDate.add(GregorianCalendar.MINUTE, 59);
             orderStatement.setInt(1, customerId);
-            orderStatement.setDate(2, new java.sql.Date(startDate.getTimeInMillis()));
-            orderStatement.setDate(3, new java.sql.Date(endDate.getTimeInMillis()));
+            orderStatement.setDate(2, new java.sql.Date(startDate.getTime().getTime()));
+            orderStatement.setDate(3, new java.sql.Date(endDate.getTime().getTime()));
 
             ResultSet datasOrder = orderStatement.executeQuery();
 
@@ -202,7 +189,7 @@ public class OrderDBAccess implements OrderDataAccess {
         return orders;
     }
 
-    public String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
+    public String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws ModifyException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String sql = "update loyalty_card set points_number = points_number + ? where loyalty_card_id = ?";
@@ -213,9 +200,9 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException("la mise à jour des points de la carte de fidélité'", exception.getMessage());
+            throw new ModifyException("points de la carte de fidélité", exception.getMessage(), "mise à jour");
         }
-        return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajouté à" : "supprimé de") + " la carte de fidélité";
+        return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajoutés à" : "supprimés de") + " la carte de fidélité";
     }
 
     public int getPointsLoyaltyCard(String cardId) throws AllDataException, ConnectionException {
