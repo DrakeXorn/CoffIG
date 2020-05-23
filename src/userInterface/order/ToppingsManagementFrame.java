@@ -38,7 +38,6 @@ public class ToppingsManagementFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             parent.setToppings(toppingsPanel.getToppings());
-            parent.updatePrice();
             dispose();
         }
     }
