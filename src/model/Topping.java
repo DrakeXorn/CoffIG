@@ -37,7 +37,7 @@ public class Topping {
         return price;
     }
 
-    public StockLocation getStock() {
+    public StockLocation getStockLocation() {
         return stock;
     }
 

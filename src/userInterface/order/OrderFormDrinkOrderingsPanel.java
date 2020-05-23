@@ -84,8 +84,9 @@ public class OrderFormDrinkOrderingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (orderingsList.getSelectedValue() != null) {
+                for (Topping topping : orderingsList.getSelectedValue().getToppings())
+                    topping.getStockLocation().addNToQuantity(orderingsList.getSelectedValue().getNbrPieces());
                 listModel.removeElement(orderingsList.getSelectedValue());
-                parent.resetFoodList();
                 orderingsList.repaint();
                 parent.setButtonText();
             } else
