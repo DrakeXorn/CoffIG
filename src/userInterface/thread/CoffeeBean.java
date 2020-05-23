@@ -11,7 +11,7 @@ public class CoffeeBean {
     private final static int DELTA_Y = 1;
     private final static int RANGE = 60;
     private final static int MINIMUM = 360;
-    private final static int LIMIT = 320;
+    private final static int LIMIT = 323;
     private final static int INITIAL_Y = 0;
     private Image coffeeBean;
     private Rectangle placement;

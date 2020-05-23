@@ -26,6 +26,7 @@ public class OrderController {
     public Integer getLastOrderNumber() throws ConnectionException, AllDataException {
         return manager.getLastOrderNumber();
     }
+  
     public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws ModifyException, ConnectionException {
         return manager.addPointsToLoyaltyCard(cardId, orderPrice);
     }

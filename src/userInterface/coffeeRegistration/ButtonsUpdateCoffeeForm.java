@@ -1,5 +1,7 @@
 package userInterface.coffeeRegistration;
 
+import controller.CoffeeController;
+import controller.StockLocationController;
 import model.Coffee;
 import userInterface.MainWindow;
 import userInterface.utils.InputCheck;
@@ -49,7 +51,10 @@ public class ButtonsUpdateCoffeeForm extends JPanel {
                         if (form.getFeatures() != null)
                             coffee.setFeatures(form.getFeatures());
                         if (JOptionPane.showConfirmDialog(parent, coffee, "Confirmer la modification ?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                            form.getController().updateCoffee(coffee);
+                            CoffeeController coffeeController = new CoffeeController();
+                            StockLocationController stockLocationController = new StockLocationController();
+                            coffeeController.updateCoffee(coffee);
+                            stockLocationController.updateStockLocation(coffee.getStockLocation());
                             parent.goBackHome();
                         }
                     } else

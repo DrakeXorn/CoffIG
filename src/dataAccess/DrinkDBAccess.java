@@ -42,6 +42,7 @@ public class DrinkDBAccess implements DrinkDataAccess {
                     drinks.add(new Drink(drinkData.getString("label"),
                             new Coffee(coffeeData.getInt("coffee_id"),
                                     coffeeData.getString("label"),
+                                    coffeeData.getString("origin_country"),
                                     coffeeData.getInt("intensity"),
                                     coffeeData.getDouble("weight_needed_for_preparation"),
                                     coffeeData.getBoolean("is_in_grains"),

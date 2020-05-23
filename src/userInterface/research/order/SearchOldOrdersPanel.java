@@ -33,11 +33,12 @@ public class SearchOldOrdersPanel extends JPanel {
     private class SearchListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            try {
-                OrderController controller = new OrderController();
-                GregorianCalendar endDateConverted = new GregorianCalendar();
-                GregorianCalendar startDateConverted = new GregorianCalendar();
-                GregorianCalendar today = (GregorianCalendar)Calendar.getInstance();
+            if (form.getEndDate().getDate() != null) {
+                try {
+                    OrderController controller = new OrderController();
+                    GregorianCalendar endDateConverted = new GregorianCalendar();
+                    GregorianCalendar startDateConverted = new GregorianCalendar();
+                    GregorianCalendar today = (GregorianCalendar) Calendar.getInstance();
 
                 endDateConverted.setTime(Date.from(form.getEndDate().getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 startDateConverted.setTime(Date.from(form.getStartDate().getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -50,21 +51,22 @@ public class SearchOldOrdersPanel extends JPanel {
                 if(!form.getTakeAway().isSelected() && !form.getOnSite().isSelected())
                     throw new BooleanInputException("Veuillez sélectionner au moins une des deux options : à emporter ou sur place");
 
-                Customer customer = form.getCustomers().get(form.getCustomersBox().getSelectedIndex());
-                ArrayList<Order> orders = controller.searchOrders(customer.getUserID(),
-                        startDateConverted, endDateConverted,
-                        form.getTakeAway().isSelected(), form.getOnSite().isSelected());
-                if(orders.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "La recherche n'a trouvé aucune commande correspondant aux critères demandés",
-                            "Recherche non aboutie !", JOptionPane.INFORMATION_MESSAGE);
+                    Customer customer = form.getCustomers().get(form.getCustomersBox().getSelectedIndex());
+                    ArrayList<Order> orders = controller.searchOrders(customer.getUserID(),
+                            startDateConverted, endDateConverted,
+                            form.getTakeAway().isSelected(), form.getOnSite().isSelected());
+                    if (orders.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "La recherche n'a trouvé aucune commande correspondant aux critères demandés",
+                                "Recherche non aboutie !", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
+                    }
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(),
+                            "Erreur !", JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
-                }
-            } catch (Exception exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),
-                        "Erreur !", JOptionPane.ERROR_MESSAGE);
-            }
+            } else
+                JOptionPane.showMessageDialog(SearchOldOrdersPanel.this, "Vous devez choisir une date limite !", "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

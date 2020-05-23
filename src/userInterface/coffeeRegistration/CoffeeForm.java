@@ -6,7 +6,6 @@ import controller.StockLocationController;
 import model.Coffee;
 import model.StockLocation;
 import model.exceptions.*;
-import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,6 @@ import java.util.*;
 
 
 public class CoffeeForm extends JPanel {
-    private MainWindow parent;
     private JLabel coffeeIDLabel, coffeeNameLabel, countryLabel, intensityLabel, weightLabel, discoveryDateLabel, priceLabel,
             packagingLabel, momentLabel, alleyLabel, shelfLabel, numberLabel, quantityLabel, expirationDateLabel, showFeaturesLabel;
     private JTextField coffeeID, coffeeName, weightNeeded, price, packaging, recommendedMoment;
@@ -26,15 +24,13 @@ public class CoffeeForm extends JPanel {
     private DatePicker expirationDatePicker;
     private JCheckBox isInGrains, isEnvironmentFriendly;
     private JButton showFeaturesButton;
-    private CoffeeController controller;
     private ArrayList<String> features;
     private Coffee coffee;
 
-    public CoffeeForm(MainWindow parent, Coffee coffeeToUpdate) {
+    public CoffeeForm(Coffee coffeeToUpdate) {
         try {
-            this.parent = parent;
             setLayout(new GridLayout(16, 2));
-            controller = new CoffeeController();
+            CoffeeController controller = new CoffeeController();
             ArrayList<String> countriesList = new ArrayList<>();
 
             coffeeIDLabel = new JLabel("Numéro du café : ");
@@ -198,6 +194,7 @@ public class CoffeeForm extends JPanel {
             isEnvironmentFriendly.setSelected(coffee.isEnvironmentFriendly());
             features = coffee.getFeatures();
         } else {
+            CoffeeController controller = new CoffeeController();
             coffeeID.setText(String.valueOf(controller.getLastCoffeeID() + 1));
         }
     }
@@ -206,10 +203,10 @@ public class CoffeeForm extends JPanel {
         StockLocationController stockLocationController = new StockLocationController();
         ArrayList<StockLocation> stockLocations = stockLocationController.getAllStockLocations();
         GregorianCalendar expirationDate = new GregorianCalendar();
-        GregorianCalendar discoveryDate = new GregorianCalendar((int) discoveryYear.getValue(), GregorianCalendar.JANUARY, 1);
         StockLocation coffeeLocation;
 
         expirationDate.setTime(Date.from(expirationDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        expirationDate.add(GregorianCalendar.HOUR, 23);
 
         coffeeLocation = new StockLocation(Integer.parseInt(alley.getValue().toString()),
                 Integer.parseInt(shelf.getValue().toString()),
@@ -218,23 +215,24 @@ public class CoffeeForm extends JPanel {
                 Integer.parseInt(quantityBought.getValue().toString()),
                 expirationDate);
 
-        return (!stockLocations.contains(coffeeLocation) || coffeeLocation.equals(coffee.getStockLocation())) ?
+        Coffee newCoffee = (!stockLocations.contains(coffeeLocation) || coffeeLocation.equals(coffee.getStockLocation())) ?
                 new Coffee(Integer.parseInt(coffeeID.getText()),
                         coffeeName.getText(),
                         String.valueOf(countries.getSelectedItem()),
                         (Integer) intensity.getValue(),
                         Double.parseDouble(weightNeeded.getText()) / 1000,
-                        discoveryDate,
                         isInGrains.isSelected(),
                         isEnvironmentFriendly.isSelected(),
                         Double.parseDouble(price.getText()),
                         Double.parseDouble(packaging.getText()),
-                        recommendedMoment.getText().toLowerCase(),
                         coffeeLocation) : null;
-    }
 
-    public CoffeeController getController() {
-        return controller;
+        if (newCoffee != null) {
+            newCoffee.setRecommendedConsumingMoment(recommendedMoment.getText().toLowerCase());
+            newCoffee.setDiscoveryYear((int) discoveryYear.getValue());
+        }
+
+        return newCoffee;
     }
 
     public JTextField getCoffeeID() {
