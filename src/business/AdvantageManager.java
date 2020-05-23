@@ -17,7 +17,7 @@ public class AdvantageManager {
     }
 
     public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AllDataException {
-        return dataAccessor.getAllAdvantageDiscount();
+        return dataAccessor.getAllAdvantageDiscounts();
     }
 
     public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {

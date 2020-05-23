@@ -1,6 +1,6 @@
 package userInterface.order;
 
-import controller.ToppingController;
+import controller.OrderController;
 import model.Topping;
 import userInterface.ButtonsManagementPanel;
 import userInterface.ManagementPanel;
@@ -20,7 +20,7 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
 
     public ToppingsManagementPanel(ToppingsManagementFrame parent) {
         try {
-            ToppingController controller = new ToppingController();
+            OrderController controller = new OrderController();
             ArrayList<Topping> toppings = controller.getAllAvailableToppings();
             setLayout(new GridLayout(1, 3));
 

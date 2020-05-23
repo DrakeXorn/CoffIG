@@ -198,10 +198,10 @@ public class OrderDBAccess implements OrderDataAccess {
         return orders;
     }
 
-    public String updatePointsToLoyaltyCard(String cardId, int numberPoints) throws ModifyException, ConnectionException {
+    public void updateLoyaltyCardPoints(String cardId, int numberPoints) throws ModifyException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sql = "update loyalty_card set points_number = points_number + ? where loyalty_card_id = ?";
+            String sql = "update loyalty_card set points_number = ? where loyalty_card_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, numberPoints);
             statement.setString(2, cardId);
@@ -211,11 +211,10 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (SQLException exception) {
             throw new ModifyException("/des points de la carte de fidélité'", exception.getMessage());
         }
-        return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajoutés à" : "supprimés de") + " la carte de fidélité";
     }
 
-    public int getPointsLoyaltyCard(String cardId) throws AllDataException, ConnectionException {
-        int points = 0;
+    public Integer getPointsLoyaltyCard(String cardId) throws AllDataException, ConnectionException {
+        Integer points = 0;
         try {
             Connection connection = SingletonConnection.getInstance();
             String sql = "select points_number from loyalty_card where loyalty_card_id = ?";
@@ -232,23 +231,23 @@ public class OrderDBAccess implements OrderDataAccess {
         return points;
     }
 
-    public ArrayList<Integer> getPointsAdvantage(String cardId) throws AllDataException, ConnectionException {
-        ArrayList<Integer> points = new ArrayList<>();
+    public Integer getPointsAdvantage(Integer advantageId) throws AllDataException, ConnectionException {
+        Integer point;
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sql = "select points_required from advantage a join `right` r on a.advantage_id = r.advantage_id where r.loyalty_card_id = ?";
+            String sql = "select points_required from advantage where advantage_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, cardId);
+            statement.setInt(1, advantageId);
             ResultSet data = statement.executeQuery();
-            while(data.next())
-                points.add(data.getInt("points_number"));
+            data.next();
+            point = data.getInt("points_number");
 
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
             throw new AllDataException("des points de l'avantage", exception.getMessage());
         }
-        return points;
+        return point;
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
@@ -293,4 +292,137 @@ public class OrderDBAccess implements OrderDataAccess {
             throw new ModifyException("stock", exception.getMessage());
         }
     }
+
+    @Override
+    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        ArrayList<Drink> drinks = new ArrayList<>();
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String drinkSqlInstruction = "select * from drink";
+            PreparedStatement drinkStatement = connection.prepareStatement(drinkSqlInstruction);
+            ResultSet drinkData = drinkStatement.executeQuery();
+
+            while (drinkData.next()) {
+                String coffeeSqlInstruction = "select c.*, buying_price, quantity, expiration_date" +
+                        " from coffee c join drink on c.coffee_id = drink.coffee_id" +
+                        " join stock_location sl on c.stock_location_alley = sl.alley" +
+                        " and c.stock_location_shelf = sl.shelf" +
+                        " and c.stock_location_number = sl.number" +
+                        " where drink.label = ?";
+                PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
+                coffeeStatement.setString(1, drinkData.getString("label"));
+                ResultSet coffeeData = coffeeStatement.executeQuery();
+
+                if (coffeeData.next()) {
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    calendar.setTime(coffeeData.getDate("expiration_date"));
+
+                    drinks.add(new Drink(drinkData.getString("label"),
+                            new Coffee(coffeeData.getInt("coffee_id"),
+                                    coffeeData.getString("label"),
+                                    coffeeData.getString("origin_country"),
+                                    coffeeData.getInt("intensity"),
+                                    coffeeData.getDouble("weight_needed_for_preparation"),
+                                    coffeeData.getBoolean("is_in_grains"),
+                                    coffeeData.getBoolean("is_environment_friendly"),
+                                    coffeeData.getDouble("price"),
+                                    coffeeData.getDouble("packaging"),
+                                    new StockLocation(coffeeData.getInt("stock_location_alley"),
+                                            coffeeData.getInt("stock_location_shelf"),
+                                            coffeeData.getInt("stock_location_number"),
+                                            coffeeData.getDouble("buying_price"),
+                                            coffeeData.getInt("quantity"),
+                                            calendar)),
+                            drinkData.getBoolean("is_cold")));
+                }
+            }
+        } catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "boissons");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return drinks;
+    }
+
+    @Override
+    public ArrayList<Food> getAllAvailableFoods() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        ArrayList<Food> availableFoods = new ArrayList<>();
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInstruction = "select food_id, label, price, alley, shelf, number, buying_price, quantity, expiration_date" +
+                    " from food" +
+                    " join stock_location sl on food.stock_location_alley = sl.alley" +
+                    " and food.stock_location_shelf = sl.shelf" +
+                    " and food.stock_location_number = sl.number" +
+                    " where expiration_date > ?" +
+                    " and sl.quantity > 0" +
+                    " order by food_id";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                GregorianCalendar expirationDate = new GregorianCalendar();
+                expirationDate.setTime(data.getDate("expiration_date"));
+
+                availableFoods.add(new Food(data.getInt("food_id"),
+                        data.getString("label"),
+                        data.getDouble("price"),
+                        new StockLocation(data.getInt("alley"),
+                                data.getInt("shelf"),
+                                data.getInt("number"),
+                                data.getDouble("buying_price"),
+                                data.getInt("quantity"),
+                                expirationDate)));
+            }
+        } catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "nourritures");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return availableFoods;
+    }
+
+    @Override
+    public ArrayList<Topping> getAllAvailableToppings() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        ArrayList<Topping> toppings = new ArrayList<>();
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sqlInstruction = "select * from topping t" +
+                    " join stock_location sl on t.stock_location_alley = sl.alley" +
+                    " and t.stock_location_shelf = sl.shelf" +
+                    " and t.stock_location_number = sl.number" +
+                    " where sl.expiration_date >= ?" +
+                    " and sl.quantity > 0" +
+                    " order by t.topping_id";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                GregorianCalendar expirationDate = new GregorianCalendar();
+                expirationDate.setTime(data.getDate("expiration_date"));
+
+                toppings.add(new Topping(data.getInt("topping_id"),
+                        data.getString("label"),
+                        data.getDouble("price"),
+                        new StockLocation(data.getInt("alley"),
+                                data.getInt("shelf"),
+                                data.getInt("number"),
+                                data.getDouble("buying_price"),
+                                data.getInt("quantity"),
+                                expirationDate)));
+            }
+        } catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "toppings");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return toppings;
+    }
+
+
 }

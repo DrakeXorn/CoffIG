@@ -1,7 +1,10 @@
 package controller;
 
 import business.OrderManager;
+import model.Drink;
+import model.Food;
 import model.Order;
+import model.Topping;
 import model.exceptions.*;
 
 import java.util.ArrayList;
@@ -26,13 +29,17 @@ public class OrderController {
     public Integer getLastOrderNumber() throws ConnectionException, AllDataException {
         return manager.getLastOrderNumber();
     }
-  
-    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws ModifyException, ConnectionException {
-        return manager.addPointsToLoyaltyCard(cardId, orderPrice);
+
+    public void updateLoyaltyCardPoints(String cardId, int numberPoints) throws ModifyException, ConnectionException {
+        manager.updateLoyaltyCardPoints(cardId,numberPoints);
     }
 
-    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws ModifyException, ConnectionException {
-        return manager.removePointsToLoyaltyCard(cardId, numberPoints);
+    public int addPoints(Integer loyaltyCardPoints, double orderPrice){
+        return manager.addPoints(loyaltyCardPoints, orderPrice);
+    }
+
+    public int removePoints(Integer loyaltyCardPoints, Integer advantagePoints){
+        return manager.removePoints(loyaltyCardPoints, advantagePoints);
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
@@ -41,5 +48,17 @@ public class OrderController {
 
     public void closeConnexion() throws ClosedConnexion, ConnectionException{
         manager.closeConnexion();
+    }
+
+    public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        return manager.getAllDrinks();
+    }
+
+    public ArrayList<Food> getAllAvailableFoods() throws ConnectionException, DoubleInputException, DateException, IntegerInputException, AllDataException {
+        return manager.getAllAvailableFoods();
+    }
+
+    public ArrayList<Topping> getAllAvailableToppings() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
+        return manager.getAllAvailableToppings();
     }
 }

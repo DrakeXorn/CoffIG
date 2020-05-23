@@ -1,7 +1,6 @@
 package dataAccess;
 
-import model.Coffee;
-import model.StockLocation;
+import model.*;
 import model.exceptions.*;
 
 import java.io.IOException;
@@ -236,4 +235,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         }
         return features;
     }
+
+
+
 }

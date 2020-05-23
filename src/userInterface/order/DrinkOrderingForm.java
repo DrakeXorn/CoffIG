@@ -1,6 +1,6 @@
 package userInterface.order;
 
-import controller.DrinkController;
+import controller.OrderController;
 import model.Drink;
 import model.DrinkOrdering;
 import model.Topping;
@@ -28,7 +28,7 @@ public class DrinkOrderingForm extends JPanel {
         toppings = new ArrayList<>();
 
         try {
-            DrinkController controller = new DrinkController();
+            OrderController controller = new OrderController();
             setLayout(new GridLayout(3, 4));
 
             drinkLabel = new JLabel("Boisson souhaitée : ");

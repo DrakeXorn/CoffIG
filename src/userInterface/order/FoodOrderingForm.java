@@ -1,9 +1,8 @@
 package userInterface.order;
 
-import controller.FoodController;
+import controller.OrderController;
 import model.Food;
 import model.FoodOrdering;
-import userInterface.order.OrderFormCentralPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -23,7 +22,7 @@ public class FoodOrderingForm extends JPanel {
         this.parent = parent;
 
         try {
-            FoodController controller = new FoodController();
+            OrderController controller = new OrderController();
             setLayout(new GridLayout(2, 4));
 
             foodLabel = new JLabel("Nourriture souhaitée : ");

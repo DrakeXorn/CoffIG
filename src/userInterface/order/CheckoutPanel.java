@@ -45,7 +45,6 @@ public class CheckoutPanel extends JPanel {
 
             setVisible(true);
         } catch (Exception exception) {
-            exception.printStackTrace();
             JOptionPane.showMessageDialog(getParent(), exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

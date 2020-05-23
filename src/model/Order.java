@@ -10,6 +10,7 @@ public class Order {
     private Boolean toTakeAway;
     private Customer beneficiary;
     private Employee orderPicker;
+    private Double discount;
     private ArrayList<FoodOrdering> foodOrderings;
     private ArrayList<DrinkOrdering> drinkOrderings;
 
@@ -32,7 +33,11 @@ public class Order {
         for (DrinkOrdering drinkOrdering : drinkOrderings)
             price += drinkOrdering.getPrice();
 
-        return price;
+        return discount != null ? price - discount : price;
+    }
+
+    public void setDiscount(Double discount){
+        this.discount = discount;
     }
 
     public void setBeneficiary(Customer beneficiary) {

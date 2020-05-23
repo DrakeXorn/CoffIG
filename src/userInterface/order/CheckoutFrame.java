@@ -1,6 +1,7 @@
 package userInterface.order;
 
 import controller.OrderController;
+import model.LoyaltyCard;
 import model.Order;
 
 import javax.swing.*;
@@ -44,23 +45,34 @@ public class CheckoutFrame extends JFrame {
             try {
                 OrderController controller = new OrderController();
                 Order order = new Order(parent.getOrderNumber(), (GregorianCalendar) GregorianCalendar.getInstance(), checkoutPanel.isToTakeAway());
-                String message = "Votre commande a bien été prise en compte.\n" + controller.addPointsToLoyaltyCard(parent.getBeneficiary().getLoyaltyCard().getLoyaltyCardID(), order.getPrice()) + "\n";
+
+                LoyaltyCard card = parent.getBeneficiary().getLoyaltyCard();
 
                 order.setBeneficiary(parent.getBeneficiary());
                 order.setOrderPicker(parent.getOrderPicker());
                 order.setFoodOrderings(parent.getFoodOrderings());
                 order.setDrinkOrderings(parent.getDrinkOrderings());
-                controller.addOrder(order);
+
+                int numberPoints = controller.addPoints(card.getPointsNumber(), order.getPrice());
+                controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
+
                 if (checkoutPanel.getChosenAdvantage() != null) {
-                    message += controller.removePointsToLoyaltyCard(parent.getBeneficiary().getLoyaltyCard().getLoyaltyCardID(), checkoutPanel.getChosenAdvantage().getPointsRequired());
+                    order.setDiscount(checkoutPanel.getChosenAdvantage().getDiscount());
+                    numberPoints = controller.removePoints(numberPoints, checkoutPanel.getChosenAdvantage().getPointsRequired());
+                    controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
                     controller.removeRight(parent.getBeneficiary().getLoyaltyCard().getLoyaltyCardID(), checkoutPanel.getChosenAdvantage().getAdvantageID());
                 }
+                controller.addOrder(order);
+
+                String message = "Votre commande a bien été prise en compte.\n " +
+                        "Votre carte de fidélité compte à présent " + numberPoints + "\n" +
+                        "(précedement " + card.getPointsNumber() + " points)";
+
                 JOptionPane.showMessageDialog(parent.getWindow(),  message, "Confirmation de commande", JOptionPane.INFORMATION_MESSAGE);
 
                 parent.getWindow().goBackHome();
                 dispose();
             } catch (Exception exception) {
-                exception.printStackTrace();
                 JOptionPane.showMessageDialog(parent, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

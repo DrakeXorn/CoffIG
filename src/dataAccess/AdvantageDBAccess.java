@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class AdvantageDBAccess implements AdvantageDataAccess {
     @Override
-    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AllDataException {
+    public ArrayList<Double> getAllAdvantageDiscounts() throws ConnectionException, AllDataException {
         ArrayList<Double> discounts = new ArrayList<>();
 
         try {
