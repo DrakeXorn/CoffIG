@@ -22,11 +22,15 @@ public class CoffeeManager {
         dataAccessor.addCoffee(coffee);
     }
 
-    public int getNbrCoffees() throws ConnectionException, AddDataException {
-        return dataAccessor.getLastId();
+    public int getLastCoffeeID() throws ConnectionException, AddDataException {
+        return dataAccessor.getLastCoffeeID();
     }
 
-    public void updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException {
         dataAccessor.updateCoffee(coffee);
+    }
+
+    public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
+        return dataAccessor.getFeatures();
     }
 }

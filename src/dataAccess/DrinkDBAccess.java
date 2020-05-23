@@ -25,13 +25,16 @@ public class DrinkDBAccess implements DrinkDataAccess {
             ResultSet drinkData = drinkStatement.executeQuery();
 
             while (drinkData.next()) {
-                String coffeeSqlInstruction = "select c.*, buying_price, quantity, expiration_date from coffee c join drink on c.coffee_id = drink.coffee_id join stock_location sl on c.stock_location_alley = sl.alley and c.stock_location_shelf = sl.shelf and c.stock_location_number = sl.number where drink.label = ?";
+                String coffeeSqlInstruction = "select c.*, buying_price, quantity, expiration_date" +
+                        " from coffee c join drink on c.coffee_id = drink.coffee_id" +
+                        " join stock_location sl on c.stock_location_alley = sl.alley" +
+                        " and c.stock_location_shelf = sl.shelf" +
+                        " and c.stock_location_number = sl.number" +
+                        " where drink.label = ?";
                 PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
-                ResultSet coffeeData;
-
                 coffeeStatement.setString(1, drinkData.getString("label"));
+                ResultSet coffeeData = coffeeStatement.executeQuery();
 
-                coffeeData = coffeeStatement.executeQuery();
                 if (coffeeData.next()) {
                     GregorianCalendar calendar = new GregorianCalendar();
                     calendar.setTime(coffeeData.getDate("expiration_date"));
@@ -59,7 +62,6 @@ public class DrinkDBAccess implements DrinkDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-
         return drinks;
     }
 }

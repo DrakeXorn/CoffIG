@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface CustomerDataAccess {
     // create
-    void addCustomer(Customer customer) throws AddException, ConnectionException;
+    void addCustomer(Customer customer) throws AddDataException, ConnectionException;
 
     // read
     ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException;

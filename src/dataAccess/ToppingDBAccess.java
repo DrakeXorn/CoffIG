@@ -16,16 +16,19 @@ public class ToppingDBAccess implements ToppingDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select * from topping t join stock_location sl on t.stock_location_alley = sl.alley and t.stock_location_shelf = sl.shelf and t.stock_location_number = sl.number where sl.expiration_date >= ? and sl.quantity > 0 order by t.topping_id";
+            String sqlInstruction = "select * from topping t" +
+                    " join stock_location sl on t.stock_location_alley = sl.alley" +
+                    " and t.stock_location_shelf = sl.shelf" +
+                    " and t.stock_location_number = sl.number" +
+                    " where sl.expiration_date >= ?" +
+                    " and sl.quantity > 0" +
+                    " order by t.topping_id";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data;
-
             preparedStatement.setDate(1, new Date(GregorianCalendar.getInstance().getTimeInMillis()));
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
                 GregorianCalendar expirationDate = new GregorianCalendar();
-
                 expirationDate.setTime(data.getDate("expiration_date"));
 
                 toppings.add(new Topping(data.getInt("topping_id"),
@@ -43,7 +46,6 @@ public class ToppingDBAccess implements ToppingDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-
         return toppings;
     }
 }

@@ -15,7 +15,7 @@ public class OrderManager {
         orderDataAccess = new OrderDBAccess();
     }
 
-    public void addOrder(Order order) throws ConnectionException, AddDataException {
+    public void addOrder(Order order) throws ConnectionException, AddDataException, ModifyException {
         orderDataAccess.addOrder(order);
     }
 
@@ -24,11 +24,11 @@ public class OrderManager {
         return orderDataAccess.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
 
-    public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
+    public Integer getLastOrderNumber() throws ConnectionException, AllDataException {
         return orderDataAccess.getLastOrderNumber();
     }
 
-    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws AllDataException, ConnectionException {
+    public String addPointsToLoyaltyCard(String cardId, double orderPrice) throws ModifyException, ConnectionException {
         int price = (int) orderPrice;
 
         if (cardId != null && price > 0)
@@ -37,7 +37,7 @@ public class OrderManager {
             return "Les points n'ont pas été ajouté à la carte de fidélité !";
     }
 
-    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws AllDataException, ConnectionException {
+    public String removePointsToLoyaltyCard(String cardId, int numberPoints) throws ModifyException, ConnectionException {
         if (cardId != null && numberPoints > 0)
             return orderDataAccess.updatePointsToLoyaltyCard(cardId, -numberPoints);
         else

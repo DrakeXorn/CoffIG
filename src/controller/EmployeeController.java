@@ -1,12 +1,14 @@
 package controller;
 
 import business.EmployeeManager;
+import model.Assignment;
 import model.Employee;
 import model.exceptions.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class EmployeeController {
     private EmployeeManager manager;
@@ -19,7 +21,7 @@ public class EmployeeController {
         return manager.getAllEmployees();
     }
 
-    public Employee getManager() throws AllDataException, ConnectionException, IOException, SQLException, StringInputException, DateException, CharacterInputException {
+    public Employee getManager() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException {
         return manager.getManager();
     }
 
@@ -33,5 +35,9 @@ public class EmployeeController {
 
     public int getLastParkingSpaceNumber() throws ConnectionException, AddDataException {
         return manager.getLastParkingSpaceNumber();
+    }
+
+    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException {
+        return manager.searchAssignments(identity, startDate, endDate);
     }
 }

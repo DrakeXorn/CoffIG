@@ -18,7 +18,7 @@ public class StockLocationManager {
         return dataAccessor.getAllStockLocations();
     }
 
-    public void updateStockLocation(StockLocation stockLocation) throws ConnectionException, AddDataException {
+    public void updateStockLocation(StockLocation stockLocation) throws ConnectionException, ModifyException {
         dataAccessor.updateStockLocation(stockLocation);
     }
 }

@@ -12,9 +12,11 @@ import java.util.GregorianCalendar;
 public class AdvantageManager {
     private AdvantageDataAccess dataAccessor;
 
-    public AdvantageManager() { dataAccessor = new AdvantageDBAccess(); }
+    public AdvantageManager() {
+        dataAccessor = new AdvantageDBAccess();
+    }
 
-    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AllDataException {
         return dataAccessor.getAllAdvantageDiscount();
     }
 

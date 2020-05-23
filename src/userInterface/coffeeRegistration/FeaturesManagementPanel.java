@@ -1,6 +1,6 @@
 package userInterface.coffeeRegistration;
 
-import controller.FeatureController;
+import controller.CoffeeController;
 import userInterface.ButtonsManagementPanel;
 import userInterface.ManagementPanel;
 import userInterface.utils.InputCheck;
@@ -23,7 +23,7 @@ public class FeaturesManagementPanel extends JPanel implements ManagementPanel {
 
     public FeaturesManagementPanel(FeaturesManagementFrame parent) {
         try {
-            FeatureController controller = new FeatureController();
+            CoffeeController controller = new CoffeeController();
             features = controller.getFeatures();
 
             setLayout(new GridLayout(2, 3));
