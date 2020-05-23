@@ -16,8 +16,10 @@ public class OrderForm extends JPanel {
     private OrderFormRecapPanel recapPanel;
     private OrderFormCentralPanel centralPanel;
     private OrderFormBottomPanel bottomBar;
+    private MainWindow mainWindow;
 
-    public OrderForm(MainWindow parent) throws AllDataException, ConnectionException, ClosedShopException, StringInputException, DateException, CharacterInputException {
+    public OrderForm(MainWindow mainWindow) throws AllDataException, ConnectionException, ClosedShopException, StringInputException, DateException, CharacterInputException {
+        this.mainWindow = mainWindow;
         setLayout(new BorderLayout());
 
         topBar = new OrderFormTopPanel(this);
@@ -29,6 +31,10 @@ public class OrderForm extends JPanel {
         add(centralPanel, BorderLayout.CENTER);
         add(bottomBar, BorderLayout.SOUTH);
         add(recapPanel, BorderLayout.EAST);
+    }
+
+    public MainWindow getWindow() {
+        return mainWindow;
     }
 
     public Integer getOrderNumber() {

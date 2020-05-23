@@ -3,8 +3,6 @@ package dataAccess;
 import model.Employee;
 import model.exceptions.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface EmployeeDataAccess {

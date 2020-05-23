@@ -4,8 +4,6 @@ import business.EmployeeManager;
 import model.Employee;
 import model.exceptions.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeController {
@@ -19,7 +17,7 @@ public class EmployeeController {
         return manager.getAllEmployees();
     }
 
-    public Employee getManager() throws AllDataException, ConnectionException, IOException, SQLException, StringInputException, DateException, CharacterInputException {
+    public Employee getManager() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException {
         return manager.getManager();
     }
 

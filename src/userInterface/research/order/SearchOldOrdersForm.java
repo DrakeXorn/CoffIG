@@ -40,7 +40,6 @@ public class SearchOldOrdersForm extends JPanel {
 
             startDate = new DatePicker();
             startDate.setDate(LocalDate.of(2019, Month.JANUARY, 1));
-
             this.add(startDate);
 
             endDateLabel = new JLabel("Date de fin :");
