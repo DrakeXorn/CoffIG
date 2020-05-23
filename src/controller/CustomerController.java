@@ -12,7 +12,7 @@ public class CustomerController {
         manager = new CustomerManager();
     }
 
-    public void addCustomer(Customer customer) throws AddException, ConnectionException {
+    public void addCustomer(Customer customer) throws AddDataException, ConnectionException {
         manager.addCustomer(customer);
     }
 

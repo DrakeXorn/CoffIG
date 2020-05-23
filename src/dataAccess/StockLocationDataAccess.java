@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public interface StockLocationDataAccess {
     ArrayList<StockLocation> getAllStockLocations() throws ConnectionException, AllDataException, DoubleInputException, IntegerInputException, DateException;
-    void updateStockLocation(StockLocation stockLocation) throws ConnectionException, AddDataException;
+    void updateStockLocation(StockLocation stockLocation) throws ConnectionException, ModifyException;
 }

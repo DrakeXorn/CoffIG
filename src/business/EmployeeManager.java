@@ -2,10 +2,11 @@ package business;
 
 import dataAccess.EmployeeDBAccess;
 import dataAccess.EmployeeDataAccess;
+import model.Assignment;
 import model.Employee;
 import model.exceptions.*;
-
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class EmployeeManager {
     private EmployeeDataAccess employeeAccessor;
@@ -32,5 +33,9 @@ public class EmployeeManager {
 
     public int getLastParkingSpaceNumber() throws ConnectionException, AddDataException {
         return employeeAccessor.getLastParkingSpaceNumber();
+    }
+
+    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException {
+        return employeeAccessor.searchAssignments(identity, startDate, endDate);
     }
 }

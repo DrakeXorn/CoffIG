@@ -2,7 +2,6 @@ package dataAccess;
 
 import model.*;
 import model.exceptions.*;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.GregorianCalendar;
 
 public class OrderDBAccess implements OrderDataAccess {
     @Override
-    public void addOrder(Order order) throws ConnectionException, AddDataException {
+    public void addOrder(Order order) throws ConnectionException, AddDataException, ModifyException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String insertInstruction = "insert into `order` (order_number, date, is_to_take_away, beneficiary, order_picker) values (?, ?, ?, ?, ?)";
@@ -38,6 +37,11 @@ public class OrderDBAccess implements OrderDataAccess {
                     String linkToppingToOrderingInstruction = "insert into supplement (order_number, drink_label, drink_id, drink_size, topping_id) values (?, ?, ?, ?, ?)";
                     PreparedStatement linkToppingToOrderingStatement = connection.prepareStatement(linkToppingToOrderingInstruction);
 
+                    updateQuantityStockLocation(topping.getStockLocation().getAlley(),
+                        topping.getStockLocation().getShelf(),
+                        topping.getStockLocation().getNumber(),
+                        drinkOrdering.getNbrPieces());
+
                     linkToppingToOrderingStatement.setInt(1, order.getOrderNumber());
                     linkToppingToOrderingStatement.setString(2, drinkOrdering.getDrink().getLabel());
                     linkToppingToOrderingStatement.setInt(3, drinkOrdering.getDrink().getCoffee().getCoffeeID());
@@ -50,6 +54,11 @@ public class OrderDBAccess implements OrderDataAccess {
             String insertFoodInstruction = "insert into food_ordering (food_id, order_number, nbr_pieces, selling_price) values (?, ?, ?, ?)";
             PreparedStatement insertFoodStatement = connection.prepareStatement(insertFoodInstruction);
             for (FoodOrdering foodOrdering : order.getFoodOrderings()) {
+                updateQuantityStockLocation(foodOrdering.getFood().getStockLocation().getAlley(),
+                        foodOrdering.getFood().getStockLocation().getShelf(),
+                        foodOrdering.getFood().getStockLocation().getNumber(),
+                        foodOrdering.getNbrPieces());
+              
                 insertFoodStatement.setInt(1, foodOrdering.getFood().getFoodId());
                 insertFoodStatement.setInt(2, order.getOrderNumber());
                 insertFoodStatement.setInt(3, foodOrdering.getNbrPieces());
@@ -64,7 +73,7 @@ public class OrderDBAccess implements OrderDataAccess {
     }
 
     @Override
-    public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
+    public Integer getLastOrderNumber() throws ConnectionException, AllDataException {
         int nbrOrders;
 
         try {
@@ -78,15 +87,15 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "commande");
+            throw new AllDataException(exception.getMessage(), "commande");
         }
-
         return nbrOrders;
     }
 
     public ArrayList<Order> searchOrders(Integer customerId, GregorianCalendar startDate, GregorianCalendar endDate, Boolean isToTakeAway, Boolean isOnSite)
             throws AllDataException, ConnectionException, DoubleInputException, StringInputException, IntegerInputException {
         ArrayList<Order> orders = new ArrayList<>();
+
         try {
             Connection connection = SingletonConnection.getInstance();
 
@@ -200,7 +209,7 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new ModifyException("points de la carte de fidélité", exception.getMessage(), "mise à jour");
+            throw new ModifyException("/des points de la carte de fidélité'", exception.getMessage());
         }
         return Math.abs(numberPoints) + " ont été " + (numberPoints > 0 ?  "ajoutés à" : "supprimés de") + " la carte de fidélité";
     }
@@ -218,7 +227,7 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException("la récupération des points de la carte de fidélité", exception.getMessage());
+            throw new AllDataException("des points de la carte de fidélité", exception.getMessage());
         }
         return points;
     }
@@ -237,27 +246,9 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException("la récupération des points de l'avantage", exception.getMessage());
+            throw new AllDataException("des points de l'avantage", exception.getMessage());
         }
         return points;
-    }
-
-    public void updateStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws ConnectionException, AddDataException {
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String sql = "update stock_location set quantity = quantity - ? " +
-                    "where alley = ? and shelf  = ? and number = ?";
-            PreparedStatement updateStatement = connection.prepareStatement(sql);
-            updateStatement.setInt(1, removeQuantity);
-            updateStatement.setInt(2, alley);
-            updateStatement.setInt(3, shelf);
-            updateStatement.setInt(4, number);
-            updateStatement.executeUpdate();
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        } catch (SQLException exception) {
-            throw new AddDataException("la mise à jour du stock", exception.getMessage());
-        }
     }
 
     public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
@@ -271,7 +262,7 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new ModifyException("droit", exception.getMessage(), "suppression");
+            throw new ModifyException(exception.getMessage(), "droit(s)");
         }
     }
 
@@ -285,4 +276,21 @@ public class OrderDBAccess implements OrderDataAccess {
         }
     }
 
+    private void updateQuantityStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws ConnectionException, ModifyException {
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String sql = "update stock_location set quantity = quantity - ? " +
+                    "where alley = ? and shelf  = ? and number = ?";
+            PreparedStatement updateStatement = connection.prepareStatement(sql);
+            updateStatement.setInt(1, removeQuantity);
+            updateStatement.setInt(2, alley);
+            updateStatement.setInt(3, shelf);
+            updateStatement.setInt(4, number);
+            updateStatement.executeUpdate();
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new ModifyException("stock", exception.getMessage());
+        }
+    }
 }

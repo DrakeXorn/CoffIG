@@ -9,16 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-
 public class AdvantageDBAccess implements AdvantageDataAccess {
     @Override
-    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AllDataException {
         ArrayList<Double> discounts = new ArrayList<>();
 
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlInstruction = "select DISTINCT discount from advantage order by discount";
-
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             ResultSet data = statement.executeQuery();
 
@@ -26,7 +24,7 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
                 discounts.add(data.getDouble("discount"));
             }
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "avntage");
+            throw new AllDataException(exception.getMessage(), "avantage");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -61,7 +59,6 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
 
             ResultSet data = statement.executeQuery();
 
-
             while(data.next()) {
                 GregorianCalendar startDate = new GregorianCalendar();
                 GregorianCalendar endDate = new GregorianCalendar();
@@ -74,19 +71,18 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
                         data.getInt("advantage_id"),
                         data.getString("label"),
                         data.getDouble("discount"),
-                        startDate,endDate,
+                        startDate,
+                        endDate,
                         data.getInt("points_required")
                 );
 
                 advantages.add(advantage);
             }
-
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "avantage");
+            throw new AllDataException(exception.getMessage(), "avantages");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-
         return advantages;
     }
 }

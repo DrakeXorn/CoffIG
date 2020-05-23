@@ -13,7 +13,7 @@ public class CustomerManager {
         dao = new CustomerDBAccess();
     }
 
-    public void addCustomer(Customer customer) throws AddException, ConnectionException {
+    public void addCustomer(Customer customer) throws AddDataException, ConnectionException {
         dao.addCustomer(customer);
     }
 

@@ -15,7 +15,7 @@ public class AdvantageController {
         manager = new AdvantageManager();
     }
 
-    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AddDataException {
+    public ArrayList<Double> getAllAdvantageDiscount() throws ConnectionException, AllDataException {
         return manager.getAllAdvantageDiscount();
     }
 

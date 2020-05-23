@@ -22,10 +22,14 @@ public class CoffeeController {
     }
 
     public int getLastCoffeeID() throws ConnectionException, AddDataException {
-        return coffeeManager.getNbrCoffees();
+        return coffeeManager.getLastCoffeeID();
     }
 
-    public void updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException {
         coffeeManager.updateCoffee(coffee);
+    }
+
+    public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
+        return coffeeManager.getFeatures();
     }
 }

@@ -1,6 +1,6 @@
 package userInterface.research.service;
 
-import controller.AssignmentController;
+import controller.EmployeeController;
 import model.Assignment;
 import userInterface.utils.InputCheck;
 
@@ -44,7 +44,7 @@ public class SearchAssignmentsPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (InputCheck.areInputsFilled(form.getEmployeesBox(), form.getStartDatePicker())) {
-                    AssignmentController controller = new AssignmentController();
+                    EmployeeController controller = new EmployeeController();
                     GregorianCalendar startDate = new GregorianCalendar();
                     GregorianCalendar endDate = new GregorianCalendar();
                     ArrayList<Assignment> assignments;

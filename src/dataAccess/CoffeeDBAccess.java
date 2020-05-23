@@ -16,7 +16,11 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String coffeeSqlInstruction = "select * from `coff-ig`.coffee join stock_location sl on coffee.stock_location_alley = sl.alley and coffee.stock_location_shelf = sl.shelf and coffee.stock_location_number = sl.number";
+            String coffeeSqlInstruction = "select * from `coff-ig`.coffee" +
+                    " join stock_location sl" +
+                    " on coffee.stock_location_alley = sl.alley" +
+                    " and coffee.stock_location_shelf = sl.shelf" +
+                    " and coffee.stock_location_number = sl.number";
             PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
             ResultSet coffeeData = coffeeStatement.executeQuery();
 
@@ -48,11 +52,13 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 if (!coffeeData.wasNull())
                     coffee.setRecommendedConsumingMoment(recommendedConsumingMoment);
 
-                String featuresSqlInstruction = "select label, coffee_id from feature join description d on feature.label = d.feature_label and d.coffee_id = ?";
+                String featuresSqlInstruction = "select label, coffee_id from feature " +
+                        "join description d on feature.label = d.feature_label and d.coffee_id = ?";
                 PreparedStatement featuresStatement = connection.prepareStatement(featuresSqlInstruction);
                 featuresStatement.setInt(1, coffeeData.getInt("coffee_id"));
                 ResultSet featureData = featuresStatement.executeQuery();
                 ArrayList<String> features = new ArrayList<>();
+
                 while (featureData.next()) {
                     features.add(featureData.getString("label"));
                 }
@@ -61,11 +67,10 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 allCoffees.add(coffee);
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "la récupération");
+            throw new AllDataException(exception.getMessage(), "des cafés");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
-
         return allCoffees;
     }
 
@@ -75,8 +80,6 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
             Connection connection = SingletonConnection.getInstance();
             String stockSqlInstruction = "insert into stock_location (alley, shelf, number, buying_price, quantity, expiration_date) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement stockStatement = connection.prepareStatement(stockSqlInstruction);
-            String coffeeSqlInstruction = "insert into coffee (coffee_id, label, origin_country, intensity, weight_needed_for_preparation, is_in_grains, is_environment_friendly, price, packaging, stock_location_alley, stock_location_shelf, stock_location_number) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
 
             stockStatement.setInt(1, coffee.getStockLocation().getAlley());
             stockStatement.setInt(2, coffee.getStockLocation().getShelf());
@@ -85,6 +88,9 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
             stockStatement.setInt(5, coffee.getStockLocation().getQuantity());
             stockStatement.setDate(6, new Date(coffee.getStockLocation().getExpirationDate().getTimeInMillis()));
             stockStatement.executeUpdate();
+
+            String coffeeSqlInstruction = "insert into coffee (coffee_id, label, origin_country, intensity, weight_needed_for_preparation, is_in_grains, is_environment_friendly, price, packaging, stock_location_alley, stock_location_shelf, stock_location_number) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement coffeeStatement = connection.prepareStatement(coffeeSqlInstruction);
 
             coffeeStatement.setInt(1, coffee.getCoffeeID());
             coffeeStatement.setString(2, coffee.getLabel());
@@ -139,11 +145,13 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
     }
 
     @Override
-    public void updateCoffee(Coffee coffee) throws ConnectionException, AddDataException {
-        Connection connection;
+    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException {
         try {
-            connection = SingletonConnection.getInstance();
-            String updateCoffeeInstruction = "update coffee set label = ?, origin_country = ?, intensity = ?, weight_needed_for_preparation = ?, discovery_year = ?, is_in_grains = ?, is_environment_friendly = ?, price = ?, packaging = ?, recommended_consuming_moment = ? where coffee_id = ?";
+            Connection connection = SingletonConnection.getInstance();
+            String updateCoffeeInstruction = "update coffee set label = ?, origin_country = ?, intensity = ?," +
+                    " weight_needed_for_preparation = ?, discovery_year = ?, is_in_grains = ?," +
+                    " is_environment_friendly = ?, price = ?, packaging = ?, recommended_consuming_moment = ?" +
+                    " where coffee_id = ?";
             PreparedStatement updateCoffeeStatement = connection.prepareStatement(updateCoffeeInstruction);
 
             updateCoffeeStatement.setString(1, coffee.getLabel());
@@ -165,6 +173,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 updateCoffeeStatement.setString(10, coffee.getRecommendedConsumingMoment());
             else
                 updateCoffeeStatement.setNull(10, Types.VARCHAR);
+
             updateCoffeeStatement.setInt(11, coffee.getCoffeeID());
             updateCoffeeStatement.executeUpdate();
 
@@ -184,11 +193,11 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "café");
+            throw new ModifyException(exception.getMessage(), "café");
         }
     }
 
-    public int getLastId() throws ConnectionException, AddDataException {
+    public int getLastCoffeeID() throws ConnectionException, AddDataException {
         int nbrCoffees;
 
         try {
@@ -204,7 +213,27 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
         } catch (SQLException exception) {
             throw new AddDataException(exception.getMessage(), "café");
         }
-
         return nbrCoffees;
+    }
+
+    @Override
+    public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
+        ArrayList<String> features = new ArrayList<>();
+
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            String featuresSqlInstruction = "select label from feature";
+            PreparedStatement featuresStatement = connection.prepareStatement(featuresSqlInstruction);
+            ResultSet featureData = featuresStatement.executeQuery();
+
+            while (featureData.next()) {
+                features.add(featureData.getString("label"));
+            }
+        } catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "les caractéristiques");
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+        return features;
     }
 }

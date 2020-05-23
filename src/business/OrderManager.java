@@ -15,7 +15,7 @@ public class OrderManager {
         orderDataAccess = new OrderDBAccess();
     }
 
-    public void addOrder(Order order) throws ConnectionException, AddDataException {
+    public void addOrder(Order order) throws ConnectionException, AddDataException, ModifyException {
         orderDataAccess.addOrder(order);
     }
 
@@ -24,7 +24,7 @@ public class OrderManager {
         return orderDataAccess.searchOrders(customerId, startDate, endDate, isToTakeAway, isOnSite);
     }
 
-    public Integer getLastOrderNumber() throws ConnectionException, AddDataException {
+    public Integer getLastOrderNumber() throws ConnectionException, AllDataException {
         return orderDataAccess.getLastOrderNumber();
     }
 

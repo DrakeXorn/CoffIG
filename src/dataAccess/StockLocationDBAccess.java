@@ -35,12 +35,11 @@ public class StockLocationDBAccess implements StockLocationDataAccess {
         } catch (IOException e) {
             throw new ConnectionException(e.getMessage());
         }
-
         return stockLocations;
     }
 
     @Override
-    public void updateStockLocation(StockLocation stock) throws ConnectionException, AddDataException {
+    public void updateStockLocation(StockLocation stock) throws ConnectionException, ModifyException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String updateSockInstruction = "update stock_location set buying_price = ?, quantity = ?, expiration_date = ? where alley = ? and shelf = ? and number = ?";
@@ -56,7 +55,7 @@ public class StockLocationDBAccess implements StockLocationDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "café");
+            throw new ModifyException(exception.getMessage(), "café");
         }
     }
 }

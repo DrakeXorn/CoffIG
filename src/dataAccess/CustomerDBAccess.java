@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 
 public class CustomerDBAccess implements CustomerDataAccess {
     @Override
-    public void addCustomer(Customer customer) throws AddException, ConnectionException {
+    public void addCustomer(Customer customer) throws AddDataException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();
 
@@ -62,12 +62,11 @@ public class CustomerDBAccess implements CustomerDataAccess {
                 createLoyaltyCard(connection, customer);
 
         } catch (SQLException exception) {
-            throw new AddException("client", exception.getMessage());
+            throw new AddDataException(exception.getMessage(), "client");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
     }
-
 
     @Override
     public ArrayList<Customer> getAllCustomers() throws AllDataException, ConnectionException, CharacterInputException, DateException, StringInputException, IntegerInputException {
@@ -127,9 +126,9 @@ public class CustomerDBAccess implements CustomerDataAccess {
                 customers.add(customer);
             }
         } catch (IOException exception) {
-            throw new AllDataException(exception.getMessage(), "la récupération des clients");
-        } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new AllDataException(exception.getMessage(), "clients");
         }
         return customers;
     }
@@ -195,7 +194,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
                 }
             }
         } catch (SQLException exception) {
-            throw new ModifyException("client", exception.getMessage(), "modification");
+            throw new ModifyException(exception.getMessage(), "client");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -224,7 +223,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
             removeUserStatement.setInt(1, customer.getUserID());
             removeUserStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new ModifyException("client", exception.getMessage(), "suppression");
+            throw new ModifyException(exception.getMessage(), "client");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
