@@ -15,15 +15,11 @@ public class ButtonsAddUserForm extends JPanel {
     private MainWindow parent;
     private User user;
     private JPanel form;
-    private CustomerController customerController;
-    private EmployeeController employeeController;
 
     public ButtonsAddUserForm(MainWindow window, JPanel form){
         this.parent = window;
         parent.resetSize();
         this.form = form;
-        customerController = new CustomerController();
-        employeeController = new EmployeeController();
         this.setLayout(new FlowLayout());
 
         requiredFields = new JLabel("*champs obligatoires");
@@ -46,6 +42,7 @@ public class ButtonsAddUserForm extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 if(form instanceof CustomerForm){
+                    CustomerController customerController = new CustomerController();
                     user = ((CustomerForm)form).createCustomer();
 
                     if (user != null && JOptionPane.showConfirmDialog(null, user.description() + ".\nAjouter le client ?", "Validation de l'inscription", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -54,6 +51,7 @@ public class ButtonsAddUserForm extends JPanel {
                         parent.goBackHome();
                     }
                 } else {
+                    EmployeeController employeeController = new EmployeeController();
                     user = ((EmployeeForm)form).createEmployee();
                     if (user != null && JOptionPane.showConfirmDialog(null, user.description() + ".\nAjouter l'employé ?", "Validation de l'inscription", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                         employeeController.addEmployee((Employee)user);
