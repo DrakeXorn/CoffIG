@@ -82,7 +82,6 @@ public class EmployeeForm extends JPanel {
             if (wantsEndContract.isSelected() && endContractDatePicker.getDate() != null)
                 throw new DateException(null, "Vous devez choisir une date de fin de contrat !");
 
-
             endContractDate.setTime(Date.from(endContractDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             employee = new Employee(userController.getLastCustomerId() + 1, userInfos.getPassword(), userInfos.getLastName(), userInfos.getFirstName(), userInfos.getSecondName(),
                     userInfos.getMaidenName(), userInfos.getBirthDate(), userInfos.getStreetName(), userInfos.getLocality(), userInfos.getEmail(),

@@ -32,7 +32,6 @@ public class SearchAdvantagesForm extends JPanel {
             JPanel radioButtonsPanel = new JPanel();
             radioButtonsPanel.setLayout(new GridLayout(1, 3, 5, 5));
 
-
             customerIdLabel = new JLabel("Client : ");
             customerIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -49,7 +48,6 @@ public class SearchAdvantagesForm extends JPanel {
             dateOfDay = new JTextField(dateFormat.format(GregorianCalendar.getInstance().getTime()));
             dateOfDay.setEditable(false);
 
-
             discountLabel = new JLabel("Remise : ");
             discountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -57,7 +55,6 @@ public class SearchAdvantagesForm extends JPanel {
             for (Double discount : advantageController.getAllAdvantageDiscount())
                 discountsBox.addItem(discount);
             discountsBox.setMaximumRowCount(5);
-
 
             anyAdvantage = new JRadioButton("Tous les avantages", true);
             anyAdvantage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,12 +65,10 @@ public class SearchAdvantagesForm extends JPanel {
             inaccessibleAdvantage = new JRadioButton("Avantages inaccessibles", false);
             inaccessibleAdvantage.setHorizontalAlignment(SwingConstants.CENTER);
 
-
             buttonGroup = new ButtonGroup();
             buttonGroup.add(anyAdvantage);
             buttonGroup.add(accessibleAdvantage);
             buttonGroup.add(inaccessibleAdvantage);
-
 
             fieldsPanel.add(customerIdLabel);
             fieldsPanel.add(customersBox);
@@ -87,8 +82,7 @@ public class SearchAdvantagesForm extends JPanel {
             radioButtonsPanel.add(accessibleAdvantage);
             radioButtonsPanel.add(inaccessibleAdvantage);
             add(radioButtonsPanel, BorderLayout.CENTER);
-
-
+            
             setVisible(true);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(),

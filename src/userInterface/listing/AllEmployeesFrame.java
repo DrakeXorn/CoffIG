@@ -11,15 +11,13 @@ public class AllEmployeesFrame extends JFrame {
     private JTable empleyeeTable;
     private JScrollPane scrollPane;
     private EmployeeController controller;
-    private MainWindow mainWindow;
     private Container container;
 
-    public AllEmployeesFrame(MainWindow window) {
+    public AllEmployeesFrame() {
         super("Affichage de tous les employés");
         this.setBounds(50, 50, 1400, 400);
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
-        mainWindow = window;
         controller = new EmployeeController();
 
         try {

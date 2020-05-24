@@ -30,7 +30,6 @@ public class CoffeeForm extends JPanel {
     public CoffeeForm(Coffee coffeeToUpdate) {
         try {
             setLayout(new GridLayout(16, 2));
-            CoffeeController controller = new CoffeeController();
             ArrayList<String> countriesList = new ArrayList<>();
 
             coffeeIDLabel = new JLabel("Numéro du café : ");
@@ -69,7 +68,6 @@ public class CoffeeForm extends JPanel {
             add(intensityLabel);
 
             intensity = new JSpinner(new SpinnerNumberModel(0, 0, 5, 1));
-
             add(intensity);
 
             discoveryDateLabel = new JLabel("Année de découverte : ");
@@ -161,8 +159,6 @@ public class CoffeeForm extends JPanel {
             add(showFeaturesButton);
 
             setCoffeeData(coffeeToUpdate);
-
-            this.setVisible(true);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur lors de la création de l'identifiant du café", JOptionPane.ERROR_MESSAGE);
         }
@@ -231,7 +227,6 @@ public class CoffeeForm extends JPanel {
             newCoffee.setRecommendedConsumingMoment(recommendedMoment.getText().toLowerCase());
             newCoffee.setDiscoveryYear((int) discoveryYear.getValue());
         }
-
         return newCoffee;
     }
 
@@ -290,7 +285,7 @@ public class CoffeeForm extends JPanel {
     private class ShowFeaturesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            FeaturesManagementFrame frame = new FeaturesManagementFrame(CoffeeForm.this);
+            new FeaturesManagementFrame(CoffeeForm.this);
         }
     }
 }

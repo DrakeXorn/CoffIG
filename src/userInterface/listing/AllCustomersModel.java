@@ -30,7 +30,7 @@ public class AllCustomersModel extends AbstractTableModel {
 
     public void setContents(ArrayList<Customer> contents) throws AllDataException {
         if(contents.isEmpty())
-            throw new AllDataException("la récupération des clients", null);
+            throw new AllDataException("clients", null);
         this.contents = contents;
     }
 

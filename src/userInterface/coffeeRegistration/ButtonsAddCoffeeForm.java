@@ -17,10 +17,9 @@ public class ButtonsAddCoffeeForm extends JPanel {
 
     public ButtonsAddCoffeeForm(MainWindow parent) {
         this.parent = parent;
-
         setLayout(new GridLayout(1, 2));
 
-        resetButton = new JButton("Tout vider");
+        resetButton = new JButton("Vider le formulaire");
         resetButton.addActionListener(new ResetListener());
         add(resetButton);
 

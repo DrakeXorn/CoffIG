@@ -13,7 +13,6 @@ public class AllAdvantagesFrame extends JFrame{
     private JTable advantagesTable;
     private JScrollPane scrollPane;
     private Container container;
-    private AdvantageController controller;
     private AllAdvantagesModel model;
 
     public AllAdvantagesFrame(ArrayList<Advantage> advantages) {
@@ -21,7 +20,6 @@ public class AllAdvantagesFrame extends JFrame{
         setBounds(50, 200, 700, 300);
         setLayout(new BorderLayout());
         container = this.getContentPane();
-        controller = new AdvantageController();
 
         try {
             model = new AllAdvantagesModel(advantages);

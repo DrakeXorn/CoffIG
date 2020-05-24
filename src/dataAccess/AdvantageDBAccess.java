@@ -24,7 +24,7 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
                 discounts.add(data.getDouble("discount"));
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "avantage");
+            throw new AllDataException(exception.getMessage(), "avantages");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -37,10 +37,10 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
 
         try {
             Connection connection = SingletonConnection.getInstance();
-            String sqlInstruction = "select * from advantage a\n" +
-                    "   join `right` r on r.advantage_id = a.advantage_id\n" +
-                    "   join loyalty_card l on l.loyalty_card_id = r.loyalty_card_id\n" +
-                    "where l.loyalty_card_id like ?";
+            String sqlInstruction = "select * from advantage a" +
+                    " join `right` r on r.advantage_id = a.advantage_id" +
+                    " join loyalty_card l on l.loyalty_card_id = r.loyalty_card_id" +
+                    " where l.loyalty_card_id like ?";
 
             sqlInstruction += switch (typeAdvantage) {
                 case 2 ->  " and a.points_required <= l.points_number and ? between a.start_date and a.end_date";
@@ -73,8 +73,7 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
                         data.getDouble("discount"),
                         startDate,
                         endDate,
-                        data.getInt("points_required")
-                );
+                        data.getInt("points_required"));
 
                 advantages.add(advantage);
             }

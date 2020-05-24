@@ -66,7 +66,7 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 allCoffees.add(coffee);
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "des cafés");
+            throw new AllDataException(exception.getMessage(), "cafés");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -229,13 +229,10 @@ public class CoffeeDBAccess implements CoffeeDataAccess {
                 features.add(featureData.getString("label"));
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "les caractéristiques");
+            throw new AllDataException(exception.getMessage(), "caractéristiques");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
         return features;
     }
-
-
-
 }

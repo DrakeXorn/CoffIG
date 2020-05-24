@@ -4,6 +4,8 @@ import model.exceptions.DoubleInputException;
 import model.exceptions.IntegerInputException;
 import model.exceptions.StringInputException;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DrinkOrdering {
@@ -22,9 +24,9 @@ public class DrinkOrdering {
         setPrice(sellingPrice);
     }
 
+    // pour la récation de commandes
     public DrinkOrdering(Drink drink, String size, Integer nbrPieces, Double sellingPrice, ArrayList<Topping> toppings) throws IntegerInputException, StringInputException, DoubleInputException {
         this(drink, size, nbrPieces, sellingPrice);
-
         this.toppings = toppings;
     }
 
@@ -64,13 +66,12 @@ public class DrinkOrdering {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof DrinkOrdering &&
-                object.toString().equals(toString())
+        return (object instanceof DrinkOrdering && object.toString().equals(toString()))
                 ||
                 (object instanceof DrinkOrdering &&
-                ((DrinkOrdering) object).getSize().equals(size) &&
-                ((DrinkOrdering) object).getDrink().equals(drink) &&
-                allToppingsMatch((DrinkOrdering) object));
+                        ((DrinkOrdering) object).getSize().equals(size) &&
+                        ((DrinkOrdering) object).getDrink().equals(drink) &&
+                        allToppingsMatch((DrinkOrdering) object));
     }
 
     public void setPieces(Integer nbrPieces) throws IntegerInputException {

@@ -1,7 +1,6 @@
 package model;
 
 import model.exceptions.*;
-
 import java.util.GregorianCalendar;
 
 public class Advantage {

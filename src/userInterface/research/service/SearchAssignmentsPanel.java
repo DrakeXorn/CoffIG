@@ -64,7 +64,10 @@ public class SearchAssignmentsPanel extends JPanel {
                     else {
                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
 
-                        JOptionPane.showMessageDialog(SearchAssignmentsPanel.this, "Aucun service attribué pour " + form.getEmployeesBox().getSelectedItem() + " entre le " + dateFormat.format(startDate) + " et le " + dateFormat.format(endDate) + ".", "Aucun service", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(SearchAssignmentsPanel.this,
+                                "Aucun service attribué pour " + form.getEmployeesBox().getSelectedItem() + " entre le " +
+                                        dateFormat.format(startDate) + " et le " + dateFormat.format(endDate) + ".",
+                                "Aucun service", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(SearchAssignmentsPanel.this, "Vous devez remplir tous les champs !", "Attention", JOptionPane.WARNING_MESSAGE);

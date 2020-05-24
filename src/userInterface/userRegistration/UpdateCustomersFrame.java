@@ -11,7 +11,6 @@ public class UpdateCustomersFrame extends JFrame {
     private UpdateCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
-    private ListSelectionModel listSelect;
     private ButtonsUpdateDeleteCustomerPanel buttonsPanel;
     private CustomerController controller;
     private MainWindow mainWindow;
@@ -31,8 +30,6 @@ public class UpdateCustomersFrame extends JFrame {
             customerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
             customerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = customerTable.getSelectionModel();
-
             scrollPane = new JScrollPane((customerTable));
             container.add(scrollPane, BorderLayout.CENTER);
 

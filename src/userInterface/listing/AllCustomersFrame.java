@@ -11,15 +11,13 @@ public class AllCustomersFrame extends JFrame {
     private JTable customerTable;
     private JScrollPane scrollPane;
     private CustomerController controller;
-    private MainWindow mainWindow;
     private Container container;
 
-    public AllCustomersFrame(MainWindow window){
+    public AllCustomersFrame(){
         super("Affichage de tous les clients");
         this.setBounds(50, 50, 1400, 400);
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
-        mainWindow = window;
         controller = new CustomerController();
 
         try {

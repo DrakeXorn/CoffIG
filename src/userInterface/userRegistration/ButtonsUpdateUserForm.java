@@ -57,7 +57,7 @@ public class ButtonsUpdateUserForm extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             parent.goBackHome();
-            UpdateCustomersFrame updateCustomersFrame = new UpdateCustomersFrame(parent);
+            new UpdateCustomersFrame(parent);
         }
     }
 }

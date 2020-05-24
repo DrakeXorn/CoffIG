@@ -5,6 +5,7 @@ public class Drink {
     private Coffee coffee;
     private Boolean cold;
 
+    // pour la récupération de tous les drinks
     public Drink(String label, Coffee coffee, Boolean cold) {
         this.label = label;
         this.coffee = coffee;
@@ -13,8 +14,7 @@ public class Drink {
 
     // pour la recherche des anciennes commandes
     public Drink(String label, Boolean cold) {
-        this.label = label;
-        this.cold = cold;
+        this(label, null, cold);
     }
 
     public String getLabel() {

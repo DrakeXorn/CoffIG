@@ -17,7 +17,6 @@ public class ButtonsUpdateCoffeeForm extends JPanel {
 
     public ButtonsUpdateCoffeeForm(MainWindow parent) {
         this.parent = parent;
-
         setLayout(new GridLayout(1, 2));
 
         goBackButton = new JButton("Retour");
@@ -33,7 +32,7 @@ public class ButtonsUpdateCoffeeForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             parent.getWindowContainer().removeAll();
-            UpdateCoffeesFrame frame = new UpdateCoffeesFrame(parent);
+            new UpdateCoffeesFrame(parent);
             parent.repaint();
         }
     }

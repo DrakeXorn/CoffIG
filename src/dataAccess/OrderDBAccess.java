@@ -99,7 +99,7 @@ public class OrderDBAccess implements OrderDataAccess {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlOrder = "select o.order_number OrderNumber, o.date, o.is_to_take_away, " +
+            String sqlOrder = "select distinct o.order_number OrderNumber, o.date, o.is_to_take_away, " +
                     "do.order_number DrinkOrderNumber, do.drink_id DrinkIdDO, do.drink_label DrinkLabel, do.size, do.nbr_drinks, do.selling_price DrinkPrice," +
                     "d.coffee_id, d.label, d.is_cold, " +
                     "fo.order_number FoodOrderNumber, fo.nbr_pieces, fo.selling_price FoodPrice, " +
@@ -150,8 +150,8 @@ public class OrderDBAccess implements OrderDataAccess {
                     previousOrderNumber = datasOrder.getInt("OrderNumber");
                 }
 
-                drinkId = datasOrder.getInt("DrinkIdDO");
                 drinkLabel = datasOrder.getString("DrinkLabel");
+                drinkId = datasOrder.getInt("DrinkIdDO");
                 if(!datasOrder.wasNull()){
                     drinkOrdering = new DrinkOrdering(
                             new Drink(drinkLabel, datasOrder.getBoolean("is_cold")),
@@ -193,7 +193,7 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException("la récupération des commandes", exception.getMessage());
+            throw new AllDataException("des commandes", exception.getMessage());
         }
         return orders;
     }
@@ -213,44 +213,7 @@ public class OrderDBAccess implements OrderDataAccess {
         }
     }
 
-    public Integer getPointsLoyaltyCard(String cardId) throws AllDataException, ConnectionException {
-        Integer points = 0;
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String sql = "select points_number from loyalty_card where loyalty_card_id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, cardId);
-            ResultSet data = statement.executeQuery();
-            if(data.next())
-                points = data.getInt("points_number");
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        } catch (SQLException exception) {
-            throw new AllDataException("des points de la carte de fidélité", exception.getMessage());
-        }
-        return points;
-    }
-
-    public Integer getPointsAdvantage(Integer advantageId) throws AllDataException, ConnectionException {
-        Integer point;
-        try {
-            Connection connection = SingletonConnection.getInstance();
-            String sql = "select points_required from advantage where advantage_id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, advantageId);
-            ResultSet data = statement.executeQuery();
-            data.next();
-            point = data.getInt("points_number");
-
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        } catch (SQLException exception) {
-            throw new AllDataException("des points de l'avantage", exception.getMessage());
-        }
-        return point;
-    }
-
-    public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
+   public void removeRight(String loyaltyCardId, Integer advantageId) throws ConnectionException, ModifyException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String sql = "delete from `right` where loyalty_card_id = ? and advantage_id = ?";
@@ -263,17 +226,7 @@ public class OrderDBAccess implements OrderDataAccess {
         } catch (SQLException exception) {
             throw new ModifyException(exception.getMessage(), "droit(s)");
         }
-    }
-
-    public void closeConnexion() throws ClosedConnexion, ConnectionException {
-        try {
-            SingletonConnection.getInstance().close();
-        } catch (SQLException exception) {
-            throw new ClosedConnexion(exception.getMessage());
-        } catch (IOException exception) {
-            throw new ConnectionException(exception.getMessage());
-        }
-    }
+   }
 
     private void updateQuantityStockLocation(Integer alley, Integer shelf, Integer number, Integer removeQuantity) throws ConnectionException, ModifyException {
         try {
@@ -424,5 +377,13 @@ public class OrderDBAccess implements OrderDataAccess {
         return toppings;
     }
 
-
+    public void closeConnexion() throws ClosedConnexion, ConnectionException {
+        try {
+            SingletonConnection.getInstance().close();
+        } catch (SQLException exception) {
+            throw new ClosedConnexion(exception.getMessage());
+        } catch (IOException exception) {
+            throw new ConnectionException(exception.getMessage());
+        }
+    }
 }

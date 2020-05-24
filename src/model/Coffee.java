@@ -19,6 +19,7 @@ public class Coffee {
     private StockLocation stockLocation;
     private ArrayList<String> features;
 
+    // pour la récupération de tous les cafés et la création d'un nouveau café
     public Coffee(Integer coffeeID, String label, String originCountry, Integer intensity,
                   Double weightNeededForPreparation, Boolean inGrains,
                   Boolean environmentFriendly, Double price, Double packaging,

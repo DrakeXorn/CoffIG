@@ -3,12 +3,12 @@ package model;
 import model.exceptions.DoubleInputException;
 
 public class Food {
-    private static int nbrFoods = 1;
     private Integer foodId;
     private String label;
     private Double price;
     private StockLocation stockLocation;
 
+    // pour la récupération des foods dans le BD
     public Food(Integer foodId, String label, Double price, StockLocation stockLocation) throws DoubleInputException {
         this.foodId = foodId;
         this.label = label;
@@ -16,20 +16,13 @@ public class Food {
         this.stockLocation = stockLocation;
     }
 
-    public static int getNbrFoods() {
-        return nbrFoods;
-    }
-
-    public Integer getFoodId() {
-        return foodId;
-    }
-
     // pour la recherche des anciennes commandes
     public Food(Integer foodID, String label) {
         this.foodId = foodID;
-        if (foodID > nbrFoods)
-            nbrFoods = foodID + 1;
         this.label = label;
+    }
+    public Integer getFoodId() {
+        return foodId;
     }
 
     public String getLabel() {

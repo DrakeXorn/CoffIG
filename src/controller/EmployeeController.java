@@ -31,7 +31,7 @@ public class EmployeeController {
         return manager.getCurrentlyWorkingEmployees();
     }
 
-    public int getLastParkingSpaceNumber() throws ConnectionException, AddDataException {
+    public int getLastParkingSpaceNumber() throws ConnectionException, AllDataException {
         return manager.getLastParkingSpaceNumber();
     }
 

@@ -9,12 +9,10 @@ public class Employee extends User {
     private GregorianCalendar endContractDate;
     private Boolean isEmployeeOfMonth;
     private Double discount;
-    private static int nbrParkingSpaces = 1;
     private Integer parkingSpaceNumber;
     private Employee manager;
-    private ArrayList<Assignment> assignments;
 
-    // pour la création
+    // pour la création d'un employé
     public Employee(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                     GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender,
                     GregorianCalendar hireDate, GregorianCalendar endContractDate, Boolean isEmployeeOfMonth, Double discount, Integer parkingSpaceNumber, Employee manager)
@@ -52,19 +50,11 @@ public class Employee extends User {
     public Double getDiscount() {
         return discount;
     }
-  
-    public int getNbrParkingSpaces() {
-        return nbrParkingSpaces;
-    }
-  
+
     public Integer getParkingSpaceNumber() {
         return parkingSpaceNumber;
     }
-  
-    public ArrayList<Assignment> getAssignments() {
-        return assignments;
-    }
-  
+
     public Employee getManager() {
         return manager;
     }

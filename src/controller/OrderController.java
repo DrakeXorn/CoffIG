@@ -46,10 +46,6 @@ public class OrderController {
         manager.removeRight(loyaltyCardId, advantageId);
     }
 
-    public void closeConnexion() throws ClosedConnexion, ConnectionException{
-        manager.closeConnexion();
-    }
-
     public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return manager.getAllDrinks();
     }
@@ -60,5 +56,9 @@ public class OrderController {
 
     public ArrayList<Topping> getAllAvailableToppings() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return manager.getAllAvailableToppings();
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException{
+        manager.closeConnexion();
     }
 }

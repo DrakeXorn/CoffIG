@@ -1,7 +1,6 @@
 package model;
 
 import model.exceptions.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -95,11 +94,5 @@ public class StockLocation {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof StockLocation && ((StockLocation) obj).getAlley().equals(alley) && ((StockLocation) obj).getShelf().equals(shelf) && ((StockLocation) obj).getNumber().equals(number);
-    }
-
-    public String toString() {
-        // TODO : à modifier
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return alley + ", " + shelf + ", " + number + ", " + buyingPrice + ", " + quantity + ", " + dateFormat.format(expirationDate);
     }
 }

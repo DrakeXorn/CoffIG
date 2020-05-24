@@ -12,7 +12,6 @@ public class ButtonsManagementPanel extends JPanel {
 
     public ButtonsManagementPanel(ManagementPanel parent) {
         this.parent = parent;
-
         setLayout(new GridLayout(2, 1));
 
         sendToChosenButton = new JButton("Ajouter >>");

@@ -20,7 +20,7 @@ public class AllFoodsModel extends AbstractTableModel {
 
     public void setContents(ArrayList<FoodOrdering> contents) throws AllDataException {
         if(contents.isEmpty())
-            throw new AllDataException("la récupération de la nourriture", null);
+            throw new AllDataException("aliments", null);
         this.contents = contents;
     }
 
