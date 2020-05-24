@@ -12,11 +12,9 @@ public class AllCoffeesPanel extends JPanel {
     private AllCoffeesModel coffeeTableModel;
     private JTable coffeeTable;
     private CoffeeController controller;
-    private JFrame parent;
 
-    public AllCoffeesPanel(JFrame window) {
+    public AllCoffeesPanel() {
         controller = new CoffeeController();
-        parent = window;
 
         try {
             coffeeTableModel = new AllCoffeesModel(controller.getAllCoffees());

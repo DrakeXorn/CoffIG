@@ -23,7 +23,7 @@ public class UpdateCoffeesFrame extends JFrame {
         setBounds(250, 300, 1250, 600);
 
         this.parent = parent;
-        coffeesPanel = new AllCoffeesPanel(this);
+        coffeesPanel = new AllCoffeesPanel();
         container.add(coffeesPanel, BorderLayout.CENTER);
 
         updateButton = new JButton("Modifier le café");

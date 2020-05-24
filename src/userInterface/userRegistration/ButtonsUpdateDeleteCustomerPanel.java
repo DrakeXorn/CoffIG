@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
     private JButton updateButton;
@@ -28,11 +29,11 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
     private class UpdateButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            Customer chosenCustomer = parent.getChosenCustomer();
+            ArrayList<Customer> chosenCustomers = parent.getChosenCustomers();
 
-            if (chosenCustomer != null) {
-                UserForm userForm = new UserForm(chosenCustomer);
-                CustomerForm customerForm = new CustomerForm(userForm, chosenCustomer);
+            if (chosenCustomers.size() == 1) {
+                UserForm userForm = new UserForm(chosenCustomers.get(0));
+                CustomerForm customerForm = new CustomerForm(userForm, chosenCustomers.get(0));
 
                 parent.getParent().resetSize();
                 parent.getParent().getWindowContainer().removeAll();
@@ -43,7 +44,7 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
                 parent.getParent().setVisible(true);
                 parent.dispose();
             } else
-                JOptionPane.showMessageDialog(null, "Sélectionnez un client à modifier !",
+                JOptionPane.showMessageDialog(parent, chosenCustomers.size() == 0 ? "Sélectionnez un client à modifier !" : "Vous ne pouvez choisir qu'un seul client à modifier !",
                         "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -51,22 +52,25 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
     private class DeleteButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Customer customer = parent.getChosenCustomer();
+            ArrayList<Customer> customers = parent.getChosenCustomers();
 
-            if (customer != null) {
-                if (JOptionPane.showConfirmDialog(parent, "Êtes-vous sûr de vouloir supprimer " + customer.getIdentity() + " ?", "Confirmer la suppression", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                    try {
-                        CustomerController coffeeController = new CustomerController();
+            if (customers.size() != 0) {
+                for (Customer customer : customers) {
+                    if (JOptionPane.showConfirmDialog(parent, "Êtes-vous sûr de vouloir supprimer " + customer.getIdentity() + " ?", "Confirmer la suppression", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                        try {
+                            CustomerController controller = new CustomerController();
 
-                        coffeeController.removeCustomer(customer);
-                        parent.dispose();
-                        parent = new UpdateCustomersFrame(parent.getParent());
-                    } catch (Exception exception) {
-                        JOptionPane.showMessageDialog(parent, exception.getMessage(), "Erreur lors de la suppression", JOptionPane.ERROR_MESSAGE);
+                            controller.removeCustomer(customer);
+                        } catch (Exception exception) {
+                            JOptionPane.showMessageDialog(parent, exception.getMessage(), "Erreur lors de la suppression", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
+
+                parent.dispose();
+                parent = new UpdateCustomersFrame(parent.getParent());
             } else
-                JOptionPane.showMessageDialog(null, "Sélectionnez un client à supprimer !",
+                JOptionPane.showMessageDialog(parent, "Sélectionnez un (des) client(s) à supprimer !",
                         "Attention", JOptionPane.WARNING_MESSAGE);
         }
     }
