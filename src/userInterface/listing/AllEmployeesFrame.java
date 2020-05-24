@@ -15,6 +15,7 @@ public class AllEmployeesFrame extends JFrame {
     public AllEmployeesFrame() {
         super("Affichage de tous les employés");
         this.setBounds(50, 50, 1400, 400);
+
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
         controller = new EmployeeController();

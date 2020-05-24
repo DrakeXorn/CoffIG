@@ -18,8 +18,7 @@ public class CheckoutFrame extends JFrame {
 
     public CheckoutFrame(OrderForm parent) {
         super("Confirmation de la commande");
-
-        setSize(600, 200);
+        this.setBounds(200, 150, 600, 200);
         this.parent = parent;
 
         setLayout(new BorderLayout());
@@ -55,8 +54,6 @@ public class CheckoutFrame extends JFrame {
 
                 if (parent.getBeneficiary() != null) {
                     card = parent.getBeneficiary().getLoyaltyCard();
-
-
                     numberPoints = controller.addPoints(card.getPointsNumber(), order.getPrice());
                     controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
 

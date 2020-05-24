@@ -83,7 +83,7 @@ public class UserForm extends JPanel {
             birthDatePicker = new DatePicker();
             this.add(birthDatePicker);
 
-            streetNameLabel = new JLabel("Rue* :");
+            streetNameLabel = new JLabel("Adresse* :");
             streetNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(streetNameLabel);
             streetName = new JTextField();

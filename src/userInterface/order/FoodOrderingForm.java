@@ -68,7 +68,6 @@ public class FoodOrderingForm extends JPanel {
     private void setSpinnerValues() {
         if (((Food) foodBox.getSelectedItem()).getStockLocation().getQuantity() != 0) {
             numberPiecesSpinner.setModel(new SpinnerNumberModel(1, 1, (int) ((Food) foodBox.getSelectedItem()).getStockLocation().getQuantity(), 1));
-
             numberPiecesSpinner.setEnabled(true);
             addToListButton.setEnabled(true);
         } else {
