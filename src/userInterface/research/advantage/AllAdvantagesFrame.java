@@ -1,6 +1,5 @@
 package userInterface.research.advantage;
 
-import controller.AdvantageController;
 import model.Advantage;
 import model.exceptions.AllDataException;
 

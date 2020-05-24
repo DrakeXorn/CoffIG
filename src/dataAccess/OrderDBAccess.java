@@ -12,15 +12,23 @@ public class OrderDBAccess implements OrderDataAccess {
     public void addOrder(Order order) throws ConnectionException, AddDataException, ModifyException {
         try {
             Connection connection = SingletonConnection.getInstance();
-            String insertInstruction = "insert into `order` (order_number, date, is_to_take_away, beneficiary, order_picker) values (?, ?, ?, ?, ?)";
+            String insertInstruction = "insert into `order` (order_number, date, is_to_take_away, order_picker) values (?, ?, ?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertInstruction);
 
             insertStatement.setInt(1, order.getOrderNumber());
             insertStatement.setDate(2, new Date(order.getDate().getTimeInMillis()));
             insertStatement.setBoolean(3, order.isToTakeAway());
-            insertStatement.setInt(4, order.getBeneficiary().getUserID());
-            insertStatement.setInt(5, order.getOrderPicker().getUserID());
+            insertStatement.setInt(4, order.getOrderPicker().getUserID());
             insertStatement.executeUpdate();
+
+            if (order.getBeneficiary() != null) {
+                String addBeneficiaryInstruction = "update `order` set beneficiary = ? where order_number = ?";
+                PreparedStatement addBeneficiaryStatement = connection.prepareStatement(addBeneficiaryInstruction);
+
+                addBeneficiaryStatement.setInt(1, order.getBeneficiary().getUserID());
+                addBeneficiaryStatement.setInt(2, order.getOrderNumber());
+                addBeneficiaryStatement.executeUpdate();
+            }
 
             String insertDrinksInstruction = "insert into drink_ordering (order_number, drink_label, drink_id, size, nbr_drinks, selling_price) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement insertDrinkStatement = connection.prepareStatement(insertDrinksInstruction);

@@ -139,7 +139,7 @@ public class DrinkOrderingForm extends JPanel {
     private class ManageToppingsButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ToppingsManagementFrame frame = new ToppingsManagementFrame(DrinkOrderingForm.this);
+            new ToppingsManagementFrame(DrinkOrderingForm.this);
         }
     }
 

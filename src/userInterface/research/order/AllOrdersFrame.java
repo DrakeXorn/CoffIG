@@ -49,10 +49,6 @@ public class AllOrdersFrame extends JFrame {
         }
     }
 
-    public Container getContainer() {
-        return container;
-    }
-
     private class SelectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {

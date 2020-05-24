@@ -66,7 +66,7 @@ public class OrderFormRecapPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (drinkOrderingPanel.getAllLines().size() != 0 || foodOrderingPanel.getAllLines().size() != 0) {
-                CheckoutFrame checkout = new CheckoutFrame(parent);
+                new CheckoutFrame(parent);
             } else
                 JOptionPane.showMessageDialog(parent, "Vous devez avoir au moins une ligne de commande pour effectuer une commande !", "Attention", JOptionPane.WARNING_MESSAGE);
         }

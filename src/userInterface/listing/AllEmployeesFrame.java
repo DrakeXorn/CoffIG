@@ -1,7 +1,6 @@
 package userInterface.listing;
 
 import controller.EmployeeController;
-import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;

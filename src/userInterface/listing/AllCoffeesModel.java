@@ -1,7 +1,6 @@
 package userInterface.listing;
 
 import model.Coffee;
-import model.Employee;
 import model.exceptions.AllDataException;
 
 import javax.swing.table.AbstractTableModel;

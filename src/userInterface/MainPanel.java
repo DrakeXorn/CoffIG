@@ -39,10 +39,9 @@ public class MainPanel extends JPanel {
             try {
                 parent.getWindowContainer().removeAll();
                 parent.getWindowContainer().add(new OrderForm(parent));
-                parent.repaint();
                 parent.setVisible(true);
                 parent.setSize(1300, 500);
-                repaint();
+                parent.repaint();
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(parent, exception.getMessage(),
                         "Erreur !", JOptionPane.ERROR_MESSAGE);

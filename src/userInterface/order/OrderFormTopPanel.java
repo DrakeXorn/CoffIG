@@ -11,13 +11,11 @@ public class OrderFormTopPanel extends JPanel {
     private JLabel numberLabel, customerLabel;
     private JTextField numberField;
     private JComboBox<Customer> customersBox;
-    private OrderForm parent;
 
-    public OrderFormTopPanel(OrderForm parent) {
+    public OrderFormTopPanel() {
         OrderController orderController = new OrderController();
         CustomerController customerController = new CustomerController();
 
-        this.parent = parent;
         setLayout(new GridLayout(1, 6));
 
         try {
@@ -35,6 +33,7 @@ public class OrderFormTopPanel extends JPanel {
             add(customerLabel);
 
             customersBox = new JComboBox<>();
+            customersBox.addItem(null);
             for (Customer customer : customerController.getAllCustomers())
                 customersBox.addItem(customer);
             add(customersBox);

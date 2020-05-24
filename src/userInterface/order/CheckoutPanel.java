@@ -20,7 +20,7 @@ public class CheckoutPanel extends JPanel {
             AdvantageController controller = new AdvantageController();
             ArrayList<Advantage> availableAdvantages = null;
 
-            if (parent.getParent().getBeneficiary().getLoyaltyCard() != null)
+            if (parent.getParent().getBeneficiary() != null && parent.getParent().getBeneficiary().getLoyaltyCard() != null)
                 availableAdvantages = controller.searchAdvantages(parent.getParent().getBeneficiary(), (GregorianCalendar) GregorianCalendar.getInstance(), null, 2);
 
             advantagesLabel = new JLabel("Vos avantages : ");

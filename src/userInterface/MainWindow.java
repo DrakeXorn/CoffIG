@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
     private final static int HEIGHT = 680;
     private JMenuBar menuBar;
     private JMenu infos, addNew, update, displayAll, search;
-    private JMenuItem home, about, exitItem,
+    private JMenuItem home, exitItem,
             addCustomer, addEmployee, addCoffee,
             updateCustomer, updateCoffee,
             allCustomers, allEmployees, allCoffees,
@@ -59,10 +59,6 @@ public class MainWindow extends JFrame {
         home = new JMenuItem("Accueil");
         infos.add(home);
         home.addActionListener(new HomeListener());
-
-        about = new JMenuItem("À propos");
-        about.addActionListener(new AboutListener());
-        infos.add(about);
 
         exitItem = new JMenuItem("Quitter");
         infos.add(exitItem);
@@ -138,11 +134,10 @@ public class MainWindow extends JFrame {
     }
   
     public void goBackHome() {
-        windowContainer.removeAll();
-        windowContainer.add(new MainPanel(MainWindow.this));
-        windowContainer.repaint();
-        setVisible(true);
         resetSize();
+        windowContainer.removeAll();
+        windowContainer.add(new MainPanel(this));
+        setVisible(true);
     }
 
     public void closeWindow(){
@@ -159,13 +154,6 @@ public class MainWindow extends JFrame {
     private class HomeListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             goBackHome();
-        }
-    }
-
-    private class AboutListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            AboutFrame frame = new AboutFrame();
         }
     }
 

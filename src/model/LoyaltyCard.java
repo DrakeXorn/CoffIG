@@ -9,7 +9,6 @@ public class LoyaltyCard {
     private String loyaltyCardID;
     private GregorianCalendar registrationDate;
     private Integer pointsNumber;
-    private ArrayList<Advantage> advantages;
 
     public LoyaltyCard(GregorianCalendar registrationDate, Integer pointsNumber, Customer customer)
             throws IntegerInputException {
@@ -18,7 +17,6 @@ public class LoyaltyCard {
 
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
-        advantages = new ArrayList<>();
     }
 
     // pour la création d'une carte en créant un client
@@ -33,7 +31,6 @@ public class LoyaltyCard {
         this.loyaltyCardID = loyaltyCardID;
         this.registrationDate = registrationDate;
         setPointsNumber(pointsNumber);
-        advantages = new ArrayList<>();
     }
 
     public String getLoyaltyCardID() {
