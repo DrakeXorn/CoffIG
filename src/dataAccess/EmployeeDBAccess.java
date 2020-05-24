@@ -36,7 +36,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
                 employees.add(employee);
             }
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "employé");
+            throw new AllDataException(exception.getMessage(), "employés");
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         }
@@ -60,7 +60,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
             manager = createEmployee(data);
         }
         catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage(), "manager");
+            throw new AllDataException(exception.getMessage(), "manager(s)");
         }
         catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
@@ -173,7 +173,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
     }
 
     @Override
-    public int getLastParkingSpaceNumber() throws ConnectionException, AddDataException {
+    public int getLastParkingSpaceNumber() throws ConnectionException, AllDataException {
         int nbParkingSpaceNumber;
 
         try {
@@ -187,7 +187,7 @@ public class EmployeeDBAccess implements EmployeeDataAccess {
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AddDataException(exception.getMessage(), "numéro d'emplacement de parking !");
+            throw new AllDataException(exception.getMessage(), "numéros d'emplacement de parking !");
         }
         return nbParkingSpaceNumber;
     }

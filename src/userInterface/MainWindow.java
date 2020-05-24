@@ -19,7 +19,7 @@ import java.awt.event.*;
 public class MainWindow extends JFrame {
     private final static int HEIGHT = 680;
     private JMenuBar menuBar;
-    private JMenu infos, addNew, upDate, displayAll, search;
+    private JMenu infos, addNew, update, displayAll, search;
     private JMenuItem home, about, exitItem,
             addCustomer, addEmployee, addCoffee,
             updateCustomer, updateCoffee,
@@ -49,7 +49,6 @@ public class MainWindow extends JFrame {
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 
-
         infos = new JMenu();
         ImageIcon beanIcon = new ImageIcon(ClassLoader.getSystemResource("coffeeCup.png"));
         Image beanImage = beanIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -70,7 +69,6 @@ public class MainWindow extends JFrame {
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         exitItem.addActionListener(new ExitListener());
 
-
         addNew = new JMenu("Ajouter");
         menuBar.add(addNew);
 
@@ -86,17 +84,16 @@ public class MainWindow extends JFrame {
         addNew.add(addCoffee);
         addCoffee.addActionListener(new AddCoffeeListener());
 
-        upDate = new JMenu("Modifier");
-        menuBar.add(upDate);
+        update = new JMenu("Modifier");
+        menuBar.add(update);
 
         updateCustomer = new JMenuItem("Modifier un client");
-        upDate.add(updateCustomer);
+        update.add(updateCustomer);
         updateCustomer.addActionListener(new UpdateCustomerListener());
 
         updateCoffee = new JMenuItem("Modifier un café");
-        upDate.add(updateCoffee);
+        update.add(updateCoffee);
         updateCoffee.addActionListener(new UpdateCoffeeListener());
-
 
         displayAll = new JMenu("Afficher");
         menuBar.add(displayAll);
@@ -112,7 +109,6 @@ public class MainWindow extends JFrame {
         allCoffees = new JMenuItem("Afficher tous les cafés");
         displayAll.add(allCoffees);
         allCoffees.addActionListener(new AllCoffeesListener());
-
 
         search = new JMenu("Rechercher");
         menuBar.add(search);
@@ -162,11 +158,7 @@ public class MainWindow extends JFrame {
 
     private class HomeListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            windowContainer.removeAll();
-            windowContainer.add(new MainPanel(MainWindow.this));
-            windowContainer.repaint();
-            MainWindow.this.setVisible(true);
-            resetSize();
+            goBackHome();
         }
     }
 
@@ -193,7 +185,6 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, customerForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
-
             resetSize();
         }
     }
@@ -208,6 +199,7 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsAddUserForm(MainWindow.this, employeeForm), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
+            resetSize();
         }
     }
 
@@ -219,7 +211,6 @@ public class MainWindow extends JFrame {
             windowContainer.add(new ButtonsAddCoffeeForm(MainWindow.this), BorderLayout.SOUTH);
             windowContainer.repaint();
             MainWindow.this.setVisible(true);
-
             resetSize();
         }
     }
@@ -242,16 +233,14 @@ public class MainWindow extends JFrame {
     private class AllCustomerListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             goBackHome();
-            new AllCustomersFrame(MainWindow.this);
-            resetSize();
+            new AllCustomersFrame();
         }
     }
   
     private class AllEmployeesListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             goBackHome();
-            new AllEmployeesFrame(MainWindow.this);
-            resetSize();
+            new AllEmployeesFrame();
         }
     }
   
@@ -260,7 +249,6 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             goBackHome();
             new AllCoffeesFrame();
-            resetSize();
         }
     }
 

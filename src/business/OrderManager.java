@@ -50,10 +50,6 @@ public class OrderManager {
         orderDataAccess.removeRight(loyaltyCardId, advantageId);
     }
 
-    public void closeConnexion() throws ClosedConnexion, ConnectionException {
-        orderDataAccess.closeConnexion();
-    }
-
     public ArrayList<Drink> getAllDrinks() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return orderDataAccess.getAllDrinks();
     }
@@ -64,5 +60,9 @@ public class OrderManager {
 
     public ArrayList<Topping> getAllAvailableToppings() throws ConnectionException, AllDataException, DateException, IntegerInputException, DoubleInputException {
         return orderDataAccess.getAllAvailableToppings();
+    }
+
+    public void closeConnexion() throws ClosedConnexion, ConnectionException {
+        orderDataAccess.closeConnexion();
     }
 }

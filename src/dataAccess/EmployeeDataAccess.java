@@ -12,7 +12,7 @@ public interface EmployeeDataAccess {
     Employee getManager() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException;
     void addEmployee(Employee employee) throws ConnectionException, AddDataException;
     ArrayList<Employee> getCurrentlyWorkingEmployees() throws AllDataException, ConnectionException, StringInputException, DateException, CharacterInputException;
-    int getLastParkingSpaceNumber() throws ConnectionException, AddDataException;
+    int getLastParkingSpaceNumber() throws ConnectionException, AllDataException;
     ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException;
 
 }

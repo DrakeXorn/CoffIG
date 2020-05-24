@@ -23,7 +23,7 @@ public class SearchOldOrdersForm extends JPanel {
             controller = new CustomerController();
             this.setLayout(new GridLayout(4, 2, 5, 5));
 
-            customerIdLabel = new JLabel("Client :");
+            customerIdLabel = new JLabel("Client : ");
             customerIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(customerIdLabel);
 
@@ -34,7 +34,7 @@ public class SearchOldOrdersForm extends JPanel {
             customersBox.setMaximumRowCount(5);
             this.add(customersBox);
 
-            startDateLabel = new JLabel("Date de début :");
+            startDateLabel = new JLabel("Date de début : ");
             startDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(startDateLabel);
 
@@ -42,7 +42,7 @@ public class SearchOldOrdersForm extends JPanel {
             startDate.setDate(LocalDate.of(2019, Month.JANUARY, 1));
             this.add(startDate);
 
-            endDateLabel = new JLabel("Date de fin :");
+            endDateLabel = new JLabel("Date de fin : ");
             endDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(endDateLabel);
 

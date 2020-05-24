@@ -1,7 +1,6 @@
 package model;
 
 import model.exceptions.TimeException;
-
 import java.time.LocalTime;
 
 public class Service {

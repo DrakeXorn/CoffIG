@@ -12,7 +12,6 @@ public class UpdateCustomersFrame extends JFrame {
     private UpdateCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
-    private ListSelectionModel listSelect;
     private ButtonsUpdateDeleteCustomerPanel buttonsPanel;
     private MainWindow mainWindow;
     private Container container;

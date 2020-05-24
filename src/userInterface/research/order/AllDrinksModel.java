@@ -22,7 +22,7 @@ public class AllDrinksModel extends AbstractTableModel {
 
     public void setContents(ArrayList<DrinkOrdering> contents) throws AllDataException {
         if(contents.isEmpty())
-            throw new AllDataException("la récupération des boissons", null);
+            throw new AllDataException("boissons", null);
         this.contents = contents;
     }
 

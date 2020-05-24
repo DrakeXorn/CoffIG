@@ -35,7 +35,7 @@ public class AllEmployeesModel extends AbstractTableModel {
 
     public void setContents(ArrayList<Employee> contents) throws AllDataException {
         if(contents.isEmpty())
-            throw new AllDataException("la récupération des employees", null);
+            throw new AllDataException("employees", null);
         this.contents = contents;
     }
 

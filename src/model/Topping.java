@@ -3,12 +3,12 @@ package model;
 import model.exceptions.DoubleInputException;
 
 public class Topping {
-    private static int nbrToppings = 1;
     private Integer toppingID;
     private String label;
     private Double price;
     private StockLocation stock;
 
+    // pour la récupération des toppings
     public Topping(Integer toppingID, String label, Double price, StockLocation stock) throws DoubleInputException {
         this.toppingID = toppingID;
         this.label = label;
@@ -18,11 +18,7 @@ public class Topping {
     
     // pour la recherche des anciennes commandes
     public Topping(Integer toppingID, String label, Double price) throws DoubleInputException {
-        this.toppingID = toppingID;
-        if (toppingID > nbrToppings)
-            nbrToppings = toppingID + 1;
-        this.label = label;
-        setPrice(price);
+        this(toppingID, label, price, null);
     }
 
     public Integer getToppingID() {

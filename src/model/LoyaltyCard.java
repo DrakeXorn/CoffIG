@@ -21,6 +21,7 @@ public class LoyaltyCard {
         advantages = new ArrayList<>();
     }
 
+    // pour la création d'une carte en créant un client
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
             throws IntegerInputException {
         this(registrationDate, 100, customer);

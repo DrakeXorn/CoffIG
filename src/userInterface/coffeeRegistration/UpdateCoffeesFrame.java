@@ -20,7 +20,7 @@ public class UpdateCoffeesFrame extends JFrame {
         setLayout(new BorderLayout());
         container = getContentPane();
         container.setLayout(new BorderLayout());
-        setBounds(250, 300, 1250, 600);
+        this.setBounds(90, 90, 1200, 400);
 
         this.parent = parent;
         coffeesPanel = new AllCoffeesPanel();
@@ -44,7 +44,6 @@ public class UpdateCoffeesFrame extends JFrame {
                 CoffeeForm coffeeForm = new CoffeeForm(chosenCoffee);
                 parent.getWindowContainer().add(coffeeForm, BorderLayout.CENTER);
                 parent.getWindowContainer().add(new ButtonsUpdateCoffeeForm(parent), BorderLayout.SOUTH);
-
                 parent.getWindowContainer().repaint();
                 parent.setVisible(true);
                 dispose();

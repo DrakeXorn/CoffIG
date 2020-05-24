@@ -59,7 +59,7 @@ public class SearchOldOrdersPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "La recherche n'a trouvé aucune commande correspondant aux critères demandés",
                                 "Recherche non aboutie !", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
+                        new AllOrdersFrame(orders, customer);
                     }
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(),

@@ -24,9 +24,9 @@ public class DrinkOrdering {
         setPrice(sellingPrice);
     }
 
+    // pour la récation de commandes
     public DrinkOrdering(Drink drink, String size, Integer nbrPieces, Double sellingPrice, ArrayList<Topping> toppings) throws IntegerInputException, StringInputException, DoubleInputException {
         this(drink, size, nbrPieces, sellingPrice);
-
         this.toppings = toppings;
     }
 

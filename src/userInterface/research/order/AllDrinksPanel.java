@@ -46,12 +46,11 @@ public class AllDrinksPanel extends JPanel {
                 ArrayList<Topping> toppings = drinkOrderingToDisplay.getToppings();
 
                 if(!toppings.isEmpty()) {
-                    AllToppingsFrame toppingsFrame = new AllToppingsFrame(toppings);
+                    new AllToppingsFrame(toppings);
                 } else {
                     JOptionPane.showMessageDialog(null, "Aucun topping n'a été ajouté à cette boisson !",
                             "Aucun topping !", JOptionPane.INFORMATION_MESSAGE);
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "Sélectionnez une boisson à afficher !",
                         "Erreur !", JOptionPane.ERROR_MESSAGE);

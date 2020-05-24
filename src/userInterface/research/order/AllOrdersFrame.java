@@ -88,8 +88,8 @@ public class AllOrdersFrame extends JFrame {
     private class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            setVisible(false);
-            AllOrdersFrame allOrdersFrame = new AllOrdersFrame(orders, customer);
+            dispose();
+            new AllOrdersFrame(orders, customer);
         }
     }
 }

@@ -9,7 +9,6 @@ public class Customer extends User {
     private Boolean wantsAdvertising;
     private Integer satisfactionDegree;
     private LoyaltyCard loyaltyCard;
-    private ArrayList<Order> orders;
 
     // pour la création et la modification d'un user
     public Customer(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
@@ -18,7 +17,6 @@ public class Customer extends User {
             throws StringInputException, DateException, CharacterInputException {
         super(userID, password, lastName, firstName, secondName, maidenName, birthDate, streetName, locality, email, phone, gender);
         this.wantsAdvertising = wantsAdvertising;
-        orders = new ArrayList<>();
     }
 
     // pour la récupération de la BD
@@ -41,10 +39,6 @@ public class Customer extends User {
         return loyaltyCard;
     }
 
-    public ArrayList<Order> getOrders() {
-        return orders;
-    }
-
     public void setSatisfactionDegree(Integer satisfactionDegree) throws IntegerInputException {
         if (satisfactionDegree != null && (satisfactionDegree < 0 || satisfactionDegree > 5))
             throw new IntegerInputException(satisfactionDegree, "degré satisfaction", "Le degré de satisfaction doit être compris entre 0 et 5 !");
@@ -53,10 +47,6 @@ public class Customer extends User {
 
     public void addLoyaltyCard(LoyaltyCard card) {
         loyaltyCard = card;
-    }
-
-    public void addOrder(Order order) {
-        orders.add(order);
     }
 
     public String description() {
