@@ -1,6 +1,9 @@
 package dataAccess;
 
 import model.Coffee;
+import model.Drink;
+import model.Food;
+import model.Topping;
 import model.exceptions.*;
 
 import java.util.ArrayList;
@@ -11,4 +14,4 @@ public interface CoffeeDataAccess {
     void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException;
     int getLastCoffeeID() throws ConnectionException, AddDataException;
     ArrayList<String> getFeatures() throws AllDataException, ConnectionException;
-}
+    }

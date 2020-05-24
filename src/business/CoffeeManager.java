@@ -3,6 +3,9 @@ package business;
 import dataAccess.CoffeeDBAccess;
 import dataAccess.CoffeeDataAccess;
 import model.Coffee;
+import model.Drink;
+import model.Food;
+import model.Topping;
 import model.exceptions.*;
 
 import java.util.ArrayList;
@@ -33,4 +36,6 @@ public class CoffeeManager {
     public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
         return dataAccessor.getFeatures();
     }
+
+
 }

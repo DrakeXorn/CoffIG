@@ -2,6 +2,9 @@ package controller;
 
 import business.CoffeeManager;
 import model.Coffee;
+import model.Drink;
+import model.Food;
+import model.Topping;
 import model.exceptions.*;
 
 import java.util.ArrayList;
@@ -32,4 +35,6 @@ public class CoffeeController {
     public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
         return coffeeManager.getFeatures();
     }
+
+
 }

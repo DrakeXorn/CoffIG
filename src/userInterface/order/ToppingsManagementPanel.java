@@ -1,6 +1,6 @@
 package userInterface.order;
 
-import controller.ToppingController;
+import controller.OrderController;
 import model.Topping;
 import userInterface.ButtonsManagementPanel;
 import userInterface.ManagementPanel;
@@ -17,19 +17,16 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
     private ButtonsManagementPanel buttonsPanel;
     private DefaultListModel<Topping> toppingsModel;
     private DefaultListModel<Topping> chosenToppingsModel;
-    private static ArrayList<Topping> toppings;
 
     public ToppingsManagementPanel(ToppingsManagementFrame parent) {
         try {
-            ToppingController controller = new ToppingController();
-            if (toppings == null)
-                toppings = controller.getAllAvailableToppings();
+            OrderController controller = new OrderController();
+            ArrayList<Topping> toppings = controller.getAllAvailableToppings();
             setLayout(new GridLayout(1, 3));
 
             toppingsModel = new DefaultListModel<>();
             for (Topping topping : toppings)
-                if (topping.getStockLocation().getQuantity() > 0)
-                    toppingsModel.addElement(topping);
+                toppingsModel.addElement(topping);
 
             toppingsList = new JList<>(toppingsModel);
             toppingsScrollPane = new JScrollPane(toppingsList);
@@ -69,7 +66,6 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
     @Override
     public void moveToList() {
         for (Topping topping : chosenToppingsList.getSelectedValuesList()) {
-            topping.getStockLocation().addNToQuantity(1);
             toppingsModel.addElement(topping);
             chosenToppingsModel.removeElement(topping);
         }
@@ -79,7 +75,6 @@ public class ToppingsManagementPanel extends JPanel implements ManagementPanel {
     public void moveToChosenList() {
         for (Topping topping : toppingsList.getSelectedValuesList()) {
             chosenToppingsModel.addElement(topping);
-            topping.getStockLocation().removeNToQuantity(1);
             toppingsModel.removeElement(topping);
         }
     }
