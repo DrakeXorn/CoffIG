@@ -22,10 +22,10 @@ public class OrderForm extends JPanel {
         this.mainWindow = mainWindow;
         setLayout(new BorderLayout());
 
-        topBar = new OrderFormTopPanel(this);
+        topBar = new OrderFormTopPanel();
         recapPanel = new OrderFormRecapPanel(this);
         centralPanel = new OrderFormCentralPanel(this);
-        bottomBar = new OrderFormBottomPanel(this);
+        bottomBar = new OrderFormBottomPanel();
 
         add(topBar, BorderLayout.NORTH);
         add(centralPanel, BorderLayout.CENTER);

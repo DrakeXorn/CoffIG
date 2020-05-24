@@ -1,7 +1,6 @@
 package userInterface.listing;
 
 import controller.CoffeeController;
-import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +8,8 @@ import java.awt.*;
 public class AllCoffeesFrame extends JFrame {
     private JScrollPane scrollPane;
     private JTable coffeeTable;
-    private ListSelectionModel listSelect;
     private CoffeeController controller;
     private Container container;
-    private MainWindow parent;
 
     public AllCoffeesFrame() {
         super("Tous les cafés");
@@ -36,10 +33,9 @@ public class AllCoffeesFrame extends JFrame {
 
             coffeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
             coffeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = coffeeTable.getSelectionModel();
             scrollPane = new JScrollPane(coffeeTable);
 
-            add(scrollPane);
+            container.add(scrollPane);
             setVisible(true);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur !", JOptionPane.ERROR_MESSAGE);

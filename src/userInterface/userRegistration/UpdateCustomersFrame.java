@@ -13,6 +13,7 @@ public class UpdateCustomersFrame extends JFrame {
     private JTable customerTable;
     private JScrollPane scrollPane;
     private ButtonsUpdateDeleteCustomerPanel buttonsPanel;
+    private ListSelectionModel listSelect;
     private MainWindow mainWindow;
     private Container container;
 

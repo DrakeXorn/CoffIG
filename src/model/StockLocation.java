@@ -1,8 +1,7 @@
 package model;
 
 import model.exceptions.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.GregorianCalendar;
 
 public class StockLocation {

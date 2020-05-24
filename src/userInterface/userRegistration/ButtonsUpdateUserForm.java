@@ -19,7 +19,6 @@ public class ButtonsUpdateUserForm extends JPanel{
     public ButtonsUpdateUserForm(MainWindow window, CustomerForm form){
         this.parent = window;
         this.form = form;
-        CustomerController controller = new CustomerController();
         this.setLayout(new FlowLayout());
 
         requiredFields = new JLabel("*champs obligatoires");

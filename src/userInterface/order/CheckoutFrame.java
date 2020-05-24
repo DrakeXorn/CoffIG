@@ -45,28 +45,33 @@ public class CheckoutFrame extends JFrame {
             try {
                 OrderController controller = new OrderController();
                 Order order = new Order(parent.getOrderNumber(), (GregorianCalendar) GregorianCalendar.getInstance(), checkoutPanel.isToTakeAway());
-
-                LoyaltyCard card = parent.getBeneficiary().getLoyaltyCard();
+                LoyaltyCard card = null;
+                int numberPoints = 0;
 
                 order.setBeneficiary(parent.getBeneficiary());
                 order.setOrderPicker(parent.getOrderPicker());
                 order.setFoodOrderings(parent.getFoodOrderings());
                 order.setDrinkOrderings(parent.getDrinkOrderings());
 
-                int numberPoints = controller.addPoints(card.getPointsNumber(), order.getPrice());
-                controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
+                if (parent.getBeneficiary() != null) {
+                    card = parent.getBeneficiary().getLoyaltyCard();
 
-                if (checkoutPanel.getChosenAdvantage() != null) {
-                    order.setDiscount(checkoutPanel.getChosenAdvantage().getDiscount());
-                    numberPoints = controller.removePoints(numberPoints, checkoutPanel.getChosenAdvantage().getPointsRequired());
+
+                    numberPoints = controller.addPoints(card.getPointsNumber(), order.getPrice());
                     controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
-                    controller.removeRight(parent.getBeneficiary().getLoyaltyCard().getLoyaltyCardID(), checkoutPanel.getChosenAdvantage().getAdvantageID());
+
+                    if (checkoutPanel.getChosenAdvantage() != null) {
+                        order.setDiscount(checkoutPanel.getChosenAdvantage().getDiscount());
+                        numberPoints = controller.removePoints(numberPoints, checkoutPanel.getChosenAdvantage().getPointsRequired());
+                        controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
+                        controller.removeRight(parent.getBeneficiary().getLoyaltyCard().getLoyaltyCardID(), checkoutPanel.getChosenAdvantage().getAdvantageID());
+                    }
                 }
                 controller.addOrder(order);
 
-                String message = "Votre commande a bien été prise en compte.\n " +
-                        "Votre carte de fidélité compte à présent " + numberPoints + "\n" +
-                        "(précedement " + card.getPointsNumber() + " points)";
+                String message = "Votre commande a bien été prise en compte." + (card != null ?
+                        "\nVotre carte de fidélité compte à présent " + numberPoints + "\n" +
+                        "(précedement " + card.getPointsNumber() + " points)" : "");
 
                 JOptionPane.showMessageDialog(parent.getWindow(),  message, "Confirmation de commande", JOptionPane.INFORMATION_MESSAGE);
 

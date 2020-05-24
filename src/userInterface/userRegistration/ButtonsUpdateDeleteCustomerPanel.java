@@ -56,7 +56,7 @@ public class ButtonsUpdateDeleteCustomerPanel extends JPanel {
 
             if (customers.size() != 0) {
                 for (Customer customer : customers) {
-                    if (JOptionPane.showConfirmDialog(parent, "Êtes-vous sûr de vouloir supprimer " + customer.getIdentity() + " ?", "Confirmer la suppression", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                    if (JOptionPane.showConfirmDialog(parent, "Êtes-vous sûr de vouloir supprimer " + customer.getIdentity() + " ?" + (customer.getLoyaltyCard() != null ? "\nVous supprimerez aussi la carte de fidélité n°" + customer.getLoyaltyCard().getLoyaltyCardID() + " qui contient " + customer.getLoyaltyCard().getPointsNumber() + " points." : ""), "Confirmer la suppression", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                         try {
                             CustomerController controller = new CustomerController();
 

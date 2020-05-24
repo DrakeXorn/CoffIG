@@ -1,7 +1,6 @@
 package userInterface.research.service;
 
 import model.Assignment;
-import model.Coffee;
 import model.exceptions.AllDataException;
 
 import javax.swing.table.AbstractTableModel;

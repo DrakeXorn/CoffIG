@@ -11,10 +11,6 @@ public class DoubleInputException extends Exception   {
         this.precision = precision;
     }
 
-    public DoubleInputException(Double wrongValue, String nameValue) {
-        this(wrongValue, nameValue, "");
-    }
-
     public String getMessage() {
         return "La valeur (" + wrongValue + ") proposée pour " + nameValue + " est invalide !\n" + precision;
     }

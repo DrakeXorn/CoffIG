@@ -17,7 +17,7 @@ public class OrderFormBottomPanel extends JPanel {
     private JTextField dateField, willBeServedByField;
     private Employee orderPicker;
 
-    public OrderFormBottomPanel(OrderForm parent) throws ConnectionException, StringInputException, CharacterInputException, DateException, AllDataException, ClosedShopException {
+    public OrderFormBottomPanel() throws ConnectionException, StringInputException, CharacterInputException, DateException, AllDataException, ClosedShopException {
             EmployeeController controller = new EmployeeController();
             ArrayList<Employee> currentlyWorkingEmployees = controller.getCurrentlyWorkingEmployees();
 

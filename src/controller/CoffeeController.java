@@ -2,9 +2,6 @@ package controller;
 
 import business.CoffeeManager;
 import model.Coffee;
-import model.Drink;
-import model.Food;
-import model.Topping;
 import model.exceptions.*;
 
 import java.util.ArrayList;

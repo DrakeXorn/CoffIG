@@ -65,7 +65,7 @@ public class OrderFormDrinkOrderingsPanel extends JPanel {
         return price;
     }
 
-    private class DrinkOrderingsListCellRenderer extends DefaultListCellRenderer {
+    private static class DrinkOrderingsListCellRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel renderer = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
