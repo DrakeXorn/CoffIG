@@ -24,7 +24,7 @@ public class LoyaltyCard {
     // pour la création d'une carte en créant un client
     public LoyaltyCard(GregorianCalendar registrationDate, Customer customer)
             throws IntegerInputException {
-        this(registrationDate, 100, customer);
+        this(registrationDate, 500, customer);
     }
 
     // constructeur pour récupérer AllCustomers dans DBAccess
