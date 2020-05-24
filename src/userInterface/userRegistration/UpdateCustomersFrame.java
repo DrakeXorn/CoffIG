@@ -6,13 +6,13 @@ import userInterface.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class UpdateCustomersFrame extends JFrame {
     private UpdateCustomersModel model;
     private JTable customerTable;
     private JScrollPane scrollPane;
     private ButtonsUpdateDeleteCustomerPanel buttonsPanel;
-    private CustomerController controller;
     private MainWindow mainWindow;
     private Container container;
 
@@ -22,14 +22,16 @@ public class UpdateCustomersFrame extends JFrame {
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
         mainWindow = window;
-        controller = new CustomerController();
+        CustomerController controller = new CustomerController();
 
         try {
             model = new UpdateCustomersModel(controller.getAllCustomers());
             customerTable = new JTable(model);
             customerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-            customerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            customerTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listSelect = customerTable.getSelectionModel();
+
             scrollPane = new JScrollPane((customerTable));
             container.add(scrollPane, BorderLayout.CENTER);
 
@@ -48,7 +50,14 @@ public class UpdateCustomersFrame extends JFrame {
         return mainWindow;
     }
 
-    public Customer getChosenCustomer() {
-        return customerTable.getSelectionModel().getMinSelectionIndex() != -1 ? model.getRow(customerTable.getSelectedRow()) : null;
+    public ArrayList<Customer> getChosenCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        if (listSelect.getMinSelectionIndex() != -1) {
+            for (int index : listSelect.getSelectedIndices())
+                customers.add(model.getRow(index));
+        }
+
+        return customers;
     }
 }

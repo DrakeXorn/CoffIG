@@ -1,6 +1,7 @@
 package userInterface.research.service;
 
 import model.Assignment;
+import model.exceptions.AllDataException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,17 +16,21 @@ public class AssignmentsFrame extends JFrame {
     private JButton goBackButton;
 
     public AssignmentsFrame(ArrayList<Assignment> assignments, String employeeIdentity) {
-        setBounds(50, 200, 700, 300);
-        setLayout(new BorderLayout());
-        container = getContentPane();
-        updateFrame(assignments, employeeIdentity);
-        goBackButton = new JButton("Retour");
-        goBackButton.addActionListener(new GoBackListener());
+        try {
+            setBounds(50, 200, 700, 300);
+            setLayout(new BorderLayout());
+            container = getContentPane();
+                updateFrame(assignments, employeeIdentity);
+            goBackButton = new JButton("Retour");
+            goBackButton.addActionListener(new GoBackListener());
 
-        add(goBackButton, BorderLayout.SOUTH);
+            add(goBackButton, BorderLayout.SOUTH);
+        } catch (AllDataException exception) {
+            JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    public void updateFrame(ArrayList<Assignment> assignments, String employeeIdentity) {
+    public void updateFrame(ArrayList<Assignment> assignments, String employeeIdentity) throws AllDataException {
         setTitle("Services de " + employeeIdentity);
         if (scrollPane != null)
             container.remove(scrollPane);

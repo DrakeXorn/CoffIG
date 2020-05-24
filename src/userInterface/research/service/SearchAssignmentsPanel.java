@@ -2,6 +2,7 @@ package userInterface.research.service;
 
 import controller.EmployeeController;
 import model.Assignment;
+import model.exceptions.AllDataException;
 import userInterface.utils.InputCheck;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public class SearchAssignmentsPanel extends JPanel {
         setVisible(true);
     }
 
-    public void updateWindow(ArrayList<Assignment> assignments, String employeeIdentity) {
+    public void updateWindow(ArrayList<Assignment> assignments, String employeeIdentity) throws AllDataException {
         if (assignmentsFrame == null)
             assignmentsFrame = new AssignmentsFrame(assignments, employeeIdentity);
         else assignmentsFrame.updateFrame(assignments, employeeIdentity);

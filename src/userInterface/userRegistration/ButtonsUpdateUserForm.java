@@ -15,12 +15,11 @@ public class ButtonsUpdateUserForm extends JPanel{
     private MainWindow parent;
     private Customer user;
     private CustomerForm form;
-    private CustomerController controller;
 
     public ButtonsUpdateUserForm(MainWindow window, CustomerForm form){
         this.parent = window;
         this.form = form;
-        controller = new CustomerController();
+        CustomerController controller = new CustomerController();
         this.setLayout(new FlowLayout());
 
         requiredFields = new JLabel("*champs obligatoires");
@@ -42,6 +41,8 @@ public class ButtonsUpdateUserForm extends JPanel{
                 user = form.updateCustomer();
 
                 if(user != null && JOptionPane.showConfirmDialog(null, "Êtes-vous sûr(e) de vouloir modifier " + user + " ?", "Modification de l'inscription", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                    CustomerController controller = new CustomerController();
+
                     controller.updateCustomer(user);
                     JOptionPane.showMessageDialog(null, user + " a été modifié" , "Modification de l'inscription", JOptionPane.INFORMATION_MESSAGE);
                     parent.goBackHome();

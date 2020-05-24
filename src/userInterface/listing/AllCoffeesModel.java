@@ -1,6 +1,8 @@
 package userInterface.listing;
 
 import model.Coffee;
+import model.Employee;
+import model.exceptions.AllDataException;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ public class AllCoffeesModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<Coffee> contents;
 
-    public AllCoffeesModel(ArrayList<Coffee> coffees) {
+    public AllCoffeesModel(ArrayList<Coffee> coffees) throws AllDataException {
         contents = new ArrayList<>();
         columnNames = new ArrayList<>();
         columnNames.add("Label");
@@ -25,7 +27,13 @@ public class AllCoffeesModel extends AbstractTableModel {
         columnNames.add("Allée");
         columnNames.add("Étagère");
         columnNames.add("Emplacement");
-        contents.addAll(coffees);
+        setContents(coffees);
+    }
+
+    public void setContents(ArrayList<Coffee> coffees) throws AllDataException {
+        if (coffees.isEmpty())
+            throw new AllDataException("cafés", null);
+        this.contents = coffees;
     }
 
     @Override

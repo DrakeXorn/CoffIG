@@ -138,7 +138,7 @@ public class Coffee {
         if (discoveryYear != null)
             description.append(" et découvert en ").append(discoveryYear);
         description.append(".\nCe café").append(inGrains ? " en grains" : " moulu").append(" est cultivé de manière");
-        description.append(environmentFriendly ? "" : " non").append(" respectueuse de l'environnement.\n");
+        description.append(environmentFriendly ? "" : " non").append(" éco-responsable.\n");
         for (int iFeature = 0; iFeature < features.size(); iFeature++) {
             description.append(iFeature == 0 ? "Il est " : iFeature == features.size() - 1 ? " et " : ", ");
             description.append(features.get(iFeature));

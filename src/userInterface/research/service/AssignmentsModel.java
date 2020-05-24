@@ -1,6 +1,8 @@
 package userInterface.research.service;
 
 import model.Assignment;
+import model.Coffee;
+import model.exceptions.AllDataException;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalTime;
@@ -11,13 +13,19 @@ public class AssignmentsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<Assignment> contents;
 
-    public AssignmentsModel(ArrayList<Assignment> assignments) {
+    public AssignmentsModel(ArrayList<Assignment> assignments) throws AllDataException {
         contents = new ArrayList<>();
         columnNames = new ArrayList<>();
         columnNames.add("Date");
         columnNames.add("Heure de début");
         columnNames.add("Heure de fin");
-        contents.addAll(assignments);
+        setContents(assignments);
+    }
+
+    public void setContents(ArrayList<Assignment> assignments) throws AllDataException {
+        if (assignments.isEmpty())
+            throw new AllDataException("les services", null);
+        this.contents = assignments;
     }
 
     @Override

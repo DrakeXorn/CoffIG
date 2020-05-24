@@ -202,7 +202,7 @@ public class CoffeeForm extends JPanel {
         StockLocation coffeeLocation;
 
         expirationDate.setTime(Date.from(expirationDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        expirationDate.add(GregorianCalendar.HOUR, 23);
+        expirationDate.add(GregorianCalendar.HOUR, 1);
 
         coffeeLocation = new StockLocation(Integer.parseInt(alley.getValue().toString()),
                 Integer.parseInt(shelf.getValue().toString()),
