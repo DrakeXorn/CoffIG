@@ -68,13 +68,11 @@ public class AllCustomersModel extends AbstractTableModel {
 
     public Class<?> getColumnClass (int column) {
         return switch (column) {
-            case 0, 1, 2, 3, 4, 6, 7, 8, 9, 13 -> String.class;
-            // id, last name, first name, second name, maiden name, street, locality, email, phone, loyalty card
             case 5 -> Date.class; // birth date
             case 10 -> Character.class; // gender
             case 11 -> Boolean.class; // wants advertising
             case 12 -> Integer.class; // degree
-            default -> String.class;
+            default -> String.class; // id, last name, first name, second name, maiden name, street, locality, email, phone, loyalty card
         };
     }
 }

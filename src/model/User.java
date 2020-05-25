@@ -19,7 +19,6 @@ public class User {
     private Character gender;
     private Locality locality;
 
-    // pour la création avant l'insertion, la récupération et la modification d'un user
     public User(Integer userID, String password, String lastName, String firstName, String secondName, String maidenName,
                 GregorianCalendar birthDate, String streetName, Locality locality, String email, String phone, Character gender)
             throws StringInputException, DateException, CharacterInputException {

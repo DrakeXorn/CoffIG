@@ -11,7 +11,6 @@ public class Advantage {
     private GregorianCalendar endDate;
     private Integer pointsRequired;
 
-    // Pour la recherche
     public Advantage(Integer advantageID, String label, Double discount,
                      GregorianCalendar startDate, GregorianCalendar endDate, Integer pointsRequired)
                     throws IntegerInputException, DoubleInputException, DateException {

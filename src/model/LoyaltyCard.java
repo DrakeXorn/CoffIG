@@ -2,7 +2,6 @@ package model;
 
 import model.exceptions.*;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class LoyaltyCard {

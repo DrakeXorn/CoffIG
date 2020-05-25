@@ -72,7 +72,6 @@ public class AllEmployeesModel extends AbstractTableModel {
 
     public Class<?> getColumnClass (int column) {
         return switch (column) {
-            //case 0 -> String.class;
             case 5, 11, 12 -> Date.class;   // birth date, hire date, end date
             case 10 -> Character.class;     // gender
             case 13 -> Boolean.class;       // isEmployeeOfTheMonth

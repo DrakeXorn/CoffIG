@@ -14,7 +14,6 @@ public class Order {
     private ArrayList<FoodOrdering> foodOrderings;
     private ArrayList<DrinkOrdering> drinkOrderings;
 
-    // pour la recherche des anciennes commandes et la création d'une nouvelle commande
     public Order(Integer orderNumber, GregorianCalendar date, Boolean isToTakeAway) {
         this.orderNumber = orderNumber;
         this.date = date;

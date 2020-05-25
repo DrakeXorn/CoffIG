@@ -8,7 +8,6 @@ public class FoodOrdering {
     private Integer nbrPieces;
     private Double sellingPrice;
 
-    // pour la recherche des anciennes commandes
     public FoodOrdering(Food food, Integer nbrPieces, Double sellingPrice) throws DoubleInputException, IntegerInputException {
         this.food = food;
         setPieces(nbrPieces);
