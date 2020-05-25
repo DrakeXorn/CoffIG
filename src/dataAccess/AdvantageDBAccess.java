@@ -32,7 +32,7 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
     }
 
     @Override
-    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {
+    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar date, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {
         ArrayList<Advantage> advantages = new ArrayList<>();
 
         try {
@@ -53,7 +53,7 @@ public class AdvantageDBAccess implements AdvantageDataAccess {
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             statement.setString(1, customer.getLoyaltyCard().getLoyaltyCardID());
 
-            if (typeAdvantage != 1) statement.setDate(2, new java.sql.Date(today.getTimeInMillis()));
+            if (typeAdvantage != 1) statement.setDate(2, new java.sql.Date(date.getTimeInMillis()));
 
             if (discount != null) statement.setDouble((typeAdvantage == 1 ? 2 : 3), discount);
 

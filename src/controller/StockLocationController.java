@@ -17,7 +17,7 @@ public class StockLocationController {
         return manager.getAllStockLocations();
     }
 
-    public void updateStockLocation(StockLocation stockLocation) throws ConnectionException, ModifyException {
+    public void updateStockLocation(StockLocation stockLocation) throws ConnectionException, ModifyException, BusinessException {
         manager.updateStockLocation(stockLocation);
     }
 }

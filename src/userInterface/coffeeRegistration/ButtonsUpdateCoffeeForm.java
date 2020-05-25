@@ -31,7 +31,7 @@ public class ButtonsUpdateCoffeeForm extends JPanel {
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            parent.getWindowContainer().removeAll();
+            parent.goBackHome();
             new UpdateCoffeesFrame(parent);
             parent.repaint();
         }

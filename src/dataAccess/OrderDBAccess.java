@@ -10,10 +10,16 @@ import java.util.GregorianCalendar;
 public class OrderDBAccess implements OrderDataAccess {
     @Override
     public void addOrder(Order order) throws ConnectionException, AddDataException, ModifyException {
+        Savepoint savepoint = null;
+        Connection connection = null;
+
         try {
-            Connection connection = SingletonConnection.getInstance();
+            connection = SingletonConnection.getInstance();
             String insertInstruction = "insert into `order` (order_number, date, is_to_take_away, order_picker) values (?, ?, ?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertInstruction);
+
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint("Order");
 
             insertStatement.setInt(1, order.getOrderNumber());
             insertStatement.setDate(2, new Date(order.getDate().getTimeInMillis()));
@@ -73,9 +79,17 @@ public class OrderDBAccess implements OrderDataAccess {
                 insertFoodStatement.setDouble(4, foodOrdering.getSellingPrice());
                 insertFoodStatement.executeUpdate();
             }
+
+            connection.commit();
         } catch (IOException exception) {
             throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
+            try {
+                if (connection != null)
+                    connection.rollback(savepoint);
+            } catch (SQLException exception2) {
+                throw new AddDataException(exception2.getMessage(), "commande");
+            }
             throw new AddDataException(exception.getMessage(), "commande");
         }
     }

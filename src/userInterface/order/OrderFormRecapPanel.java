@@ -9,8 +9,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class OrderFormRecapPanel extends JPanel {
-    private OrderFormDrinkOrderingsPanel drinkOrderingPanel;
-    private OrderFormFoodOrderingsPanel foodOrderingPanel;
+    private RecapDrinkOrderingPanel drinkOrderingPanel;
+    private RecapFoodOrderingPanel foodOrderingPanel;
     private JButton orderButton;
     private OrderForm parent;
 
@@ -19,10 +19,10 @@ public class OrderFormRecapPanel extends JPanel {
         setLayout(new GridLayout(3, 1));
         setBorder(BorderFactory.createTitledBorder("Récapitulatif de la commande"));
 
-        drinkOrderingPanel = new OrderFormDrinkOrderingsPanel(this);
+        drinkOrderingPanel = new RecapDrinkOrderingPanel(this);
         add(drinkOrderingPanel);
 
-        foodOrderingPanel = new OrderFormFoodOrderingsPanel(this);
+        foodOrderingPanel = new RecapFoodOrderingPanel(this);
         add(foodOrderingPanel);
 
         orderButton = new JButton();

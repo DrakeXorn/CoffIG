@@ -20,7 +20,13 @@ public class AdvantageManager {
         return dataAccessor.getAllAdvantageDiscounts();
     }
 
-    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException {
-        return dataAccessor.searchAdvantages(customer, today, discount, typeAdvantage);
+    public ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar date, Double discount, int typeAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException, BusinessException {
+        if (customer == null)
+            throw new BusinessException("AdvantageManager", "la recherche d'avantages", "Le client");
+        if (date == null)
+            throw new BusinessException("AdvantageManager", "la recherche d'avantages", "La date");
+        if (discount == null)
+            throw new BusinessException("AdvantageManager", "la recherche d'avantages", "La réduction");
+        return dataAccessor.searchAdvantages(customer, date, discount, typeAdvantage);
     }
 }

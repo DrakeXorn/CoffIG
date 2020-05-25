@@ -23,7 +23,10 @@ public class EmployeeManager {
         return employeeAccessor.getManager();
     }
 
-    public void addEmployee(Employee employee) throws AddDataException, ConnectionException {
+    public void addEmployee(Employee employee) throws AddDataException, ConnectionException, BusinessException {
+        if (employee == null)
+            throw new BusinessException("EmployeeManager", "l'ajout d'un employé", "L'employé");
+
         employeeAccessor.addEmployee(employee);
     }
 
@@ -35,7 +38,14 @@ public class EmployeeManager {
         return employeeAccessor.getLastParkingSpaceNumber();
     }
 
-    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException {
+    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException, BusinessException {
+        if (identity == null)
+            throw new BusinessException("EmployeeManager", "la recherche de services", "L'identité de l'employé");
+        if (startDate == null)
+            throw new BusinessException("EmployeeManager", "la recherche de services", "La date de début");
+        if (endDate == null)
+            throw new BusinessException("EmployeeManager", "la recherche de services", "La date de fin");
+
         return employeeAccessor.searchAssignments(identity, startDate, endDate);
     }
 }

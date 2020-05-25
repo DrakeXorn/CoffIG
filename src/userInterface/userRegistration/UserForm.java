@@ -6,6 +6,8 @@ import model.*;
 import model.exceptions.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -62,14 +64,18 @@ public class UserForm extends JPanel {
             maidenNameLabel = new JLabel("Nom de jeune fille :");
             maidenNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             this.add(maidenNameLabel);
+
             maidenName = new JTextField();
+            maidenName.setEditable(false);
             this.add(maidenName);
 
             maleButton = new JRadioButton("Homme");
             maleButton.setHorizontalAlignment(SwingConstants.CENTER);
+            maleButton.addActionListener(new RadioButtonsListener());
             this.add(maleButton);
             femaleButton = new JRadioButton("Femme");
             femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
+            femaleButton.addActionListener(new RadioButtonsListener());
             this.add(femaleButton);
 
             buttonGroup = new ButtonGroup();
@@ -201,5 +207,12 @@ public class UserForm extends JPanel {
 
     public Character getGender() {
         return maleButton.isSelected() ? 'M' : 'F';
+    }
+
+    private class RadioButtonsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            maidenName.setEditable(e.getSource() == femaleButton);
+        }
     }
 }

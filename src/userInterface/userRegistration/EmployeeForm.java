@@ -79,7 +79,7 @@ public class EmployeeForm extends JPanel {
             GregorianCalendar endContractDate = new GregorianCalendar();
 
             hireDate.setTime(Date.from(hireDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            if (wantsEndContract.isSelected() && endContractDatePicker.getDate() != null)
+            if (wantsEndContract.isSelected() && endContractDatePicker.getDate() == null)
                 throw new DateException(null, "Vous devez choisir une date de fin de contrat !");
 
             endContractDate.setTime(Date.from(endContractDatePicker.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));

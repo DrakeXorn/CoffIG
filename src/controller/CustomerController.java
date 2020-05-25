@@ -12,7 +12,7 @@ public class CustomerController {
         manager = new CustomerManager();
     }
 
-    public void addCustomer(Customer customer) throws AddDataException, ConnectionException {
+    public void addCustomer(Customer customer) throws AddDataException, ConnectionException, BusinessException {
         manager.addCustomer(customer);
     }
 
@@ -20,11 +20,11 @@ public class CustomerController {
         return manager.getAllCustomers();
     }
 
-    public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
+    public void updateCustomer(Customer customer) throws ModifyException, ConnectionException, BusinessException {
         manager.updateCustomer(customer);
     }
 
-    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException {
+    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException, BusinessException {
         manager.removeCustomer(customer);
     }
 }
