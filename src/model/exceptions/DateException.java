@@ -13,10 +13,14 @@ public class DateException extends Exception {
     }
 
     public String getMessage(){
-        String message = "La date " + wrongDate.get(Calendar.DAY_OF_MONTH)
-                + "/" + (wrongDate.get(Calendar.MONTH) + 1) + "/"
-                + wrongDate.get(Calendar.YEAR)
-                + " est invalide ! ";
+        String message = "";
+        if(wrongDate != null){
+            message = "La date " + wrongDate.get(Calendar.DAY_OF_MONTH)
+                    + "/" + (wrongDate.get(Calendar.MONTH) + 1) + "/"
+                    + wrongDate.get(Calendar.YEAR)
+                    + " est invalide ! ";
+        }
+
         if(precision != null){
             message += precision;
         }

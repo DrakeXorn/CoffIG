@@ -13,8 +13,8 @@ public class AllCoffeesFrame extends JFrame {
 
     public AllCoffeesFrame() {
         super("Tous les cafés");
+        this.setBounds(50, 50, 1400, 400);
 
-        setBounds(50, 200, 1250, 600);
         container = getContentPane();
         controller = new CoffeeController();
 
