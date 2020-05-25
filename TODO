@@ -1,4 +1,0 @@
-TODO :
-	Changer en StringBuilder dans les classes exception
-	À l'initialisation de l'application, setter le nombre maximal de toutes les tables aux classes (via static setter)
-	Vérifier size du schéma
