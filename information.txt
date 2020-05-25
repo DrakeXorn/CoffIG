@@ -1,0 +1,20 @@
+Informations concernant le projet CoffIG 
+Réalisé dans le cadre du projet informatique intégré
+
+
+Auteurs du projet :
+	- Christophe Bernard 	(etu39862@henallux.be)
+	- Aurélie Bodart		(etu30201@henallux.be)
+	- Maxime Forain 		(etu41411@henallux.be)
+
+
+Informations générales :
+	- L'accès au projet vous sera fourni via GitHub (master)
+		https://github.com/DrakeXorn/CoffIG/tree/master
+
+	- Pour pouvoir utiliser les fonctionnalités de notre application, vous devez installer le JDK 14 de Java.
+		https://www.oracle.com/java/technologies/javase-jdk14-downloads.html
+		
+	- Pour que le programme se connecte à la base de données, vous devrez modifier le fichier dbConfig.properties se trouvant dans "resources". 
+	Indiquez votre nom d'utilisateur après "user="
+	Indiquez votre mot de passe après "password="
