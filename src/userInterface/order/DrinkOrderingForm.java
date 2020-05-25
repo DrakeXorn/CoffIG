@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -108,7 +109,9 @@ public class DrinkOrderingForm extends JPanel {
     }
 
     public void updatePrice() {
-        addToListButton.setText("Ajouter à la commande (" + getLinePrice() + "€)");
+        DecimalFormat format = new DecimalFormat("0.00");
+
+        addToListButton.setText("Ajouter à la commande (" + format.format(getLinePrice()) + "€)");
     }
 
     public ArrayList<Topping> getToppings() {
@@ -153,7 +156,7 @@ public class DrinkOrderingForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) Objects.requireNonNull(sizeBox.getSelectedItem())).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice(), new ArrayList<>(toppings)));
+                parent.addToDrinksList(new DrinkOrdering((Drink) drinkBox.getSelectedItem(), ((String) Objects.requireNonNull(sizeBox.getSelectedItem())).toLowerCase(), (int) numberSpinner.getValue(), getLinePrice() / (int) numberSpinner.getValue(), new ArrayList<>(toppings)));
                 toppings.clear();
                 resetSpinnerState();
                 updatePrice();
