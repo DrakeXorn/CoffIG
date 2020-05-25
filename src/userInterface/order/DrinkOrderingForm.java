@@ -69,7 +69,7 @@ public class DrinkOrderingForm extends JPanel {
             add(new JLabel(""));
             add(new JLabel(""));
 
-            addToListButton = new JButton("Ajouter à la liste");
+            addToListButton = new JButton();
             addToListButton.addActionListener(new AddToOrderButtonListener());
             add(addToListButton);
 
@@ -81,8 +81,14 @@ public class DrinkOrderingForm extends JPanel {
         }
     }
 
-    private void resetSpinnerState() {
-        numberSpinner.setModel(new SpinnerNumberModel(1, 1, 50 - parent.getDrinksListSize(), 1));
+    public void resetSpinnerState() {
+        int minToppings = Integer.MAX_VALUE;
+
+        for (Topping topping : toppings)
+            if (minToppings > topping.getStockLocation().getQuantity())
+                minToppings = topping.getStockLocation().getQuantity();
+
+        numberSpinner.setModel(new SpinnerNumberModel(1, (minToppings == 0 ? 0 : 1), Math.min(minToppings, 50 - parent.getDrinksListSize()), 1));
     }
 
     private Double getSizePrice() {
@@ -98,7 +104,7 @@ public class DrinkOrderingForm extends JPanel {
 
         for (Topping topping : toppings)
             totalToppings += topping.getPrice();
-        return Math.floor((((((Drink) Objects.requireNonNull(drinkBox.getSelectedItem())).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice() + totalToppings) * 100) / 100;
+        return (Math.floor((((((Drink) Objects.requireNonNull(drinkBox.getSelectedItem())).getCoffee().getPrice() / ((Drink) drinkBox.getSelectedItem()).getCoffee().getPackaging()) * ((Drink) drinkBox.getSelectedItem()).getCoffee().getWeightNeededForPreparation()) + getSizePrice() + totalToppings) * 100) / 100) * (int) numberSpinner.getValue();
     }
 
     public void updatePrice() {

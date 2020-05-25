@@ -17,7 +17,7 @@ public class CoffeeController {
         return coffeeManager.getAllCoffees();
     }
 
-    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException, BusinessException {
         coffeeManager.addCoffee(coffee);
     }
 
@@ -25,7 +25,7 @@ public class CoffeeController {
         return coffeeManager.getLastCoffeeID();
     }
 
-    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException {
+    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException, BusinessException {
         coffeeManager.updateCoffee(coffee);
     }
 

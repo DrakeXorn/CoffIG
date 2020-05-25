@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class ToppingsManagementFrame extends JFrame {
     private ToppingsManagementPanel toppingsPanel;
-    private JButton returnButton;
+    private JButton acceptButton;
     private DrinkOrderingForm parent;
     private Container container;
 
@@ -22,9 +22,9 @@ public class ToppingsManagementFrame extends JFrame {
         toppingsPanel = new ToppingsManagementPanel(this);
         container.add(toppingsPanel, BorderLayout.CENTER);
 
-        returnButton = new JButton("Accepter");
-        returnButton.addActionListener(new ReturnButtonListener());
-        container.add(returnButton, BorderLayout.SOUTH);
+        acceptButton = new JButton("Accepter");
+        acceptButton.addActionListener(new AcceptButtonListener());
+        container.add(acceptButton, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -34,10 +34,12 @@ public class ToppingsManagementFrame extends JFrame {
         return parent;
     }
 
-    private class ReturnButtonListener implements ActionListener {
+    private class AcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             parent.setToppings(toppingsPanel.getToppings());
+            parent.resetSpinnerState();
+            parent.updatePrice();
             dispose();
         }
     }

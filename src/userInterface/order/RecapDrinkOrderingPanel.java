@@ -1,6 +1,7 @@
 package userInterface.order;
 
-import model.FoodOrdering;
+import model.DrinkOrdering;
+import model.Topping;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,33 +9,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class OrderFormFoodOrderingsPanel extends JPanel {
-    private JList<FoodOrdering> orderingsList;
+public class RecapDrinkOrderingPanel extends JPanel {
+    private JList<DrinkOrdering> orderingsList;
     private JScrollPane orderingsScrollPane;
     private JButton removeFromListButton;
     private OrderFormRecapPanel parent;
-    private DefaultListModel<FoodOrdering> listModel;
+    private DefaultListModel<DrinkOrdering> listModel;
 
-    public OrderFormFoodOrderingsPanel(OrderFormRecapPanel parent) {
+    public RecapDrinkOrderingPanel(OrderFormRecapPanel parent) {
         listModel = new DefaultListModel<>();
-        this.parent = parent;
 
         setLayout(new BorderLayout());
+        this.parent = parent;
 
         orderingsList = new JList<>(listModel);
         orderingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        orderingsList.setCellRenderer(new DrinkOrderingsListCellRenderer());
         orderingsList.setFixedCellWidth(300);
         orderingsScrollPane = new JScrollPane(orderingsList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(orderingsScrollPane, BorderLayout.CENTER);
 
-        removeFromListButton = new JButton("Retirer cet aliment");
+        removeFromListButton = new JButton("Retirer cette boisson");
         removeFromListButton.addActionListener(new RemoveFromListListener());
         add(removeFromListButton, BorderLayout.SOUTH);
-
-        setVisible(true);
     }
 
-    public void addLine(FoodOrdering orderLine) {
+    public void addLine(DrinkOrdering orderLine) {
         if (listModel.contains(orderLine)) {
             int i = 0;
 
@@ -47,8 +47,8 @@ public class OrderFormFoodOrderingsPanel extends JPanel {
             listModel.addElement(orderLine);
     }
 
-    public ArrayList<FoodOrdering> getAllLines() {
-        ArrayList<FoodOrdering> orderings = new ArrayList<>();
+    public ArrayList<DrinkOrdering> getAllLines() {
+        ArrayList<DrinkOrdering> orderings = new ArrayList<>();
 
         for (int i = 0; i < listModel.getSize(); i++)
             orderings.add(listModel.get(i));
@@ -65,13 +65,28 @@ public class OrderFormFoodOrderingsPanel extends JPanel {
         return price;
     }
 
+    private static class DrinkOrderingsListCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel renderer = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            StringBuilder cellValue = new StringBuilder("<html><body><p>" + ((DrinkOrdering) value).getNbrPieces() + " * " + ((DrinkOrdering) value).getDrink() + " (" + ((DrinkOrdering) value).getSize() + ")</p>");
+
+            for (Topping topping : ((DrinkOrdering) value).getToppings())
+                cellValue.append("<p style='padding-left:10px'>+ ").append(topping).append("</p>");
+            cellValue.append("<p>Total de la ligne : ").append(((DrinkOrdering) value).getPrice()).append("€</p></body></html>");
+
+            renderer.setText(cellValue.toString());
+            return renderer;
+        }
+    }
+
     private class RemoveFromListListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (orderingsList.getSelectedValue() != null) {
-                orderingsList.getSelectedValue().getFood().getStockLocation().addNToQuantity(orderingsList.getSelectedValue().getNbrPieces());
+                for (Topping topping : orderingsList.getSelectedValue().getToppings())
+                    topping.getStockLocation().addNToQuantity(orderingsList.getSelectedValue().getNbrPieces());
                 listModel.removeElement(orderingsList.getSelectedValue());
-                parent.resetFoodList();
                 orderingsList.repaint();
                 parent.setButtonText();
             } else

@@ -18,7 +18,9 @@ public class CoffeeManager {
         return dataAccessor.getAllCoffees();
     }
 
-    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException {
+    public void addCoffee(Coffee coffee) throws ConnectionException, AddDataException, BusinessException {
+        if (coffee == null)
+            throw new BusinessException("CoffeeManager", "l'ajout d'un café", "Le café");
         dataAccessor.addCoffee(coffee);
     }
 
@@ -26,13 +28,13 @@ public class CoffeeManager {
         return dataAccessor.getLastCoffeeID();
     }
 
-    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException {
+    public void updateCoffee(Coffee coffee) throws ConnectionException, ModifyException, BusinessException {
+        if (coffee == null)
+            throw new BusinessException("CoffeeManager", "la mise à jour d'un café", "Le café");
         dataAccessor.updateCoffee(coffee);
     }
 
     public ArrayList<String> getFeatures() throws AllDataException, ConnectionException {
         return dataAccessor.getFeatures();
     }
-
-
 }

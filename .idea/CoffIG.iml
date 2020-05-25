@@ -17,7 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="org.jasypt:jasypt:1.9.3" level="project" />
     <orderEntry type="library" name="LGoodDatePicker-10.4.1" level="project" />
     <orderEntry type="library" name="org.junit.jupiter:junit-jupiter:5.4.2" level="project" />
   </component>

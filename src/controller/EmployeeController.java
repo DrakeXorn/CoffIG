@@ -23,7 +23,7 @@ public class EmployeeController {
         return manager.getManager();
     }
 
-    public void addEmployee(Employee employee) throws AddDataException, ConnectionException {
+    public void addEmployee(Employee employee) throws AddDataException, ConnectionException, BusinessException {
         manager.addEmployee(employee);
     }
   
@@ -35,7 +35,7 @@ public class EmployeeController {
         return manager.getLastParkingSpaceNumber();
     }
 
-    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException {
+    public ArrayList<Assignment> searchAssignments(String identity, GregorianCalendar startDate, GregorianCalendar endDate) throws AllDataException, ConnectionException, TimeException, BusinessException {
         return manager.searchAssignments(identity, startDate, endDate);
     }
 }

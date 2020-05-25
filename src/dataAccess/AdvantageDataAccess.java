@@ -9,6 +9,6 @@ import java.util.GregorianCalendar;
 
 public interface AdvantageDataAccess {
     ArrayList<Double> getAllAdvantageDiscounts() throws ConnectionException, AllDataException;
-    ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar today, Double discount, int typAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException;
+    ArrayList<Advantage> searchAdvantages(Customer customer, GregorianCalendar date, Double discount, int typAdvantage) throws AllDataException, ConnectionException, DateException, IntegerInputException, DoubleInputException;
 }
 

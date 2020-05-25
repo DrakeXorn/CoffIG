@@ -13,7 +13,9 @@ public class CustomerManager {
         dao = new CustomerDBAccess();
     }
 
-    public void addCustomer(Customer customer) throws AddDataException, ConnectionException {
+    public void addCustomer(Customer customer) throws AddDataException, ConnectionException, BusinessException {
+        if (customer == null)
+            throw new BusinessException("CustomerManager", "l'ajout d'un client", "Le client");
         dao.addCustomer(customer);
     }
 
@@ -21,11 +23,15 @@ public class CustomerManager {
         return dao.getAllCustomers();
     }
 
-    public void updateCustomer(Customer customer) throws ModifyException, ConnectionException {
+    public void updateCustomer(Customer customer) throws ModifyException, ConnectionException, BusinessException {
+        if (customer == null)
+            throw new BusinessException("CustomerManager", "la mise à jour d'un client", "Le client");
         dao.updateCustomer(customer);
     }
 
-    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException {
+    public void removeCustomer(Customer customer) throws ConnectionException, ModifyException, BusinessException {
+        if (customer == null)
+            throw new BusinessException("CustomerManager", "la suppression d'un client", "Le client");
         dao.removeCustomer(customer);
     }
 }
