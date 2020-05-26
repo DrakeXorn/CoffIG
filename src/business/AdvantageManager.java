@@ -25,8 +25,6 @@ public class AdvantageManager {
             throw new BusinessException("AdvantageManager", "la recherche d'avantages", "Le client");
         if (date == null)
             throw new BusinessException("AdvantageManager", "la recherche d'avantages", "La date");
-        if (discount == null)
-            throw new BusinessException("AdvantageManager", "la recherche d'avantages", "La réduction");
         return dataAccessor.searchAdvantages(customer, date, discount, typeAdvantage);
     }
 }
