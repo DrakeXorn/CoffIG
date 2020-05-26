@@ -52,7 +52,7 @@ public class CheckoutFrame extends JFrame {
                 order.setFoodOrderings(parent.getFoodOrderings());
                 order.setDrinkOrderings(parent.getDrinkOrderings());
 
-                if (parent.getBeneficiary() != null) {
+                if (parent.getBeneficiary() != null && parent.getBeneficiary().getLoyaltyCard() != null) {
                     card = parent.getBeneficiary().getLoyaltyCard();
                     numberPoints = controller.addPoints(card.getPointsNumber(), order.getPrice());
                     controller.updateLoyaltyCardPoints(card.getLoyaltyCardID(), numberPoints);
